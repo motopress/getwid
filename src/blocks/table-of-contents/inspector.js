@@ -44,6 +44,7 @@ class Inspector extends Component {
 					>
 						{allowedTags.map((a, i) => (
 							<ToggleControl
+								key={ i }
 								label={`H${i + 1}`}
 								checked={a}
 								onChange={() =>

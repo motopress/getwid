@@ -423,6 +423,7 @@ class Edit extends Component {
 														this.setImageAttributes( index, {custom_link} );
 													} }
 													disableSuggestions={ true }
+													__nextHasNoMarginBottom
 												/>
 											</div>
 											<div className= {`${baseClass}__url-rel-container`}>

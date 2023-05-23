@@ -177,6 +177,7 @@ class Inspector extends Component {
 													backgroundGradient: gradient
 												});
 											} }
+											__nextHasNoMargin
 											{ ...{
 												gradients,
 												disableCustomColors,
@@ -337,7 +338,7 @@ class Inspector extends Component {
 						<Dropdown
 							className={`${controlClass}__dropdown-action`}
 							contentClassName={`${controlClass}__dropdown-content`}
-							position="top right"
+							popoverProps={ { placement: "top-end" } }
 							renderToggle={({ isOpen, onToggle }) => (
 								<Button
 									isSecondary
@@ -347,7 +348,7 @@ class Inspector extends Component {
 								</Button>
 							)}
 							renderContent={() => (
-								<Fragment>
+								<div style={ { width: '200px', maxWidth: '90vw' } } >
 									<SelectControl
 										label={__( 'Position', 'getwid' )}
 										value={backgroundImagePosition !== undefined ? backgroundImagePosition : ''}
@@ -417,7 +418,7 @@ class Inspector extends Component {
 											{ value: 'auto'   , label: __( 'Auto'   , 'getwid' ) }
 										]}
 									/>
-								</Fragment>
+								</div>
 							)}
 						/>
 					</div>

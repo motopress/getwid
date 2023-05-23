@@ -18,7 +18,7 @@ import './editor.scss';
 */
 const { compose } = wp.compose;
 const { Component } = wp.element;
-const { ToolbarGroup, ToolbarItem, DropdownMenu, TextControl, Button, Placeholder } = wp.components;
+const { ToolbarGroup, ToolbarDropdownMenu, TextControl, Button, Placeholder } = wp.components;
 const { RichText, BlockControls, BlockIcon, withColors } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
@@ -1211,7 +1211,7 @@ class GetwidTable extends Component {
 			<>
 				<BlockControls>
 					<ToolbarGroup>
-						<DropdownMenu
+						<ToolbarDropdownMenu
 							hasArrowIndicator
 							icon='edit'
 							label={ __( 'Edit Table', 'getwid' ) }

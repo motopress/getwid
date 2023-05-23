@@ -133,7 +133,7 @@ class Edit extends Component {
 		};
 
 		const getNode = (list) => list.map(item => (
-			<li>
+			<li key={ item.anchor } >
 				<a
 					href={`#${item.anchor}`}
 				>
@@ -169,14 +169,16 @@ class Edit extends Component {
 							className= {classnames(
 								`${baseClass}__list`,
 							)}
-						>{getNode(getHeadingArr(headings))}</ol>
+						>
+							{ getNode( getHeadingArr( headings ) ) }
+							</ol>
 					) : (
 						<ul
 							className= {classnames(
 								`${baseClass}__list`,
 							)}
 						>
-							{getNode(getHeadingArr(headings))}
+							{ getNode( getHeadingArr( headings ) ) }
 						</ul>
 					)}
 				</div>

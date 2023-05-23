@@ -17,21 +17,24 @@
         .dashicon{
             color: #8f98a1;
         }
-		.editor-url-input{
+
+		.block-editor-url-input{
 			margin-left: 10px;
 			margin-right: 10px;
-			input {
+
+            input {
+                border: 1px solid #8f98a1;
+                border-radius: 2px;
 				width: 100%;
 			}
 		}
 
-        .components-base-control__field{
-            align-items: flex-end;
+        .components-toggle-control{
 			margin: 0;
         }
     }
 
     & &__caption-wrapper{
-        z-index: 1;        
-    }    
+        z-index: 1;
+    }
 }
