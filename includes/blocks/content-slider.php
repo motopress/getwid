@@ -102,6 +102,9 @@ class ContentSlider extends AbstractBlock {
 			}
 		);
 
+		wp_enqueue_style( 'slick' );
+		wp_enqueue_style( 'slick-theme' );
+
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
 		wp_enqueue_script(
@@ -112,7 +115,7 @@ class ContentSlider extends AbstractBlock {
 			true
 		);
 
-		if ( !$this->assetsAlreadyEnqueued) {
+		if ( ! $this->assetsAlreadyEnqueued ) {
 			$inline_script =
 				'var Getwid = Getwid || {};' .
 				'Getwid["isRTL"] = ' . json_encode( is_rtl() ) . ';';
