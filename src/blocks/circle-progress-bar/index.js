@@ -59,7 +59,8 @@ export default registerBlockType(
                     transform: attributes => createBlock(
                         'getwid/progress-bar',
                         {
-                            fillAmount: attributes.fillAmount
+                            fillAmount: attributes.fillAmount,
+                            isAnimated: 'false'
                         }
                     )
                 }

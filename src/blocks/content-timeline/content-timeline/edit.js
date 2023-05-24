@@ -399,10 +399,14 @@ class GetwidTimeline extends Component {
 						}
 				} ) } );
 
-				this.mutationObserver.observe( $timeLine.get( 0 ), {
-					childList: true,
-					subtree: true
-				} );
+				const timeline = $timeLine.get( 0 );
+
+				if ( timeline ) {
+					this.mutationObserver.observe( timeline, {
+						childList: true,
+						subtree: true
+					} );
+				}
 				/* #endregion */
 
 				clearInterval( this.waitLoadContent );

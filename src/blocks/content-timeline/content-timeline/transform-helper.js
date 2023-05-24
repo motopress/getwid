@@ -22,7 +22,9 @@ export const convertBlockFrom = content => {
     const images = $.isPlainObject( content ) ? [ ...content.images ] : [ ...content ];
 
 	return createBlock(
-		'getwid/content-timeline', {},
+		'getwid/content-timeline', {
+            filling: 'false'
+        },
 		images.map(( item, index ) =>
 			createBlock(
 				'getwid/content-timeline-item', {
