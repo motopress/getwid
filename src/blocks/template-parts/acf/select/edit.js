@@ -12,7 +12,7 @@ const {
 	Fragment,
 } = wp.element;
 const {
-	Toolbar,
+	ToolbarGroup,
 	withFallbackStyles
 } = wp.components;
 import { __ } from 'wp.i18n';
@@ -69,7 +69,7 @@ class Edit extends Component {
 						value={ textAlignment }
 						onChange={ textAlignment => setAttributes({textAlignment}) }
 					/>
-					<Toolbar controls={ [
+					<ToolbarGroup controls={ [
 						{
 							icon: 'editor-bold',
 							title: __( 'Bold', 'getwid' ),

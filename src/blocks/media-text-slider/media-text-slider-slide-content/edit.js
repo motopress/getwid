@@ -80,24 +80,6 @@ class Edit extends Component {
 		} );
 	}
 
-	componentWillReceiveProps( receiveProps ) {
-
-		const { imgObj } = this.props;
-		const { innerParent } = receiveProps.attributes;
-
-		if ( imgObj && innerParent ) {
-
-			const { onSelectMedia } = this;
-			const { imageSize } = innerParent.attributes;
-
-			if ( typeof this.props.attributes.innerParent != 'undefined' ) {
-				if  ( ! isEqual( imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
-					receiveProps.attributes.mediaUrl = onSelectMedia( imgObj, true, imageSize );
-				}
-			}
-		}
-	}
-
 	renderMediaArea() {
 		const { attributes, baseClass, setAttributes } = this.props;
 		const { mediaAlt, mediaId, mediaType, mediaUrl, innerParent } = attributes;
@@ -138,18 +120,6 @@ class Edit extends Component {
 		const classNames = classnames( className, {
 			'is-selected': isSelected,
 		} );
-
-		const onMediaAltChange = ( newMediaAlt ) => {
-			setAttributes( { mediaAlt: newMediaAlt } );
-		};
-		const mediaTextGeneralSettings = (
-			<Fragment>
-				{ mediaType === 'image' && ( <TextareaControl
-					value={ mediaAlt }
-					onChange={ onMediaAltChange }
-				/> ) }
-			</Fragment>
-		);
 
 		const contentStyle = {
 			color : innerParent != undefined && typeof innerParent.attributes.textColor != 'undefined' ? innerParent.attributes.textColor : null

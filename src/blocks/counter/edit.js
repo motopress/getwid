@@ -107,7 +107,7 @@ class Edit extends Component {
 	getEasingFunction() {
 		const { easing, useEasing } = this.props.attributes;
 
-		if ($.parseJSON(useEasing)) {
+		if ( JSON.parse( useEasing ) ) {
 			switch (easing) {
 				case 'outExpo':
 					return (t, b, c, d) => {
@@ -156,8 +156,8 @@ class Edit extends Component {
 			decimalPlaces : parseInt  ( decimalPlaces ),
 			duration	  : parseInt  ( duration 	  ),
 
-			useEasing	: $.parseJSON( useEasing   ),
-			useGrouping : $.parseJSON( useGrouping ),
+			useEasing	: JSON.parse( useEasing ),
+			useGrouping : JSON.parse( useGrouping ),
 
 			separator : separator,
 			decimal	  : decimal,

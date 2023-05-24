@@ -59,13 +59,14 @@ class Inspector extends Component {
 								{__( 'Sync', 'getwid' )}
 							</Button>
 							<Button
-								isDefault
+								isSecondary
 								onClick={
 									event => {
 										changeData( { checkApiKey: '' } );
 										manageMailchimpApiKey( event, 'delete' );
 									}
-								}>
+								}
+							>
 								{__( 'Delete', 'getwid' )}
 							</Button>
 						</ButtonGroup>

@@ -230,15 +230,15 @@ class Edit extends Component {
 		imageWrapper.off();
 
 		//Remove menu
-		imageWrapper.contextmenu(function () {
+		imageWrapper.on( 'contextmenu', function () {
 			return false;
 		});
 
-		$imageDots.contextmenu(function () {
+		$imageDots.on( 'contextmenu', function () {
 			return false;
 		});
 
-		$imageDots.click( event => {
+		$imageDots.on( 'click', event => {
 
 			event.stopPropagation();
 
@@ -257,7 +257,7 @@ class Edit extends Component {
 			changeState( 'currentPoint', $( dot ).data( 'point-id' ) );
 		} );
 
-		$imageDots.mousedown(function (e) {
+		$imageDots.on( 'mousedown', function (e) {
 			//Wheel click
 			if (e.button == 1) {
 				e.preventDefault();
@@ -320,7 +320,7 @@ class Edit extends Component {
 		}
 
 		//Esc (Cancel add point)
-		$(document).keyup(function (e) {
+		$(document).on( 'keyup', function (e) {
 			if (getState('currentPoint') != null && getState('action') == 'drop' && e.which == 27) {
 
 				changeState({
@@ -333,7 +333,7 @@ class Edit extends Component {
 		});
 
 		//Add new point
-		imageWrapper.click( event => {
+		imageWrapper.on( 'click', event => {
 			const wrapper = event.target;
 
 			$imageDots.removeClass( 'is-selected' );
@@ -688,7 +688,6 @@ class Edit extends Component {
 									value={id}
 									render={({open}) => (
 										<ToolbarButton
-											className="components-toolbar__control"
 											label={__('Edit Media', 'getwid')}
 											icon="format-image"
 											onClick={open}
@@ -772,10 +771,10 @@ class Edit extends Component {
 		}
 
 		//Disable right click on modal window
-		$(`.${baseClass}__modal-delete`).contextmenu(function () {
+		$(`.${baseClass}__modal-delete`).on( 'contextmenu', function () {
 			return false;
 		});
-		$(`.components-modal__screen-overlay`).contextmenu(function () {
+		$(`.components-modal__screen-overlay`).on( 'contextmenu', function () {
 			return false;
 		});
 
@@ -787,7 +786,7 @@ class Edit extends Component {
 
 export default compose( [
 	withDispatch( ( dispatch, props ) => {
-		const { selectBlock } = dispatch( 'core/editor' );
+		const { selectBlock } = dispatch( 'core/block-editor' );
 		return {
 			selectBlock
 		};

@@ -91,7 +91,7 @@ class GetwidContentSliderNavigation extends Component {
 					</div>
 					<div className="wp-block-getwid-content-slider__controls-slides">
 						<Dropdown
-							position="bottom left"
+							popoverProps={ { placement: "bottom-end" } }
 							renderToggle={ ( { isOpen, onToggle } ) => (
 								<div>
 									<Button

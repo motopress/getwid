@@ -52,18 +52,18 @@ class GetwidCustomPopUpControl extends Component {
 					<Button
 						className={ classnames(
 							'wp-block-getwid-popup-icon',
-						) }		
+						) }
 						isPrimary={isVisible ? true : undefined}
-						isDefault={!isVisible ? true : undefined}										
+						isSecondary={!isVisible ? true : undefined}
 						onClick={ (e) => {
 							this.setState({isVisible: !isVisible})
 						}}>
-						<Dashicon icon={icon}/>			
+						<Dashicon icon={icon}/>
 
 						{ isVisible && (
 							<Popover
 								onClick={ (e) => {
-									e.stopPropagation();							
+									e.stopPropagation();
 								}}
 								className='components-getwid-popup-wrapper'
 								focusOnMount='container'

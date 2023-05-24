@@ -59,6 +59,7 @@ class GetwidFontSizePicker extends Component {
 				fontSizes={ this.props.fontSizes }
 				value={ fontSize?.size }
 				onChange={ this.onChange }
+				__nextHasNoMarginBottom
 			/>
 		)
 	}

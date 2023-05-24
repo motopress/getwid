@@ -177,6 +177,7 @@ class Inspector extends Component {
 													backgroundGradient: gradient
 												});
 											} }
+											__nextHasNoMargin
 											{ ...{
 												gradients,
 												disableCustomColors,
@@ -337,17 +338,17 @@ class Inspector extends Component {
 						<Dropdown
 							className={`${controlClass}__dropdown-action`}
 							contentClassName={`${controlClass}__dropdown-content`}
-							position="top right"
+							popoverProps={ { placement: "top-end" } }
 							renderToggle={({ isOpen, onToggle }) => (
 								<Button
-									isDefault
+									isSecondary
 									onClick={onToggle}
 								>
 									<Dashicon icon='admin-tools'/>
 								</Button>
 							)}
 							renderContent={() => (
-								<Fragment>
+								<div style={ { width: '200px', maxWidth: '90vw' } } >
 									<SelectControl
 										label={__( 'Position', 'getwid' )}
 										value={backgroundImagePosition !== undefined ? backgroundImagePosition : ''}
@@ -417,7 +418,7 @@ class Inspector extends Component {
 											{ value: 'auto'   , label: __( 'Auto'   , 'getwid' ) }
 										]}
 									/>
-								</Fragment>
+								</div>
 							)}
 						/>
 					</div>
@@ -898,7 +899,10 @@ class Inspector extends Component {
 											{__( 'Select Images', 'getwid' )}
 										</Button>
 
-										<Button onClick={ () => { setAttributes({ sliderImages: [] }) } } isDefault>
+										<Button
+											isSecondary
+											onClick={ () => { setAttributes({ sliderImages: [] }) } }
+										>
 											{ __( 'Remove', 'getwid' ) }
 										</Button>
 									</ButtonGroup>
@@ -1001,11 +1005,15 @@ class Inspector extends Component {
 								<BaseControl>
 									<Button
 										isPrimary
-										onClick={open}>
+										onClick={open}
+									>
 										{ __( 'Select Video', 'getwid' ) }
 									</Button>
 									{!!backgroundVideoUrl &&
-										<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isDefault>
+										<Button
+											isSecondary
+											onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }}
+										>
 											{__( 'Remove', 'getwid' )}
 										</Button>
 									}
@@ -1106,7 +1114,7 @@ class Inspector extends Component {
 							render={({ open }) => (
 								<BaseControl>
 									<Button
-										isDefault
+										isSecondary
 										onClick={open}
 									>
 										{ ! backgroundVideoPoster  &&  __( 'Select Poster' , 'getwid' ) }
@@ -1386,16 +1394,12 @@ class Inspector extends Component {
 
 export default compose( [
 	withSelect( (select, props) => {
-		const { getEditorSettings } = select( 'core/editor' );
 
 		const settings = select( 'core/block-editor' ).getSettings();
 		const colorGradientSettings = pick( settings, COLOR_AND_GRADIENT_KEYS );
 
-		// debugger;
-
 		return {
-			colorGradientSettings,
-			getEditorSettings
+			colorGradientSettings
 		};
 	} ),
 	withColors( 'backgroundColor' )

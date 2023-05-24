@@ -21,7 +21,7 @@ const { compose } = wp.compose;
 const { withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 
-const { ToolbarButton, ToggleControl, DropZone, Toolbar, ToolbarItem, Dashicon, TextControl } = wp.components;
+const { ToolbarButton, ToggleControl, DropZone, ToolbarGroup, Dashicon, TextControl } = wp.components;
 const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar, BlockIcon, URLInput } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
@@ -299,20 +299,12 @@ class Edit extends Component {
 		return result;
 	}
 
-	componentWillUpdate( nextProps, nextState ) {
-
-		const diffInUrls = this.flag ? false : this.checkURLsChanges( nextProps );
-
-		if ( ! isEqual( nextProps.attributes, this.props.attributes ) && !diffInUrls ) {
-			this.destroySlider();
-		}
-	}
-
 	componentDidUpdate( prevProps ) {
 
 		const diffInUrls = this.flag ? false : this.checkURLsChanges( prevProps );
 
 		if ( (! isEqual( prevProps.attributes, this.props.attributes ) && !diffInUrls) ) {
+			this.destroySlider();
 			this.initSlider();
 			this.flag = false;
 		}
@@ -341,7 +333,7 @@ class Edit extends Component {
 						onChange={align => setAttributes({ align })}
 					/>
 					{ !! images.length && (
-						<Toolbar>
+						<ToolbarGroup>
 							<MediaUpload
 								onSelect={onSelectImages}
 								allowedTypes={ ALLOWED_MEDIA_TYPES }
@@ -350,14 +342,13 @@ class Edit extends Component {
 								value={ images.map( img => {return (img.id ? img.id : false);} ) }
 								render={({ open }) => (
 									<ToolbarButton
-										className='components-toolbar__control'
 										label={ __( 'Edit Slider', 'getwid' ) }
 										icon='edit'
 										onClick={open}
 									/>
 								)}
 							/>
-						</Toolbar>
+						</ToolbarGroup>
 					)}
 				</BlockControls>
 			</Fragment>
@@ -432,6 +423,7 @@ class Edit extends Component {
 														this.setImageAttributes( index, {custom_link} );
 													} }
 													disableSuggestions={ true }
+													__nextHasNoMarginBottom
 												/>
 											</div>
 											<div className= {`${baseClass}__url-rel-container`}>

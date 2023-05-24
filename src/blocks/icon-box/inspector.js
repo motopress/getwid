@@ -176,6 +176,7 @@ class Inspector extends Component {
 									autoFocus={ false }
 									value={ link }
 									onChange={(link) => setAttributes({link})}
+									__nextHasNoMarginBottom
 								/>
 							</BaseControl>
 							<BaseControl>

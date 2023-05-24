@@ -139,7 +139,7 @@ class FontsControl extends Component {
 						(
 							<Dropdown
 								contentClassName="components-getwid-fonts-popover"
-								position="bottom center"
+								popoverProps={ { placement: "bottom" } }
 								renderToggle={ ({ isOpen, onToggle }) => (
 									<Button
 										className="components-getwid-fonts-button"

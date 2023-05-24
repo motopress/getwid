@@ -4,7 +4,7 @@
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
 import GroupComponent from "./components/query-group";
-import { map, isEmpty, isUndefined, pickBy, cloneDeep } from 'lodash';
+import { isEmpty, cloneDeep } from 'lodash';
 import classnames from "classnames";
 
 /**
@@ -30,6 +30,9 @@ const {
 	TextControl,
 	PanelBody
 } = wp.components;
+const {
+	withSelect
+} = wp.data;
 
 /**
 * Create an Control
@@ -54,25 +57,6 @@ class GetwidCustomQueryControl extends Component {
 		this.changeState = this.changeState.bind( this );
 	}
 
-	//Get Post Types
-	componentWillMount() {
-		this.isStillMounted = true;
-		this.waitLoadPostTypes = true;
-		this.fetchRequest = apiFetch( {
-			path: addQueryArgs( `/wp/v2/types` ),
-		} ).then(
-			( postTypeList ) => {
-
-				this.waitLoadPostTypes = false;
-				if ( this.isStillMounted ) {
-					this.setState( { postTypeList } );
-				}
-			}
-		).catch(() => {
-			this.waitLoadPostTypes = false;
-		});
-	}
-
 	//Get Taxonomy
 	getTaxonomyFromCustomPostType(postType){
 		if (typeof postType != 'undefined' && postType != ''){
@@ -83,7 +67,7 @@ class GetwidCustomQueryControl extends Component {
 			} ).then(
 				( taxonomyList ) => {
 					this.waitLoadTaxonomy = false;
-					if ( this.isStillMounted && Array.isArray(taxonomyList) && taxonomyList.length ) {
+					if ( Array.isArray(taxonomyList) && taxonomyList.length ) {
 						this.setState( { taxonomyList } );
 					} else {
 						this.setState( { taxonomyList: null } );
@@ -105,7 +89,7 @@ class GetwidCustomQueryControl extends Component {
 			} ).then(
 				( termsList ) => {
 					this.waitLoadTerms = false;
-					if ( this.isStillMounted && termsList instanceof Object && !isEmpty( termsList ) ) {
+					if ( termsList instanceof Object && !isEmpty( termsList ) ) {
 						this.setState( { termsList } );
 					} else {
 						this.setState( { termsList: null } );
@@ -115,10 +99,6 @@ class GetwidCustomQueryControl extends Component {
 				this.waitLoadTerms = false;
 			});
 		}
-	}
-
-	componentWillUnmount() {
-		this.isStillMounted = false;
 	}
 
 	changeState(param, value) {
@@ -135,18 +115,6 @@ class GetwidCustomQueryControl extends Component {
 
 	render() {
 		const controlClassPrefix = 'components-getwid-custom-query-control';
-		const postTypeArr = [];
-
-		if (this.state.postTypeList){
-			for (const key in this.state.postTypeList) {
-				if (!['attachment', 'wp_block', 'getwid_template_part', 'getwid_template'].includes(key)){
-					let postType = {};
-					postType['value'] = this.state.postTypeList[key]['slug'];
-					postType['label'] = this.state.postTypeList[key]['name'];
-					postTypeArr.push(postType);
-				}
-			}
-		}
 
 		const renderPagination = () => {
 
@@ -243,8 +211,6 @@ class GetwidCustomQueryControl extends Component {
 
 			return (
 				<Fragment>
-					{(this.waitLoadPostTypes) ? <Spinner/> : undefined}
-
 					<SelectControl
 						label={ __( 'Choose what to display', 'getwid' ) }
 						className={[`${controlClassPrefix}__post-type`]}
@@ -279,10 +245,9 @@ class GetwidCustomQueryControl extends Component {
 
 							this.getTaxonomyFromCustomPostType(value);
 						} }
-						options={[
-							...(postTypeArr ? postTypeArr : [{'value': '', 'label': '-' }])
-						]}
-						disabled={(null == this.state.postTypeList)}
+						options={
+							this.props.postTypes ? this.props.postTypes : [{'value': '', 'label': '-' }]
+						}
 					/>
 				</Fragment>
 			);
@@ -593,13 +558,16 @@ class GetwidCustomQueryControl extends Component {
 							<div className={ [ `${controlClassPrefix}__custom-conditions` ] }>
 								{ renderConditionsTree() }
 								<ButtonGroup className={ [ `${controlClassPrefix}__custom-btn-group` ] }>
-									<Button isDefault onClick={
-										() => {
-											this.setState( {
-												modalOpen: false
-											} );
+									<Button
+										isSecondary
+										onClick={
+											() => {
+												this.setState( {
+													modalOpen: false
+												} );
+											}
 										}
-									}>
+									>
 										{ __( 'Close', 'getwid' ) }
 									</Button>
 									<Button
@@ -632,4 +600,29 @@ class GetwidCustomQueryControl extends Component {
 	}
 }
 
-export default ( GetwidCustomQueryControl );
+export default withSelect( ( select, props ) => {
+	const { getPostTypes } = select( 'core' );
+
+	const _postTypes = getPostTypes();
+	let postTypes = [];
+
+	if( _postTypes ) {
+
+		_postTypes.map( type => {
+
+			if ( ! [ 'attachment', 'wp_block', 'getwid_template_part', 'getwid_template' ].includes( type.slug ) ) {
+				postTypes.push( {
+					'value': type.slug,
+					'label': type.name
+				} );
+			}
+
+		} );
+
+	}
+
+	return {
+		postTypes
+	};
+} )( GetwidCustomQueryControl );
+

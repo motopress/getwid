@@ -171,25 +171,22 @@ class Edit extends Component {
 						onChange={align => setAttributes({ align })}
 					/>
 					{ !! url && (
-						<Fragment>
-							<MediaUploadCheck>
-								<ToolbarGroup>
-									<MediaUpload
-										onSelect={ onSelectMedia }
-										allowedTypes={ ALLOWED_MEDIA_TYPES }
-										value={ id }
-										render={ ( { open } ) => (
-											<ToolbarButton
-												className='components-toolbar__control'
-												label={ __( 'Edit Media', 'getwid' ) }
-												icon='edit'
-												onClick={ open }
-											/>
-										) }
-									/>
-								</ToolbarGroup>
-							</MediaUploadCheck>
-						</Fragment>
+						<MediaUploadCheck>
+							<ToolbarGroup>
+								<MediaUpload
+									onSelect={ onSelectMedia }
+									allowedTypes={ ALLOWED_MEDIA_TYPES }
+									value={ id }
+									render={ ( { open } ) => (
+										<ToolbarButton
+											label={ __( 'Edit Media', 'getwid' ) }
+											icon='edit'
+											onClick={ open }
+										/>
+									) }
+								/>
+							</ToolbarGroup>
+						</MediaUploadCheck>
 					) }
 				</BlockControls>
 				{ !! url && (
@@ -244,66 +241,60 @@ class Edit extends Component {
 			<Fragment>
 				{ controls }
 				<div {...wrapperProps}>
-					<Fragment>
+					{ !! url && (
+						<div {...imageProps}>
+							{ VIDEO_BACKGROUND_TYPE === type && !!url ? (
+								<video
+									className= {`${baseClass}__video ${baseClass}__source`}
+									autoPlay={true}
+									muted
+									loop
+									src={ url }
+								/>
+							) : (<img src={ url } alt="" className= {`${baseClass}__image ${baseClass}__source` }/>) }
 
-						{ !! url && (
-							<div {...imageProps}>
-								{ VIDEO_BACKGROUND_TYPE === type && !!url ? (
-									<video
-										className= {`${baseClass}__video ${baseClass}__source`}
-										autoPlay={true}
-										muted
-										loop
-										src={ url }
+							<div {...captionProps}>
+								<div style={{ maxWidth: contentMaxWidth }} className= {`${baseClass}__caption-wrapper`}>
+
+									<RichText
+										tagName='span'
+										className= {`${baseClass}__title`}
+										placeholder={ __( 'Write heading…', 'getwid' ) }
+										value={ title }
+										onChange={title => setAttributes({ title })}
+										allowedFormats={allowedFormats}
 									/>
-								) : (<img src={ url } alt="" className= {`${baseClass}__image ${baseClass}__source` }/>) }
 
-								<Fragment>
-									<div {...captionProps}>
-										<div style={{ maxWidth: contentMaxWidth }} className= {`${baseClass}__caption-wrapper`}>
-
-											<RichText
-												tagName='span'
-												className= {`${baseClass}__title`}
-												placeholder={ __( 'Write heading…', 'getwid' ) }
-												value={ title }
-												onChange={title => setAttributes({ title })}
-												allowedFormats={allowedFormats}
-											/>
-
-											<RichText
-												tagName='p'
-												className= {`${baseClass}__text`}
-												placeholder={ __( 'Write text…', 'getwid' ) }
-												value={ text }
-												onChange={text => setAttributes({ text })}
-												allowedFormats={allowedFormats}
-											/>
-										</div>
-									</div>
-								</Fragment>
+									<RichText
+										tagName='p'
+										className= {`${baseClass}__text`}
+										placeholder={ __( 'Write text…', 'getwid' ) }
+										value={ text }
+										onChange={text => setAttributes({ text })}
+										allowedFormats={allowedFormats}
+									/>
+								</div>
 							</div>
-						) }
-					</Fragment>
+						</div>
+					) }
 				</div>
 					{ isSelected && (
-							<Fragment>
-								<div className= {`${baseClass}__url-field`}>
-									<Dashicon icon='admin-links'/>
-									<URLInput
-										className="has-border"
-										autoFocus={ false }
-										value={ link }
-										onChange={ link => setAttributes({ link }) }
-									/>
-                                    <ToggleControl
-                                        label={ __( 'Open in New Tab', 'getwid' ) }
-                                        onChange={ this.onSetNewTab }
-                                        checked={ linkTarget === '_blank' }/>
-								</div>
-							</Fragment>
-						)
-					}
+						<div className= {`${baseClass}__url-field`}>
+							<Dashicon icon='admin-links'/>
+							<URLInput
+								className="has-border"
+								autoFocus={ false }
+								value={ link }
+								onChange={ link => setAttributes({ link }) }
+								__nextHasNoMarginBottom
+							/>
+							<ToggleControl
+								label={ __( 'Open in New Tab', 'getwid' ) }
+								onChange={ this.onSetNewTab }
+								checked={ linkTarget === '_blank' }
+							/>
+						</div>
+					) }
 			</Fragment>
 		);
 	}

@@ -2,10 +2,10 @@
 Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf
-Requires at least: 5.5
-Tested up to: 6.1
+Requires at least: 5.6
+Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 1.8.6
+Stable tag: 1.8.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -182,7 +182,11 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.8.6, Apr 28 2023 =
+= 1.8.7, May 24 2023 =
+* Improved compatibility with WordPress 6.2.
+* Minor bug fixes and improvements.
+
+= 1.8.6, May 10 2023 =
 * Improved compatibility with WordPress 6.2.
 * Fixed an issue when wrong icons might be displayed in the Toggle and Accordion blocks in the block editor after saving.
 * Fixed an issue when images in the Slider and Content Timeline blocks would disappear in the block editor after a size change.

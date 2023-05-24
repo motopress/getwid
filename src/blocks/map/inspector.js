@@ -166,30 +166,36 @@ class Inspector extends Component {
 								/>
 
 								<ButtonGroup>
-									<Button isPrimary onClick={
-										() => {
-											if (getState('action') == 'drop'){
-												initMarkers(false, false, getState('currentMarker'), getState('mapObj'));
-											} else if (getState('action') == 'edit') {
-												initMarkers(false, true, getState('currentMarker'), getState('mapObj'));
+									<Button
+										isPrimary
+										onClick={
+											() => {
+												if (getState('action') == 'drop'){
+													initMarkers(false, false, getState('currentMarker'), getState('mapObj'));
+												} else if (getState('action') == 'edit') {
+													initMarkers(false, true, getState('currentMarker'), getState('mapObj'));
+												}
+												changeState('currentMarker', null);
+												changeState('action', false);
+												changeState('editModal', false);
 											}
-											changeState('currentMarker', null);
-											changeState('action', false);
-											changeState('editModal', false);
 										}
-									}>
+									>
 										{ getState('action') == 'drop' ? __( 'Save', 'getwid' ) : __( 'Update', 'getwid' ) }
 									</Button>
 
 									{ getState('action') == 'drop' && (
-										<Button isDefault onClick={
-											() => {
-												changeState('action', false);
-												changeState('editModal', false);
+										<Button
+											isSecondary
+											onClick={
+												() => {
+													changeState('action', false);
+													changeState('editModal', false);
 
-												cancelMarker();
+													cancelMarker();
+												}
 											}
-										}>
+										>
 											{ __( 'Cancel', 'getwid' ) }
 										</Button>
 									)}
@@ -283,19 +289,25 @@ class Inspector extends Component {
 						/>
 
 						<ButtonGroup>
-							<Button isPrimary onClick={
-								() => {
-									initMarkers(false, true, index, getState('mapObj'));
+							<Button
+								isPrimary
+								onClick={
+									() => {
+										initMarkers(false, true, index, getState('mapObj'));
+									}
 								}
-							}>
+							>
 								{ __( 'Update', 'getwid' ) }
 							</Button>
 
-							<Button isDefault onClick={
-								() => {
-									onDeleteMarker(index);
+							<Button
+								isSecondary
+								onClick={
+									() => {
+										onDeleteMarker(index);
+									}
 								}
-							}>
+							>
 								{ __( 'Delete', 'getwid' ) }
 							</Button>
 						</ButtonGroup>
@@ -387,25 +399,29 @@ class Inspector extends Component {
 							<BaseControl>
 								<ButtonGroup>
 									<Button
-									isPrimary
-									disabled={((getState('checkApiKey') != '') ? null : true)}
-									onClick={
-										(event) => {
-											removeGoogleAPIScript();
-											manageGoogleAPIKey(event, 'set');
+										isPrimary
+										disabled={((getState('checkApiKey') != '') ? null : true)}
+										onClick={
+											(event) => {
+												removeGoogleAPIScript();
+												manageGoogleAPIKey(event, 'set');
+											}
 										}
-									}>
+									>
 										{ __( 'Update', 'getwid' ) }
 									</Button>
 
-									<Button isDefault onClick={
-										(event) => {
-											changeState('checkApiKey', '');
-											changeState('googleApiKey', '');
-											manageGoogleAPIKey(event, 'delete');
-											removeGoogleAPIScript();
+									<Button
+										isSecondary
+										onClick={
+											(event) => {
+												changeState('checkApiKey', '');
+												changeState('googleApiKey', '');
+												manageGoogleAPIKey(event, 'delete');
+												removeGoogleAPIScript();
+											}
 										}
-									}>
+									>
 										{ __( 'Delete', 'getwid' ) }
 									</Button>
 								</ButtonGroup>

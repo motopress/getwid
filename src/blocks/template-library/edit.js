@@ -87,8 +87,6 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( remoteData ) => {
-				//console.log( remoteData );
-				//debugger;
 
 				//Server valiable (data.status != 404)
 				if (remoteData.code == 200){
@@ -166,22 +164,7 @@ class Edit extends Component {
 		} );
 	}
 
-/*	setContentHeight(){
-		const modal_window = jQuery('.wp-block-getwid-template-library__modal-templates');
-		const modal_height = modal_window.height();
-		const modal_header_height = jQuery('.components-modal__header', modal_window).outerHeight();
-		const toolbar_height = jQuery('.wp-block-getwid-template-library__modal-toolbar', modal_window).outerHeight();
-		jQuery('.template-library-list').css('height', (modal_height - (modal_header_height + toolbar_height)) + 'px');
-	}
-
-	initSticky(){
-		$( window ).resize(() => {
-			this.setContentHeight();
-		});
-		this.setContentHeight();
-	}
-*/
-	componentWillMount() {
+	componentDidMount() {
 		this.isStillMounted = true;
 
 		const templateLayout = localStorage.getItem( 'layoutCount' );
@@ -195,10 +178,6 @@ class Edit extends Component {
 		} else { //Get Data from JS
 			this.getStorageData( Getwid.remote_templates );
 		}
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		// this.initSticky();
 	}
 
 	componentWillUnmount() {
@@ -266,7 +245,7 @@ class Edit extends Component {
 				return item.map((key, index) => {
 
 					return (
-						<div className="template-library-container">
+						<div className="template-library-container" key={index}>
 							<div
 								className="template-library-item"
 								onClick={
@@ -316,16 +295,14 @@ class Edit extends Component {
 
 							{Object.keys(pageTemplatesArr).map((category_key, index) => {
 								return (
-									<Fragment>
-										<div className="template-library-category-wrapper">
-											<div className="template-library-category-title">
-												<h2>{(typeof pageCategories[type] != 'undefined' ? pageCategories[type][category_key] : undefined)}</h2>
-											</div>
-											<div className="template-library-category-items">
-												{renderSingleItem(pageTemplatesArr[category_key])}
-											</div>
+									<div className="template-library-category-wrapper" key={index}>
+										<div className="template-library-category-title">
+											<h2>{(typeof pageCategories[type] != 'undefined' ? pageCategories[type][category_key] : undefined)}</h2>
 										</div>
-									</Fragment>
+										<div className="template-library-category-items">
+											{renderSingleItem(pageTemplatesArr[category_key])}
+										</div>
+									</div>
 								);
 							})}
 						</Fragment>
@@ -412,7 +389,7 @@ class Edit extends Component {
 									<Button
 										className={'template-view-button'}
 										isPrimary={(templateLayout == 1) ? true : undefined}
-										isDefault={(templateLayout != 1) ? true : undefined}
+										isSecondary={(templateLayout != 1) ? true : undefined}
 										onClick={ () => {
 											this.setState( { templateLayout : 1 } );
 										}}
@@ -423,7 +400,7 @@ class Edit extends Component {
 									<Button
 										className={'template-view-button'}
 										isPrimary={(templateLayout == 2) ? true : undefined}
-										isDefault={(templateLayout != 2) ? true : undefined}
+										isSecondary={(templateLayout != 2) ? true : undefined}
 										onClick={ () => {
 											this.setState( { templateLayout : 2 } );
 										}}
@@ -434,7 +411,7 @@ class Edit extends Component {
 									<Button
 										className={'template-view-button'}
 										isPrimary={(templateLayout == 3) ? true : undefined}
-										isDefault={(templateLayout != 3) ? true : undefined}
+										isSecondary={(templateLayout != 3) ? true : undefined}
 										onClick={ () => {
 											this.setState( { templateLayout : 3 } );
 										}}
@@ -445,7 +422,7 @@ class Edit extends Component {
 									<Button
 										className={'template-view-button'}
 										isPrimary={(templateLayout == 4) ? true : undefined}
-										isDefault={(templateLayout != 4) ? true : undefined}
+										isSecondary={(templateLayout != 4) ? true : undefined}
 										onClick={ () => {
 											this.setState( { templateLayout : 4 } );
 										}}
@@ -530,7 +507,7 @@ class Edit extends Component {
 									<div className={'insert-template-button'}>
 										<Button
 											className={'open-modal-button'}
-											isDefault
+											isSecondary
 											onClick={() => {
 												this.setState( { showModal: true } );
 											}}
@@ -544,7 +521,7 @@ class Edit extends Component {
 										<p className={'no-templates'}>{__( 'No templates found.', 'getwid' )}</p>
 										<Button
 											className={'template-search-button'}
-											isDefault
+											isSecondary
 											onClick={ () => {
 												this.setState( { showLoadTemplates : true } );
 												this.getData('refresh');

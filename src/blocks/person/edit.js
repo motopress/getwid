@@ -95,25 +95,22 @@ class Edit extends Component {
 			<Fragment>
 				<BlockControls>
 					{!!imgUrl && (
-						<Fragment>
-							<MediaUploadCheck>
-								<ToolbarGroup>
-									<MediaUpload
-										onSelect={ onSelectMedia }
-										allowedTypes={ ['image'] }
-										value={ imgId }
-										render={ ( { open } ) => (
-											<ToolbarButton
-												className="components-toolbar__control"
-												label={ __( 'Edit Media', 'getwid' ) }
-												icon="edit"
-												onClick={ open }
-											/>
-										) }
-									/>
-								</ToolbarGroup>
-							</MediaUploadCheck>
-						</Fragment>
+						<MediaUploadCheck>
+							<ToolbarGroup>
+								<MediaUpload
+									onSelect={ onSelectMedia }
+									allowedTypes={ ['image'] }
+									value={ imgId }
+									render={ ( { open } ) => (
+										<ToolbarButton
+											label={ __( 'Edit Media', 'getwid' ) }
+											icon="edit"
+											onClick={ open }
+										/>
+									) }
+								/>
+							</ToolbarGroup>
+						</MediaUploadCheck>
 					) }
 				</BlockControls>
 				<div
