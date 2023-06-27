@@ -42,4 +42,6 @@ import './anchor';
 import './table-of-contents';
 import './content-slider';
 
+import './ai';
+
 //import './all-blocks';
