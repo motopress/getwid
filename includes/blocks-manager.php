@@ -117,7 +117,7 @@ class BlocksManager {
 		$block_files = array(
 			'abstract-block',
 
-			'ai',
+			'ai-text',
 			'anchor',
 			'accordion',
 			'advanced-heading',

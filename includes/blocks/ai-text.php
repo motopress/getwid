@@ -2,16 +2,16 @@
 
 namespace Getwid\Blocks;
 
-class AI extends \Getwid\Blocks\AbstractBlock {
+class AIText extends \Getwid\Blocks\AbstractBlock {
 
-	protected static $blockName = 'getwid/ai';
+	protected static $blockName = 'getwid/ai-text';
 
     public function __construct() {
 
         parent::__construct( self::$blockName );
 
 		register_block_type(
-			'getwid/ai'
+			'getwid/ai-text'
 		);
 	}
 
@@ -21,5 +21,5 @@ class AI extends \Getwid\Blocks\AbstractBlock {
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\AI()
+	new \Getwid\Blocks\AIText()
 );

@@ -42,6 +42,6 @@ import './anchor';
 import './table-of-contents';
 import './content-slider';
 
-import './ai';
+import './ai-text';
 
 //import './all-blocks';
