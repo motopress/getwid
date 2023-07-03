@@ -36,7 +36,7 @@ function TermsAndConditions( props ) {
     }
 
     const text = createInterpolateElement(
-        __( 'In order to use this block you must accept <link>Terms and Conditions</link>.', 'getwid' ),
+        __( 'In order to use this block, you must accept <link>Terms and Conditions</link>.', 'getwid' ),
         {
             link: <a href="https://api2.getmotopress.com/terms-and-conditions/" target="_blank" />
         }

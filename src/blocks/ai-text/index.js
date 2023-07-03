@@ -23,7 +23,7 @@ export default registerBlockType(
 		category: 'getwid-blocks',
 		icon: <Icon/>,
 		keywords: [ 'ai' ],
-		description: __( 'This Getwid block offers automated content generation and modification capabilities, fueled by the power of AI.', 'getwid' ),
+		description: __( 'This Getwid block utilizes the power of AI to automate content generation and modification.', 'getwid' ),
 		supports: {
             customClassName: false,
 			inserter: !Getwid.disabled_blocks.includes( 'getwid/ai-text' )

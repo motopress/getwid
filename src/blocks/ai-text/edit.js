@@ -145,7 +145,7 @@ function Edit( props ) {
                             minLength={ 5 }
                             required
                             disabled={ loading }
-                            placeholder={ __( 'Input your request or question to receive an AI-generated reply', 'getwid' ) }
+                            placeholder={ __( 'Write your request or question to receive an AI-generated reply', 'getwid' ) }
                         />
 
                         <div className='wp-block-getwid-ai__prompt-buttons'>
