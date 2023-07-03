@@ -1,11 +1,11 @@
 ﻿=== Getwid - Gutenberg Blocks ===
 Contributors: MotoPress
 Donate link: https://motopress.com/
-Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf
+Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf, ai, openai
 Requires at least: 5.6
 Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 1.8.7
+Stable tag: 1.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -181,6 +181,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 1.9.0, Jul 03 2023 =
+* New block: added the AI Assistant block.
 
 = 1.8.7, May 24 2023 =
 * Improved compatibility with WordPress 6.2.
