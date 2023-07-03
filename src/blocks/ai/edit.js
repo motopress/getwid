@@ -9,12 +9,13 @@ import classnames from 'classnames';
 import { __ } from 'wp.i18n';
 const { useState, useRef, RawHTML } = wp.element;
 const { TextControl, Button, Spinner, Icon } = wp.components;
-const { store, InnerBlocks } = wp.blockEditor;
-const { useDispatch, select } = wp.data;
+const { InnerBlocks } = wp.blockEditor;
+const { useDispatch, useSelect } = wp.data;
 
 import { getScrollableClassName } from 'GetwidUtils/help-functions';
 import { AI, Plane, Check, Cross } from './icons';
 import useGetwidAI from '../../utils/ai';
+import TermsAndConditions from './terms';
 /**
 * Create an Component
 */
@@ -22,12 +23,18 @@ function Edit( props ) {
 
     const { attributes, setAttributes } = props;
     const [ showPlainContent, setShowPlainContent ] = useState( true );
-    const { getBlock, getClientIdsOfDescendants } = select( store );
-    const { replaceBlocks, insertBlocks } = useDispatch( store );
+    const [ termsAccepted, setTermsAccepted ] = useState( false );
+    const { replaceBlocks, insertBlocks } = useDispatch( 'core/block-editor' );
     const { loading, content, makeStreamRequest, errors, parseBlocks, stopLoading } = useGetwidAI();
-    const formRef = useRef(null);
-    const acceptButtonRef = useRef(null);
-    const stopButtonRef = useRef(null);
+    const formRef = useRef( null );
+
+    const { getBlock, getClientIdsOfDescendants, currentUser } = useSelect( ( select ) => {
+        return {
+            currentUser: select( 'core' ).getCurrentUser(),
+            getBlock: select( 'core/block-editor' ).getBlock,
+            getClientIdsOfDescendants: select( 'core/block-editor' ).getClientIdsOfDescendants
+        }
+    }, [] );
 
     const onSubmit = async ( event ) =>  {
         event.preventDefault();
@@ -46,13 +53,9 @@ function Edit( props ) {
         document.getElementsByClassName( getScrollableClassName() )[0].addEventListener('scroll', () => {
 
             if ( shouldIgnoreScroll ) {
-
                 shouldIgnoreScroll = false;
-
             } else {
-
                 clearInterval( focus );
-
             }
 
         });
@@ -66,7 +69,7 @@ function Edit( props ) {
 
     }
 
-    function insertParsedBlocks( blocks ) {
+    const insertParsedBlocks = ( blocks ) => {
 
         const descendants = getClientIdsOfDescendants( [ props.clientId ] );
 
@@ -79,12 +82,18 @@ function Edit( props ) {
         setShowPlainContent( false );
     }
 
-    function replaceAIBlockWithGeneratedContent() {
+    const replaceAIBlockWithGeneratedContent = () => {
 
         const innerBlocks = getBlock( props.clientId ).innerBlocks;
 
         replaceBlocks( props.clientId, innerBlocks );
 
+    }
+
+    let termsAlreadyAccepted = true;
+
+    if ( Object.keys( currentUser ).length > 0 ) {
+        termsAlreadyAccepted = currentUser?.meta?.getwid_ai_accept_terms;
     }
 
     return (
@@ -108,77 +117,83 @@ function Edit( props ) {
             </div>
 
             <div className='wp-block-getwid-ai__prompt-wrapper' ref={ formRef }>
-                <form
-                    className= { classnames( 'wp-block-getwid-ai__prompt-form', {
-                        'is-loading': loading
-                    } ) }
-                    onSubmit={ ( event ) => onSubmit( event ) }
-                    autoComplete="off"
-                >
-                    { loading ? (
-                        <Spinner
+                { ( termsAlreadyAccepted || termsAccepted ) ? (
+                    <form
+                        className= { classnames( 'wp-block-getwid-ai__prompt-form', {
+                            'is-loading': loading
+                        } ) }
+                        onSubmit={ ( event ) => onSubmit( event ) }
+                        autoComplete="off"
+                    >
+                        <div
                             className='wp-block-getwid-ai__icon'
-                        />
-                    ) : (
-                        <Icon
-                            className='wp-block-getwid-ai__icon'
-                            icon={ AI }
-                        />
-                    ) }
+                        >
+                            { loading ? (
+                                <Spinner/>
+                            ) : (
+                                <Icon
+                                    size='16'
+                                    icon={ AI }
+                                />
+                            ) }
+                        </div>
 
-                    <TextControl
-                        className='wp-block-getwid-ai__prompt-input'
-                        value={ attributes.prompt || '' }
-                        onChange={ ( value ) => setAttributes( { prompt: value } ) }
-                        minLength={ 5 }
-                        required
-                        disabled={ loading }
-                        placeholder={ __( 'Input your request or question to receive an AI-generated reply', 'getwid' ) }
+                        <TextControl
+                            className='wp-block-getwid-ai__prompt-input'
+                            value={ attributes.prompt || '' }
+                            onChange={ ( value ) => setAttributes( { prompt: value } ) }
+                            minLength={ 5 }
+                            required
+                            disabled={ loading }
+                            placeholder={ __( 'Input your request or question to receive an AI-generated reply', 'getwid' ) }
+                        />
+
+                        <div className='wp-block-getwid-ai__prompt-buttons'>
+
+                            { ( ( ! loading && showPlainContent ) || errors.length > 0 ) && (
+                                <Button
+                                    className='send'
+                                    type='submit'
+                                    variant='tertiary'
+                                    icon={ Plane }
+                                    iconSize='16'
+                                />
+                            ) }
+
+                            { ( ! showPlainContent && errors.length == 0 ) && (
+                                <Button
+                                    className='accept'
+                                    disabled={ showPlainContent }
+                                    variant='tertiary'
+                                    onClick={ () => { replaceAIBlockWithGeneratedContent() } }
+                                    icon={ Check }
+                                    iconSize='16'
+                                >
+                                    { __( 'Accept', 'getwid' ) }
+                                </Button>
+                            ) }
+
+                            { loading && (
+                                <Button
+                                    className='stop'
+                                    variant='tertiary'
+                                    onClick={ () => {
+                                        stopLoading();
+                                    } }
+                                    icon={ Cross }
+                                    iconSize='15'
+                                >
+                                    { __( 'Stop', 'getwid' ) }
+                                </Button>
+                            ) }
+
+                        </div>
+                    </form>
+                ) : (
+                    <TermsAndConditions
+                        setTermsAccepted={ setTermsAccepted }
                     />
-
-                    <div className='wp-block-getwid-ai__prompt-buttons'>
-
-                        { ( ( ! loading && showPlainContent ) || errors.length > 0 ) && (
-                            <Button
-                                className='send'
-                                type='submit'
-                                variant='tertiary'
-                                icon={ Plane }
-                                iconSize='16'
-                            />
-                        ) }
-
-                        { ( ! showPlainContent && errors.length == 0 ) && (
-                            <Button
-                                ref={ acceptButtonRef }
-                                className='accept'
-                                disabled={ showPlainContent }
-                                variant='tertiary'
-                                onClick={ () => { replaceAIBlockWithGeneratedContent() } }
-                                icon={ Check }
-                                iconSize='16'
-                            >
-                                { __( 'Accept', 'getwid' ) }
-                            </Button>
-                        ) }
-
-                        { loading && (
-                            <Button
-                                ref={ stopButtonRef }
-                                className='stop'
-                                variant='tertiary'
-                                onClick={ () => {
-                                    stopLoading();
-                                } }
-                                icon={ Cross }
-                                iconSize='15'
-                            >
-                                { __( 'Stop', 'getwid' ) }
-                            </Button>
-                        ) }
-
-                    </div>
-                </form>
+                ) }
 
                 { errors?.length > 0 && (
                     <div className='wp-block-getwid-ai__errors'>

@@ -1,5 +1,4 @@
 const apiFetch = wp.apiFetch;
-const { select } = wp.data;
 const { useEffect, useState } = wp.element;
 const { rawHandler, createBlock } = wp.blocks;
 const { __ } = wp.i18n;
@@ -36,7 +35,7 @@ function useGetwidAI() {
             },
             method: 'POST',
             cache: "no-cache",
-            // signal: abortController.signal,
+            signal: abortController.signal,
             keepalive: true,
             parse: false,
             data: {
@@ -44,35 +43,25 @@ function useGetwidAI() {
                 context,
                 stream: true
             }
-        } ).catch( response => {
+        } ).catch( error => {
 
-
-            response.json().then( ( body ) => {
+            error.json().then( ( body ) => {
 
                 let errors = [ ];
 
                 if ( body.message ) {
-
                     errors.push( body.message );
-
                 }
 
                 if ( [ 'rest_missing_callback_param', 'rest_invalid_param' ].includes( body.code ) ) {
 
                     if ( body.data?.params ) {
-
                         errors.push( ...Object.values( body.data.params ) );
-
                     }
 
                 }
 
-                // if ( 'out_of_balance' === body.code ) {
-
-                // }
-
                 setErrors( errors );
-
                 hasErrors = true;
 
             } );
@@ -84,31 +73,27 @@ function useGetwidAI() {
             setLoading( false );
 
             return '';
-
         }
 
         try {
 
-            fullContent = await readStreamResponse( response, abortController.signal );
+            for await ( const chunk of readStreamResponse( response, abortController.signal ) ) {
 
-            setContext( [
-                ...context,
-                {
-                    prompt,
-                    response: fullContent
-                }
-            ] );
+                fullContent += chunk;
+                setContent( fullContent );
+
+            }
+
+            context.pop();
+            context.push( { prompt }, { response: fullContent } );
+            setContext( context );
 
         } catch ( error ) {
 
             if ( error.name === 'AbortError' ) {
 
-                console.log('AbortError content - ', fullContent);
-
             } else {
-
-                setErrors( [ __( 'Response parsing error', 'getwid' ) ] );
-
+                setErrors( [ __( 'Response parsing error.', 'getwid' ) ] );
             }
 
         }
@@ -116,15 +101,12 @@ function useGetwidAI() {
         setLoading( false );
 
         return fullContent;
-
     }
 
-    async function readStreamResponse( response, signal ) {
+    async function* readStreamResponse( response, signal ) {
 
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
-
-        let buffer = '';
 
         while (true) {
 
@@ -133,21 +115,13 @@ function useGetwidAI() {
             if ( done || signal.aborted ) break;
 
             const chunk = decoder.decode( value, { stream: true } );
-
             let parsedContent = parseStreamChunk( chunk );
 
-
             if ( parsedContent ) {
-
-                buffer += parsedContent;
-
-                setContent( prevContent => prevContent + parsedContent );
-
+                yield parsedContent;
             }
 
         }
-
-        return buffer;
 
     }
 
@@ -168,7 +142,6 @@ function useGetwidAI() {
         } );
 
         return buffer;
-
     }
 
     function parseBlocks( content ) {
@@ -176,7 +149,6 @@ function useGetwidAI() {
         let blocks = rawHandler( { HTML: content } );
 
         return maybeFixBlocks( blocks );
-
     }
 
     function maybeFixBlocks( blocks ) {
@@ -184,15 +156,11 @@ function useGetwidAI() {
         return blocks.map( block => {
 
             if ( ! block.isValid ) {
-
                 return createBlock( block.name, block.attributes, block.innerBlocks );
-
             }
 
             return block;
-
         } );
-
     }
 
     function stopLoading() {

@@ -15,48 +15,56 @@ final class AI {
 
         add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
 
+		$this->register_user_meta();
+
     }
+
+	public function register_user_meta() {
+
+		register_meta(
+			'user',
+			'getwid_ai_accept_terms',
+			[
+				'type' => 'boolean',
+				'single' => true,
+				'show_in_rest' => true
+			]
+		);
+
+	}
 
     public function register_rest_routes() {
 
         register_rest_route( $this->namespace, '/chat', array(
 			'methods'   => 'POST',
 			'callback' => array( $this, 'chat_callback' ),
-			'permission_callback' => '__return_true',
+			'permission_callback' => array( $this, 'permissions_check' ),
 			'args' => array(
 				'prompt' => array(
 					'required' => true,
 					'type' => 'string',
 					'minLength' => 4
-				),
-				'stream' => array(
-					'required' => true,
-					'type' => 'boolean',
-					'default' => false
-				),
+				)
 			)
 		) );
 
     }
 
-    public function chat_callback( WP_REST_Request $request ) {
+	public function permissions_check() {
 
-		$is_streamed = $request->get_param( 'stream' );
-		$request->offsetUnset( 'stream' );
+		if ( current_user_can( 'edit_posts' ) ) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+    public function chat_callback( WP_REST_Request $request ) {
 
 		$ai_request = new AIRequest();
 
-		if ( $is_streamed ) {
-
-			return $ai_request->stream( $this->api_url . '/api/getwid-ai/v1/chat', $request->get_params() );
-
-		} else {
-
-			return $ai_request->post( $this->api_url . '/api/getwid-ai/v1/chat', $request->get_params() );
-
-		}
-
-		die();
+		return $ai_request->stream( $this->api_url . '/api/getwid-ai/v1/chat', $request->get_params() );
 
     }
 

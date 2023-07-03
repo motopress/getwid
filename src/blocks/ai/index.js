@@ -19,23 +19,23 @@ const { registerBlockType, createBlock } = wp.blocks;
 export default registerBlockType(
 	'getwid/ai',
 	{
-		title: __('AI Assistant (Beta)', 'getwid'),
+		title: __( 'AI Assistant (Beta)', 'getwid' ),
 		category: 'getwid-blocks',
 		icon: <Icon/>,
 		keywords: [ 'ai' ],
 		description: __( 'This block offers automated content generation and modification capabilities, fueled by the power of AI.', 'getwid' ),
 		supports: {
             customClassName: false,
-			inserter: !Getwid.disabled_blocks.includes('getwid/ai')
+			inserter: !Getwid.disabled_blocks.includes( 'getwid/ai' )
 		},
 		attributes: {
 			prompt: {
 				type: 'string',
 			}
 		},
-		...checkDisableBlock('getwid/ai', props => (
+		...checkDisableBlock( 'getwid/ai', props => (
             <Edit { ...props } />
-        )),
+        ) ),
 		save: props => {
 			return null;
 		}

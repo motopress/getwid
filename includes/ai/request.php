@@ -4,47 +4,25 @@ namespace Getwid\AI;
 
 use Exception;
 use WP_Error;
+use WP_User;
 
 final class AIRequest {
 
-    public function __construct() {
-
-    }
-
-    public function post( $url, $params ) {
-
-		$response = wp_remote_post( $url,
-            [
-                'method'    => 'POST',
-                'timeout' 	=> 120,
-                'sslverify' => false,
-                'headers'   => [
-                    'content-type' => 'application/json'
-                ],
-                'body' => json_encode( $params )
-            ]
-        );
-
-        $response_code = wp_remote_retrieve_response_code( $response );
-
-        if ( 200 !== $response_code ) {
-
-            wp_send_json_error( esc_html__( 'Something went wrong with GetwidAI API', 'getwid' ) );
-
-        }
-
-        if ( is_wp_error( $response ) ) {
-
-            $error_message = $response->get_error_message();
-            wp_send_json_error( $error_message );
-
-        }
-
-        return json_decode( wp_remote_retrieve_body( $response ) );
-
-    }
-
     public function stream( $url, $params ) {
+
+        $current_user = wp_get_current_user();
+
+        if ( ! ( $current_user instanceof WP_User ) ) {
+            return rest_ensure_response(
+                new WP_Error(
+                    'invalid_user',
+                    esc_html__( "Current user must be valid instance of WP_User.", 'getwid' ),
+                    array(
+                        'status' => 400
+                    )
+                )
+            );
+        }
 
         if ( ! function_exists('curl_init') || ! function_exists('curl_setopt') ) {
 
@@ -66,34 +44,26 @@ final class AIRequest {
             header('Connection: keep-alive');
             header('X-Accel-Buffering: no');
 
+            set_time_limit(0);
+
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 300);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Getwid-Client-Email: ' . get_bloginfo('admin_email'),
+                'Getwid-Client-Email: ' . $current_user->user_email,
                 'Getwid-AI-API-Version: 1.0'
             ]);
             curl_setopt($ch, CURLOPT_HEADERFUNCTION, function($curl, $header) {
 
                 if ( strpos( $header, 'Content-Type:' ) === 0 ) {
-
                     header( $header );
-
-                    // if ( strpos( $header, 'application/json' ) ) {
-                    //     http_response_code( 500 );
-                    // }
-
                 }
 
-
                 if ( strpos($header, "HTTP/") === 0 ) {
-
-                    // Extract the status code from the header
-                    $statusCode = intval( explode(" ", $header)[1]);
+                    $statusCode = intval( explode(" ", $header)[1] );
                     http_response_code( $statusCode );
-
                 }
 
                 return strlen( $header );
@@ -106,7 +76,6 @@ final class AIRequest {
                 ob_flush();
 
                 return strlen($data);
-
             });
             curl_exec($ch);
             curl_close($ch);
@@ -122,7 +91,6 @@ final class AIRequest {
                     )
                 )
             );
-
         }
 
 		die();
