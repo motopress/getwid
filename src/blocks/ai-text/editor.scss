@@ -1,0 +1,168 @@
+.wp-block-getwid-ai {
+
+    &__parsed-blocks,
+    &__suggestion {
+        padding: 15px;
+        border-radius: 5px;
+        background: rgba(#f4fbff, .5);
+    }
+
+    &__parsed-blocks {
+        display: none;
+
+        &.is-visible {
+            display: block;
+        }
+
+        .block-editor-block-list__layout {
+            > * {
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+    }
+
+    &__suggestion {
+        > * {
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__prompt-wrapper {
+        border-radius: 3px;
+        border: 1px solid #e5e5e5;
+        background: #fff;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.10);
+        margin-top: 15px;
+        scroll-margin: 50px;
+    }
+
+    &__prompt-form {
+        padding: 8px 15px 8px 40px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        color: #2a282a;
+        font-size: 16px;
+
+        &.is-loading {
+
+        }
+    }
+
+    &__prompt-input {
+        margin: 0 10px 0 0;
+        flex: 1;
+
+        input[type="text"] {
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="text"]:focus {
+            background: none !important;
+            background-color: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            outline: none !important;
+            padding: 0 !important;
+        }
+
+        .components-base-control__field {
+            margin: 0;
+        }
+    }
+
+    & &__prompt-buttons {
+
+        button {
+            height: 28px;
+            color: inherit;
+            padding: 0 !important;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background: transparent !important;
+                border: 0 !important;
+                outline: 0 !important;
+                box-shadow: none !important;
+            }
+
+            &.accept,
+            &.send {
+                svg {
+                    fill: none;
+                }
+            }
+
+            &.send {
+                display: block;
+                padding-top: 5px !important;
+                margin-right: -10px;
+            }
+
+            &.stop {
+
+            }
+        }
+
+    }
+
+    & &__icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        margin: 0;
+
+        svg {
+            vertical-align: middle;
+        }
+
+        .components-spinner {
+            margin: 0;
+            display: block;
+        }
+    }
+
+    & &__terms {
+        font-size: 14px;
+        padding: 15px 20px;
+        color: #2a282a;
+
+        p {
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+    }
+
+    & &__errors {
+        border-top: 1px solid #e5e5e5;
+        color: #ed4337;
+        font-size: 14px;
+        padding: 10px 15px;
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                margin: 0 0 5px 0;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

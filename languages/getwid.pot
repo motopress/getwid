@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Getwid 1.8.3\n"
+"Project-Id-Version: Getwid 1.9.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getwid\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-04-13T12:51:34+03:00\n"
+"POT-Creation-Date: 2023-07-03T16:58:50+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: getwid\n"
@@ -34,6 +34,18 @@ msgstr ""
 msgid "https://motopress.com/"
 msgstr ""
 
+#: includes/ai/request.php:19
+msgid "Current user must be valid instance of WP_User."
+msgstr ""
+
+#: includes/ai/request.php:32
+msgid "cURL support is required, but can not be found."
+msgstr ""
+
+#: includes/ai/request.php:88
+msgid "An error occurred when making a request to the Getwid AI server."
+msgstr ""
+
 #: includes/block-actions.php:8
 msgid "Nothing found."
 msgstr ""
@@ -54,7 +66,7 @@ msgid "Getwid ACF Blocks"
 msgstr ""
 
 #. translators: %1$s is a block name, %2$s is a link
-#: includes/blocks/abstract-block.php:72
+#: includes/blocks/abstract-block.php:75
 #: assets/js/editor.blocks.js:6
 msgid "%1$s block is disabled in plugin settings. <a href=\"%2$s\">Manage Blocks</a>"
 msgstr ""
@@ -72,6 +84,11 @@ msgstr ""
 #: includes/blocks/advanced-spacer.php:23
 #: assets/js/editor.blocks.js:23
 msgid "Advanced Spacer"
+msgstr ""
+
+#: includes/blocks/ai-text.php:19
+#: assets/js/editor.blocks.js:23
+msgid "AI Assistant (Beta)"
 msgstr ""
 
 #: includes/blocks/anchor.php:20
@@ -4000,4 +4017,28 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Add any block to slide"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "This Getwid block offers automated content generation and modification capabilities, fueled by the power of AI."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Input your request or question to receive an AI-generated reply"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Accept"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Stop"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "In order to use this block you must accept <link>Terms and Conditions</link>."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "An error occurred while updating user profile."
 msgstr ""
