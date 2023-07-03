@@ -9,10 +9,10 @@ function useGetwidAI() {
     const [ content, setContent ] = useState( '' );
     const [ abortController, setAbortController ] = useState( null );
     const [ errors, setErrors ] = useState( [] );
-    const [ context, setContext ] = useState( window._context || [] );
+    const [ context, setContext ] = useState( window.GetwidAIContext || [] );
 
     useEffect( () => {
-        window._context = context;
+        window.GetwidAIContext = context;
     }, [ context ]);
 
     async function makeStreamRequest ( prompt ) {
