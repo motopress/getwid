@@ -23,9 +23,9 @@ export default registerBlockType(
 		category: 'getwid-blocks',
 		icon: <Icon/>,
 		keywords: [ 'ai' ],
-		description: __( 'This Getwid block utilizes the power of AI to automate content generation and modification.', 'getwid' ),
+		description: __( 'This Getwid block offers automated content generation fueled by the power of AI.', 'getwid' ),
 		supports: {
-            customClassName: false,
+		customClassName: false,
 			inserter: !Getwid.disabled_blocks.includes( 'getwid/ai-text' )
 		},
 		attributes: {
@@ -34,8 +34,8 @@ export default registerBlockType(
 			}
 		},
 		...checkDisableBlock( 'getwid/ai-text', props => (
-            <Edit { ...props } />
-        ) ),
+			<Edit { ...props } />
+		) ),
 		save: props => {
 			return null;
 		}

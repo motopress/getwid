@@ -93,13 +93,6 @@ The Getwid AI Assistant block will instantly generate high-quality content for y
 
 Powered by the open-source artificial intelligence (AI) technologies, this block is made to save you time and resources on crafting compelling headings, writing blog posts, building tables and overall creating more professional content of various types.
 
-What can you do with this AI WordPress block?
-* Generate content in any preferable style, voice, and volume.
-* Convert content instantly to WordPress blocks, such as lists, headings, paragraphs, tables and more.
-* Make any number of modifications to achieve the desired result.
-* Generate content in multiple languages or translate it to natural English.
-* Correct grammar and spelling errors.
-
 ### Pre-designed templates and blocks
 
 This plugin comes with a library of pre-designed layouts to help you quickly build a beautiful website with the new block editor.
