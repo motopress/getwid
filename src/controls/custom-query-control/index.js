@@ -603,7 +603,7 @@ class GetwidCustomQueryControl extends Component {
 export default withSelect( ( select, props ) => {
 	const { getPostTypes } = select( 'core' );
 
-	const _postTypes = getPostTypes();
+	const _postTypes = getPostTypes( { per_page: -1 } );
 	let postTypes = [];
 
 	if( _postTypes ) {
