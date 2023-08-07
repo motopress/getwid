@@ -1,4 +1,4 @@
-.edit-post-sidebar .components-panel__body.components-getwid-tabs-control {
+.components-panel__body.components-getwid-tabs-control {
 	padding: 0px;
 	display: flex;
 	flex-direction: row;
@@ -8,7 +8,7 @@
 	align-items: flex-start;
 	border-bottom: 1px solid #e2e4e7;
 	margin-bottom: 16px;
-	
+
 	& + .components-panel__body{
 		margin-top: -17px;
 	}
@@ -25,7 +25,7 @@
 		color: inherit;
 		border-radius: 0;
 		height: auto;
-		
+
 		&.is-selected{
 			border-bottom: 2px solid #0085ba;
 			background: #f3f4f5;

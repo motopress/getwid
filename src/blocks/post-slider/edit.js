@@ -15,8 +15,8 @@ import './editor.scss';
 * WordPress dependencies
 */
 const { serverSideRender: ServerSideRender } = wp;
-const { Component, Fragment } = wp.element;
-const { Placeholder, Spinner, Disabled } = wp.components;
+const { Component, Fragment, createRef } = wp.element;
+const { Placeholder, Spinner } = wp.components;
 const { BlockAlignmentToolbar, AlignmentToolbar, BlockControls } = wp.blockEditor || wp.editor;
 const {	withSelect} = wp.data;
 
@@ -35,6 +35,8 @@ class Edit extends Component {
 
 		this.changeState = this.changeState.bind( this );
 		this.getState    = this.getState.bind( this );
+
+		this.sliderRef = createRef();
 	}
 
 	changeState(param, value) {
@@ -84,7 +86,7 @@ class Edit extends Component {
 	}
 
 	observeSliderMarkupChange() {
-		const block = document.getElementById( `block-${this.props.clientId}` );
+		const block = this.sliderRef.current;
 
 		const mutationObserver = new MutationObserver( () => {
 			this.initSlider(block);
@@ -135,6 +137,7 @@ class Edit extends Component {
 							__( 'No posts found.', 'getwid' )
 						}
 					</Placeholder>
+					<div ref={ this.sliderRef }></div>
 				</Fragment>
 			);
 		}
@@ -164,10 +167,12 @@ class Edit extends Component {
 					)}
 				</BlockControls>
 
-				<ServerSideRender
-					block={ 'getwid/post-slider' }
-					attributes={ this.props.attributes }
-				/>
+				<div ref={ this.sliderRef } >
+					<ServerSideRender
+						block={ 'getwid/post-slider' }
+						attributes={ this.props.attributes }
+					/>
+				</div>
 
 			</Fragment>
 		);

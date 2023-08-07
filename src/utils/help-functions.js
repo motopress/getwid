@@ -57,10 +57,11 @@ export function addScript(src, callback) {
     };
 }
 
-export function isInViewport(element) {
-    const itemTop = element.offset().top;
-    const viewportTop  = $( window ).scrollTop();
-    const windowHeight = $( window ).height();
+export function isInViewport($element) {
+    const itemTop = $element.offset().top;
+	const currentWindow = $element.get(0).ownerDocument.defaultView;
+    const viewportTop  = $( currentWindow ).scrollTop();
+    const windowHeight = $( currentWindow ).height();
 
     return (itemTop - viewportTop - windowHeight) < 0;
 }

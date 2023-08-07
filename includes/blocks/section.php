@@ -40,14 +40,6 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 				true
 			);
 
-			wp_register_script(
-				'draggabilly',
-				getwid_get_plugin_url( 'vendors/draggabilly/draggabilly.pkgd.min.js' ),
-				[ 'jquery' ],
-				'2.2.0',
-				true
-			);
-
 			wp_register_style(
 				'animate',
 				getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
@@ -109,11 +101,6 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 		if ( ! in_array( 'slick', $scripts ) ) {
             array_push( $scripts, 'slick' );
         }
-
-		//draggabilly.pkgd.min.js
-        if ( ! in_array( 'draggabilly', $scripts ) ) {
-            array_push( $scripts, 'draggabilly' );
-		}
 
         return $scripts;
     }

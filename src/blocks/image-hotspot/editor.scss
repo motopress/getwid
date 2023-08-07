@@ -91,9 +91,14 @@ $base_class: '.wp-block-getwid-image-hotspot';
 }
 
 .wp-block-getwid-image-hotspot{
-    &--dropPoint{
-        cursor: crosshair;
+  &--dropPoint{
+  	cursor: crosshair;
 	}
+
+	&__wrapper {
+		user-select: none;
+	}
+
 
 	&.is-selected{
 		#{$base_class}__dot.is-selected{

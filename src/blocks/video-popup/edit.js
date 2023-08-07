@@ -23,7 +23,6 @@ const {
 	MediaUpload,
 	MediaUploadCheck,
 	RichText,
-	URLInput,
 	withColors,
 } = wp.blockEditor || wp.editor;
 const {compose} = wp.compose;
@@ -63,26 +62,6 @@ class Edit extends Component {
 
 	constructor() {
 		super(...arguments);
-	}
-
-	initPopUp() {
-		const {
-			clientId
-		} = this.props;
-
-		const thisBlock = $(`[data-block='${clientId}']`);
-		const videoWrapper = $('.wp-block-getwid-video-popup__link', thisBlock);
-		videoWrapper.on('click', function (e) {
-			e.preventDefault();
-		});
-	}
-
-	componentDidMount() {
-		this.initPopUp();
-	}
-
-	componentDidUpdate(prevProps) {
-		this.initPopUp();
 	}
 
 	render() {
@@ -243,6 +222,10 @@ class Edit extends Component {
 			href: typeof link != 'undefined' ? link : '',
 			style: {
 				maxWidth: !!!url ? buttonMaxWidth : ''
+			},
+			onClick: ( event ) => {
+				event.preventDefault();
+				event.stopPropagation();
 			}
 		};
 

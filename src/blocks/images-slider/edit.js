@@ -19,7 +19,7 @@ import './editor.scss';
 */
 const { compose } = wp.compose;
 const { withSelect } = wp.data;
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createRef } = wp.element;
 
 const { ToolbarButton, ToggleControl, DropZone, ToolbarGroup, Dashicon, TextControl } = wp.components;
 const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar, BlockIcon, URLInput } = wp.blockEditor || wp.editor;
@@ -89,6 +89,8 @@ class Edit extends Component {
 		this.state = {
 			isUpdate: false
 		};
+
+		this.sliderRef = createRef();
 	}
 
     onSetNewTab( value, index ) {
@@ -223,7 +225,7 @@ class Edit extends Component {
 
 		const { clientId } = this.props;
 
-		const thisBlock = $( `[data-block='${clientId}']` );
+		const thisBlock = $( this.sliderRef.current );
 		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
 		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
@@ -231,13 +233,11 @@ class Edit extends Component {
 
 	initSlider() {
 
-		const { clientId } = this.props;
-
 		const { sliderAutoplay, sliderAutoplaySpeed, sliderInfinite, linkTo } = this.props.attributes;
 		const { sliderAnimationEffect, sliderSlidesToShow, sliderSlidesToScroll, slideHeight } = this.props.attributes;
 		const { sliderAnimationSpeed, sliderCenterMode, sliderVariableWidth, sliderArrows, sliderDots } = this.props.attributes;
 
-		const thisBlock = $( `[data-block='${clientId}']` );
+		const thisBlock = $( this.sliderRef.current );
 		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
 		if ( sliderSelector.length && (typeof sliderSelector.imagesLoaded === "function") ) {
@@ -459,7 +459,7 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<div className={ containerClasses }>
+				<div className={ containerClasses } ref={ this.sliderRef }>
 					{ dropZone }
 					<div className={`${baseClass}__wrapper`}>
 						{ imageRender() }
