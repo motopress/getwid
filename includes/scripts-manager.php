@@ -109,7 +109,7 @@ class ScriptsManager {
 
 		global $pagenow;
 
-		$dependencies = array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api', 'wp-api-fetch' );
+		$dependencies = array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api', 'wp-api-fetch', 'lodash' );
 
 		if ( $pagenow && $pagenow === 'widgets.php' ) {
 			array_push( $dependencies, 'wp-edit-widgets' );
