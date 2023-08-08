@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 5.6
 Tested up to: 6.2
 Requires PHP: 5.6
-Stable tag: 1.9.2
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -188,9 +188,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 1.9.2, Aug 09 2023 =
-* Fixed an issues when some Getwid blocks were broken in the Site Editor.
-* Improved compatibility with the Gutenberg plugin.
+= 2.0.0, Aug 09 2023 =
+* Added full support of WordPress Full Site Editing.
+* Improved compatibility with the Gutenberg plugin 16.3.0.
 
 = 1.9.1, Jul 25 2023 =
 * Fixed an issue that prevented custom post types from being displayed in the post-based blocks.
