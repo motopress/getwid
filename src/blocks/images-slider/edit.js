@@ -223,8 +223,6 @@ class Edit extends Component {
 
 	destroySlider(){
 
-		const { clientId } = this.props;
-
 		const thisBlock = $( this.sliderRef.current );
 		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
@@ -399,56 +397,54 @@ class Edit extends Component {
 				return images.map( ( img, index ) => {
 
 					return (
-						<Fragment key={ img.id || img.url }>
-							<div className={`${baseClass}__item`}>
-								<MediaContainer
-									showCaption={showCaption}
-									captionStyle={captionStyle}
-									captionPosition={captionPosition}
-									isSelected={isSelected}
+						<div className={`${baseClass}__item`} >
+							<MediaContainer
+								showCaption={showCaption}
+								captionStyle={captionStyle}
+								captionPosition={captionPosition}
+								isSelected={isSelected}
 
-									setAttributes={attrs => this.setImageAttributes( index, attrs )}
-									image={img}
-								/>
-								{ (linkTo == 'custom') && (
-									<Fragment>
-										<div className= {`${baseClass}__url-field-wrapper`}>
-											<div className= {`${baseClass}__url-field-container`}>
-												<Dashicon icon='admin-links'/>
-												<URLInput
-													className= {`${baseClass}__url-field has-border`}
-													autoFocus={ true }
-													value={ img.custom_link ? img.custom_link : '' }
-													onChange={ custom_link => {
-														this.setImageAttributes( index, {custom_link} );
-													} }
-													disableSuggestions={ true }
-													__nextHasNoMarginBottom
-												/>
-											</div>
-											<div className= {`${baseClass}__url-rel-container`}>
-												<ToggleControl
-													className= {`${baseClass}__url-toggle`}
-													label={ __( 'New Tab', 'getwid' ) }
-													onChange={ (value) => {
-														this.onSetNewTab(value, index);
-													} }
-													checked={ img.custom_link_target === '_blank' }
-												/>
-												<TextControl
-													className= {`${baseClass}__url-rel`}
-													placeholder={ __( 'Link Rel', 'getwid' ) }
-													value={ img.custom_link_rel || '' }
-													onChange={ custom_link_rel => {
-														this.setImageAttributes( index, {custom_link_rel} );
-													} }
-												/>
-											</div>
+								setAttributes={attrs => this.setImageAttributes( index, attrs )}
+								image={img}
+							/>
+							{ (linkTo == 'custom') && (
+								<Fragment>
+									<div className= {`${baseClass}__url-field-wrapper`}>
+										<div className= {`${baseClass}__url-field-container`}>
+											<Dashicon icon='admin-links'/>
+											<URLInput
+												className= {`${baseClass}__url-field has-border`}
+												autoFocus={ true }
+												value={ img.custom_link ? img.custom_link : '' }
+												onChange={ custom_link => {
+													this.setImageAttributes( index, {custom_link} );
+												} }
+												disableSuggestions={ true }
+												__nextHasNoMarginBottom
+											/>
 										</div>
-									</Fragment>
-								)}
-							</div>
-						</Fragment>
+										<div className= {`${baseClass}__url-rel-container`}>
+											<ToggleControl
+												className= {`${baseClass}__url-toggle`}
+												label={ __( 'New Tab', 'getwid' ) }
+												onChange={ (value) => {
+													this.onSetNewTab(value, index);
+												} }
+												checked={ img.custom_link_target === '_blank' }
+											/>
+											<TextControl
+												className= {`${baseClass}__url-rel`}
+												placeholder={ __( 'Link Rel', 'getwid' ) }
+												value={ img.custom_link_rel || '' }
+												onChange={ custom_link_rel => {
+													this.setImageAttributes( index, {custom_link_rel} );
+												} }
+											/>
+										</div>
+									</div>
+								</Fragment>
+							)}
+						</div>
 					);
 				} );
 			}

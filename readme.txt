@@ -2,8 +2,8 @@
 Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf, ai, openai, chatgpt
-Requires at least: 5.6
-Tested up to: 6.2
+Requires at least: 5.8
+Tested up to: 6.3
 Requires PHP: 5.6
 Stable tag: 2.0.0
 License: GPLv2 or later

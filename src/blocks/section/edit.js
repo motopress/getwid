@@ -5,8 +5,6 @@ import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 import { isEqual, pick, has } from 'lodash';
 import default_attributes from './attributes';
-import * as gradientParser from 'gradient-parser';
-import * as hexToRgb from 'hex-to-rgb';
 
 /**
 * Internal dependencies
