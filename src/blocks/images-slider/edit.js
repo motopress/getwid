@@ -297,12 +297,22 @@ class Edit extends Component {
 		return result;
 	}
 
+	shouldComponentUpdate( nextProps ) {
+
+		const diffInUrls = this.flag ? false : this.checkURLsChanges( nextProps );
+
+		if ( ! isEqual( nextProps.attributes, this.props.attributes ) && !diffInUrls ) {
+			this.destroySlider();
+		}
+
+		return true;
+	}
+
 	componentDidUpdate( prevProps ) {
 
 		const diffInUrls = this.flag ? false : this.checkURLsChanges( prevProps );
 
-		if ( (! isEqual( prevProps.attributes, this.props.attributes ) && !diffInUrls) ) {
-			this.destroySlider();
+		if ( ( ! isEqual( prevProps.attributes, this.props.attributes ) && !diffInUrls ) ) {
 			this.initSlider();
 			this.flag = false;
 		}
