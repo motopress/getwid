@@ -14,7 +14,7 @@ import Navigation from './navigation';
  * WordPress dependencies
  */
 const { compose } = wp.compose;
-const { Component } = wp.element;
+const { Component, createRef } = wp.element;
 const { ToolbarGroup, ToolbarButton } = wp.components;
 const { BlockControls, InnerBlocks } = wp.blockEditor || wp.editor;
 const { withSelect, withDispatch, subscribe } = wp.data;
@@ -37,6 +37,8 @@ class Edit extends Component {
 			slidesCount: 0,
 			slidesOrder: []
 		}
+
+		this.sliderRef = createRef();
 
 		this.addSlide = this.addSlide.bind(this);
 		this.activateSlide = this.activateSlide.bind(this);
@@ -63,6 +65,7 @@ class Edit extends Component {
 		const { clientId, getBlockOrder } = this.props;
 		const blocksOrder = getBlockOrder( clientId );
 		const activeSlideID = blocksOrder[index] || blocksOrder[0];
+		const document = this.sliderRef.current?.ownerDocument;
 
 		this.setState({
 			slidesOrder: blocksOrder,
@@ -70,6 +73,8 @@ class Edit extends Component {
 			activeSlide: index,
 			slidesCount: blocksOrder.length
 		});
+
+		if ( ! document ) return;
 
 		blocksOrder.forEach( ( blockId ) => {
 			document.getElementById(`block-${blockId}`)?.setAttribute('data-hidden', true);
@@ -152,7 +157,10 @@ class Edit extends Component {
 
 				<Inspector { ...this.props } />
 
-				<div className={ sliderClasses }>
+				<div
+					ref={ this.sliderRef }
+					className={ sliderClasses }
+				>
 					<Navigation
 						addSlide={ this.addSlide }
 						activateSlide={ this.activateSlide }

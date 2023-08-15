@@ -2,19 +2,17 @@
  * Internal dependencies
  */
 import Inspector from './inspector';
-import GoogleFontLoader from 'react-google-font-loader';
-
+import GoogleFontLoader from 'GetwidUtils/google-fonts-loader';
 import './editor.scss';
 
 /**
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 import classnames from 'classnames';
 
 const {compose} = wp.compose;
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createRef } = wp.element;
 const { RichText, BlockControls, AlignmentToolbar, withColors } = wp.blockEditor || wp.editor;
 
 /**
@@ -39,6 +37,8 @@ class Edit extends Component {
 
 		this.changeState = this.changeState.bind( this );
 
+		this.advancedHeadingRef = createRef();
+
 		this.state = {
 			isLockedMargins: false,
 			isLockedPaddings: false
@@ -51,14 +51,6 @@ class Edit extends Component {
 		} else if (typeof param == 'string') {
 			this.setState({[param]: value});
 		}
-	}
-
-	componentDidMount() {
-		const {
-			clientId
-		} = this.props;
-
-		this.textWrapper = $( `[data-block='${clientId}'] .wp-block-getwid-advanced-heading` );
 	}
 
 	render() {
@@ -105,12 +97,13 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				{ (shouldLoadGoogleFonts) && (
+				{ ( shouldLoadGoogleFonts ) && (
 					<GoogleFontLoader
-						fonts={[ {
+						blockRef={ this.advancedHeadingRef }
+						fonts={ [ {
 							font: fontFamily,
-							weights: [fontWeight]
-						} ]}
+							weights: [ fontWeight ]
+						} ] }
 					/>
 				)}
 				<BlockControls>
@@ -131,7 +124,10 @@ class Edit extends Component {
 					} }
 				/>
 
-				<div {...wrapperClass} >
+				<div
+					ref={ this.advancedHeadingRef }
+					{ ...wrapperClass }
+				>
 					<RichText
 						className={ wrapperContentClass }
 						tagName={ titleTag }

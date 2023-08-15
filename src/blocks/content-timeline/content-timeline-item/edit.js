@@ -10,14 +10,14 @@ import { isEqual, get, pick } from 'lodash';
  * Internal dependencies
  */
 import Inspector from './inspector';
-import { createResizeObserver } from 'GetwidUtils/help-functions';
+import { createResizeObserver, getScrollableClassName } from 'GetwidUtils/help-functions';
 
 /**
 * WordPress dependencies
 */
 const { compose } = wp.compose;
 const { withSelect } = wp.data;
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createRef } = wp.element;
 const { ToolbarGroup, ToolbarButton } = wp.components;
 const { MediaUploadCheck, MediaUpload, BlockControls, InnerBlocks, RichText, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
 
@@ -45,6 +45,8 @@ class GetwidTimelineItem extends Component {
 
 		this.onSelectImage = this.onSelectImage.bind( this );
 		this.onChangeImageSize = this.onChangeImageSize.bind( this );
+
+		this.timelineItemRef = createRef();
 
 		this.state = {
 			rootClientId: this.setRootId()
@@ -114,7 +116,7 @@ class GetwidTimelineItem extends Component {
 		const { filling } = getBlock( rootClientId ).attributes;
 
 		if ( JSON.parse( filling ) ) {
-			const $block = $( `#block-${rootClientId}` );
+			const $block = $( this.timelineItemRef.current.parentNode );
 
 			updateBarHeight( $block );
 			setColorByScroll( $block );
@@ -226,7 +228,11 @@ class GetwidTimelineItem extends Component {
 						)}
 					</ToolbarGroup>
 				</BlockControls>
-				<div {...itemClass} {...timeLineStyle}>
+				<div
+					ref={ this.timelineItemRef }
+					{ ...itemClass }
+					{ ...timeLineStyle }
+				>
 					<div className={`${baseClass}__wrapper`}>
 						<div className={`${baseClass}__card`} {...cardItemStyle}>
 							<div className={`${baseClass}__card-wrapper`}>
@@ -292,9 +298,12 @@ class GetwidTimelineItem extends Component {
 
 		let scrolling = false;
 
-		const { clientId, baseClass } = this.props;
+		const { baseClass } = this.props;
 
-		const $block = $( `#block-${clientId}` );
+		const $block = $( this.timelineItemRef.current );
+		const currentDocument = this.timelineItemRef.current.ownerDocument;
+		const currentWindow = currentDocument.defaultView;
+		const root = getScrollableClassName();
 
 		const $card  = $block.find( `.${baseClass}__card` );
 		const $point = $block.find( `.${baseClass}__point-content` );
@@ -303,14 +312,14 @@ class GetwidTimelineItem extends Component {
 		const { outerParent } = this.props.attributes;
 		const animation = outerParent ? outerParent.attributes.animation : 'none';
 
-		if ( $card[ 0 ].getBoundingClientRect().top > window.innerHeight * 0.8 && animation != 'none' ) {
+		if ( $card[ 0 ].getBoundingClientRect().top > currentWindow.innerHeight * 0.8 && animation != 'none' ) {
 			$card .addClass( 'is-hidden' );
 			$meta .addClass( 'is-hidden' );
 			$point.addClass( 'is-hidden' );
 		}
 
 		const checkScroll = () => {
-			if ( $card.hasClass( 'is-hidden' ) && $card[ 0 ].getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
+			if ( $card.hasClass( 'is-hidden' ) && $card[ 0 ].getBoundingClientRect().top <= currentWindow.innerHeight * 0.8 ) {
 
 				$card .addClass( animation );
 				$meta .addClass( animation );
@@ -323,16 +332,16 @@ class GetwidTimelineItem extends Component {
 			scrolling = false;
 		}
 
-		const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
+		const $root = $( currentDocument.querySelector(`.${root}`) || currentDocument );
 
 		if ( animation != 'none' ) {
 			$root.on( 'scroll', () => {
 				if ( ! scrolling ) {
 					scrolling = true;
 
-					( ! window.requestAnimationFrame ) ? setTimeout(
+					( ! currentWindow.requestAnimationFrame ) ? setTimeout(
 						() => checkScroll(), 250
-					) : window.requestAnimationFrame(
+					) : currentWindow.requestAnimationFrame(
 						() => checkScroll()
 					);
 				}

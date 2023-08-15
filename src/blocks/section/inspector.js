@@ -855,11 +855,11 @@ class Inspector extends Component {
 		const { sliderImages, sliderAnimationEffect, sliderAnimationDuration, sliderAnimationSpeed } = this.props.attributes;
 		const { setAttributes } = this.props;
 
-		const renderSliderImages = sliderImages.map(img => {
+		const renderSliderImages = sliderImages.map( img => {
 		    return (
-		    	<img src={img.url} alt={img.alt}/>
+		    	<img key={ img.url } src={ img.url } alt={ img.alt }/>
 		    );
-		});
+		} );
 
 		return (
 			<Fragment>
@@ -881,9 +881,9 @@ class Inspector extends Component {
 						<MediaUpload
 							onSelect={ this.onSelectSliderImages }
 							multiple
-							gallery={true}
+							gallery={ true }
 							allowedTypes={ALLOWED_SLIDER_MEDIA_TYPES}
-							value={sliderImages !== undefined ? sliderImages.map( img => img.id ) : []}
+							value={ sliderImages !== undefined ? sliderImages.map( img => img.id ) : [] }
 							render={ ( { open } ) => (
 								<BaseControl>
 									{ !!sliderImages &&
@@ -975,7 +975,7 @@ class Inspector extends Component {
 						<TextControl
 							label={__('YouTube URL', 'getwid')}
 							placeholder={'https://youtube.com/watch?v=M7lc1UVf-VE'}
-							value={ youTubeVideoUrl }
+							value={ youTubeVideoUrl || '' }
 							onChange={youTubeVideoUrl => setAttributes({youTubeVideoUrl})}
 						/>
 					</Fragment>

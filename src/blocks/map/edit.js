@@ -13,6 +13,7 @@ import './editor.scss';
 const {
 	Component,
 	Fragment,
+	createRef
 } = wp.element;
 const {
 	BlockControls,
@@ -52,6 +53,8 @@ class Edit extends Component {
 		this.onDeleteMarker = this.onDeleteMarker.bind(this);
 		this.manageGoogleAPIKey = this.manageGoogleAPIKey.bind(this);
 		this.removeGoogleAPIScript = this.removeGoogleAPIScript.bind(this);
+
+		this.mapRef = createRef();
 
 		this.state = {
 			currentMarker: null,
@@ -117,14 +120,16 @@ class Edit extends Component {
 		const changeState = this.changeState;
 		const getState = this.getState;
 
+		const currentDocument = this.mapRef.current.ownerDocument;
+
 		function addScript(src, key)
 		{
-		    var script = document.createElement("script");
+		    var script = currentDocument.createElement("script");
 		    script.type = "text/javascript";
 		    script.src =  src+key;
 		    script.id = "google_api_js";
 
-		    document.getElementsByTagName('head')[0].appendChild(script);
+			currentDocument.getElementsByTagName('head')[0].appendChild(script);
 
 		    script.onload = script.onreadystatechange = function() {
 
@@ -136,7 +141,7 @@ class Edit extends Component {
 		    };
 		}
 
-		if ( $('#google_api_js').length ) {
+		if ( $( currentDocument ).find( '#google_api_js' ).length ) {
 
 			changeState('readyState', true);
 		} else {
@@ -146,13 +151,14 @@ class Edit extends Component {
 	}
 
 	removeGoogleAPIScript() {
-		const main_google_js = $('#google_api_js');
+		const currentDocument = this.mapRef.current.ownerDocument;
+		const main_google_js = $( currentDocument ).find( '#google_api_js' );
 
 		if (main_google_js.length){
 			main_google_js.remove();
 		}
 
-		const other_google_js = $("script[src*='maps.googleapis.com']");
+		const other_google_js = $( currentDocument ).find( "script[src*='maps.googleapis.com']" );
 
 		if (other_google_js.length){
 			$.each(other_google_js, function(index, val) {
@@ -202,6 +208,7 @@ class Edit extends Component {
 						{__('Save API Key', 'getwid')}
 					</Button>
 				</div>
+				<div ref={ this.mapRef }></div>
 			</form>
 		);
 	}
@@ -252,8 +259,8 @@ class Edit extends Component {
 			setAttributes
 		} = this.props;
 
+		const currentWindow = this.mapRef.current.ownerDocument.defaultView;
 		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
-
 		const mapCenterChange = !isEqual(this.props.attributes.mapCenter, prevProps.attributes.mapCenter)
 
 		const initMapEvents = this.initMapEvents;
@@ -270,12 +277,12 @@ class Edit extends Component {
 			clearInterval(this.waitLoadGoogle);
 			this.waitLoadGoogle = setInterval( () => {
 
-			  if ( typeof google != 'undefined' ) {
+			  if ( typeof currentWindow.google != 'undefined' ) {
 
 				clearInterval(this.waitLoadGoogle);
 
-				const thisBlock = $(`[data-block='${clientId}']`);
-				const mapSelector = $(`.${baseClass}__container`, thisBlock)[0];
+				const thisBlock = $( this.mapRef.current );
+				const mapSelector = $( `.${baseClass}__container`, thisBlock )[0];
 
 				thisBlock.on('keydown', function( event ) {
 				    const { keyCode } = event;
@@ -289,7 +296,7 @@ class Edit extends Component {
 
 				});
 
-				googleMap = new google.maps.Map(mapSelector, {
+				googleMap = new currentWindow.google.maps.Map(mapSelector, {
 					center: mapCenter,
 					styles: mapStyles(),
 					gestureHandling: 'cooperative', //interaction Disable this param for back-end
@@ -346,7 +353,9 @@ class Edit extends Component {
 		const changeState = this.changeState;
 		const getState = this.getState;
 
-		const geocoder = new google.maps.Geocoder;
+		const currentWindow = this.mapRef.current.ownerDocument.defaultView;
+
+		const geocoder = new currentWindow.google.maps.Geocoder;
 		// google.maps.event.clearListeners(googleMap, 'click');
 		googleMap.addListener('click', function(event) {
 			if (getState('action') == 'drop'){
@@ -434,25 +443,25 @@ class Edit extends Component {
 			markerArrTemp
 		} = this.state;
 
+		const currentWindow = this.mapRef.current.ownerDocument.defaultView;
 		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
-
 		const latLng = mapMarkersParsed[markerID].coords;
 
 		let marker;
 
 		if (refreshMarker == false) {
-			marker = new google.maps.Marker({
+			marker = new currentWindow.google.maps.Marker({
 				id: markerID,
 				position: latLng,
 				map: googleMap,
 				draggable: true,
-				animation: firstInit ? google.maps.Animation.DROP : null,
+				animation: firstInit ? currentWindow.google.maps.Animation.DROP : null,
 			});
 
 			markerArrTemp.push(marker);
 
 			if (mapMarkersParsed[markerID].bounce){
-				setTimeout(function(){marker.setAnimation(google.maps.Animation.BOUNCE); }, 2000);
+				setTimeout(function(){marker.setAnimation(currentWindow.google.maps.Animation.BOUNCE); }, 2000);
 			}
 
 		} else {
@@ -483,11 +492,12 @@ class Edit extends Component {
 		const getState = this.getState;
 		const changeState = this.changeState;
 		const updateArrValues = this.updateArrValues;
+		const currentWindow = this.mapRef.current.ownerDocument.defaultView;
 
 		let popUp;
 
 		if (refreshMarker == false) {
-			popUp = new google.maps.InfoWindow({
+			popUp = new currentWindow.google.maps.InfoWindow({
 				content: message,
 				maxWidth: maxWidth
 			});
@@ -523,7 +533,7 @@ class Edit extends Component {
 					bounce: false
 				}, marker.id );
 			} else {
-				marker.setAnimation(google.maps.Animation.BOUNCE);
+				marker.setAnimation(currentWindow.google.maps.Animation.BOUNCE);
 				updateArrValues( {
 					bounce: true
 				}, marker.id );
@@ -747,7 +757,7 @@ class Edit extends Component {
 					} }
 				/>
 
-				<div className={wrapperClass}>
+				<div className={wrapperClass} ref={ this.mapRef }>
 					<div style={{height: mapHeight + 'px'}} className={`${baseClass}__container`}></div>
 				</div>
 

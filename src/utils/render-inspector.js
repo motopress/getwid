@@ -1445,7 +1445,7 @@ export const renderPointSettingsPanel = self => {
     }
 
     const { imagePoints } = self.props.attributes;
-    const { updateArrValues, changeState } = self.props;
+    const { updatePoint, changeState } = self.props;
 
     const points = imagePoints ? JSON.parse( imagePoints ) : [];
     const index = getState( 'currentPoint' );
@@ -1456,7 +1456,7 @@ export const renderPointSettingsPanel = self => {
                 label={__( 'Title', 'getwid' )}
                 value={points[ index ].title}
                 onChange={value => {
-                    updateArrValues( { title: value }, index );
+					updatePoint( index, { title: value } );
                     changeState( 'updatePoints', true );
                 }}
             />
@@ -1464,14 +1464,14 @@ export const renderPointSettingsPanel = self => {
                 placeholder={__( 'Enter URL', 'getwid' )}
                 value={points[ index ].link}
                 onChange={value => {
-                    updateArrValues( { link: value }, index);
+                    updatePoint( index, { link: value } );
                 }}
             />
             <ToggleControl
                 label={__( 'Open in New Tab', 'getwid' )}
                 checked={points[ index ].newTab}
                 onChange={value => {
-                    updateArrValues( { newTab: value }, index );
+                    updatePoint( index, { newTab: value } );
                 }}
             />
             <TextareaControl
@@ -1479,7 +1479,7 @@ export const renderPointSettingsPanel = self => {
                 rows='5'
                 value={unescape( points[ index ].content )}
                 onChange={value => {
-                    updateArrValues( { content: value }, index );
+                    updatePoint( index, { content: value } );
                     changeState( 'updatePoints', true );
                 }}
             />
@@ -1487,7 +1487,7 @@ export const renderPointSettingsPanel = self => {
                 label={__( 'Opened by default', 'getwid' )}
                 checked={points[ index ].popUpOpen}
                 onChange={value => {
-                    updateArrValues( { popUpOpen: value }, index );
+                    updatePoint( index, { popUpOpen: value } );
                 }}
             />
             <RangeControl
@@ -1497,12 +1497,13 @@ export const renderPointSettingsPanel = self => {
                     if ( typeof value == 'undefined' ) {
                         value = 50;
                     }
-                    updateArrValues({
-                        position: {
+                    updatePoint(
+						index,
+						{ position: {
                             x: parseFloat( value ) + '%',
                             y: points[ index ].position.y
-                        }
-                    }, index );
+                        } }
+					);
                     changeState( 'updatePoints', true );
                 }}
                 allowReset
@@ -1517,12 +1518,13 @@ export const renderPointSettingsPanel = self => {
                     if ( typeof value == 'undefined' ) {
                         value = 50;
                     }
-                    updateArrValues({
-                        position: {
+                    updatePoint(
+						index,
+						{ position: {
                             x: points[ index ].position.x,
                             y: parseFloat( value ) + '%'
-                        }
-                    }, index );
+                        } }
+					);
                     changeState( 'updatePoints', true );
                 }}
                 allowReset
@@ -1535,7 +1537,7 @@ export const renderPointSettingsPanel = self => {
                         title: __( 'Point Background', 'getwid' ),
                         colors: { customColor: points[ index ].backgroundColor },
                         changeColor: value => {
-                            updateArrValues( { backgroundColor: value }, index );
+                            updatePoint( index, { backgroundColor: value } );
                             changeState({
                                 updatePoints: true,
                                 highlightDot: true
@@ -1545,7 +1547,7 @@ export const renderPointSettingsPanel = self => {
                         title: __( 'Icon Color', 'getwid' ),
                         colors: { customColor: points[ index ].color },
                         changeColor: value => {
-                            updateArrValues( { color: value }, index );
+                            updateArrValues( index, { color: value } );
                             changeState({
                                 updatePoints: true,
                                 highlightDot: true
@@ -1564,7 +1566,7 @@ export const renderPointSettingsPanel = self => {
                     { value: 'left'  , label: __( 'Left'  , 'getwid' ) }
                 ]}
                 onChange={value => {
-                    updateArrValues( { placement: value }, index );
+                    updatePoint( index, { placement: value } );
                     changeState( {
                         updatePoints: true,
                         highlightDot: true
@@ -1576,7 +1578,7 @@ export const renderPointSettingsPanel = self => {
                 value={points[ index ].popUpWidth}
                 type='number'
                 onChange={value => {
-                    updateArrValues( { popUpWidth: value }, index );
+                    updatePoint( index, { popUpWidth: value } );
                 }}
             />
             <BaseControl
@@ -1585,7 +1587,7 @@ export const renderPointSettingsPanel = self => {
                 <GetwidIconPicker
                     value={points[ index ].icon}
                     onChange={value => {
-                        updateArrValues( { icon: value }, index );
+                        updatePoint( index, { icon: value } );
                         changeState( {
                             updatePoints: true,
                             highlightDot: true

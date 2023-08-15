@@ -2,10 +2,10 @@
 Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf, ai, openai, chatgpt
-Requires at least: 5.6
-Tested up to: 6.2
+Requires at least: 5.8
+Tested up to: 6.3
 Requires PHP: 5.6
-Stable tag: 1.9.1
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -188,6 +188,10 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 2.0.0, Aug 15 2023 =
+* Added full support of WordPress Full Site Editing.
+* Improved compatibility with the Gutenberg plugin 16.3.0.
+
 = 1.9.1, Jul 25 2023 =
 * Fixed an issue that prevented custom post types from being displayed in the post-based blocks.
 
@@ -212,12 +216,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 = 1.8.4, Apr 13 2023 =
 * Security - Improve URL checks in REST controller.
-
-= 1.8.3, Jan 26 2023 =
-* Improved accessibility of the Video Popup block.
-* Added the ability to load block assets outside Getwid.
-* Fixed an issue with the Tabs block styles being broken when it's nested inside itself.
-* Fixed an issue with the Media Text Slider block not working properly in WP 6.1.
 
 --------
 

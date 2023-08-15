@@ -1,3 +1,9 @@
+= 1.8.3, Jan 26 2023 =
+* Improved accessibility of the Video Popup block.
+* Added the ability to load block assets outside Getwid.
+* Fixed an issue with the Tabs block styles being broken when it's nested inside itself.
+* Fixed an issue with the Media Text Slider block not working properly in WP 6.1.
+
 = 1.8.2, Jun 29 2022 =
 * Added the ability to set the width of the cell borders in the Advanced Table block.
 * Added new parameters for the Content Slider block - Adaptive Height and Draggable.

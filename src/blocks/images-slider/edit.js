@@ -19,7 +19,7 @@ import './editor.scss';
 */
 const { compose } = wp.compose;
 const { withSelect } = wp.data;
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createRef } = wp.element;
 
 const { ToolbarButton, ToggleControl, DropZone, ToolbarGroup, Dashicon, TextControl } = wp.components;
 const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar, BlockIcon, URLInput } = wp.blockEditor || wp.editor;
@@ -89,6 +89,8 @@ class Edit extends Component {
 		this.state = {
 			isUpdate: false
 		};
+
+		this.sliderRef = createRef();
 	}
 
     onSetNewTab( value, index ) {
@@ -221,9 +223,7 @@ class Edit extends Component {
 
 	destroySlider(){
 
-		const { clientId } = this.props;
-
-		const thisBlock = $( `[data-block='${clientId}']` );
+		const thisBlock = $( this.sliderRef.current );
 		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
 		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
@@ -231,13 +231,11 @@ class Edit extends Component {
 
 	initSlider() {
 
-		const { clientId } = this.props;
-
 		const { sliderAutoplay, sliderAutoplaySpeed, sliderInfinite, linkTo } = this.props.attributes;
 		const { sliderAnimationEffect, sliderSlidesToShow, sliderSlidesToScroll, slideHeight } = this.props.attributes;
 		const { sliderAnimationSpeed, sliderCenterMode, sliderVariableWidth, sliderArrows, sliderDots } = this.props.attributes;
 
-		const thisBlock = $( `[data-block='${clientId}']` );
+		const thisBlock = $( this.sliderRef.current );
 		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
 		if ( sliderSelector.length && (typeof sliderSelector.imagesLoaded === "function") ) {
@@ -299,12 +297,22 @@ class Edit extends Component {
 		return result;
 	}
 
+	shouldComponentUpdate( nextProps ) {
+
+		const diffInUrls = this.flag ? false : this.checkURLsChanges( nextProps );
+
+		if ( ! diffInUrls ) {
+			this.destroySlider();
+		}
+
+		return true;
+	}
+
 	componentDidUpdate( prevProps ) {
 
 		const diffInUrls = this.flag ? false : this.checkURLsChanges( prevProps );
 
-		if ( (! isEqual( prevProps.attributes, this.props.attributes ) && !diffInUrls) ) {
-			this.destroySlider();
+		if ( ! diffInUrls ) {
 			this.initSlider();
 			this.flag = false;
 		}
@@ -399,56 +407,54 @@ class Edit extends Component {
 				return images.map( ( img, index ) => {
 
 					return (
-						<Fragment key={ img.id || img.url }>
-							<div className={`${baseClass}__item`}>
-								<MediaContainer
-									showCaption={showCaption}
-									captionStyle={captionStyle}
-									captionPosition={captionPosition}
-									isSelected={isSelected}
+						<div className={`${baseClass}__item`} >
+							<MediaContainer
+								showCaption={showCaption}
+								captionStyle={captionStyle}
+								captionPosition={captionPosition}
+								isSelected={isSelected}
 
-									setAttributes={attrs => this.setImageAttributes( index, attrs )}
-									image={img}
-								/>
-								{ (linkTo == 'custom') && (
-									<Fragment>
-										<div className= {`${baseClass}__url-field-wrapper`}>
-											<div className= {`${baseClass}__url-field-container`}>
-												<Dashicon icon='admin-links'/>
-												<URLInput
-													className= {`${baseClass}__url-field has-border`}
-													autoFocus={ true }
-													value={ img.custom_link ? img.custom_link : '' }
-													onChange={ custom_link => {
-														this.setImageAttributes( index, {custom_link} );
-													} }
-													disableSuggestions={ true }
-													__nextHasNoMarginBottom
-												/>
-											</div>
-											<div className= {`${baseClass}__url-rel-container`}>
-												<ToggleControl
-													className= {`${baseClass}__url-toggle`}
-													label={ __( 'New Tab', 'getwid' ) }
-													onChange={ (value) => {
-														this.onSetNewTab(value, index);
-													} }
-													checked={ img.custom_link_target === '_blank' }
-												/>
-												<TextControl
-													className= {`${baseClass}__url-rel`}
-													placeholder={ __( 'Link Rel', 'getwid' ) }
-													value={ img.custom_link_rel || '' }
-													onChange={ custom_link_rel => {
-														this.setImageAttributes( index, {custom_link_rel} );
-													} }
-												/>
-											</div>
+								setAttributes={attrs => this.setImageAttributes( index, attrs )}
+								image={img}
+							/>
+							{ (linkTo == 'custom') && (
+								<Fragment>
+									<div className= {`${baseClass}__url-field-wrapper`}>
+										<div className= {`${baseClass}__url-field-container`}>
+											<Dashicon icon='admin-links'/>
+											<URLInput
+												className= {`${baseClass}__url-field has-border`}
+												autoFocus={ true }
+												value={ img.custom_link ? img.custom_link : '' }
+												onChange={ custom_link => {
+													this.setImageAttributes( index, {custom_link} );
+												} }
+												disableSuggestions={ true }
+												__nextHasNoMarginBottom
+											/>
 										</div>
-									</Fragment>
-								)}
-							</div>
-						</Fragment>
+										<div className= {`${baseClass}__url-rel-container`}>
+											<ToggleControl
+												className= {`${baseClass}__url-toggle`}
+												label={ __( 'New Tab', 'getwid' ) }
+												onChange={ (value) => {
+													this.onSetNewTab(value, index);
+												} }
+												checked={ img.custom_link_target === '_blank' }
+											/>
+											<TextControl
+												className= {`${baseClass}__url-rel`}
+												placeholder={ __( 'Link Rel', 'getwid' ) }
+												value={ img.custom_link_rel || '' }
+												onChange={ custom_link_rel => {
+													this.setImageAttributes( index, {custom_link_rel} );
+												} }
+											/>
+										</div>
+									</div>
+								</Fragment>
+							)}
+						</div>
 					);
 				} );
 			}
@@ -459,7 +465,7 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<div className={ containerClasses }>
+				<div className={ containerClasses } ref={ this.sliderRef }>
 					{ dropZone }
 					<div className={`${baseClass}__wrapper`}>
 						{ imageRender() }

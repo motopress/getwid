@@ -82,9 +82,7 @@ class Save extends Component {
 			if (typeof mapMarkersParsed[ index ] !== 'undefined') {
 
 				return (
-					<Fragment>
-						<li><a href={`https://maps.google.com/?q=${mapMarkersParsed[ index ].coords.lat},${mapMarkersParsed[ index ].coords.lng}&ll=${mapMarkersParsed[ index ].coords.lat},${mapMarkersParsed[ index ].coords.lng}&z=${mapZoom}`}>{`${mapMarkersParsed[ index ].name}`}</a></li>
-					</Fragment>
+					<li key={ index }><a href={`https://maps.google.com/?q=${mapMarkersParsed[ index ].coords.lat},${mapMarkersParsed[ index ].coords.lng}&ll=${mapMarkersParsed[ index ].coords.lat},${mapMarkersParsed[ index ].coords.lng}&z=${mapZoom}`}>{`${mapMarkersParsed[ index ].name}`}</a></li>
 				);
 			}
 		};
@@ -101,7 +99,7 @@ class Save extends Component {
 								</ul>
 							</Fragment>
 						)}
-					
+
 				</div>
 			</Fragment>
 		);
