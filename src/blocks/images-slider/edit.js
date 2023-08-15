@@ -301,7 +301,7 @@ class Edit extends Component {
 
 		const diffInUrls = this.flag ? false : this.checkURLsChanges( nextProps );
 
-		if ( ! isEqual( nextProps.attributes, this.props.attributes ) && !diffInUrls ) {
+		if ( ! diffInUrls ) {
 			this.destroySlider();
 		}
 
@@ -312,7 +312,7 @@ class Edit extends Component {
 
 		const diffInUrls = this.flag ? false : this.checkURLsChanges( prevProps );
 
-		if ( ( ! isEqual( prevProps.attributes, this.props.attributes ) && !diffInUrls ) ) {
+		if ( ! diffInUrls ) {
 			this.initSlider();
 			this.flag = false;
 		}
