@@ -188,7 +188,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 2.0.0, Aug 09 2023 =
+= 2.0.0, Aug 15 2023 =
 * Added full support of WordPress Full Site Editing.
 * Improved compatibility with the Gutenberg plugin 16.3.0.
 
