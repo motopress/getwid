@@ -270,6 +270,7 @@ class Edit extends Component {
 								placeholder={ __( 'Slide', 'getwid' ) }
 								value={ sliderArraysParsed[ index ] ? typeof sliderArraysParsed[ index ].text !== 'undefined' ? sliderArraysParsed[ index ].text : sliderArraysParsed[ index ] : __( 'Slide', 'getwid' ) }
 								unstableOnFocus={() => changeState( 'currentSlide', 1 + index )}
+								onFocus={() => changeState( 'currentSlide', 1 + index )}
 								onChange={value => {
 									updateSlideLabel( value, index );
 								}}
