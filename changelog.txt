@@ -1,3 +1,6 @@
+= 1.8.4, Apr 13 2023 =
+* Security - Improve URL checks in REST controller.
+
 = 1.8.3, Jan 26 2023 =
 * Improved accessibility of the Video Popup block.
 * Added the ability to load block assets outside Getwid.

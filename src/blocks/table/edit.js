@@ -1021,6 +1021,22 @@ class GetwidTable extends Component {
 		}
 	}
 
+	onCellSelect(cell) {
+		const { updated } = this.state;
+		if ( !updated ) {
+			const { minColIdx, maxColIdx } = this.table.getIndices( cell.section, cell.rowIdx, cell.columnIdx );
+
+			this.setState({
+				selectedCell: {
+					...cell,
+					minColIdx: minColIdx,
+					maxColIdx: maxColIdx
+				},
+				selectedSection: cell.section
+			});
+		}
+	}
+
 	renderSection(section) {
 		const {
 			baseClass,
@@ -1132,21 +1148,8 @@ class GetwidTable extends Component {
 								className={ `${baseClass}__cell` }
 								value={ content }
 								onChange={ value => this.onUpdateTableContent( value ) }
-								unstableOnFocus={ () => {
-									const { updated } = this.state;
-									if ( !updated ) {
-										const { minColIdx, maxColIdx } = this.table.getIndices( section, rIndex, cIndex );
-
-										this.setState({
-											selectedCell: {
-												...cell,
-												minColIdx: minColIdx,
-												maxColIdx: maxColIdx
-											},
-											selectedSection: section
-										});
-									}
-								} }
+								unstableOnFocus={ () => this.onCellSelect( cell ) }
+								onFocus={ () => this.onCellSelect( cell ) }
 								allowedFormats={ selectedCell
 									? allowedFormats
 									: []
@@ -1268,6 +1271,13 @@ class GetwidTable extends Component {
 							setAttributes({ caption: value })
 						}
 						unstableOnFocus={ () =>
+							this.setState({
+								selectedCell: null,
+								rangeSelected: null,
+								multiSelected: null
+							})
+						}
+						onFocus={ () =>
 							this.setState({
 								selectedCell: null,
 								rangeSelected: null,
