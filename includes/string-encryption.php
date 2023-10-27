@@ -20,7 +20,7 @@ final class StringEncryption {
         }
 
         $ivlen = openssl_cipher_iv_length( $this->cipher );
-		$iv = openssl_random_pseudo_bytes( $ivlen );
+        $iv = openssl_random_pseudo_bytes( $ivlen );
 
         $encrypted_string = openssl_encrypt(
             $string_to_encrypt . $this->salt,
@@ -42,7 +42,7 @@ final class StringEncryption {
         $encrypted_string = base64_decode( $string_to_decrypt, true );
 
         $ivlen = openssl_cipher_iv_length( $this->cipher );
-		$iv = substr( $encrypted_string, 0, $ivlen );
+        $iv = substr( $encrypted_string, 0, $ivlen );
 
         $encrypted_string = substr( $encrypted_string, $ivlen );
 
@@ -55,8 +55,8 @@ final class StringEncryption {
         );
 
         if ( ! $decrypted_string || substr( $decrypted_string, - strlen( $this->salt ) ) !== $this->salt ) {
-			return $string_to_decrypt;
-		}
+            return $string_to_decrypt;
+        }
 
         return substr( $decrypted_string, 0, - strlen( $this->salt ) );
     }

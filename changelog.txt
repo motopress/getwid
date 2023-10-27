@@ -1,3 +1,7 @@
+= 1.8.5, Apr 14 2023 =
+* Fixed an issue when content of Section block may disappear in the block editor.
+* Fixed an issue when animation of Progress Bar and Circular Progress Bar blocks may not run in the block editor.
+
 = 1.8.4, Apr 13 2023 =
 * Security - Improve URL checks in REST controller.
 

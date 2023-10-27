@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 5.8
 Tested up to: 6.3
 Requires PHP: 5.6
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -188,6 +188,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 2.0.2, Oct 27 2023 =
+* Added Instagram Access Token encryption.
+
 = 2.0.1, Sep 18 2023 =
 * Fixed an issue when the Table block didn't work correctly in WordPress 6.3.
 
@@ -213,9 +216,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Fixed an issue when the Countdown block was not functioning properly in the block editor.
 * Minor bug fixes and improvements.
 
-= 1.8.5, Apr 14 2023 =
-* Fixed an issue when content of Section block may disappear in the block editor.
-* Fixed an issue when animation of Progress Bar and Circular Progress Bar blocks may not run in the block editor.
 
 --------
 
