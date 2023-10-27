@@ -154,7 +154,7 @@ class ScriptsManager {
 						'date_time_utc' => current_time('Y-m-d H:i:s'),
 						'post_type' => get_post_type(),
 						'google_api_key'  => get_option( 'getwid_google_api_key', '' ),
-						'instagram_token' => get_option( 'getwid_instagram_token', '' ),
+						'instagram_token_isset' => (bool) get_option( 'getwid_instagram_token', '' ),
 
 						'assets_path' => getwid_get_plugin_url( '/assets' ),
 						'image_sizes' => $this->get_image_sizes(),
@@ -186,7 +186,7 @@ class ScriptsManager {
 						'google_api_key' => wp_create_nonce( 'getwid_nonce_google_api_key' ),
 						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' ),
 						'mailchimp_api_key' => wp_create_nonce( 'getwid_nonce_mailchimp_api_key' ),
-						'get_instagram_token' => wp_create_nonce( 'getwid_nonce_get_instagram_token' )
+						'check_instagram_token' => wp_create_nonce( 'getwid_nonce_check_instagram_token' )
 					),
 					'acf_exist' => getwid_acf_is_active(),
 				]

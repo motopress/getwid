@@ -12,6 +12,8 @@ class InstagramTokenManager {
 
 		add_action( 'update_option', [ $this, 'update_option' ], 10, 3 );
 		add_action( 'admin_init', [ $this, 'error_message' ] );
+
+		add_filter( 'pre_update_option_getwid_instagram_token', [ $this, 'filter_token_before_save' ], 10, 2 );
 	}
 
 	public function time_scheduled_event( $schedules ) {
@@ -45,6 +47,16 @@ class InstagramTokenManager {
 		}
 	}
 
+	public function filter_token_before_save( $value, $old_value ) {
+
+		if ( $value !== '' ) {
+			$encryption = new StringEncryption();
+			$value = $encryption->encrypt( $value );
+		}
+
+		return $value;
+	}
+
 	public function clear_scheduled_event() {
 		$timestamp = wp_next_scheduled( 'getwid_refresh_instagram_token' );
 
@@ -54,7 +66,8 @@ class InstagramTokenManager {
 	}
 
 	public function refresh_instagram_token() {
-		$getwid_instagram_token = get_option( 'getwid_instagram_token' );
+		$encryption = new StringEncryption();
+		$getwid_instagram_token = $encryption->decrypt( get_option( 'getwid_instagram_token', '' ) );
 
 		if ( ! empty( $getwid_instagram_token ) ) {
 			$api_req  = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=' . $getwid_instagram_token;

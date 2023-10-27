@@ -116,8 +116,7 @@ class SettingsPage {
         <?php
     }
 
-    public function checkInstagramQueryURL()
-    {
+    public function checkInstagramQueryURL() {
         global $pagenow;
 
         if ( $pagenow == 'options-general.php' && isset( $_GET['instagram-token'] ) && isset( $_GET['nonce'] ) ) {
@@ -242,7 +241,8 @@ class SettingsPage {
 
     public function renderInstagramToken() {
 
-        $field_val = get_option('getwid_instagram_token', '');
+		$encryption = new StringEncryption();
+        $field_val = $encryption->decrypt( get_option( 'getwid_instagram_token', '' ) );
 
 		$connectURL = add_query_arg(
 			['nonce' => wp_create_nonce('getwid_nonce_save_instagram_token') ],

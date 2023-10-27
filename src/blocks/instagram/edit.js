@@ -34,30 +34,26 @@ class Edit extends Component {
 		super( ...arguments );
 
 		this.changeState = this.changeState.bind( this );
-		this.getState    = this.getState   .bind( this );
+		this.getState = this.getState.bind( this );
 
 		this.state = {
-			checkToken : false,
-			getTokenURL : 'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state='+Getwid.get_instagram_token_url
+			tokenIsset: Getwid.settings.instagram_token_isset,
+			getTokenURL: 'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state='+Getwid.get_instagram_token_url
 		};
 	}
 
-	manageInstagramToken(event, option) {
-		event.preventDefault();
+	checkInstagramTokenExistence() {
 		const changeState = this.changeState;
 
 		const data = {
-			'action': 'get_instagram_token',
+			'action': 'check_instagram_token',
 			'data': '',
-			'option': option,
-			'nonce': Getwid.nonces.get_instagram_token
+			'nonce': Getwid.nonces.check_instagram_token
 		};
 
 		jQuery.post( Getwid.ajax_url, data, response => {
-			if ( response.data !='' ) {
-				Getwid.settings.instagram_token = response.data;
-				changeState( 'checkToken', true );
-			}
+			Getwid.settings.instagram_token_isset = !!response.data;
+			changeState( 'tokenIsset', !!response.data );
 		});
 	}
 
@@ -69,7 +65,7 @@ class Edit extends Component {
 		return (
 			<form className={`${this.props.className}__key-form`} onSubmit={ event => {
 				event.preventDefault();
-				this.manageInstagramToken( event, 'get' );
+				this.checkInstagramTokenExistence();
 			}}>
 				<span className={'form-title'}>{__('Connect Instagram Account', 'getwid')}</span>
 
@@ -99,7 +95,7 @@ class Edit extends Component {
 
 	render() {
 
-		if ( Getwid.settings.instagram_token == '' ) {
+		if ( ! this.state.tokenIsset ) {
 			return this.enterInstagramTokenForm();
 		}
 
