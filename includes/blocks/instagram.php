@@ -2,7 +2,7 @@
 
 namespace Getwid\Blocks;
 
-use Getwid\Settings;
+use Getwid\StringEncryption;
 
 class Instagram extends \Getwid\Blocks\AbstractBlock {
 
@@ -12,7 +12,7 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 
         parent::__construct( self::$blockName );
 
-		add_action( 'wp_ajax_get_instagram_token', [ $this, 'get_instagram_token'] );
+		add_action( 'wp_ajax_check_instagram_token', [ $this, 'check_instagram_token'] );
 
         register_block_type(
             'getwid/instagram',
@@ -52,16 +52,11 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 		return __('Instagram', 'getwid');
 	}
 
-    public function get_instagram_token() {
+    public function check_instagram_token() {
 
-		check_ajax_referer( 'getwid_nonce_get_instagram_token', 'nonce' );
+		check_ajax_referer( 'getwid_nonce_check_instagram_token', 'nonce' );
 
-        $action = sanitize_text_field( wp_unslash( $_POST[ 'option' ] ) );
-
-        $response = false;
-        if ( $action == 'get' ) {
-            $response = get_option( 'getwid_instagram_token', '' );
-        }
+        $response = (bool) get_option( 'getwid_instagram_token', '' );
 
         wp_send_json_success( $response );
     }
@@ -93,11 +88,11 @@ class Instagram extends \Getwid\Blocks\AbstractBlock {
 	}
 
     public function render_callback( $attributes ) {
-        $error = false;
-        $empty = false;
+
+        $encryption = new StringEncryption();
 
         //Get Access Token
-        $access_token = get_option( 'getwid_instagram_token' );
+        $access_token = $encryption->decrypt( get_option( 'getwid_instagram_token', '' ) );
 
         //If Empty Token
         if ( empty($access_token) ) {
