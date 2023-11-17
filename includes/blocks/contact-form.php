@@ -237,7 +237,8 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
         if ( ! empty( $data['subject'] ) ) {
             $subject = sprintf(
-                esc_html_x( 'Contact Form: %s', '%s is email subject', 'getwid' ),
+                //translators: %s is email subject
+                esc_html__( 'Contact Form: %s', 'getwid' ),
                 sanitize_text_field( wp_unslash( $data[ 'subject' ] ) )
             );
         }
