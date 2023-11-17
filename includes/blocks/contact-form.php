@@ -233,20 +233,28 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
         $to = get_option( 'admin_email' );
 
-        $subject = sprintf(
-			//translators: %s is a blogname
-			__( 'This e-mail was sent from a contact form on %s', 'getwid' ),
-			get_option( 'blogname' )
-		);
+        $subject = esc_html__( 'Contact Form', 'getwid' );
 
-		if ( ! empty( $data['subject'] ) ) {
-			$subject = sanitize_text_field( wp_unslash( $data[ 'subject' ] ) );
-		}
+        if ( ! empty( $data['subject'] ) ) {
+            $subject = sprintf(
+                //translators: %s is email subject
+                esc_html__( 'Contact Form: %s', 'getwid' ),
+                sanitize_text_field( wp_unslash( $data[ 'subject' ] ) )
+            );
+        }
 
         $email   = sanitize_email( wp_unslash( $data[ 'email' ] ) );
         $name    = sanitize_text_field( wp_unslash( $data[ 'name' ] ) );
-        $message = sanitize_textarea_field( wp_unslash( $data[ 'message' ] ) );
-        $body = $message;
+        $message[] = sanitize_textarea_field( wp_unslash( $data[ 'message' ] ) );
+        $message[] = '<br/><br/>';
+        $message[] = '<hr/>';
+        $message[] = sprintf(
+            //translators: %s is a blogname
+            __( 'This e-mail was sent from a contact form on %s', 'getwid' ),
+            get_option( 'blogname' )
+        );
+
+        $body = implode( '', $message );
 
         if ( $email ) {
             $headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
