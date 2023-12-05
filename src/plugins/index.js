@@ -2,8 +2,7 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const { createElement } = wp.element;
-const { PluginMoreMenuItem } = wp.editPost || wp.editSite;
+const { PluginMoreMenuItem } = wp.editPost || wp.editSite || {};
 const { addQueryArgs } = wp.url;
 const { registerPlugin } = wp.plugins;
 
@@ -14,16 +13,18 @@ const { registerPlugin } = wp.plugins;
 registerPlugin( 'getwid-templates', {
 	render() {
 
-		return createElement(
-			PluginMoreMenuItem,
-			{
-				icon: 'category',
-				href: addQueryArgs("edit.php",{
-					post_type: Getwid.templates.name
-				}),
-				onClick: function() {},
-			},
-			__('Getwid Post Templates', 'getwid')
+		const href = addQueryArgs("edit.php",{
+			post_type: Getwid.templates.name
+		});
+
+		return PluginMoreMenuItem && (
+			<PluginMoreMenuItem
+				icon='category'
+				href={ href }
+				onClick={ () => {} }
+			>
+				{ __('Getwid Post Templates', 'getwid') }
+			</PluginMoreMenuItem>
 		);
 	},
 } );
