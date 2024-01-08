@@ -419,9 +419,8 @@ class Tabs extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings } = select( 'core/block-editor' );
+		const { getBlock } = select( 'core/block-editor' );
 		return {
-			getEditorSettings,
 			getBlock
 		};
 	} ),

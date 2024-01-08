@@ -80,7 +80,7 @@ class Inspector extends Component {
 	render() {
 		const { tabName, backgroundType, foregroundType } = this.state;
 
-		const { customBackgroundColor } = this.props.attributes;
+		const { customBackgroundColor, foregroundColor } = this.props.attributes;
 		const { setBackgroundColor, backgroundColor, clientId, getBlock } = this.props;
 
 		const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
@@ -211,9 +211,15 @@ class Inspector extends Component {
 							/>
 
 							{ foregroundType === 'color' && (
-								<Fragment>
-									{this.renderForegroundColor()}
-								</Fragment>
+								<GetwidCustomColorPalette
+									colorSettings={[{
+										title: __( 'Overlay Color', 'getwid' ),
+										colors: {
+											customColor: foregroundColor
+										},
+										changeColor: foregroundColor => { setAttributes( { foregroundColor } ) }
+									}]}
+								/>
 							)}
 
 							{ foregroundType === 'image' && (
@@ -1183,35 +1189,6 @@ class Inspector extends Component {
 						{ value: 'luminosity' , label: __( 'Luminosity' , 'getwid' ) }
 					]}
 				/>
-			</Fragment>
-		);
-	}
-
-	renderForegroundColor() {
-
-		const { foregroundColor } = this.props.attributes;
-		const { setAttributes } = this.props;
-
-		const editorColors = get( select( 'core/editor' ).getEditorSettings(), [ 'colors' ], [] );
-
-		return (
-			<Fragment>
-				<BaseControl
-					label={__( 'Overlay Color', 'getwid' )}
-					className='components-getwid-color-palette-control'
-				>
-					{foregroundColor && (
-						<ColorIndicator colorValue={foregroundColor}/>
-					)}
-
-					<ColorPalette
-						colors= {editorColors }
-						value= {foregroundColor }
-						onChange= {foregroundColor => {
-							setAttributes({ foregroundColor });
-						}}
-					/>
-				</BaseControl>
 			</Fragment>
 		);
 	}

@@ -85,10 +85,9 @@ class TabItem extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/block-editor' );
+		const { getBlock, getBlockRootClientId } = select( 'core/block-editor' );
 		return {
 			getBlock,
-			getEditorSettings,
 			getBlockRootClientId,
 		};
 	} )
