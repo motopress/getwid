@@ -154,15 +154,46 @@ Definitely! You can use Getwid together with the core and third-party block plug
 == Screenshots ==
 
 1. Blocks, Designs, Tutorials, Community.
-2. Section Block.
-3. Pre-Designed Templates and Blocks.
-4. Accordion/Tabs Block.
-5. Image Box Block.
-6. Instagram Block.
-7. Contact Form Block.
-8. Post Carousel Block.
-9. Post Slider Block.
-10. Google Maps Block.
+2. AI Assistant WordPress Block.
+3. Section WordPress Block.
+4. Section with Gradient WordPress Block.
+5. Section with Youtube WordPress Block.
+6. Tabs WordPress Block.
+7. Accordion WordPress Block.
+8. Toggle WordPress Block.
+9. Advanced Table WordPress Block.
+10. Advanced Heading WordPress Block.
+11. Banner WordPress Block.
+12. Button Group WordPress Block.
+13. Circular Progress Bar WordPress Block.
+14. Contact Form WordPress Block.
+15. Content Timeline WordPress Block.
+16. Countdown WordPress Block.
+17. Google Maps WordPress Block.
+18. Icon Box WordPress Block.
+19. Icon WordPress Block.
+20. Image Box WordPress Block.
+21. Image Hotspot WordPress Block.
+22. Image Slider WordPress Block.
+23. Image Stack Gallery WordPress Block.
+24. Instagram WordPress Block.
+25. Mailchimp WordPress Block.
+26. Media & Text Slider WordPress Block.
+27. Person WordPress Block.
+28. Posts Carousel WordPress Block.
+29. Posts Grid / List WordPress Block.
+30. Posts Slider WordPress Block.
+31. Price Box WordPress Block.
+32. Price List WordPress Block.
+33. Progress Bar WordPress Block.
+34. Recent Posts WordPress Block.
+35. Social Links WordPress Block.
+36. Table of Contents WordPress Block.
+37. Testimonial WordPress Block.
+38. Video Popup WordPress Block.
+39. Advanced Custom Fields WordPress Block.
+40. Settings.
+41. Pre-Designed Templates and Blocks.
 
 == Installation ==
 
@@ -203,25 +234,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 = 2.0.0, Aug 15 2023 =
 * Added full support of WordPress Full Site Editing.
 * Improved compatibility with the Gutenberg plugin 16.3.0.
-
-= 1.9.1, Jul 25 2023 =
-* Fixed an issue that prevented custom post types from being displayed in the post-based blocks.
-
-= 1.9.0, Jul 03 2023 =
-* New block: added the AI Assistant block.
-
-= 1.8.7, May 24 2023 =
-* Improved compatibility with WordPress 6.2.
-* Minor bug fixes and improvements.
-
-= 1.8.6, May 10 2023 =
-* Improved compatibility with WordPress 6.2.
-* Fixed an issue when wrong icons might be displayed in the Toggle and Accordion blocks in the block editor after saving.
-* Fixed an issue when images in the Slider and Content Timeline blocks would disappear in the block editor after a size change.
-* Fixed an issue with the Google Fonts control in the block editor.
-* Fixed an issue when the Countdown block was not functioning properly in the block editor.
-* Minor bug fixes and improvements.
-
 
 --------
 

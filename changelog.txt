@@ -1,3 +1,21 @@
+= 1.9.1, Jul 25 2023 =
+* Fixed an issue that prevented custom post types from being displayed in the post-based blocks.
+
+= 1.9.0, Jul 03 2023 =
+* New block: added the AI Assistant block.
+
+= 1.8.7, May 24 2023 =
+* Improved compatibility with WordPress 6.2.
+* Minor bug fixes and improvements.
+
+= 1.8.6, May 10 2023 =
+* Improved compatibility with WordPress 6.2.
+* Fixed an issue when wrong icons might be displayed in the Toggle and Accordion blocks in the block editor after saving.
+* Fixed an issue when images in the Slider and Content Timeline blocks would disappear in the block editor after a size change.
+* Fixed an issue with the Google Fonts control in the block editor.
+* Fixed an issue when the Countdown block was not functioning properly in the block editor.
+* Minor bug fixes and improvements.
+
 = 1.8.5, Apr 14 2023 =
 * Fixed an issue when content of Section block may disappear in the block editor.
 * Fixed an issue when animation of Progress Bar and Circular Progress Bar blocks may not run in the block editor.
