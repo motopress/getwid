@@ -10,9 +10,9 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
         parent::__construct( self::$blockName );
 
-		add_action( 'wp_ajax_getwid_recaptcha_api_key_manage', [ $this, 'recaptcha_api_key_manage' ] );
+		add_action( 'wp_ajax_getwid_update_recaptcha_credentials', [ $this, 'update_recaptcha_credentials' ] );
 
-        add_action( 'wp_ajax_getwid_send_mail'		 , [ $this, 'send' ] );
+        add_action( 'wp_ajax_getwid_send_mail', [ $this, 'send' ] );
         add_action( 'wp_ajax_nopriv_getwid_send_mail', [ $this, 'send' ] );
 
         $this->register_contact_form_blocks();
@@ -53,14 +53,6 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
             $field_textarea,
             array(
                 'render_callback' => [ $this, 'render_field_textarea_block' ]
-            )
-        );
-
-		$field_captcha = 'getwid/captcha';
-        register_block_type(
-            $field_captcha,
-            array(
-                'render_callback' => [ $this, 'render_captcha_block' ]
             )
         );
         /* #endregion */
@@ -141,14 +133,11 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
             true
         );
 
-		/*
-		 * var Getwid = {"ajax_url":"https:\/\/getwid.loc\/wp-admin\/admin-ajax.php","nonces":{"recaptcha_v2_contact_form":"6fea8c6c3e"}};
-		 */
 		$inline_script =
 			'var Getwid = Getwid || {};' .
 			'Getwid["ajax_url"] = ' . json_encode( admin_url( 'admin-ajax.php' ) ) . ';' .
 			'Getwid["nonces"] = ' . json_encode(
-				array( 'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' ) )
+				array( 'contact_form' => wp_create_nonce( 'getwid_nonce_send_contact_form' ) )
 			) . ';'
 		;
 
@@ -179,17 +168,20 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
         getwid_custom_color_style_and_class( $button_style, $button_class, $attributes, 'color'      );
         getwid_custom_color_style_and_class( $button_style, $button_class, $attributes, 'background' );
 
+		$recaptcha_theme = isset( $attributes['recaptchaTheme'] ) ? $attributes['recaptchaTheme'] : '';
+		$captcha = $this->render_captcha_block( [ 'theme' =>  $recaptcha_theme ] );
+
         $extra_attr = array(
             'class' => $class,
             'block_name' => $block_name,
-            'content'    => $content,
+            'content'    => $content . $captcha,
 
             'button_style' => $button_style,
             'button_class' => $button_class
         );
 
         ob_start();?>
-        <div class='<?php echo esc_attr( $class ); ?>'>
+        <div class="<?php echo esc_attr( $class ); ?>" >
             <?php getwid_get_template_part( 'contact-form/contact-form', $attributes, false, $extra_attr ); ?>
         </div><?php
 
@@ -202,13 +194,17 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
     public function send() {
 
-        check_ajax_referer( 'getwid_nonce_contact_form', 'security' );
+        check_ajax_referer( 'getwid_nonce_send_contact_form', 'nonce' );
 
-        if ( !isset( $_POST['data']['g-recaptcha-response'] ) ) {
-            $this->send_mail( $_POST['data'] );
-        } else {
-            $recaptcha_challenge  = sanitize_text_field( wp_unslash( $_POST['data']['g-recaptcha-response'] ) );
-            $recaptcha_secret_key = get_option('getwid_recaptcha_v2_secret_key');
+		$recaptcha_secret_key = get_option( 'getwid_recaptcha_v2_secret_key', false );
+
+        if ( $recaptcha_secret_key ) {
+
+			if ( empty( $_POST['data']['g-recaptcha-response'] ) ) {
+				wp_send_json_error( $this->get_error( 'bad-request' ) );
+			}
+
+			$recaptcha_challenge  = sanitize_text_field( wp_unslash( $_POST['data']['g-recaptcha-response'] ) );
 
             $request = wp_remote_get(
                 'https://google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $recaptcha_challenge,
@@ -226,7 +222,10 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
             } else {
                 $this->send_mail( $_POST['data'] );
             }
-        }
+
+        } else {
+			$this->send_mail( $_POST['data'] );
+		}
     }
 
     private function send_mail( $data ) {
@@ -275,32 +274,30 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
-    public function recaptcha_api_key_manage() {
-        $nonce = sanitize_key( $_POST[ 'nonce' ] );
+    public function update_recaptcha_credentials() {
 
-        if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_contact_form' ) ) {
+		check_ajax_referer( 'getwid_nonce_recaptcha_v2', 'nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
             wp_send_json_error();
         }
 
-        $option = sanitize_text_field( wp_unslash( $_POST['option'] ) );
+        $site_key = sanitize_text_field( wp_unslash( $_POST['data']['site_key'] ) );
+        $secret_key = sanitize_text_field( wp_unslash( $_POST['data']['secret_key'] ) );
 
-        $site_api_key   = sanitize_text_field( wp_unslash( $_POST['data']['site_api_key'] ) );
-        $secret_api_key = sanitize_text_field( wp_unslash( $_POST['data']['secret_api_key'] ) );
+		if ( ! empty( $site_key ) ) {
+			update_option( 'getwid_recaptcha_v2_site_key', $site_key );
+		} else {
+			delete_option( 'getwid_recaptcha_v2_site_key' );
+		}
 
-        $response = false;
-        if ( $option == 'set' ) {
-            if ( ! empty( $site_api_key ) ) {
-                $response = update_option( 'getwid_recaptcha_v2_site_key', $site_api_key );
-            }
-            if ( ! empty( $secret_api_key ) ) {
-                $response = update_option( 'getwid_recaptcha_v2_secret_key', $secret_api_key );
-            }
-        } elseif ( $option == 'delete' ) {
-            $response = delete_option( 'getwid_recaptcha_v2_site_key' );
-            $response = delete_option( 'getwid_recaptcha_v2_secret_key' );
-        }
+		if ( ! empty( $secret_key ) ) {
+			update_option( 'getwid_recaptcha_v2_secret_key', $secret_key );
+		} else {
+			delete_option( 'getwid_recaptcha_v2_secret_key' );
+		}
 
-        wp_send_json_success( $response );
+        wp_send_json_success();
     }
 
     private function get_error( $error_code ) {

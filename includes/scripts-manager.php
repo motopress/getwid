@@ -184,7 +184,7 @@ class ScriptsManager {
 					],
 					'nonces' => array(
 						'google_api_key' => wp_create_nonce( 'getwid_nonce_google_api_key' ),
-						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' ),
+						'recaptcha_v2' => wp_create_nonce( 'getwid_nonce_recaptcha_v2' ),
 						'mailchimp_api_key' => wp_create_nonce( 'getwid_nonce_mailchimp_api_key' ),
 						'check_instagram_token' => wp_create_nonce( 'getwid_nonce_check_instagram_token' )
 					),
@@ -283,7 +283,7 @@ class ScriptsManager {
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'isRTL' => is_rtl(),
 					'nonces' => array(
-						'recaptcha_v2_contact_form' => wp_create_nonce( 'getwid_nonce_contact_form' )
+						'contact_form' => wp_create_nonce( 'getwid_nonce_send_contact_form' )
 					),
 				]
 			)
