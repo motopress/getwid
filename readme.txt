@@ -220,8 +220,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 == Changelog ==
 
 = 2.0.5, Jan 12 2024 =
-* Fixed Contact Form block Captcha bypass vulnerability.
-* Fixed vulnerability with missing authorization to reCAPTCHA Site Key and Secret Key modification.
+* Improved the way to modify of reCAPTCHA Site Key and Secret Key.
 * Improved Contact Form block - Google reCAPTCHA applied to all Contact Forms if Site Key and Secret Key are set.
 * Removed Captcha - contact form child block.
 
