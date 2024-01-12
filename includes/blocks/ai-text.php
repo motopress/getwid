@@ -16,7 +16,7 @@ class AIText extends \Getwid\Blocks\AbstractBlock {
 	}
 
 	public function getLabel() {
-		return __('AI Assistant (Beta)', 'getwid');
+		return __('AI Assistant', 'getwid');
 	}
 }
 

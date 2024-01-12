@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-12T16:41:04+03:00\n"
+"POT-Creation-Date: 2024-01-12T18:01:09+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: getwid\n"
@@ -88,7 +88,7 @@ msgstr ""
 
 #: includes/blocks/ai-text.php:19
 #: assets/js/editor.blocks.js:23
-msgid "AI Assistant (Beta)"
+msgid "AI Assistant"
 msgstr ""
 
 #: includes/blocks/anchor.php:20
