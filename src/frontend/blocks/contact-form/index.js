@@ -58,7 +58,7 @@
 
 					const data = {
 						'action': 'getwid_send_mail',
-						'security': Getwid.nonces.recaptcha_v2_contact_form,
+						'nonce': Getwid.nonces.contact_form,
 						'data': form_values
 					};
 

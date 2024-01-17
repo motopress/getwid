@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 5.6
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -218,6 +218,11 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 2.0.5, Jan 12 2024 =
+* Improved the way to modify reCAPTCHA Site Key and Secret Key.
+* Improved Contact Form block - Google reCAPTCHA applied to all Contact Forms if Site Key and Secret Key are set.
+* Removed Captcha - Contact Form child block.
 
 = 2.0.4, Jan 08 2024 =
 * Fixed an issue with the Accordion, Toggle, Tabs, Icon, Section blocks that may cause errors in the widgets editor.

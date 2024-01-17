@@ -5,6 +5,7 @@ import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 
 import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+import Recaptcha from './recaptcha';
 
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
@@ -115,6 +116,12 @@ class GetwidContactForm extends Component {
 						/>
 					</PanelBody>
 				</InspectorControls>
+
+				<Recaptcha
+					theme={ this.props.attributes.recaptchaTheme }
+					setTheme={ ( theme ) => this.props.setAttributes( { recaptchaTheme: theme } ) }
+				/>
+
 			</Fragment>
 		);
 	}

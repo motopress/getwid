@@ -1,17 +1,17 @@
-# Copyright (C) 2023 MotoPress
+# Copyright (C) 2024 MotoPress
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Getwid 2.0.3\n"
+"Project-Id-Version: Getwid 2.0.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getwid\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-11-17T13:57:16+03:00\n"
+"POT-Creation-Date: 2024-01-12T18:01:09+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: getwid\n"
 
 #. Plugin Name of the plugin
@@ -88,7 +88,7 @@ msgstr ""
 
 #: includes/blocks/ai-text.php:19
 #: assets/js/editor.blocks.js:23
-msgid "AI Assistant (Beta)"
+msgid "AI Assistant"
 msgstr ""
 
 #: includes/blocks/anchor.php:20
@@ -112,50 +112,50 @@ msgid "Circular Progress Bar"
 msgstr ""
 
 #: includes/blocks/contact-form.php:22
-#: includes/blocks/contact-form.php:236
+#: includes/blocks/contact-form.php:235
 #: assets/js/editor.blocks.js:23
 msgid "Contact Form"
 msgstr ""
 
 #. translators: %s is email subject
-#: includes/blocks/contact-form.php:241
+#: includes/blocks/contact-form.php:240
 msgid "Contact Form: %s"
 msgstr ""
 
 #. translators: %s is a blogname
-#: includes/blocks/contact-form.php:253
+#: includes/blocks/contact-form.php:252
 msgid "This e-mail was sent from a contact form on %s"
 msgstr ""
 
-#: includes/blocks/contact-form.php:267
+#: includes/blocks/contact-form.php:266
 msgid "Thank you for your message. It has been sent."
 msgstr ""
 
-#: includes/blocks/contact-form.php:274
+#: includes/blocks/contact-form.php:273
 msgid "There was an error trying to send your message. Please try again later."
 msgstr ""
 
-#: includes/blocks/contact-form.php:309
+#: includes/blocks/contact-form.php:306
 msgid "The request is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:315
+#: includes/blocks/contact-form.php:312
 msgid "The secret parameter is missing."
 msgstr ""
 
-#: includes/blocks/contact-form.php:321
+#: includes/blocks/contact-form.php:318
 msgid "Please check the captcha."
 msgstr ""
 
-#: includes/blocks/contact-form.php:327
+#: includes/blocks/contact-form.php:324
 msgid "The secret parameter is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:333
+#: includes/blocks/contact-form.php:330
 msgid "The response parameter is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:339
+#: includes/blocks/contact-form.php:336
 msgid "The response is no longer valid: either is too old or has been used previously."
 msgstr ""
 
@@ -512,12 +512,10 @@ msgid "Google Maps API Key"
 msgstr ""
 
 #: includes/settings-page.php:201
-#: assets/js/editor.blocks.js:23
 msgid "Recaptcha Site Key"
 msgstr ""
 
 #: includes/settings-page.php:207
-#: assets/js/editor.blocks.js:23
 msgid "Recaptcha Secret Key"
 msgstr ""
 
@@ -1799,6 +1797,10 @@ msgid "Overlay Type"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "Overlay Color"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "Background Settings"
 msgstr ""
 
@@ -2272,10 +2274,6 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Luminosity"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Overlay Color"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3314,15 +3312,7 @@ msgid "Email"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Captcha"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
 msgid "Field Settings"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Color Theme"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3335,6 +3325,22 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Button Background Color"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "reCAPTCHA v2"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Color Theme"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "reCAPTCHA v2 Site Key"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "reCAPTCHA v2 Secret Key"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23

@@ -19,7 +19,7 @@ const { registerBlockType } = wp.blocks;
 export default registerBlockType(
 	'getwid/ai-text',
 	{
-		title: __( 'AI Assistant (Beta)', 'getwid' ),
+		title: __( 'AI Assistant', 'getwid' ),
 		category: 'getwid-blocks',
 		icon: <Icon/>,
 		keywords: [ 'ai' ],
