@@ -116,6 +116,12 @@ Our collection of extra WordPress blocks for Gutenberg page builder ships with a
 
 It's brought to you by MotoPress - a trusted WordPress developer with more than 7 years of experience in creating WordPress tools for content building.
 
+### Optimized for WordPress Full Site Editing
+
+Since version 2.0 of Getwid, the plugin integrates flawlessly with any FSE-enabled WordPress theme, letting you use a vast arsenal of blocks throughout your website. Create custom headers, footers, and even navigation just by using blocks, including those by Getwid!
+
+Download [Prime FSE](https://wordpress.org/themes/prime-fse/), your free block theme, made exclusively for the new-era WordPress site editor and powered up by Getwid blocks.
+
 == Frequently Asked Questions ==
 
 = How to turn off blocks I don't need in the Getwid Gutenberg WP plugin? =
