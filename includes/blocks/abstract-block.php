@@ -82,4 +82,20 @@ abstract class AbstractBlock {
 
 		return $block_content;
 	}
+
+	protected function validateHeadingHTMLTag( $tag ) {
+
+		$allowed_tags = array(
+			'h1',
+			'h2',
+			'h3',
+			'h4',
+			'h5',
+			'h6',
+			'span',
+			'p',
+		);
+
+		return in_array( strtolower( $tag ), $allowed_tags ) ? $tag : 'span';
+	}
 }
