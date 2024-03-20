@@ -175,6 +175,8 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 			$wrapper_class .= ' getwid-columns getwid-columns-' . $attributes['columns'];
 		}
 
+		$attributes['titleTag'] = $this->validateHeadingHTMLTag( $attributes['titleTag'] );
+
 		$q = new \WP_Query( $query_args );
 		ob_start();
 		?>

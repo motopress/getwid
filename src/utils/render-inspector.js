@@ -1086,7 +1086,6 @@ export const renderSlideHeightPanel = self => {
                         {
                             name: 'mobile',
                             title: __('Mobile', 'getwid'),
-                            disabled: true,
                             className: 'components-button is-link is-small'
                         }
                     ]}>

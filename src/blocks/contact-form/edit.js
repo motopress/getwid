@@ -20,6 +20,8 @@ const ALLOWED_BLOCKS = [
 	'getwid/field-email',
 	'getwid/field-textarea',
 	'getwid/captcha',
+	'core/group',
+	'core/columns',
 	'core/paragraph',
 	'core/spacer'
 ];

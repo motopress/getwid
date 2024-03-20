@@ -89,7 +89,7 @@ const settings = {
 
 const fieldDefaults = {
 	category: 'getwid-blocks',
-	parent: [ 'getwid/contact-form' ],
+	ancestor: [ 'getwid/contact-form' ],
 	supports: {
         multiple: false,
         reusable: false,

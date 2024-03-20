@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 5.6
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -224,6 +224,10 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 2.0.6, Mar 20 2024 =
+* Improved Contact Form block - added Group and Columns to allowed child blocks list.
+* Minor bugfixes and improvements.
 
 = 2.0.5, Jan 12 2024 =
 * Improved the way to modify reCAPTCHA Site Key and Secret Key.
