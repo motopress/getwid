@@ -255,7 +255,47 @@ class SettingsPage {
 		);
 
 		?>
-		<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" class="regular-text" value="<?php echo esc_attr( $field_val ); ?>" />
+		<input type="text" id="getwid_instagram_token" name="getwid_instagram_token" class="regular-text" value="<?php echo esc_attr( $field_val ); ?>" /><?php
+
+			if ( ! empty( $field_val ) ) {
+
+				try {
+
+					$profile_data_json = wp_remote_get(
+						'https://graph.instagram.com/me?fields=username&access_token=' . $field_val
+					);
+
+					if ( ( ! is_wp_error( $profile_data_json ) ) && ( 200 === wp_remote_retrieve_response_code( $profile_data_json ) ) ) {
+
+						$profile_data = json_decode( $profile_data_json['body'] );
+
+						if ( json_last_error() === JSON_ERROR_NONE ) {
+
+							if ( isset( $profile_data->username ) ) {
+
+								echo '<p class="description">' . sprintf(
+									//translators: %s is username or user id
+									esc_html__('Account: %s', 'getwid'),
+									esc_html( $profile_data->username )
+								) . '<p>';
+
+							} elseif ( isset( $profile_data->id ) ) {
+
+								echo '<p class="description">' . sprintf(
+									//translators: %s is username or user id
+									esc_html__('Account: %s', 'getwid'),
+									esc_html( $profile_data->id )
+								) . '</p>';
+							}
+						}
+					}
+				} catch ( Exception $profile_data_exception ) {
+
+					echo esc_html( $profile_data_exception->getMessage() );
+				}
+			}
+
+		?>
         <p><a href="<?php echo esc_url(
 			'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=' .
 			'https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state=' .
