@@ -5,8 +5,6 @@ namespace Getwid;
 class InstagramTokenManager {
 
 	public function __construct() {
-		// Deactivation hook.
-		register_deactivation_hook( GETWID_PLUGIN_FILE, [ $this, 'clear_scheduled_event' ] );
 
 		// Action hook to execute when the event is run
 		add_action( 'getwid_refresh_instagram_token', [ $this, 'refresh_instagram_token' ] );
@@ -14,6 +12,8 @@ class InstagramTokenManager {
 
 		add_action( 'update_option', [ $this, 'update_option' ], 10, 3 );
 		add_action( 'admin_init', [ $this, 'error_message' ] );
+
+		add_filter( 'pre_update_option_getwid_instagram_token', [ $this, 'filter_token_before_save' ], 10, 2 );
 	}
 
 	public function time_scheduled_event( $schedules ) {
@@ -47,6 +47,16 @@ class InstagramTokenManager {
 		}
 	}
 
+	public function filter_token_before_save( $value, $old_value ) {
+
+		if ( $value !== '' ) {
+			$encryption = new StringEncryption();
+			$value = $encryption->encrypt( $value );
+		}
+
+		return $value;
+	}
+
 	public function clear_scheduled_event() {
 		$timestamp = wp_next_scheduled( 'getwid_refresh_instagram_token' );
 
@@ -56,7 +66,8 @@ class InstagramTokenManager {
 	}
 
 	public function refresh_instagram_token() {
-		$getwid_instagram_token = get_option( 'getwid_instagram_token' );
+		$encryption = new StringEncryption();
+		$getwid_instagram_token = $encryption->decrypt( get_option( 'getwid_instagram_token', '' ) );
 
 		if ( ! empty( $getwid_instagram_token ) ) {
 			$api_req  = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=' . $getwid_instagram_token;
@@ -68,7 +79,7 @@ class InstagramTokenManager {
  				$response_body = json_decode( wp_remote_retrieve_body( $response ), false );
 
 				if ( $response_body && json_last_error() === JSON_ERROR_NONE ) {
-					if ( $response_body->error ) {
+					if ( isset( $response_body->error ) ) {
 						update_option( 'getwid_instagram_token_cron_error_message', $response_body->error->message );
 					} else {
 						delete_option( 'getwid_instagram_token_cron_error_message' );
@@ -97,11 +108,11 @@ class InstagramTokenManager {
 			<div class="notice notice-error">
 				<p>
 					<?php
-						echo sprintf(
+						echo esc_html( sprintf(
 							//translators: %s is an error message
 							__( 'An error occurred while updating Instagram access token: %s', 'getwid' ),
 							$instagram_token_error_message
-						);
+						) );
 					?>
 				</p>
 			</div>
@@ -112,7 +123,9 @@ class InstagramTokenManager {
 	public function error_message() {
     	global $pagenow;
 
-    	$is_getwid_settings_page = $pagenow == 'options-general.php' && ( isset($_GET['page']) && $_GET['page'] == 'getwid' );
+		$is_getwid_url = isset( $_GET['page'] ) && sanitize_text_field( wp_unslash( $_GET['page'] ) ) == 'getwid';
+
+		$is_getwid_settings_page = $pagenow == 'options-general.php' && $is_getwid_url;
 
 		if ( $is_getwid_settings_page && current_user_can( 'manage_options' ) ) {
 			if ( get_option( 'getwid_instagram_token_cron_error_message' ) !== '' ) {

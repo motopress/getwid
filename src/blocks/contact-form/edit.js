@@ -5,6 +5,7 @@ import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 
 import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+import Recaptcha from './recaptcha';
 
 const { compose } = wp.compose;
 const { Component, Fragment } = wp.element;
@@ -19,6 +20,8 @@ const ALLOWED_BLOCKS = [
 	'getwid/field-email',
 	'getwid/field-textarea',
 	'getwid/captcha',
+	'core/group',
+	'core/columns',
 	'core/paragraph',
 	'core/spacer'
 ];
@@ -44,7 +47,7 @@ class GetwidContactForm extends Component {
 	render() {
 		const { textColor, backgroundColor } = this.props;
 		const { className, setTextColor, setBackgroundColor, contactFormClass, customBackgroundColor, customTextColor } = this.props;
-		
+
 		const buttonSubmitClass = classnames(
 			'wp-block-button__link', {
 				'has-background': backgroundColor.color,
@@ -83,7 +86,6 @@ class GetwidContactForm extends Component {
 								backgroundColor: backgroundColor.color,
 								color: textColor.color
 							} }
-							keepPlaceholderOnFocus
 						/>
 					</div>
 				</div>
@@ -91,7 +93,7 @@ class GetwidContactForm extends Component {
 					<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen={ true }>
 						<TextControl
 							label={ __( 'Subject', 'getwid' ) }
-							value={ this.props.attributes.subject }
+							value={ this.props.attributes.subject || '' }
 							onChange={ subject =>
 								this.props.setAttributes( { subject } )
 							}
@@ -116,6 +118,12 @@ class GetwidContactForm extends Component {
 						/>
 					</PanelBody>
 				</InspectorControls>
+
+				<Recaptcha
+					theme={ this.props.attributes.recaptchaTheme }
+					setTheme={ ( theme ) => this.props.setAttributes( { recaptchaTheme: theme } ) }
+				/>
+
 			</Fragment>
 		);
 	}

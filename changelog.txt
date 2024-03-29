@@ -1,3 +1,116 @@
+= 1.9.1, Jul 25 2023 =
+* Fixed an issue that prevented custom post types from being displayed in the post-based blocks.
+
+= 1.9.0, Jul 03 2023 =
+* New block: added the AI Assistant block.
+
+= 1.8.7, May 24 2023 =
+* Improved compatibility with WordPress 6.2.
+* Minor bug fixes and improvements.
+
+= 1.8.6, May 10 2023 =
+* Improved compatibility with WordPress 6.2.
+* Fixed an issue when wrong icons might be displayed in the Toggle and Accordion blocks in the block editor after saving.
+* Fixed an issue when images in the Slider and Content Timeline blocks would disappear in the block editor after a size change.
+* Fixed an issue with the Google Fonts control in the block editor.
+* Fixed an issue when the Countdown block was not functioning properly in the block editor.
+* Minor bug fixes and improvements.
+
+= 1.8.5, Apr 14 2023 =
+* Fixed an issue when content of Section block may disappear in the block editor.
+* Fixed an issue when animation of Progress Bar and Circular Progress Bar blocks may not run in the block editor.
+
+= 1.8.4, Apr 13 2023 =
+* Security - Improve URL checks in REST controller.
+
+= 1.8.3, Jan 26 2023 =
+* Improved accessibility of the Video Popup block.
+* Added the ability to load block assets outside Getwid.
+* Fixed an issue with the Tabs block styles being broken when it's nested inside itself.
+* Fixed an issue with the Media Text Slider block not working properly in WP 6.1.
+
+= 1.8.2, Jun 29 2022 =
+* Added the ability to set the width of the cell borders in the Advanced Table block.
+* Added new parameters for the Content Slider block - Adaptive Height and Draggable.
+* Improved the way to generate ID for the Table of Contents block.
+* Fixed an issue with the Template Library and Edit with Elementor buttons not being displayed when both Getwid and Elementor were activated.
+* Fixed an issue when the Toggle and Accordion blocks didn't work correctly when they were nested inside themselves.
+* Fixed an issue with the Image Slider block not being initialized if added from the Template Library.
+* Minor bugfixes and improvements.
+
+= 1.8.1, May 16 2022 =
+* Improved the support for right-to-left languages.
+
+= 1.8.0, May 02 2022 =
+* New block: added the Content Slider block.
+
+= 1.7.10, Apr 26 2022 =
+* Added the ability to add a link to the Background Featured Image template part block.
+* Fixed an issue with the font size picker.
+* Fixed an issue when content of Post Slider and Post Carousel blocks may disappear in the block editor.
+
+= 1.7.9, Mar 16 2022 =
+* Improved compatibility with WordPress 5.9.
+* Increased the maximum number of slides in the Media & Text Slider block.
+* Fixed an issue when the first slide's content may have disappeared in the Media & Text Slider block.
+* Fixed an issue with the slide content class in the Media & Text Slider block.
+* Fixed an issue with the button width in the Button Group block.
+* Fixed an issue when some blocks may have not been displayed in the block inserter.
+
+= 1.7.8, Dec 14 2021 =
+* Minor bugfixes and improvements of the Google Maps, Table and Image Slider blocks.
+
+= 1.7.7, Nov 2 2021 =
+* Fixed an issue with the empty terms list in the Custom Post Type and related blocks.
+
+= 1.7.6, Oct 27 2021 =
+* Security - sanitization and escaping.
+
+= 1.7.5, Oct 1 2021 =
+* Security - added nonces to prevent CSRF.
+
+= 1.7.4, Jul 31 2021 =
+* Fixed an issue with YouTube video in the Section block.
+
+= 1.7.3, Jul 30 2021 =
+* Revert changes in version 1.7.2.
+
+= 1.7.2, Jul 29 2021 =
+* Improved compatibility with WordPress 5.8.
+* Added the ability to use post template parts and ACF template parts in the Query Loop Block.
+
+= 1.7.1, Jul 02 2021 =
+* New feature: Custom Field Filter. It allows you to extend the post filtering possibilities for the Custom post type, Post slider, and Post carousel blocks, e.g. use post filters sourced from third-party plugins like WooCommerce.
+
+= 1.7.0, May 14 2021 =
+* New feature: Performance Optimization. It is currently in beta and you may activate it in Settings > Getwid > Performance Optimization.
+* Fixed an issue with a large number of get_option queries to the database.
+* Added the Post Templates tab to Getwid settings for easier template management.
+
+= 1.6.12, May 11 2021 =
+* Added Advanced Custom Fields Wysiwyg, Select, Image and Background Image blocks you may use as template parts in the Custom Post Type and related blocks.
+* Fixed an issue with the background and progress bar color in the Content Timeline block.
+* Fixed an issue with the button width in the Button Group and Price Box blocks.
+
+= 1.6.11, Mar 15 2021 =
+* Improved compatibility with WordPress 5.7 and PHP 8.
+
+= 1.6.10, Mar 3 2021 =
+* Plugin settings moved to a separate page under the Settings menu.
+* Added an action to display custom content when there are no posts to display in the Custom Post Type and related blocks.
+* Added the ability to automatically refresh Instagram access token.
+* Added the ability to display a caption under the image in the Image Slider block.
+* Added the ability to set an aspect ratio of images in the Image Slider block.
+* Added the ability for developers to manage fonts.
+* Added the Smooth animation option that prevents a horizontal scroll bar and blinking from appearing during the entrance animation.
+* Fixed an issue when YouTube video did not automatically play on iOS devices.
+* Fixed an issue when a click on a tab scrolled a page.
+* Improved the Content Timeline block compatibility with third-party plugins.
+* Improved YouTube compatibility with third-party plugins.
+
+= 1.6.9, Dec 17 2020 =
+* Fixed an issue when some blocks may grow infinitely wide in WordPress 5.6.
+
 = 1.6.8, Dec 14 2020 =
 * Improved compatibility with WordPress 5.6.
 * Added support for an H1 HTML tag to the Table of Contents block.

@@ -2,7 +2,6 @@
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
 	Component,
 	Fragment,
@@ -45,7 +44,6 @@ export default class Inspector extends Component {
 				showCategories,
 				showCommentsCount,
 				showFeaturedImage,
-				align,
 				postLayout,
 				columns,
 				order,
@@ -55,12 +53,10 @@ export default class Inspector extends Component {
 				contentLength,
 				cropImages
 			},
+			categoriesList,
 			setAttributes,
 			recentPosts,
-			hasPosts,
-
-			changeState,
-			getState,
+			hasPosts
 		} = this.props;
 
 		return (
@@ -176,7 +172,7 @@ export default class Inspector extends Component {
 					<QueryControls
 						{ ...{ order, orderBy } }
 						numberOfItems={ postsToShow }
-						categoriesList={ getState('categoriesList') }
+						categoriesList={ categoriesList }
 						selectedCategoryId={
 							undefined !== categories ? Number( categories ) : ''
 						}

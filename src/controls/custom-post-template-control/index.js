@@ -33,10 +33,10 @@ class GetwidCustomPostTemplateControl extends Component {
 		this.state = {
 			postTemplates: null,
 			waitLoadTemplates: false
-		};		
+		};
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.isStillMounted = true;
 		this.updateTemplates();
 	}
@@ -51,7 +51,7 @@ class GetwidCustomPostTemplateControl extends Component {
 			path: addQueryArgs( `/getwid/v1/templates`, {template_name : 'getwid_template_part'} ),
 		} ).then(
 			( templatesList ) => {
-				this.waitLoadTemplates = false;	
+				this.waitLoadTemplates = false;
 				if ( this.isStillMounted && templatesList instanceof Object ) {
 					this.setState( {
 						postTemplates : templatesList,
@@ -76,8 +76,8 @@ class GetwidCustomPostTemplateControl extends Component {
 	render() {
 		const controlClassPrefix = 'components-getwid-custom-post-template-control';
 
-		let postTemplateArr = [];		
-	
+		let postTemplateArr = [];
+
 		if (this.state.postTemplates){
 			postTemplateArr = this.state.postTemplates;
 		}
@@ -110,27 +110,27 @@ class GetwidCustomPostTemplateControl extends Component {
 						)}
 						<a href={Getwid.templates.new} className="components-button is-button is-default" target="_blank">{__( 'New', 'getwid' )}</a>
 						<a href={Getwid.templates.view} className="components-button is-button is-default" target="_blank">{__( 'View All', 'getwid' )}</a>
-						<Button isDefault onClick={ (e) => {
+						<Button isSecondary onClick={ (e) => {
 							this.setState( { waitLoadTemplates : true } );
 							this.updateTemplates();
 						}}>{__( 'Update', 'getwid' )}</Button>
-					</ButtonGroup>	
+					</ButtonGroup>
 
 					{this.props.values.postTemplate && (
 						<BaseControl>
 							<Button isLink onClick={ (e) => { this.resetTemplates(); }}>{__( 'Reset to default', 'getwid' )}</Button>
-						</BaseControl>								
+						</BaseControl>
 					)}
 				</Fragment>
 			);
 		};
-		
+
 		return (
 			<div
 				className={classnames('components-base-control', controlClassPrefix)}
-			>				
+			>
 				{renderTempalatesSelect()}
-			</div>	
+			</div>
 		);
 	}
 }

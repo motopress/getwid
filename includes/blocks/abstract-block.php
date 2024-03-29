@@ -12,8 +12,6 @@ abstract class AbstractBlock {
 
 		if ( $this->isDisabled() ) {
 
-			getwid_log( $this->getDisabledOptionKey(), $this->isDisabled() );
-
 			// https://developer.wordpress.org/reference/functions/render_block/
 			add_filter( 'pre_render_block', [ $this, 'pre_render_block' ], 10, 2 );
 		}
@@ -32,6 +30,9 @@ abstract class AbstractBlock {
 
 		$has_block = has_block( $this->blockName );
 
+		/**
+		 * Determines whether a $post contains a specific block.
+		 */
 		return apply_filters( 'getwid/blocks/has_block', $has_block, $this->blockName );
 	}
 
@@ -50,6 +51,8 @@ abstract class AbstractBlock {
 	public function isDisabled() {
 
 		$disabled = rest_sanitize_boolean( get_option( $this->getDisabledOptionKey(), false ) );
+
+		getwid_maybe_add_option( $this->getDisabledOptionKey(), false, true );
 
 		return apply_filters( 'getwid/blocks/is_disabled', $disabled, $this->blockName );
 	}
@@ -78,5 +81,21 @@ abstract class AbstractBlock {
 		}
 
 		return $block_content;
+	}
+
+	protected function validateHeadingHTMLTag( $tag ) {
+
+		$allowed_tags = array(
+			'h1',
+			'h2',
+			'h3',
+			'h4',
+			'h5',
+			'h6',
+			'span',
+			'p',
+		);
+
+		return in_array( strtolower( $tag ), $allowed_tags ) ? $tag : 'span';
 	}
 }

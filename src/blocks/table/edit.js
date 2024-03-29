@@ -18,7 +18,7 @@ import './editor.scss';
 */
 const { compose } = wp.compose;
 const { Component } = wp.element;
-const { ToolbarGroup, ToolbarItem, DropdownMenu, TextControl, Button, Placeholder } = wp.components;
+const { ToolbarGroup, ToolbarDropdownMenu, TextControl, Button, Placeholder } = wp.components;
 const { RichText, BlockControls, BlockIcon, withColors } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
@@ -325,7 +325,10 @@ class GetwidTable extends Component {
 				|| borderBottomWidth
 				|| borderLeftWidth;
 		}
-		return width ? width : undefined;
+
+		width = parseInt(width);
+
+		return isNaN(width) ? undefined : width;
 	}
 
 	setupBorderWidth(styles, style, getStyle) {
@@ -344,6 +347,7 @@ class GetwidTable extends Component {
 				}
 			} );
 		}
+
 		return styles;
 	}
 
@@ -421,9 +425,7 @@ class GetwidTable extends Component {
 			const cell = attributes[section][rowIdx].cells[columnIdx];
 
 			if ( isEqual( style, 'borderWidth' ) ) {
-				return parseInt(
-					this.getBorderWidth( this.getStyles( cell ) )
-				);
+				return this.getBorderWidth( this.getStyles( cell ) );
 			}
 			const value = this.getStyle( cell, style );
 			return /px/.test( value )
@@ -441,7 +443,7 @@ class GetwidTable extends Component {
 
 			let cellsStyle;
 			cellsStyle = isEqual( style, 'borderWidth' )
-				? parseInt( this.getBorderWidth( this.getStyles( head( selected ) ) ) )
+				? this.getBorderWidth( this.getStyles( head( selected ) ) )
 				: this.getStyle(
 					head( selected ),
 					style
@@ -450,7 +452,7 @@ class GetwidTable extends Component {
 			let hasCommonStyle = selected.every( cell => {
 				if ( cell.styles ) {
 					const value = isEqual( style, 'borderWidth' )
-						? parseInt( this.getBorderWidth( this.getStyles( cell ) ) )
+						? this.getBorderWidth( this.getStyles( cell ) )
 						: this.getStyle(
 							cell,
 							style
@@ -666,7 +668,7 @@ class GetwidTable extends Component {
 									cIndex,
 									'verticalAlign'
 								);
-							} else if ( style.borderWidth ) {
+							} else if ( !isNaN(style.borderWidth) ) {
 								styles = this.setupBorderWidth(
 									styles,
 									style,
@@ -968,14 +970,10 @@ class GetwidTable extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 
-		const { isSelected: isSelectedBlock } = this.props;
-		const { selectedCell, updated } = this.state;
+		const { isSelected } = this.props;
+		const { updated } = this.state;
 
-		const isSelected = selectedCell
-			|| this.isRangeSelected()
-			|| this.isMultiSelected();
-
-		if ( !isSelectedBlock && isSelected ) {
+		if ( prevProps.isSelected && !isSelected ) {
 			this.setState({
 				selectedCell: null,
 				rangeSelected: null,
@@ -1019,6 +1017,22 @@ class GetwidTable extends Component {
 			this.setState({
 				selectedCell: null,
 				selectedSection: null
+			});
+		}
+	}
+
+	onCellSelect(cell) {
+		const { updated } = this.state;
+		if ( !updated ) {
+			const { minColIdx, maxColIdx } = this.table.getIndices( cell.section, cell.rowIdx, cell.columnIdx );
+
+			this.setState({
+				selectedCell: {
+					...cell,
+					minColIdx: minColIdx,
+					maxColIdx: maxColIdx
+				},
+				selectedSection: cell.section
 			});
 		}
 	}
@@ -1134,21 +1148,8 @@ class GetwidTable extends Component {
 								className={ `${baseClass}__cell` }
 								value={ content }
 								onChange={ value => this.onUpdateTableContent( value ) }
-								unstableOnFocus={ () => {
-									const { updated } = this.state;
-									if ( !updated ) {
-										const { minColIdx, maxColIdx } = this.table.getIndices( section, rIndex, cIndex );
-
-										this.setState({
-											selectedCell: {
-												...cell,
-												minColIdx: minColIdx,
-												maxColIdx: maxColIdx
-											},
-											selectedSection: section
-										});
-									}
-								} }
+								unstableOnFocus={ () => this.onCellSelect( cell ) }
+								onFocus={ () => this.onCellSelect( cell ) }
 								allowedFormats={ selectedCell
 									? allowedFormats
 									: []
@@ -1213,29 +1214,31 @@ class GetwidTable extends Component {
 			<>
 				<BlockControls>
 					<ToolbarGroup>
-						<DropdownMenu
+						<ToolbarDropdownMenu
 							hasArrowIndicator
-							icon='editor-table'
+							icon='edit'
 							label={ __( 'Edit Table', 'getwid' ) }
 							controls={ this.getTableControlls() }
 						/>
 					</ToolbarGroup>
                 </BlockControls>
-				<Inspector {...{
-					inRange,
-					inMulti,
-					getCellStyle,
-					toggleSection,
-					getSelectedCell,
-					isRangeSelected,
-					isMultiSelected,
-					selectedSection,
-					getParsedStyles,
-					updateCellsStyles,
-					changeState,
-					getIndices,
-					...this.props
-				}} key={ 'inspector' }/>
+				<Inspector
+					{ ...{
+						inRange,
+						inMulti,
+						getCellStyle,
+						toggleSection,
+						getSelectedCell,
+						isRangeSelected,
+						isMultiSelected,
+						selectedSection,
+						getParsedStyles,
+						updateCellsStyles,
+						changeState,
+						getIndices,
+						...this.props
+					} }
+				/>
 				<div
 					className={ classnames( className, {
 						[ `has-table-layout-${tableLayout}` ]: tableLayout,
@@ -1268,6 +1271,13 @@ class GetwidTable extends Component {
 							setAttributes({ caption: value })
 						}
 						unstableOnFocus={ () =>
+							this.setState({
+								selectedCell: null,
+								rangeSelected: null,
+								multiSelected: null
+							})
+						}
+						onFocus={ () =>
 							this.setState({
 								selectedCell: null,
 								rangeSelected: null,

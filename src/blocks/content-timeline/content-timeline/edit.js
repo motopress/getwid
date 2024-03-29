@@ -4,7 +4,7 @@
 import { __ } from 'wp.i18n';
 
 import { isEqual, get } from 'lodash';
-
+import { getScrollableClassName } from 'GetwidUtils/help-functions';
 /**
  * Internal dependencies
  */
@@ -19,7 +19,7 @@ const { compose } = wp.compose;
 const { withSelect, withDispatch } = wp.data;
 
 const { withColors, InnerBlocks, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
-const { Component, Fragment, createContext } = wp.element;
+const { Component, Fragment, createContext, createRef } = wp.element;
 
 const { Button } = wp.components;
 const { createBlock } = wp.blocks;
@@ -42,10 +42,12 @@ class GetwidTimeline extends Component {
 		super(...arguments);
 
 		this.updateLineHeight = this.updateLineHeight.bind( this );
-		this.updateBarHeight  = this.updateBarHeight .bind( this );
+		this.updateBarHeight = this.updateBarHeight.bind( this );
 		this.setColorByScroll = this.setColorByScroll.bind( this );
-		this.changeState      = this.changeState     .bind( this );
-		this.addItem          = this.addItem         .bind( this );
+		this.changeState = this.changeState.bind( this );
+		this.addItem = this.addItem.bind( this );
+
+		this.timelineRef = createRef();
 
 		this.state = {
 			isLockedPaddings: false
@@ -61,11 +63,11 @@ class GetwidTimeline extends Component {
 	}
 
 	getColor() {
-		const { getEditorSettings } = this.props;
+		const { getSettings } = this.props;
 		const { fillColor, customFillColor } = this.props.attributes;
 
 		if ( fillColor ) {
-			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
+			const editorColors = get( getSettings(), [ 'colors' ], [] );
 			return getColorObjectByAttributeValues( editorColors, fillColor ).color;
 
 		} else if ( customFillColor ) {
@@ -87,12 +89,17 @@ class GetwidTimeline extends Component {
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-					...{ isLockedPaddings },
-					...{ changeState }
-				} } key={ 'inspector' } />
-				<div className={`${className}`}>
+				<Inspector
+					{ ...{
+						...this.props,
+						isLockedPaddings,
+						changeState
+					} }
+				/>
+				<div
+					ref={ this.timelineRef }
+					className={ className }
+				>
 					<div className={`${baseClass}__line`}>
 						<div className={`${baseClass}__bar`} {...lineStyle}></div>
 					</div>
@@ -105,15 +112,15 @@ class GetwidTimeline extends Component {
 							]}
 							templateLock={false}
 
-							renderAppender={() => (
-								<div className={`${baseClass}__add-item`}>
+							renderAppender={ () => (
+								<div className={ `${baseClass}__add-item` }>
 									<Button
 										icon='insert'
-										onClick={this.addItem}
-										label={__( 'Add Item', 'getwid' )}
+										onClick={ this.addItem }
+										label={ __( 'Add Item', 'getwid' ) }
 									/>
 								</div>
-							)}
+							) }
 						/>
 					</Provider>
 				</div>
@@ -134,7 +141,7 @@ class GetwidTimeline extends Component {
 		}
 	}
 
-	componentDidUpdate(prevProps, prevState) { //CHECK
+	componentDidUpdate(prevProps, prevState) {
 		const { clientId } = this.props;
 		const { getBlock, updateBlockAttributes } = this.props;
 
@@ -145,7 +152,8 @@ class GetwidTimeline extends Component {
 			innerBlocks = block.innerBlocks;
 		}
 
-		const $block = $( `#block-${clientId}` );
+		const $block = $( this.timelineRef.current );
+		const currentWindow = this.timelineRef.current.ownerDocument.defaultView;
 
 		/* #region update inner blocks attributes */
 		const { backgroundColor, customBackgroundColor } = this.props.attributes;
@@ -189,7 +197,7 @@ class GetwidTimeline extends Component {
 
 			const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
 
-			if ( $.parseJSON( filling ) ) {
+			if ( JSON.parse( filling ) ) {
 				const updateFilling = () => {
 					this.setColorByScroll( $block );
 					this.updateBarHeight ( $block );
@@ -197,9 +205,9 @@ class GetwidTimeline extends Component {
 
 				updateFilling();
 
-				$root.scroll(() => {
+				$root.on( 'scroll', () => {
 					updateFilling();
-				});
+				} );
 			} else {
 				$root.off();
 				this.disableFilling( $block );
@@ -214,7 +222,7 @@ class GetwidTimeline extends Component {
 			const borderColor = this.getColor();
 
 			$.each($points, (index, point) => {
-				if ( $( point ).offset().top <= $( window ).height() / 2 ) {
+				if ( $( point ).offset().top <= $( currentWindow ).height() / 2 ) {
 					$( point ).find( ':first-child' ).css({
 						borderColor: borderColor ? borderColor : ''
 					});
@@ -225,9 +233,8 @@ class GetwidTimeline extends Component {
 	}
 
 	updateLineHeight() {
-		const { clientId } = this.props;
 
-		const $block = $( `#block-${clientId}` );
+		const $block = $( this.timelineRef.current );
 		const $points = $block.find( 'div[class$=__point]' );
 
 		let lineHeight = 0;
@@ -251,16 +258,19 @@ class GetwidTimeline extends Component {
 	updateBarHeight($block) {
 
 		const $points = $block.find( 'div[class$=__point]' );
-		const $bar    = $block.find( 'div[class$=__line]').find( 'div[class$=__bar]');
+		const $bar = $block.find( 'div[class$=__line]').find( 'div[class$=__bar]');
+		const currentWindow = this.timelineRef.current?.ownerDocument.defaultView;
+
+		if( $bar.length === 0 || ! currentWindow ) return;
 
 		const barOffsetTop = $bar.offset().top;
-		const viewportHeightHalf = $( window ).height() / 2;
+		const viewportHeightHalf = $( currentWindow ).height() / 2;
 
 		const [ first, ...rest ] = $points.toArray();
 
 		if ( !first ) return;
 
-		const barHeight = viewportHeightHalf - $( first ).offset().top;
+		const barHeight = viewportHeightHalf - first.getBoundingClientRect().top;
 
 		if ( rest.length ) {
 			const last = rest.slice( -1 ).pop();
@@ -284,18 +294,21 @@ class GetwidTimeline extends Component {
 	setColorByScroll($block) {
 		const { baseClass } = this.props;
 		const $points = $block.find( 'div[class$=__point]' );
+		const currentWindow = this.timelineRef.current?.ownerDocument.defaultView;
+
+		if ( ! currentWindow ) return;
 
 		const [ first, ...rest ] = $points.get();
 		if ( rest.length ) {
 			$.each( $points, (index, point) => {
 
-				const pointOffsetTop = $( point ).offset().top;
+				const pointOffsetTop = point.getBoundingClientRect().top;
 				const item = $( point ).parents( `.${baseClass}-item` )[ 0 ];
 
 				const color = this.getColor();
 				const pointHeightHalf = $( point ).height() / 2;
 
-				if ( pointOffsetTop <= $( window ).height() / 2 + pointHeightHalf ) {
+				if ( pointOffsetTop <= $( currentWindow ).height() / 2 + pointHeightHalf ) {
 					if ( !$( item ).hasClass( 'is-active' ) ) {
 						$( item ).addClass( 'is-active' );
 					}
@@ -327,21 +340,22 @@ class GetwidTimeline extends Component {
 
 	componentDidMount() {
 		const { clientId } = this.props;
-		const $block = $( `#block-${clientId}` );
+		const $timeline = $( this.timelineRef.current );
+		const root = getScrollableClassName();
+		const currentDocument = this.timelineRef.current.ownerDocument;
 
 		const { filling } = this.props.attributes;
 
-		if ( $.parseJSON( filling ) ) {
+		if ( JSON.parse( filling ) ) {
 			this.waitLoadMarkup = setInterval( () => {
-				const $wrappers = $block.find( 'div[class*=__wrapper]' );
+				const $wrappers = $timeline.find( 'div[class*=__wrapper]' );
 
 				if ( $wrappers.length ) {
-					const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
-
-					$root.scroll(() => {
-						this.setColorByScroll( $block );
-						this.updateBarHeight ( $block );
-					});
+					const $root = $( currentDocument.querySelector(`.${root}`) || currentDocument );
+					$root.on( 'scroll', () => {
+						this.setColorByScroll( $timeline );
+						this.updateBarHeight( $timeline );
+					} );
 
 					clearInterval( this.waitLoadMarkup );
 				}
@@ -349,17 +363,14 @@ class GetwidTimeline extends Component {
 		}
 
 		this.waitLoadContent = setInterval( () => {
-			if ( document.readyState == 'complete' ) {
+			if ( currentDocument.readyState == 'complete' ) {
 				this.updateLineHeight();
 
-				const { className } = this.props;
-				const $timeLine = $block.find( `.${className}` );
-
 				const { filling } = this.props.attributes;
-				if ( $.parseJSON( filling ) ) {
+				if (JSON.parse( filling ) ) {
 
-					this.setColorByScroll( $block );
-					this.updateBarHeight ( $block );
+					this.setColorByScroll( $timeline );
+					this.updateBarHeight ( $timeline );
 				}
 
 				/* #region mutation observer */
@@ -385,10 +396,10 @@ class GetwidTimeline extends Component {
 											this.updateLineHeight();
 
 											const { filling } = this.props.attributes;
-											if ( $.parseJSON( filling ) ) {
+											if ( JSON.parse( filling ) ) {
 
-												this.setColorByScroll( $block );
-												this.updateBarHeight ( $block );
+												this.setColorByScroll( $timeline );
+												this.updateBarHeight ( $timeline );
 											}
 										}
 									}
@@ -397,10 +408,14 @@ class GetwidTimeline extends Component {
 						}
 				} ) } );
 
-				this.mutationObserver.observe( $timeLine.get( 0 ), {
-					childList: true,
-					subtree: true
-				} );
+				const timeline = $timeline.get( 0 );
+
+				if ( timeline ) {
+					this.mutationObserver.observe( timeline, {
+						childList: true,
+						subtree: true
+					} );
+				}
 				/* #endregion */
 
 				clearInterval( this.waitLoadContent );
@@ -409,23 +424,15 @@ class GetwidTimeline extends Component {
 	}
 
 	componentWillUnmount() {
-		const { className, clientId } = this.props;
-
-		const $block = $( `#block-${clientId}` );
-		const $timeLine = $block.find( `.${className}` );
-
-		this.mutationObserver.disconnect( $timeLine.get( 0 ) );
-
-		const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
-		$root.off();
+		this.mutationObserver.disconnect();
 	}
 }
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings } = select( 'core/block-editor' );
+		const { getBlock, getSettings } = select( 'core/block-editor' );
 		return {
-			getEditorSettings,
+			getSettings,
 			getBlock
 		};
 	} ),

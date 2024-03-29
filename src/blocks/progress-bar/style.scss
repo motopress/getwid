@@ -1,3 +1,7 @@
+/*!
+ * getwid-progress-bar
+ */
+
 .wp-block-getwid-progress-bar {
 	width: 100%;
 	position: relative;
@@ -16,7 +20,10 @@
 	}
 
 	&__percent {
+		/*rtl:begin:remove*/
 		margin-left: auto;
+		/*rtl:end:remove*/
+		/*rtl:raw: margin-right: 5%; */
 	}
 
 	&__bar {

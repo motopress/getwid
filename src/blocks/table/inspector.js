@@ -83,7 +83,7 @@ class Inspector extends Component {
 	}
 
 	render() {
-		
+
 		const {
 			attributes: {
 				head,
@@ -286,8 +286,8 @@ class Inspector extends Component {
 									/>
 									<RangeControl
 										label={ __( 'Border Width', 'getwid' ) }
-										value={ getCellStyle( 'borderWidth' ) || '' }
-										min={1}
+										value={ getCellStyle( 'borderWidth' ) }
+										min={0}
 										max={10}
 										onChange={ value => updateCellsStyles({
 											borderWidth: value

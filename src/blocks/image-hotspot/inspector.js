@@ -76,11 +76,12 @@ class Inspector extends Component {
 
 			//Functions
 			onCancelPoint,
-			updateArrValues,
+			updatePoint,
 			changeImageSize,
 			changeState,
 			getState,
-			onSelectMedia
+			onSelectMedia,
+			hasSelectedPoint
 		} = this.props;
 
 		const { tabName } = this.state;
@@ -112,26 +113,32 @@ class Inspector extends Component {
 								<Fragment>
 									{renderPointsFields( index, true )}
 									<ButtonGroup>
-										<Button isPrimary onClick={
-											() => changeState({
-												updatePoints: true,
-												editModal: false,
-												action: false
-											})
-										}>
+										<Button
+											isPrimary
+											onClick={
+												() => changeState({
+													updatePoints: true,
+													editModal: false,
+													action: false
+												})
+											}
+										>
 											{getState( 'action' ) == 'drop' ? __( 'Save', 'getwid' ) : __( 'Update', 'getwid' )}
 										</Button>
 
 										{getState( 'action' ) == 'drop' && (
-											<Button isDefault onClick={
-												() => {
-													changeState({
-														action: false,
-														editModal: false
-													});
-													onCancelPoint();
+											<Button
+												isSecondary
+												onClick={
+													() => {
+														changeState({
+															action: false,
+															editModal: false
+														});
+														onCancelPoint();
+													}
 												}
-											}>
+											>
 												{ __( 'Cancel', 'getwid' ) }
 											</Button>
 										)}
@@ -150,41 +157,39 @@ class Inspector extends Component {
 					label={__('Title', 'getwid')}
 					value={ imagePointsParsed[ index ].title }
 					onChange={ value => {
-						updateArrValues( { title: value }, index );
+						updatePoint( index, { title: value } );
 					} }
 				/>
-				<Fragment>
-					<div className = {`components-base-control ${baseClass}__url-field`}>
-						<Dashicon className={`${baseClass}__url-icon`} icon="admin-links"/>
-						<TextControl
-							placeholder={ __( 'Enter URL', 'getwid' ) }
-							value={ imagePointsParsed[ index ].link }
-							onChange={value => {
-								updateArrValues( { link: value }, index );
-							}}
-						/>
-						<ToggleControl
-							label={ __( 'Open in New Tab', 'getwid' ) }
-							checked={imagePointsParsed[ index ].newTab }
-							onChange={ value => {
-								updateArrValues( { newTab: value }, index );
-							} }
-						/>
-					</div>
-				</Fragment>
+				<div className = {`components-base-control ${baseClass}__url-field`}>
+					<Dashicon className={`${baseClass}__url-icon`} icon="admin-links"/>
+					<TextControl
+						placeholder={ __( 'Enter URL', 'getwid' ) }
+						value={ imagePointsParsed[ index ].link }
+						onChange={value => {
+							updatePoint( index, { link: value });
+						}}
+					/>
+					<ToggleControl
+						label={ __( 'Open in New Tab', 'getwid' ) }
+						checked={imagePointsParsed[ index ].newTab }
+						onChange={ value => {
+							updatePoint( index, { newTab: value } );
+						} }
+					/>
+				</div>
 				<TextareaControl
 					label={__( 'Popup Content. Plain Text or HTML.', 'getwid' )}
 					rows='5'
 					value={unescape( imagePointsParsed[ index ].content )}
-					onChange={value => {
-						updateArrValues( { content: escape( value ) }, index );
+					onChange={ value => {
+						updatePoint( index, { content: escape( value ) } );
 					}}
 				/>
 				<ToggleControl
 					label={__( 'Opened by default', 'getwid' )}
 					checked={imagePointsParsed[ index ].popUpOpen}
 					onChange={ value => {
-						updateArrValues( { popUpOpen: value }, index );
+						updatePoint( index, { popUpOpen: value } );
 					}}
 				/>
 			</Fragment>
@@ -199,12 +204,13 @@ class Inspector extends Component {
 						if (typeof value == 'undefined'){
 							value = 50;
 						}
-						updateArrValues( {
-							position: {
+						updatePoint(
+							index,
+							{ position: {
 								x: parseFloat(value) + '%',
 								y: imagePointsParsed[ index ].position.y
-							}
-						}, index );
+							} }
+						);
 					} }
 					allowReset
 					min={0}
@@ -219,12 +225,13 @@ class Inspector extends Component {
 							value = 50;
 						}
 
-						updateArrValues({
-							position: {
+						updatePoint(
+							index,
+							{ position: {
 								x: imagePointsParsed[ index ].position.x,
 								y: parseFloat(value) + '%'
-							}
-						}, index );
+							} }
+						);
 					} }
 					allowReset
 					min={0}
@@ -242,7 +249,7 @@ class Inspector extends Component {
 							{ value: 'left'  , label: __( 'Left'  , 'getwid' ) }
 						] }
 						onChange={value => {
-							updateArrValues( { placement: value }, index );
+							updatePoint( index, { placement: value } );
 							changeState({
 								updatePoints: true,
 								highlightDot: true
@@ -259,22 +266,22 @@ class Inspector extends Component {
 							{ value: 'bottom', label: __( 'Bottom', 'getwid' ) },
 							{ value: 'left'  , label: __( 'Left'  , 'getwid' ) }
 						]}
-						onChange={value => {
-							updateArrValues( { placement: value }, index );
+						onChange={ value => {
+							updatePoint( index, { placement: value } );
 							changeState({
 								updatePoints: true,
 								highlightDot: true,
 							});
-						}}
+						} }
 					/>
 				)}
 				<TextControl
 					label={__( 'Popup Maximum Width, px.', 'getwid' )}
 					value={ imagePointsParsed[ index ].popUpWidth }
 					type='number'
-					onChange={value => {
-						updateArrValues( { popUpWidth: value }, index );
-					}}
+					onChange={ value => {
+						updatePoint( index, { popUpWidth: value } );
+					} }
 				/>
 			</Fragment>
 		);
@@ -287,7 +294,7 @@ class Inspector extends Component {
 					<GetwidIconPicker
 						value={ imagePointsParsed[ index ].icon }
 						onChange={value => {
-							updateArrValues( { icon: value }, index );
+							updatePoint( index, { icon: value } );
 							changeState({
 								updatePoints: true,
 								highlightDot: true
@@ -300,7 +307,7 @@ class Inspector extends Component {
 							title: __( 'Point Background', 'getwid' ),
 							colors: { customColor: imagePointsParsed[ index ].backgroundColor },
 							changeColor: value => {
-								updateArrValues( { backgroundColor: value }, index );
+								updatePoint( index, { backgroundColor: value } );
 								changeState({
 									updatePoints: true,
 									highlightDot: true
@@ -310,7 +317,7 @@ class Inspector extends Component {
 							title: __( 'Icon Color', 'getwid' ),
 							colors: { customColor: imagePointsParsed[ index ].color },
 							changeColor: value => {
-								updateArrValues( { color: value }, index );
+								updatePoint( index, { color: value } );
 								changeState({
 									updatePoints: true,
 									highlightDot: true
@@ -405,90 +412,88 @@ class Inspector extends Component {
 		return (
 			<InspectorControls>
 
-				{(!this.props.isSelectedPoint() ) && (
+				{ ( ! hasSelectedPoint ) && (
 					<GetwidCustomTabsControl
 						state={tabName}
 						stateName={'tabName'}
 						onChangeTab={changeTabState}
 						tabs = {[ 'general', 'style', 'advanced' ]}
 					/>
-				)}
-
-				{(tabName === 'general' && !this.props.isSelectedPoint()) && (
-					<Fragment>
-						<PanelBody initialOpen={true}>
-							<GetwidMediaControl
-								label={__( 'Image', 'getwid' )}
-								removeButton={false}
-								url={url}
-								id={id}
-								onSelectMedia={onSelectMedia}
-								onRemoveMedia={() => setAttributes({
-									url: undefined,
-									id : undefined
-								})}
-							/>
-							{imgObj && (
-								<SelectControl
-									label={__( 'Image Size', 'getwid' )}
-									help={__( 'For images from Media Library only.', 'getwid' )}
-									value={imageSize}
-									onChange={onChangeImageSize}
-									options={Getwid.settings.image_sizes}
-								/>
-							)}
-							<RadioControl
-								label={__( 'Tooltip Interactivity', 'getwid' )}
-								help={__( 'These options are applied on frontend only.', 'getwid' )}
-								selected={tooltipTrigger}
-								options={[
-									{ value: 'hover'   , label: __( 'Hover'           , 'getwid' ) },
-									{ value: 'click'   , label: __( 'Click'           , 'getwid' ) },
-									{ value: 'multiple', label: __( 'Click (Multiple)', 'getwid' ) }
-								]}
-								onChange={tooltipTrigger => setAttributes({ tooltipTrigger })}
-							/>
-							<BaseControl
-								label={__( 'Point Icon', 'getwid' )}
-							>
-								<GetwidIconPicker
-									value={dotIcon}
-									onChange={dotIcon => setAttributes({ dotIcon })}
-								/>
-							</BaseControl>
-							<RangeControl
-								label={__( 'Point Size', 'getwid' )}
-								value={dotSize}
-								onChange={dotSize => {
-									if ( typeof dotSize == 'undefined' ) {
-										dotSize = 16;
-									}
-									setAttributes({ dotSize });
-								}}
-								allowReset
-								min={2}
-								max={64}
-								step={1}
-							/>
-							<RangeControl
-								label={__( 'Point Spacing', 'getwid' )}
-								value={dotPaddings}
-								onChange={dotPaddings => {
-									if (typeof dotPaddings == 'undefined') {
-										dotPaddings = 6;
-									}
-									setAttributes({ dotPaddings });
-								}}
-								allowReset
-								min={2}
-								max={100}
-								step={1}
-							/>
-						</PanelBody>
-					</Fragment>
 				) }
 
-				{ (tabName === 'style' && !this.props.isSelectedPoint()) && (
+				{ ( tabName === 'general' && ! hasSelectedPoint ) && (
+					<PanelBody initialOpen={true}>
+						<GetwidMediaControl
+							label={__( 'Image', 'getwid' )}
+							removeButton={false}
+							url={url}
+							id={id}
+							onSelectMedia={onSelectMedia}
+							onRemoveMedia={() => setAttributes({
+								url: undefined,
+								id : undefined
+							})}
+						/>
+						{imgObj && (
+							<SelectControl
+								label={__( 'Image Size', 'getwid' )}
+								help={__( 'For images from Media Library only.', 'getwid' )}
+								value={imageSize}
+								onChange={onChangeImageSize}
+								options={Getwid.settings.image_sizes}
+							/>
+						)}
+						<RadioControl
+							label={__( 'Tooltip Interactivity', 'getwid' )}
+							help={__( 'These options are applied on frontend only.', 'getwid' )}
+							selected={tooltipTrigger}
+							options={[
+								{ value: 'hover'   , label: __( 'Hover'           , 'getwid' ) },
+								{ value: 'click'   , label: __( 'Click'           , 'getwid' ) },
+								{ value: 'multiple', label: __( 'Click (Multiple)', 'getwid' ) }
+							]}
+							onChange={tooltipTrigger => setAttributes({ tooltipTrigger })}
+						/>
+						<BaseControl
+							label={__( 'Point Icon', 'getwid' )}
+						>
+							<GetwidIconPicker
+								value={dotIcon}
+								onChange={dotIcon => setAttributes({ dotIcon })}
+							/>
+						</BaseControl>
+						<RangeControl
+							label={__( 'Point Size', 'getwid' )}
+							value={dotSize}
+							onChange={dotSize => {
+								if ( typeof dotSize == 'undefined' ) {
+									dotSize = 16;
+								}
+								setAttributes({ dotSize });
+							}}
+							allowReset
+							min={2}
+							max={64}
+							step={1}
+						/>
+						<RangeControl
+							label={__( 'Point Spacing', 'getwid' )}
+							value={dotPaddings}
+							onChange={dotPaddings => {
+								if (typeof dotPaddings == 'undefined') {
+									dotPaddings = 6;
+								}
+								setAttributes({ dotPaddings });
+							}}
+							allowReset
+							min={2}
+							max={100}
+							step={1}
+						/>
+					</PanelBody>
+				) }
+
+				{ ( tabName === 'style' && ! hasSelectedPoint ) && (
 					<PanelBody initialOpen={true}>
 						<GetwidCustomColorPalette
 							colorSettings={[{
@@ -524,7 +529,7 @@ class Inspector extends Component {
 					</PanelBody>
 				)}
 
-				{ (tabName === 'advanced' && !this.props.isSelectedPoint()) && (
+				{ ( tabName === 'advanced' && ! hasSelectedPoint) && (
 					<Fragment>
 						<PanelBody initialOpen={true}>
 							<SelectControl
@@ -590,21 +595,14 @@ class Inspector extends Component {
 
 				{renderEditModal  ( getState( 'currentPoint' ) )}
 
-				{this.props.isSelectedPoint() && (
+				{ hasSelectedPoint && (
 					<PanelBody title={ __( 'Point Settings', 'getwid' ) } initialOpen={true}>
 						{renderPointSettingsPanel( this )}
 					</PanelBody>
-				)}
+				) }
 			</InspectorControls>
 		);
 	}
 }
 
-export default compose( [
-	withSelect( ( select, props ) => {
-		const { getEditorSettings } = select( 'core/editor' );
-		return {
-			getEditorSettings
-		};
-	} )
-] )( Inspector );
+export default Inspector;

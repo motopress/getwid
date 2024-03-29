@@ -37,7 +37,6 @@ class Toggle extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.updateParentOptions = this.updateParentOptions.bind( this );
 		this.renderConstructorForm = this.renderConstructorForm.bind( this );
 		this.onConstructToggle = this.onConstructToggle.bind( this );
 		this.changeState = this.changeState.bind( this );
@@ -114,11 +113,13 @@ class Toggle extends Component {
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-					...{ changeState },
-					...{ getState }
-				} } key={ 'inspector' } />
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState,
+						getState
+					} }
+				/>
 				<div
 					className={classnames(className, {
 						'has-icon-left': iconPosition === 'left'
@@ -206,17 +207,12 @@ class Toggle extends Component {
 		}
 	}
 
-	updateParentOptions() {
-		const { clientId } = this.props;
-		const $block = $( `#block-${clientId}` );
-	}
 }
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings } = select( 'core/block-editor' );
+		const { getBlock } = select( 'core/block-editor' );
 		return {
-			getEditorSettings,
 			getBlock
 		};
 	} ),

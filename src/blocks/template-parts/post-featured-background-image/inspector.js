@@ -307,7 +307,8 @@ export default class Inspector extends Component {
 				//Content
 				minHeight,
 				contentMaxWidth,
-				imageSize
+				imageSize,
+				linkTo
 			},
 			setAttributes,
 			changeState,
@@ -339,7 +340,7 @@ export default class Inspector extends Component {
 						min={0}
 						max={2000}
 						step={1}
-					/>		
+					/>
 
 					<SelectControl
 						label={__('Image Size', 'getwid')}
@@ -349,7 +350,17 @@ export default class Inspector extends Component {
 							setAttributes( { imageSize: value } );
 						}}
 						options={Getwid.settings.image_sizes}
-					/>							
+					/>
+
+					<SelectControl
+						label={__('Link to', 'getwid')}
+						value={linkTo}
+						onChange={linkTo => setAttributes({linkTo})}
+						options={[
+							{value: 'none', label: __('None', 'getwid'), },
+							{value: 'post', label: __('Post', 'getwid'), },
+						]}
+					/>
 				</PanelBody>
 
 				{this.renderAlignmentSettings()}
@@ -357,7 +368,7 @@ export default class Inspector extends Component {
 				{renderPaddingsPanelWithTabs(this)}
 
 				{this.renderForegroundSettings()}
-								
+
 			</InspectorControls>
 		);
 	}

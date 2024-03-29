@@ -1,3 +1,7 @@
+/*!
+ * getwid-icon
+ */
+
 import getwid_animate from 'GetwidUtils/animate';
 
 (function($){
@@ -16,7 +20,7 @@ import getwid_animate from 'GetwidUtils/animate';
 				//Add init class
 				$(el).addClass('getwid-init');
 
-				$('.getwid-animation.wp-block-getwid-icon__wrapper').mouseenter(function(){
+				$('.getwid-animation.wp-block-getwid-icon__wrapper').on( 'mouseenter', function(){
 					getwid_animate($(this), {
 						animation: $(this).attr('data-animation')
 					});

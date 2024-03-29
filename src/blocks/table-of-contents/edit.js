@@ -10,12 +10,11 @@ import './editor.scss'
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-const {Component, Fragment} = wp.element;
-const {select, dispatch} = wp.data;
-const {registerBlockType, getBlockContent, createBlock} = wp.blocks;
-const {IconButton, Placeholder, Button, Toolbar} = wp.components;
-const {BlockControls, RichText} = wp.blockEditor || wp.editor;
+const { Component, Fragment } = wp.element;
+const { select } = wp.data;
+const { getBlockContent } = wp.blocks;
+const { Placeholder, Button, ToolbarGroup, ToolbarButton } = wp.components;
+const { BlockControls } = wp.blockEditor || wp.editor;
 
 /**
 * Module Constants
@@ -84,20 +83,17 @@ class Edit extends Component {
 			if (currentHeading[ 'level' ]) {
 				currentHeading[ 'level' ] -= 1;
 				currentHeading[ 'content' ] = heading.attributes.content.length	? getBlockContent( heading ).replace( /<(?:.|\n)*?>/gm, '' ) : '';
-				let lowerCaseText = unescape(currentHeading[ 'content' ].toLowerCase());
-				let headingID = lowerCaseText.replace(/[!@#$%^&*()\/\\,?":{}|<>]/g, "");
-				headingID = headingID.replace(/(amp;)+/g, "");
-				headingID = headingID.replace(/\s/g, "-");
-				headingID = heading.clientId.split('-')[heading.clientId.split('-').length - 1];
 
 				if (heading.attributes.anchor) {
 					currentHeading[ 'anchor' ] = heading.attributes.anchor;
 				} else {
-					currentHeading[ 'anchor' ] = headingID;
+					currentHeading[ 'anchor' ] = 'g' + heading.clientId.split('-')[heading.clientId.split('-').length - 1];
 					heading.attributes.anchor = currentHeading[ 'anchor' ];
 				}
+
 				headingDatas.push( currentHeading );
 			}
+
 			return heading;
 		} );
 
@@ -113,12 +109,8 @@ class Edit extends Component {
 				align,
 				allowedTags,
 				listStyle,
-			},
-			isSelected,
-			setAttributes,
+			}
 		} = this.props;
-
-		const { selectBlock } = dispatch( 'core/block-editor' );
 
 		const moveChildren = (arr, item) => {
 			if (arr.length === 0 || arr[0].level === item.level) {
@@ -141,7 +133,7 @@ class Edit extends Component {
 		};
 
 		const getNode = (list) => list.map(item => (
-			<li>
+			<li key={ item.anchor } >
 				<a
 					href={`#${item.anchor}`}
 				>
@@ -161,7 +153,6 @@ class Edit extends Component {
 		let tableContent;
 
 		if (headings.length > 0 && headings.filter(header => allowedTags[header.level]).length > 0) {
-			const { selectBlock } = dispatch( 'core/block-editor' );
 
 			tableContent = (
 				<div
@@ -178,14 +169,16 @@ class Edit extends Component {
 							className= {classnames(
 								`${baseClass}__list`,
 							)}
-						>{getNode(getHeadingArr(headings))}</ol>
+						>
+							{ getNode( getHeadingArr( headings ) ) }
+							</ol>
 					) : (
 						<ul
 							className= {classnames(
 								`${baseClass}__list`,
 							)}
 						>
-							{getNode(getHeadingArr(headings))}
+							{ getNode( getHeadingArr( headings ) ) }
 						</ul>
 					)}
 				</div>
@@ -198,10 +191,10 @@ class Edit extends Component {
 					instructions={__( 'Headings not found on this page.', 'getwid' )}
 				>
 					<Button
-						onClick={this.checkHeading}
-						className={'button'}
+						onClick={ this.checkHeading }
+						isSecondary
 					>
-						{__( 'Update', 'getwid' )}
+						{ __( 'Update', 'getwid' ) }
 					</Button>
 				</Placeholder>
 			);
@@ -209,17 +202,15 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				{!!headings.length && (
+				{ !!headings.length && (
 					<BlockControls>
-						<Toolbar>
-							<IconButton
-								className={'components-icon-button components-toolbar__control'}
-								icon={'update'}
-								label={__( 'Update', 'getwid' )}
-								onClick={this.checkHeading}
+						<ToolbarGroup>
+							<ToolbarButton
+								icon={ 'update' }
+								label={ __( 'Update', 'getwid' ) }
+								onClick={ this.checkHeading }
 							/>
-						</Toolbar>
-
+						</ToolbarGroup>
 					</BlockControls>
 				) }
 				<Inspector {...this.props} />

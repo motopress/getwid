@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class ImageSlider extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/images-slider';
+	private $assetsAlreadyEnqueued = false;
 
     public function __construct() {
 
@@ -53,8 +54,6 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
         //slick.min.css
 		if ( ! in_array( 'slick', $styles ) ) {
             array_push( $styles, 'slick' );
@@ -83,10 +82,15 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
         return $scripts;
     }
 
-    private function block_frontend_assets() {
+    public function block_frontend_assets() {
 
         if ( is_admin() ) {
             return;
+        }
+
+		//slick.min.js
+        if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
+            wp_enqueue_script('slick');
         }
 
 		//imagesloaded.min.js
@@ -94,10 +98,56 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
             wp_enqueue_script('imagesloaded');
         }
 
-		//slick.min.js
-        if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
-            wp_enqueue_script('slick');
-        }
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$deps = [
+			'slick', 'slick-theme'
+		];
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = 'slick';
+				$assets[] = 'slick-theme';
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		$rtl = is_rtl() ? '.rtl' : '';
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/images-slider/style' . $rtl . '.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/images-slider/frontend.js' ),
+            [ 'jquery', 'imagesloaded', 'slick' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
+		if ( !$this->assetsAlreadyEnqueued ) {
+			$inline_script =
+				'var Getwid = Getwid || {};' .
+				'Getwid["isRTL"] = ' . json_encode( is_rtl() ) . ';';
+
+			wp_add_inline_script(
+				self::$blockName,
+				$inline_script,
+				'before'
+			);
+		}
+
+		$this->assetsAlreadyEnqueued = true;
     }
 
     public function render_callback( $attributes, $content ) {

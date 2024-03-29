@@ -60,8 +60,14 @@ class Edit extends Component {
 			} else {
 				size = quality;
 			}
-			
-			src = get( media, [ 'sizes', size, 'url' ] ) || get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) || media.url || media.source_url;
+
+			src =
+				get( media, [ 'media_details', 'sizes', size, 'source_url' ] ) ||
+				get( media, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+				get( media, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+				get( media, [ 'sizes', size, 'url' ] ) ||
+				media.url ||
+				media.source_url;
 		}
 
 		if ( getUrl ) return src;
@@ -74,31 +80,9 @@ class Edit extends Component {
 		} );
 	}
 
-	componentWillReceiveProps( receiveProps ) {
-
-		const { imgObj } = this.props;
-		const { innerParent } = receiveProps.attributes;
-
-		if ( imgObj && innerParent ) {
-
-			const { onSelectMedia } = this;
-			const { imageSize } = innerParent.attributes;
-
-			if ( typeof this.props.attributes.innerParent != 'undefined' ) {
-				if  ( ! isEqual( imageSize, this.props.attributes.innerParent.attributes.imageSize ) ) {
-					receiveProps.attributes.mediaUrl = onSelectMedia( imgObj, true, imageSize );
-				}
-			}
-		}
-	}
-
 	renderMediaArea() {
 		const { attributes, baseClass, setAttributes } = this.props;
 		const { mediaAlt, mediaId, mediaType, mediaUrl, innerParent } = attributes;
-
-		if ( ! mediaType ) {
-			setAttributes( { mediaType: 'image' } );
-		}
 
 		return (
 			<MediaContainer
@@ -123,31 +107,19 @@ class Edit extends Component {
 				onSelectMedia( imgObj );
 			}
 		}
-		
+
 		if ( ! innerParent ) {
 			this.props.updateContentAttributes( this.props.clientId );
-		}		
+		}
 	}
 
 	render() {
 		const { className, isSelected, setAttributes } = this.props;
 		const { mediaAlt, mediaUrl, mediaType, innerParent } = this.props.attributes;
-		
-		const classNames = classnames( className, {
-			'is-selected': isSelected,		
-		} );
 
-		const onMediaAltChange = ( newMediaAlt ) => {
-			setAttributes( { mediaAlt: newMediaAlt } );
-		};
-		const mediaTextGeneralSettings = (
-			<Fragment>
-				{ mediaType === 'image' && ( <TextareaControl
-					value={ mediaAlt }
-					onChange={ onMediaAltChange }
-				/> ) }
-			</Fragment>
-		);
+		const classNames = classnames( className, {
+			'is-selected': isSelected,
+		} );
 
 		const contentStyle = {
 			color : innerParent != undefined && typeof innerParent.attributes.textColor != 'undefined' ? innerParent.attributes.textColor : null
@@ -155,9 +127,15 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector {...{ ...this.props, ...{ setAttributes }, ...{ onSelectMedia : this.onSelectMedia } } } key={ 'inspector' }/>
+				<Inspector
+					{ ...{
+						...this.props,
+						setAttributes,
+						...{ onSelectMedia : this.onSelectMedia }
+					} }
+				/>
 				<div className={ classNames } >
-					{ this.renderMediaArea() }		
+					{ this.renderMediaArea() }
 					<div className={ `${className}__content` } style={ contentStyle }>
 						<div className={ `${className}__content-wrapper` }>
 							{ mediaUrl && (

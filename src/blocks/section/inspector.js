@@ -25,7 +25,7 @@ const { select, withSelect } = wp.data;
 const { Component, Fragment } = wp.element;
 const { InspectorControls, MediaUpload, MediaPlaceholder, withColors } = wp.blockEditor || wp.editor;
 const { FocalPointPicker, BaseControl, Button, PanelBody, RangeControl, SelectControl, TextControl, CheckboxControl, RadioControl, ToggleControl, ButtonGroup, TabPanel, ExternalLink, ColorPalette, ColorIndicator, Dropdown, Dashicon } = wp.components;
-const { __experimentalGradientPicker: GradientPicker } = wp.components;
+const GradientPicker = wp.components.__experimentalGradientPicker || wp.components.GradientPicker; // since WP 5.9 we have to use non-experimental version of GradientPicker
 const { compose } = wp.compose;
 
 /**
@@ -80,7 +80,7 @@ class Inspector extends Component {
 	render() {
 		const { tabName, backgroundType, foregroundType } = this.state;
 
-		const { customBackgroundColor } = this.props.attributes;
+		const { customBackgroundColor, foregroundColor } = this.props.attributes;
 		const { setBackgroundColor, backgroundColor, clientId, getBlock } = this.props;
 
 		const { backgroundGradientFirstColor, backgroundGradientFirstColorLocation, backgroundGradientSecondColor, backgroundGradientSecondColorLocation, backgroundGradientType, backgroundGradientAngle } = this.props.attributes;
@@ -98,9 +98,8 @@ class Inspector extends Component {
 		const { setAttributes } = this.props;
 
 		//Gradient
-		let { backgroundGradient, foregroundGradient } = this.props.attributes;
-		backgroundGradient = prepareMultiGradientStyle('background', this.props);
-		foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
+		const backgroundGradient = prepareMultiGradientStyle('background', this.props);
+		const foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
 
 		if ( ! getBlock( clientId ) ) {
 			return (
@@ -109,7 +108,7 @@ class Inspector extends Component {
 		}
 
 		return (
-			<InspectorControls key='inspector'>
+			<InspectorControls>
 				<GetwidCustomTabsControl
 					state={tabName}
 					stateName='tabName'
@@ -178,6 +177,7 @@ class Inspector extends Component {
 													backgroundGradient: gradient
 												});
 											} }
+											__nextHasNoMargin
 											{ ...{
 												gradients,
 												disableCustomColors,
@@ -211,9 +211,15 @@ class Inspector extends Component {
 							/>
 
 							{ foregroundType === 'color' && (
-								<Fragment>
-									{this.renderForegroundColor()}
-								</Fragment>
+								<GetwidCustomColorPalette
+									colorSettings={[{
+										title: __( 'Overlay Color', 'getwid' ),
+										colors: {
+											customColor: foregroundColor
+										},
+										changeColor: foregroundColor => { setAttributes( { foregroundColor } ) }
+									}]}
+								/>
 							)}
 
 							{ foregroundType === 'image' && (
@@ -338,17 +344,17 @@ class Inspector extends Component {
 						<Dropdown
 							className={`${controlClass}__dropdown-action`}
 							contentClassName={`${controlClass}__dropdown-content`}
-							position="top right"
+							popoverProps={ { placement: "top-end" } }
 							renderToggle={({ isOpen, onToggle }) => (
 								<Button
-									isDefault
+									isSecondary
 									onClick={onToggle}
 								>
 									<Dashicon icon='admin-tools'/>
 								</Button>
 							)}
 							renderContent={() => (
-								<Fragment>
+								<div style={ { width: '200px', maxWidth: '90vw' } } >
 									<SelectControl
 										label={__( 'Position', 'getwid' )}
 										value={backgroundImagePosition !== undefined ? backgroundImagePosition : ''}
@@ -418,7 +424,7 @@ class Inspector extends Component {
 											{ value: 'auto'   , label: __( 'Auto'   , 'getwid' ) }
 										]}
 									/>
-								</Fragment>
+								</div>
 							)}
 						/>
 					</div>
@@ -855,11 +861,11 @@ class Inspector extends Component {
 		const { sliderImages, sliderAnimationEffect, sliderAnimationDuration, sliderAnimationSpeed } = this.props.attributes;
 		const { setAttributes } = this.props;
 
-		const renderSliderImages = sliderImages.map(img => {
+		const renderSliderImages = sliderImages.map( img => {
 		    return (
-		    	<img src={img.url} alt={img.alt}/>
+		    	<img key={ img.url } src={ img.url } alt={ img.alt }/>
 		    );
-		});
+		} );
 
 		return (
 			<Fragment>
@@ -881,9 +887,9 @@ class Inspector extends Component {
 						<MediaUpload
 							onSelect={ this.onSelectSliderImages }
 							multiple
-							gallery={true}
+							gallery={ true }
 							allowedTypes={ALLOWED_SLIDER_MEDIA_TYPES}
-							value={sliderImages !== undefined ? sliderImages.map( img => img.id ) : []}
+							value={ sliderImages !== undefined ? sliderImages.map( img => img.id ) : [] }
 							render={ ( { open } ) => (
 								<BaseControl>
 									{ !!sliderImages &&
@@ -899,7 +905,10 @@ class Inspector extends Component {
 											{__( 'Select Images', 'getwid' )}
 										</Button>
 
-										<Button onClick={ () => { setAttributes({ sliderImages: [] }) } } isDefault>
+										<Button
+											isSecondary
+											onClick={ () => { setAttributes({ sliderImages: [] }) } }
+										>
 											{ __( 'Remove', 'getwid' ) }
 										</Button>
 									</ButtonGroup>
@@ -972,7 +981,7 @@ class Inspector extends Component {
 						<TextControl
 							label={__('YouTube URL', 'getwid')}
 							placeholder={'https://youtube.com/watch?v=M7lc1UVf-VE'}
-							value={ youTubeVideoUrl }
+							value={ youTubeVideoUrl || '' }
 							onChange={youTubeVideoUrl => setAttributes({youTubeVideoUrl})}
 						/>
 					</Fragment>
@@ -1002,11 +1011,15 @@ class Inspector extends Component {
 								<BaseControl>
 									<Button
 										isPrimary
-										onClick={open}>
+										onClick={open}
+									>
 										{ __( 'Select Video', 'getwid' ) }
 									</Button>
 									{!!backgroundVideoUrl &&
-										<Button onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }} isDefault>
+										<Button
+											isSecondary
+											onClick={() => { setAttributes({ backgroundVideoUrl: undefined }) }}
+										>
 											{__( 'Remove', 'getwid' )}
 										</Button>
 									}
@@ -1107,7 +1120,7 @@ class Inspector extends Component {
 							render={({ open }) => (
 								<BaseControl>
 									<Button
-										isDefault
+										isSecondary
 										onClick={open}
 									>
 										{ ! backgroundVideoPoster  &&  __( 'Select Poster' , 'getwid' ) }
@@ -1176,35 +1189,6 @@ class Inspector extends Component {
 						{ value: 'luminosity' , label: __( 'Luminosity' , 'getwid' ) }
 					]}
 				/>
-			</Fragment>
-		);
-	}
-
-	renderForegroundColor() {
-
-		const { foregroundColor } = this.props.attributes;
-		const { setAttributes } = this.props;
-
-		const editorColors = get( select( 'core/editor' ).getEditorSettings(), [ 'colors' ], [] );
-
-		return (
-			<Fragment>
-				<BaseControl
-					label={__( 'Overlay Color', 'getwid' )}
-					className='components-getwid-color-palette-control'
-				>
-					{foregroundColor && (
-						<ColorIndicator colorValue={foregroundColor}/>
-					)}
-
-					<ColorPalette
-						colors= {editorColors }
-						value= {foregroundColor }
-						onChange= {foregroundColor => {
-							setAttributes({ foregroundColor });
-						}}
-					/>
-				</BaseControl>
 			</Fragment>
 		);
 	}
@@ -1387,16 +1371,12 @@ class Inspector extends Component {
 
 export default compose( [
 	withSelect( (select, props) => {
-		const { getEditorSettings } = select( 'core/editor' );
 
 		const settings = select( 'core/block-editor' ).getSettings();
 		const colorGradientSettings = pick( settings, COLOR_AND_GRADIENT_KEYS );
 
-		// debugger;
-
 		return {
-			colorGradientSettings,
-			getEditorSettings
+			colorGradientSettings
 		};
 	} ),
 	withColors( 'backgroundColor' )

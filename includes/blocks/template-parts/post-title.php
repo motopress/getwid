@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class PostTitle extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/template-post-title';
+	protected static $assetsHandle = 'getwid/template-parts';
 
     public function __construct() {
 
@@ -31,7 +32,7 @@ class PostTitle extends \Getwid\Blocks\AbstractBlock {
                         'type' => 'string'
                     ),
                     'customFontSize' => array(
-                        'type' => 'number'
+                        'type' => 'string'
                     ),
                     'bold' => array(
                         'type' => 'boolean'
@@ -57,6 +58,34 @@ class PostTitle extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+    public function block_frontend_assets() {
+
+        if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = self::$assetsHandle;
+
+				return $assets;
+			}
+		);
+
+		$rtl = is_rtl() ? '.rtl' : '';
+
+		wp_enqueue_style(
+			self::$assetsHandle,
+			getwid_get_plugin_url( 'assets/blocks/template-parts/style' . $rtl . '.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+    }
+
     public function render_callback( $attributes, $content ) {
 
         //Not BackEnd render if we view from template page
@@ -78,7 +107,7 @@ class PostTitle extends \Getwid\Blocks\AbstractBlock {
             $title_style .= 'text-align: ' . esc_attr( $attributes[ 'textAlignment' ] ) . ';';
         }
 
-        $is_back_end = \defined( 'REST_REQUEST' ) && REST_REQUEST && ! empty( $_REQUEST[ 'context' ] ) && 'edit' === $_REQUEST[ 'context' ];
+        $is_back_end = getwid_is_block_editor();
 
 
         $link_class = esc_attr( $block_name ) . '__link';
@@ -92,7 +121,8 @@ class PostTitle extends \Getwid\Blocks\AbstractBlock {
         }
 
         if ( isset( $attributes[ 'customFontSize' ] ) ) {
-            $title_style .= 'font-size: ' . esc_attr( $attributes[ 'customFontSize' ] ) . 'px;';
+			$font_size = is_numeric( $attributes['customFontSize'] ) ? $attributes['customFontSize'] . 'px' : $attributes['customFontSize'];
+            $title_style .= 'font-size: ' . esc_attr( $font_size ) . ';';
         }
 
         if ( isset( $attributes[ 'fontSize' ] ) ) {
@@ -102,7 +132,7 @@ class PostTitle extends \Getwid\Blocks\AbstractBlock {
         getwid_custom_color_style_and_class( $title_style, $title_class, $attributes, 'color', $is_back_end );
 
         $result = '';
-        $headerTag = $attributes[ 'headerTag' ];
+        $headerTag = $this->validateHeadingHTMLTag( $attributes[ 'headerTag' ] );
 
         $extra_attr = array(
             'headerTag'   => $headerTag,
@@ -118,6 +148,8 @@ class PostTitle extends \Getwid\Blocks\AbstractBlock {
 
             $result = ob_get_clean();
         }
+
+		$this->block_frontend_assets();
 
         return $result;
     }

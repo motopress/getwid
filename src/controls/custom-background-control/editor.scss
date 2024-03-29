@@ -1,4 +1,4 @@
-.edit-post-sidebar .components-getwid-background-types-control {
+.components-getwid-background-types-control {
 
 	.components-getwid-background-types-group{
 		display: flex;
@@ -8,27 +8,27 @@
 		align-content: center;
 		align-items: stretch;
 
-		button.components-button{			
+		button.components-button{
 			color: inherit;
 			padding: 10px;
 			height: auto;
 			order: 0;
 			flex: 1 1 auto;
 			align-self: auto;
-			display: flex;	
-			flex-direction: row;	
-			flex-wrap: nowrap;		
-			justify-content: center;		
-			align-content: center;		
-			align-items: stretch;	
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: center;
+			align-content: center;
+			align-items: stretch;
 			border-radius: 0px;
 			border: 1px solid #e2e4e7;
 
-			&.is-active,	
+			&.is-active,
 			&:hover{
 				background: #f3f4f5;
 				box-shadow: none;
-			}	
+			}
 
 			&.is-active{
 				border-bottom: 2px solid #0085ba;

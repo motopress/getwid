@@ -2,8 +2,7 @@
  * Internal dependencies
  */
 import Inspector from './inspector';
-import GoogleFontLoader from 'react-google-font-loader';
-import { isEqual } from "lodash";
+import GoogleFontLoader from 'GetwidUtils/google-fonts-loader';
 
 import './editor.scss';
 import './style.scss';
@@ -17,11 +16,11 @@ const {jQuery: $} = window;
 
 const { serverSideRender: ServerSideRender } = wp;
 const { compose } = wp.compose;
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createRef } = wp.element;
 const {
 	ToolbarGroup
 } = wp.components;
-const { BlockControls, AlignmentToolbar, withColors } = wp.blockEditor || wp.editor;
+const { BlockControls, withColors } = wp.blockEditor || wp.editor;
 
 
 /**
@@ -40,6 +39,8 @@ class Edit extends Component {
 		this.changeState = this.changeState.bind( this );
 		this.getState = this.getState.bind(this);
 		this.initCountdown = this.initCountdown.bind(this);
+
+		this.countdownRef = createRef();
 	}
 
 	changeState(param, value) {
@@ -50,21 +51,16 @@ class Edit extends Component {
 		}
 	}
 
-	getState (value) {
-		return this.state[value];
+	getState ( value ) {
+		return this.state[ value ];
 	}
 
-	initCountdown(isUpdate = false){
-		const {
-			clientId
-		} = this.props;
+	initCountdown( block ) {
 
-		const thisBlock = $(`[data-block='${clientId}']`);
+			let dataWrapper = $( `.${baseClass}__content:not('.init-countdown')`, block );
 
-		this.waitLoadCountdown = setInterval( () => {
+			if ( dataWrapper.length ) {
 
-			let dataWrapper = $( `.${baseClass}__content:not('.init-countdown')`, thisBlock );
-			if (dataWrapper.length){
 				dataWrapper.addClass('init-countdown');
 
 				var dateTime = dataWrapper.data('datetime');
@@ -103,40 +99,31 @@ class Edit extends Component {
 					dateFormat +='S';
 				}
 
-				if ( isUpdate && (typeof dataWrapper.countdown === "function") ) {
-					dataWrapper.countdown('destroy');
-				}
+				if ( typeof dataWrapper.countdown === "function" ) {
 
-				if ( typeof dataWrapper.countdown === "function") {
-					dataWrapper.countdown({
+					dataWrapper.countdown( {
 						until: dateTo,
 						format: dateFormat,
-						onTick: (e) =>{
-							var section = jQuery('.countdown-section', dataWrapper);
-							if (backgroundColor){
-								section.css('background-color', backgroundColor);
+						onTick: () => {
+							if ( backgroundColor ) {
+								$( '.countdown-section', dataWrapper ).css( 'background-color', backgroundColor );
 							}
 						}
-					});
+					} );
 				}
-				clearInterval(this.waitLoadCountdown);
 			}
-		}, 1);
-
 	}
 
 	componentDidMount() {
-		this.initCountdown(false);
-	}
+		const block = this.countdownRef.current;
 
-	componentDidUpdate(prevProps, prevState) {
-		if (!isEqual(this.props.attributes, prevProps.attributes)){
-			this.initCountdown(true);
-		}
-	}
+		const mutationObserver = new MutationObserver( () => {
+			this.initCountdown( block );
+		} );
 
-	componentWillUnmount() {
-		clearInterval(this.waitLoadCountdown);
+		mutationObserver.observe( block, {
+			childList: true
+		} );
 	}
 
 	render() {
@@ -194,10 +181,11 @@ class Edit extends Component {
 			<Fragment>
 				{ (shouldLoadGoogleFonts) && (
 					<GoogleFontLoader
-						fonts={[ {
+						blockRef={ this.countdownRef }
+						fonts={ [ {
 							font: fontFamily,
-							weights: [fontWeight]
-						} ]}
+							weights: [ fontWeight ]
+						} ] }
 					/>
 				)}
 				<BlockControls>
@@ -206,15 +194,20 @@ class Edit extends Component {
 					/>
 				</BlockControls>
 
-				<Inspector {...{
-					...this.props,
-					changeState
-				}} key='inspector'/>
-
-				<ServerSideRender
-					block="getwid/countdown"
-					attributes={this.props.attributes}
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState
+					} }
 				/>
+
+				<div ref={ this.countdownRef } >
+					<ServerSideRender
+						block="getwid/countdown"
+						attributes={ this.props.attributes }
+					/>
+				</div>
+
 			</Fragment>
 		);
 	}

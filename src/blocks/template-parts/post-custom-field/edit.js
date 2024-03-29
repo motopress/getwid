@@ -16,13 +16,11 @@ const {
 } = wp.element;
 const {
 	Disabled,
-	Toolbar,
+	ToolbarGroup,
 	withFallbackStyles
 } = wp.components;
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
-	BlockAlignmentToolbar,
 	AlignmentToolbar,
 	BlockControls,
 	withColors,
@@ -76,15 +74,13 @@ class Edit extends Component {
 		if (current_post_type && current_post_type == Getwid.templates.name){
 			return (
 				<Fragment>
-					<Inspector {...{
-						...this.props,
-					}} key='inspector'/>
+					<Inspector { ...this.props } />
 					<BlockControls>
 						<AlignmentToolbar
 							value={ textAlignment }
 							onChange={ textAlignment => setAttributes({textAlignment}) }
 						/>
-						<Toolbar controls={[
+						<ToolbarGroup controls={[
 							{
 								icon: 'editor-bold',
 								title: __('Bold', 'getwid'),
@@ -116,7 +112,7 @@ class Edit extends Component {
 								textAlign: textAlignment,
 								fontWeight: bold ? 'bold' : undefined,
 								fontStyle: italic ? 'italic' : undefined,
-								fontSize: fontSize.size ? fontSize.size + 'px' : undefined,
+								fontSize: !isNaN(fontSize.size) ? fontSize.size + 'px' : fontSize.size,
 						}}
 					>
 						{ __('Custom Field', 'getwid') }

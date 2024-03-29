@@ -8,7 +8,6 @@ import {checkDisableBlock} from 'GetwidUtils/help-functions';
  * Internal dependencies
  */
 import GetwidFieldTextarea from './components/getwid-field-textarea';
-import GetwidCaptcha       from './components/getwid-captcha';
 import GetwidField         from './components/getwid-field';
 
 import { registerBlock } from 'GetwidUtils/register-getwid-block';
@@ -28,7 +27,6 @@ const { getBlockType, createBlock } = wp.blocks;
 * Module Constants
 */
 const contactFormClass = 'wp-block-getwid-contact-form';
-const captchaClass     = 'wp-block-getwid-captcha';
 const blockName = 'getwid/contact-form';
 
 const settings = {
@@ -73,6 +71,10 @@ const settings = {
             type: 'string',
             default: 'Submit'
         },
+        recaptchaTheme: {
+            type: 'string',
+            default: ''
+        },
     },
 	...checkDisableBlock(blockName, props => (
         <GetwidContactForm {...{
@@ -87,7 +89,7 @@ const settings = {
 
 const fieldDefaults = {
 	category: 'getwid-blocks',
-	parent: [ 'getwid/contact-form' ],
+	ancestor: [ 'getwid/contact-form' ],
 	supports: {
         multiple: false,
         reusable: false,
@@ -177,34 +179,7 @@ const childBlocks = [
                 textareaField( props )
             )
 		}
-    },
-    {
-		name: 'captcha',
-		settings: {
-            parent  : fieldDefaults.parent,
-            supports: fieldDefaults.supports,
-            category: fieldDefaults.category,
-
-			title: __( 'Captcha', 'getwid' ),
-            icon: 'shield',
-            attributes: {
-                theme: {
-                    type: 'string',
-                    default: 'light'
-                },
-                size: {
-                    type: 'string'
-                }
-            },
-            edit: ( props ) => (
-                <GetwidCaptcha {...{
-                    ...props,
-                    captchaClass
-                }} />
-            ),
-            save: fieldDefaults.save
-		}
-	}
+    }
 ];
 
 /**

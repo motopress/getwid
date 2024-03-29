@@ -27,7 +27,7 @@ const {
 	TextControl
 } = wp.components;
 
-const { Component } = wp.element;
+const { Component, Fragment } = wp.element;
 
 /**
 * Internal dependencies
@@ -46,7 +46,6 @@ class FontsControl extends Component {
 		this.enableGoogleFonts = wp.hooks.applyFilters('getwid.fontsControl.enableGoogleFonts', this.enableGoogleFonts);
 
 		this.state = {
-			googleFonts: null,
 			fonts: null,
 			search: '',
 			selectedFont: null
@@ -57,11 +56,12 @@ class FontsControl extends Component {
 		let defaultFonts = [ ];
 
 		if ( this.enableGoogleFonts ) {
-			await this.loadGoogleFonts();
+			const googleFonts = await this.loadGoogleFonts();
+
 			defaultFonts.push({
 				id: 'google-fonts',
 				title: __( 'Google Fonts', 'getwid' ),
-				items: this.state.googleFonts
+				items: googleFonts
 			});
 		}
 
@@ -72,12 +72,10 @@ class FontsControl extends Component {
 		return this.setState({ fonts });
 	}
 
-	loadGoogleFonts() {
+	async loadGoogleFonts() {
 		return fetch( 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAWN8pd8HMruaR92oVbykdg-Q2HpgsikKU' )
 			.then( blob => blob.json() )
-			.then( data => {
-				this.setState({ googleFonts: data.items });
-			} );
+			.then( data => data.items );
 	}
 
 	processLoadedFonts(fonts) {
@@ -141,10 +139,9 @@ class FontsControl extends Component {
 						(
 							<Dropdown
 								contentClassName="components-getwid-fonts-popover"
-								position="bottom center"
+								popoverProps={ { placement: "bottom" } }
 								renderToggle={ ({ isOpen, onToggle }) => (
 									<Button
-										isLarge
 										className="components-getwid-fonts-button"
 										id={ id }
 										onClick={ onToggle }
@@ -176,23 +173,23 @@ class FontsControl extends Component {
 											</MenuItem>
 
 											{ ( this.state.fonts ).map( fontGroup => {
-												const getID = fontGroup.id;
 
 												return (
-													<>
-														<h4 style={{margin:0}} >
+													<Fragment key={ fontGroup.id }>
+														<h4 style={ { margin:0 } } >
 															{ fontGroup.title }
 														</h4>
-														{ ( fontGroup.items ).map( font => {
-															if ( this.fontMatchesSearch(font) ) {
+														{ ( fontGroup.items ).map( ( font, index ) => {
+															if ( this.fontMatchesSearch( font ) ) {
 																return (
 																	<MenuItem
+																		key={ index }
 																		className={ classnames(
 																			{ 'is-selected': ( font.family === this.props.value ) }
 																		) }
 																		onClick={ () => {
 																			onToggle();
-																			this.selectFont(getID, font);
+																			this.selectFont( fontGroup.id, font );
 																		}}
 																	>
 																		{ font.title || font.family }
@@ -200,7 +197,7 @@ class FontsControl extends Component {
 																);
 															}
 														} ) }
-													</>
+													</Fragment>
 												);
 											} ) }
 										</div>

@@ -37,7 +37,7 @@ class Tabs extends \Getwid\Blocks\AbstractBlock {
         return $scripts;
     }
 
-    private function block_frontend_assets() {
+    public function block_frontend_assets() {
 
         if ( is_admin() ) {
             return;
@@ -47,6 +47,28 @@ class Tabs extends \Getwid\Blocks\AbstractBlock {
         if ( ! wp_script_is( 'jquery-ui-tabs', 'enqueued' ) ) {
             wp_enqueue_script('jquery-ui-tabs');
         }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$rtl = is_rtl() ? '.rtl' : '';
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/tabs/style' . $rtl . '.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/tabs/frontend.js' ),
+            [ 'jquery', 'jquery-ui-tabs' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
     }
 
     public function render_callback( $attributes, $content ) {

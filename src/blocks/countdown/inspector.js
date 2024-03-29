@@ -56,7 +56,7 @@ class Inspector extends Component {
 		const { changeState } = this;
 
 		return (
-			<InspectorControls key='inspector'>
+			<InspectorControls>
 				<GetwidCustomTabsControl
 					state={tabName}
 					stateName='tabName'
@@ -71,6 +71,8 @@ class Inspector extends Component {
 								onChange={value => {
 									setAttributes({ dateTime: value });
 								}}
+								__nextRemoveHelpButton={true}
+								__nextRemoveResetButton={true}
 							/>
 							<ToggleControl
 								label={__( 'Years', 'getwid' )}

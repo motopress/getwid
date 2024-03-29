@@ -1,3 +1,7 @@
+/*!
+ * getwid-media-text-slider
+ */
+
 import getwid_animate from 'GetwidUtils/animate';
 
 (function($){
@@ -42,21 +46,11 @@ import getwid_animate from 'GetwidUtils/animate';
 				}
 
 				getwid_content_slider.on('init', function(){
-
-					if (getwid_infinite){
-						if (getwid_fade_effect == true){
-							var first_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide__content-wrapper').eq(0).find('.wp-block-getwid-media-text-slider-slide-content__content');
-						} else {
-							var first_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide__content-wrapper').eq(1).find('.wp-block-getwid-media-text-slider-slide-content__content');
-						}
-					} else {
-						var first_slide_content = $(this).find('.wp-block-getwid-media-text-slider-slide__content-wrapper').first().find('.wp-block-getwid-media-text-slider-slide-content__content');
-					}
-
 					if (getwid_use_animation){
-						first_slide_content.css('opacity', '1');
+						$(this)
+							.find('.wp-block-getwid-media-text-slider-slide.slick-active .wp-block-getwid-media-text-slider-slide-content__content')
+							.css('opacity', '1');
 					}
-
 				});
 
 				var the_same_slide = false;
@@ -101,9 +95,9 @@ import getwid_animate from 'GetwidUtils/animate';
 					fade: getwid_fade_effect,
 					speed: getwid_slide_speed,
 					infinite: getwid_infinite,
-
 					arrows: isAvalibleArrow,
-					dots  : isAvalibleDots
+					dots  : isAvalibleDots,
+					rtl: !!Getwid.isRTL
 				});
 			});
 		};

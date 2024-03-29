@@ -62,17 +62,60 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
         /* #endregion */
     }
 
+    public function block_frontend_assets() {
+
+        if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$rtl = is_rtl() ? '.rtl' : '';
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/mailchimp/style' . $rtl . '.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/mailchimp/frontend.js' ),
+            [ 'jquery' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
+
+		/*
+		 * var Getwid = {"ajax_url":"https:\/\/getwid.loc\/wp-admin\/admin-ajax.php"};
+		 */
+		$inline_script =
+			'var Getwid = Getwid || {};' .
+			'Getwid["ajax_url"] = ' . json_encode( admin_url( 'admin-ajax.php' ) ) . ';'
+		;
+
+		wp_add_inline_script(
+			self::$blockName,
+			$inline_script,
+			'before'
+		);
+
+    }
+
     public function render_callback( $attributes, $content ) {
 
         $class      = 'wp-block-getwid-mailchimp';
         $block_name = $class;
 
         if ( isset( $attributes[ 'className' ] ) ) {
-            $class .= ' ' . esc_attr( $attributes[ 'className' ] );
+            $class .= ' ' . $attributes[ 'className' ];
         }
 
         if ( isset( $attributes[ 'align' ] ) ) {
-            $class .= ' align' . esc_attr( $attributes[ 'align' ] );
+            $class .= ' align' . $attributes[ 'align' ];
         }
 
         $button_style = $button_class = '';
@@ -96,10 +139,12 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
                 <?php getwid_get_template_part( 'mailchimp/mailchimp', $attributes, false, $extra_attr ); ?>
             </div><?php
         } else {?>
-            <p><?php echo __( 'Select at least one MailChim list.', 'getwid' ); ?></p><?php
+            <p><?php echo esc_html__( 'Select at least one MailChimp list.', 'getwid' ); ?></p><?php
         }
 
         $chash = ob_get_clean();
+
+		$this->block_frontend_assets();
 
         return $chash;
     }
@@ -143,16 +188,15 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
     /* #endregion */
 
     public function mailchimp_api_key_manage() {
-        $nonce = $_POST[ 'nonce' ];
+        $nonce = sanitize_key( $_POST[ 'nonce' ] );
 
         if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_mailchimp_api_key' ) ) {
             wp_send_json_error();
         }
 
-        $data   = $_POST[ 'data'   ];
-        $option = $_POST[ 'option' ];
+        $option = sanitize_text_field( wp_unslash( $_POST[ 'option' ] ) );
 
-        $api_key = trim( $data[ 'api_key' ] );
+        $api_key = sanitize_text_field( wp_unslash( $_POST[ 'data' ][ 'api_key' ] ) );
 
         if ( $option == 'save' || $option == 'sync' ) {
             if ( ! empty( $api_key ) ) {
@@ -268,31 +312,29 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
 
     public function subscribe() {
 
-		parse_str( $_POST[ 'data' ], $data );
-
-		$email = ! empty( $data[ 'email' ] ) ? sanitize_email( trim( $data[ 'email' ] ) ) : '';
+		$email = ! empty( $_POST[ 'data' ][ 'email' ] ) ? sanitize_email( wp_unslash( $_POST[ 'data' ][ 'email' ] ) ) : '';
 
         if ( empty( $email ) || ! is_email( $email ) ) {
             wp_send_json_error( __('Email is required.', 'getwid') );
         }
 
-		if ( empty( $data[ 'list_ids' ] ) ) {
+		if ( empty( $_POST[ 'data' ][ 'list_ids' ] ) ) {
             wp_send_json_error( __('An invalid Mailchimp list was provided.', 'getwid') );
         }
 
-        $interests_ids = json_decode( $data[ 'list_ids' ], true );
+        $interests_ids = json_decode( sanitize_text_field( wp_unslash( $_POST[ 'data' ][ 'list_ids' ] ) ), true );
 
         $merge_vars = array();
         $merge_vars[ 'email_address' ] = $email;
         $merge_vars[ 'status' ] = 'subscribed';
 
         $merge_vars[ 'merge_fields' ] = array();
-        if ( isset( $data[ 'first-name' ] ) ) {
-            $merge_vars[ 'merge_fields' ][ 'FNAME' ] = $data[ 'first-name' ];
+        if ( isset( $_POST[ 'data' ][ 'first-name' ] ) ) {
+            $merge_vars[ 'merge_fields' ][ 'FNAME' ] = sanitize_text_field( wp_unslash( $_POST[ 'data' ][ 'first-name' ] ) );
         }
 
-        if ( isset( $data[ 'last-name' ] ) ) {
-            $merge_vars[ 'merge_fields' ][ 'LNAME' ] = $data[ 'last-name' ];
+        if ( isset( $_POST[ 'data' ][ 'last-name' ] ) ) {
+            $merge_vars[ 'merge_fields' ][ 'LNAME' ] = sanitize_text_field( wp_unslash( $_POST[ 'data' ][ 'last-name' ] ) );
         }
 
         if ( empty( $merge_vars[ 'merge_fields' ] ) ) {

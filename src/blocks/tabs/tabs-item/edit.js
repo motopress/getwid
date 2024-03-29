@@ -41,29 +41,12 @@ class TabItem extends Component {
 	render() {
 		const {
 			className,
-			baseClass,
-			getBlock,
-			clientId,
-			getParentState
 		} = this.props;
-
-		const { rootClientId } = this.state;
-		const {
-			headerTag,
-		} = getBlock( rootClientId ).attributes;
-
-		const itemClass = {
-			className: classnames( className, {
-				},
-			)
-		};
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-				} } key={ 'inspector' }/>
-				<div {...itemClass}>
+				<Inspector { ...this.props } />
+				<div className={ className }>
 					<div className={`wp-block-getwid-tabs__content`}>
 						<InnerBlocks
 							templateLock={false}
@@ -76,10 +59,6 @@ class TabItem extends Component {
 				</div>
 			</Fragment>
 		);
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-
 	}
 
 	componentDidMount() {
@@ -106,10 +85,9 @@ class TabItem extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/block-editor' );
+		const { getBlock, getBlockRootClientId } = select( 'core/block-editor' );
 		return {
 			getBlock,
-			getEditorSettings,
 			getBlockRootClientId,
 		};
 	} )

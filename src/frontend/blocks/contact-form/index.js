@@ -1,3 +1,7 @@
+/*!
+ * getwid-contact-form
+ */
+
 ( function ( $ ) {
     $( document ).ready( ( event ) => {
 
@@ -46,10 +50,16 @@
 
 					$submit.prop( 'disabled', true );
 
+					let form_values = {};
+
+					$(form).serializeArray().forEach(function(field, index) {
+						form_values[field.name] = field.value;
+					});
+
 					const data = {
 						'action': 'getwid_send_mail',
-						'security': Getwid.nonces.recaptcha_v2_contact_form,
-						'data': $( form ).serialize()
+						'nonce': Getwid.nonces.contact_form,
+						'data': form_values
 					};
 
 					if ( $result.text() != '' ) {

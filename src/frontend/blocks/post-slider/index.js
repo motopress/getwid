@@ -1,3 +1,7 @@
+/*!
+ * getwid-post-slider
+ */
+
 (function($){
 	$(document).ready(function(e){
 
@@ -52,6 +56,7 @@
 						variableWidth: false,
 						pauseOnHover: false,
 						adaptiveHeight: true,
+						rtl: !!Getwid.isRTL
 					});
 
 				} );

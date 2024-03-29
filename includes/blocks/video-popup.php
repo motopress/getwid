@@ -23,18 +23,18 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 
 			//Register JS/CSS assets
 			wp_register_script(
-				'magnific-popup',
-				getwid_get_plugin_url( 'vendors/magnific-popup/jquery.magnific-popup.min.js' ),
+				'fancybox',
+				getwid_get_plugin_url( 'vendors/fancybox/jquery.fancybox.min.js' ),
 				[ 'jquery' ],
-				'1.1.0',
+				'3.5.7',
 				true
 			);
 
 			wp_register_style(
-				'magnific-popup',
-				getwid_get_plugin_url( 'vendors/magnific-popup/magnific-popup.min.css' ),
+				'fancybox',
+				getwid_get_plugin_url( 'vendors/fancybox/jquery.fancybox.min.css' ),
 				[],
-				'1.1.0'
+				'3.5.7'
 			);
 		}
     }
@@ -45,29 +45,66 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 
     public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
 		//fontawesome
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
-        //magnific-popup.min.css
-		if ( ! is_admin() && ! in_array( 'magnific-popup', $styles ) ) {
-            array_push( $styles, 'magnific-popup' );
+        //jquery.fancybox.min.css
+		if ( ! is_admin() && ! in_array( 'fancybox', $styles ) ) {
+            array_push( $styles, 'fancybox' );
         }
 
         return $styles;
     }
 
-    private function block_frontend_assets() {
+    public function block_frontend_assets() {
 
         if ( is_admin() ) {
             return;
         }
 
-        //jquery.magnific-popup.min.js
-		if ( ! wp_script_is( 'magnific-popup', 'enqueued' ) ) {
-            wp_enqueue_script('magnific-popup');
+        //jquery.fancybox.min.js
+		if ( ! wp_script_is( 'fancybox', 'enqueued' ) ) {
+            wp_enqueue_script('fancybox');
         }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$deps = [
+			'fancybox'
+		];
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = 'fancybox';
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		//fontawesome
+		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
+
+		$rtl = is_rtl() ? '.rtl' : '';
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/video-popup/style' . $rtl . '.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/video-popup/frontend.js' ),
+            [ 'jquery', 'fancybox' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
     }
 
     public function render_callback( $attributes, $content ) {

@@ -5,7 +5,7 @@ if ( ! function_exists( 'getwid_blocks_no_items_found' ) ) :
 	 * Displays message when there are no posts to display
 	 */
 	function getwid_blocks_no_items_found( $attributes, $content ) {
-		echo '<p>' . esc_html__( 'Nothing found.', 'getwid' ) . '</p>';
+		?><p><?php echo esc_html__( 'Nothing found.', 'getwid' ); ?></p><?php
 	}
 endif;
 

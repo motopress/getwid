@@ -16,7 +16,7 @@ import { getScrollableClassName } from 'GetwidUtils/help-functions';
 * WordPress dependencies
 */
 const { compose } = wp.compose;
-const { Component } = wp.element;
+const { Component, Fragment, createRef } = wp.element;
 const { RichText, withColors, BlockControls, AlignmentToolbar } = wp.blockEditor || wp.editor;
 const { jQuery: $ } = window;
 
@@ -41,9 +41,11 @@ class Edit extends Component {
 		super(...arguments);
 
 		this.getEasingFunction = this.getEasingFunction.bind( this );
-		this.getNumerals       = this.getNumerals .bind( this );
-		this.startCounter      = this.startCounter.bind( this );
-		this.startCounter      = this.startCounter.bind( this );
+		this.getNumerals = this.getNumerals.bind( this );
+		this.startCounter = this.startCounter.bind( this );
+		this.startCounter = this.startCounter.bind( this );
+
+		this.counterRef = createRef();
 	}
 
 	render() {
@@ -63,51 +65,54 @@ class Edit extends Component {
 			}
 		};
 
-		return [
-			<BlockControls>
-				<AlignmentToolbar
-					value={wrapperAlign}
-					onChange={(wrapperAlign) => {
-						setAttributes({ wrapperAlign });
-					}}
-				/>
-			</BlockControls>,
-			<Inspector {...this.props} />,
-			<div className={classnames(className, clientId)} >
-				<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
-
-					<RichText
-						tagName='p'
-						className={`${baseClass}__prefix`}
-						placeholder={__('Prefix', 'getwid')}
-						value={prefix ? prefix : ''}
-						onChange={prefix => setAttributes({ prefix })}
-						keepPlaceholderOnFocus={true}
-						multiline={false}
-						allowedFormats={allowedFormats}
+		return (
+			<Fragment>
+				<BlockControls>
+					<AlignmentToolbar
+						value={wrapperAlign}
+						onChange={(wrapperAlign) => {
+							setAttributes({ wrapperAlign });
+						}}
 					/>
+				</BlockControls>
+				<Inspector { ...this.props } />
+				<div
+					ref={ this.counterRef }
+					className={ classnames( className, clientId ) }
+				>
+					<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
 
-					<span {...wrapperProps} >0</span>
+						<RichText
+							tagName='p'
+							className={`${baseClass}__prefix`}
+							placeholder={__('Prefix', 'getwid')}
+							value={prefix ? prefix : ''}
+							onChange={prefix => setAttributes({ prefix })}
+							multiline={false}
+							allowedFormats={allowedFormats}
+						/>
 
-					<RichText
-						tagName='p'
-						className={`${baseClass}__suffix`}
-						placeholder={__('Suffix', 'getwid')}
-						value={suffix ? suffix : ''}
-						onChange={suffix => setAttributes({ suffix })}
-						keepPlaceholderOnFocus={true}
-						multiline={false}
-						allowedFormats={allowedFormats}
-					/>
+						<span {...wrapperProps} >0</span>
+
+						<RichText
+							tagName='p'
+							className={`${baseClass}__suffix`}
+							placeholder={__('Suffix', 'getwid')}
+							value={suffix ? suffix : ''}
+							onChange={suffix => setAttributes({ suffix })}
+							multiline={false}
+							allowedFormats={allowedFormats}
+						/>
+					</div>
 				</div>
-			</div>
-		];
+			</Fragment>
+		);
 	}
 
 	getEasingFunction() {
 		const { easing, useEasing } = this.props.attributes;
 
-		if ($.parseJSON(useEasing)) {
+		if ( JSON.parse( useEasing ) ) {
 			switch (easing) {
 				case 'outExpo':
 					return (t, b, c, d) => {
@@ -145,19 +150,19 @@ class Edit extends Component {
 
 	startCounter() {
 
-		const { baseClass, clientId } = this.props;
+		const { baseClass } = this.props;
 		const { useEasing, useGrouping, separator } = this.props.attributes;
 		const { start, end, decimalPlaces, duration, decimal } = this.props.attributes;
 
-		const $counter = $( `.${clientId}` ).find( `.${baseClass}__number` );
+		const $counter = $( this.counterRef.current ).find( `.${baseClass}__number` );
 
 		const options = {
 			startVal	  : parseFloat( start 		  ),
 			decimalPlaces : parseInt  ( decimalPlaces ),
 			duration	  : parseInt  ( duration 	  ),
 
-			useEasing	: $.parseJSON( useEasing   ),
-			useGrouping : $.parseJSON( useGrouping ),
+			useEasing	: JSON.parse( useEasing ),
+			useGrouping : JSON.parse( useGrouping ),
 
 			separator : separator,
 			decimal	  : decimal,
@@ -199,12 +204,12 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		const { clientId, baseClass } = this.props;
+		const { baseClass } = this.props;
 		const { isInViewport, scrollHandler } = this.props;
 
 		const root = getScrollableClassName();
 
-		const $counter = $( `.${clientId}`).find(`.${baseClass}__number` );
+		const $counter = $( this.counterRef.current ).find(`.${baseClass}__number` );
 
 		if ( isInViewport( $counter ) || root === false ) {
 			this.startCounter();

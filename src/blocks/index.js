@@ -40,5 +40,8 @@ import './template-library';
 import './table';
 import './anchor';
 import './table-of-contents';
+import './content-slider';
+
+import './ai-text';
 
 //import './all-blocks';

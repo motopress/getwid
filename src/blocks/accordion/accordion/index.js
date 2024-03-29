@@ -46,36 +46,69 @@ export default registerBlockType(
 				return { 'data-align': align };
 			}
 		},
-		deprecated: [{
-			attributes: attributes_deprecated,
-			migrate: function( attributes, innerBlocks ) {
-                return [
-                    {
-						align: attributes.align,
-						active: attributes.active,
-						iconPosition: attributes.iconPosition,
-						iconOpen: attributes.iconOpen,
-						iconClose: attributes.iconClose,
-						headerTag: attributes.headerTag
-					},
-                    attributes.items.map(( item, index ) => {
-						return createBlock(
-							'getwid/accordion-item', {
-								title: attributes.titles[index].content,
-							}, [
-								createBlock( 'core/paragraph', { placeholder: __( 'Write heading…', 'getwid' ), content: item.content } )
-							]
-						);
-					}),
-                ];
-            },
-			save: props => (
-				<Save_deprecated {...{
-					...props,
-					baseClass
-				}}/>
-			)
-		}],
+		deprecated: [
+			{
+				attributes,
+				isEligible: ( attributes, innerBlocks ) => {
+
+					const firstInnerBlockParentAttributes = innerBlocks[0]?.attributes.outerParent?.attributes;
+
+					if ( !!!firstInnerBlockParentAttributes ) {
+						return false;
+					}
+
+					const hasUndefinedCloseIcon = !!!attributes.iconClose && firstInnerBlockParentAttributes.iconClose;
+					const hasUndefinedOpenIcon = !!!attributes.iconOpen && firstInnerBlockParentAttributes.iconOpen;
+
+					if ( hasUndefinedCloseIcon || hasUndefinedOpenIcon ) {
+						return true;
+					}
+
+					return false;
+				},
+				migrate: ( attributes, innerBlocks ) => {
+					const firstInnerBlockParentAttributes = innerBlocks[0].attributes.outerParent.attributes;
+
+					attributes.iconClose = firstInnerBlockParentAttributes.iconClose;
+					attributes.iconOpen = firstInnerBlockParentAttributes.iconOpen;
+
+					return [ attributes, innerBlocks ];
+				},
+				save: props => (
+					<Save { ...props } />
+				)
+			},
+			{
+				attributes: attributes_deprecated,
+				migrate: function( attributes, innerBlocks ) {
+					return [
+						{
+							align: attributes.align,
+							active: attributes.active,
+							iconPosition: attributes.iconPosition,
+							iconOpen: attributes.iconOpen,
+							iconClose: attributes.iconClose,
+							headerTag: attributes.headerTag
+						},
+						attributes.items.map(( item, index ) => {
+							return createBlock(
+								'getwid/accordion-item', {
+									title: attributes.titles[index].content,
+								}, [
+									createBlock( 'core/paragraph', { placeholder: __( 'Write heading…', 'getwid' ), content: item.content } )
+								]
+							);
+						}),
+					];
+				},
+				save: props => (
+					<Save_deprecated {...{
+						...props,
+						baseClass
+					}}/>
+				)
+			}
+		],
         transforms: {
 			to: [
 				{
@@ -143,16 +176,13 @@ export default registerBlockType(
 		},
         attributes: attributes,
 		...checkDisableBlock(blockName, props => (
-            <Accordion {...{
+            <Accordion { ...{
                 ...props,
                 baseClass
-            }} />
+            } } />
 		)),
         save: props => (
-            <Save {...{
-                ...props,
-                baseClass
-            }} />
+            <Save { ...props } />
         )
     }
 );

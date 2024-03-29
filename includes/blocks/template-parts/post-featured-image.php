@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/template-post-featured-image';
+	protected static $assetsHandle = 'getwid/template-parts';
 
     public function __construct() {
 
@@ -35,6 +36,34 @@ class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
         );
     }
 
+    public function block_frontend_assets() {
+
+        if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = self::$assetsHandle;
+
+				return $assets;
+			}
+		);
+
+		$rtl = is_rtl() ? '.rtl' : '';
+
+		wp_enqueue_style(
+			self::$assetsHandle,
+			getwid_get_plugin_url( 'assets/blocks/template-parts/style' . $rtl . '.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+    }
+
     public function render_callback( $attributes, $content ) {
 
         //Not BackEnd render if we view from template page
@@ -52,7 +81,7 @@ class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
         $wrapper_style = '';
         //Classes
         if ( isset( $attributes[ 'align' ] ) ) {
-            $wrapper_class .= ' align' . $attributes[ 'align' ];
+            $wrapper_class .= ' align' . esc_attr( $attributes[ 'align' ] );
         }
 
         $imageSize = ( ( isset( $attributes[ 'imageSize' ] ) && $attributes[ 'imageSize' ] ) ? $attributes[ 'imageSize' ] : 'post-thumbnail' );
@@ -72,6 +101,8 @@ class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
 
             $result = ob_get_clean();
         }
+
+		$this->block_frontend_assets();
 
         return $result;
     }

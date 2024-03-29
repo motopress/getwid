@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-import { __ } from 'wp.i18n';
+import { __, isRTL } from 'wp.i18n';
 import classnames from 'classnames';
 import { pick, map, get, some, isEqual, sortBy } from 'lodash';
 
@@ -19,9 +19,9 @@ import './editor.scss';
 */
 const { compose } = wp.compose;
 const { withSelect } = wp.data;
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createRef } = wp.element;
 
-const { ToolbarButton, ToggleControl, DropZone, Toolbar, ToolbarItem, Dashicon, TextControl } = wp.components;
+const { ToolbarButton, ToggleControl, DropZone, ToolbarGroup, Dashicon, TextControl } = wp.components;
 const { BlockControls, MediaUpload, MediaPlaceholder, mediaUpload, BlockAlignmentToolbar, BlockIcon, URLInput } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
@@ -38,12 +38,20 @@ const NEW_TAB_REL = 'noreferrer noopener';
 * Module Functions
 */
 export const pickRelevantMediaFiles = ( image, imageSize, props ) => {
-	const { images } = props.attributes;
 
+	const { images } = props.attributes;
 	const imageProps = pick( image, [ 'id', 'link' ] );
+
 	imageProps.original_url = image.url || image.source_url;
 	imageProps.alt = image.alt || image.alt_text;
-	imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
+
+	imageProps.url =
+		get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) ||
+		get( image, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+		get( image, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+		get( image, [ 'sizes', imageSize, 'url' ] ) ||
+		image.url ||
+		image.source_url;
 
 	$.each(images, (index, item) => {
 		if ( item.id == image.id ) {
@@ -81,6 +89,8 @@ class Edit extends Component {
 		this.state = {
 			isUpdate: false
 		};
+
+		this.sliderRef = createRef();
 	}
 
     onSetNewTab( value, index ) {
@@ -213,9 +223,7 @@ class Edit extends Component {
 
 	destroySlider(){
 
-		const { clientId } = this.props;
-
-		const thisBlock = $( `[data-block='${clientId}']` );
+		const thisBlock = $( this.sliderRef.current );
 		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
 		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
@@ -223,13 +231,11 @@ class Edit extends Component {
 
 	initSlider() {
 
-		const { clientId } = this.props;
-
 		const { sliderAutoplay, sliderAutoplaySpeed, sliderInfinite, linkTo } = this.props.attributes;
 		const { sliderAnimationEffect, sliderSlidesToShow, sliderSlidesToScroll, slideHeight } = this.props.attributes;
 		const { sliderAnimationSpeed, sliderCenterMode, sliderVariableWidth, sliderArrows, sliderDots } = this.props.attributes;
 
-		const thisBlock = $( `[data-block='${clientId}']` );
+		const thisBlock = $( this.sliderRef.current );
 		const sliderSelector = $( `.${baseClass}__wrapper`, thisBlock );
 
 		if ( sliderSelector.length && (typeof sliderSelector.imagesLoaded === "function") ) {
@@ -253,7 +259,8 @@ class Edit extends Component {
 					variableWidth: sliderVariableWidth,
 
 					pauseOnHover: true,
-					rows: 0
+					rows: 0,
+					rtl: isRTL()
 				} );
 
 				if ( slideHeight ) {
@@ -290,20 +297,22 @@ class Edit extends Component {
 		return result;
 	}
 
-	componentWillUpdate( nextProps, nextState ) {
+	shouldComponentUpdate( nextProps ) {
 
 		const diffInUrls = this.flag ? false : this.checkURLsChanges( nextProps );
 
-		if ( ! isEqual( nextProps.attributes, this.props.attributes ) && !diffInUrls ) {
+		if ( ! diffInUrls ) {
 			this.destroySlider();
 		}
+
+		return true;
 	}
 
 	componentDidUpdate( prevProps ) {
 
 		const diffInUrls = this.flag ? false : this.checkURLsChanges( prevProps );
 
-		if ( (! isEqual( prevProps.attributes, this.props.attributes ) && !diffInUrls) ) {
+		if ( ! diffInUrls ) {
 			this.initSlider();
 			this.flag = false;
 		}
@@ -332,7 +341,7 @@ class Edit extends Component {
 						onChange={align => setAttributes({ align })}
 					/>
 					{ !! images.length && (
-						<Toolbar>
+						<ToolbarGroup>
 							<MediaUpload
 								onSelect={onSelectImages}
 								allowedTypes={ ALLOWED_MEDIA_TYPES }
@@ -341,14 +350,13 @@ class Edit extends Component {
 								value={ images.map( img => {return (img.id ? img.id : false);} ) }
 								render={({ open }) => (
 									<ToolbarButton
-										className='components-toolbar__control'
 										label={ __( 'Edit Slider', 'getwid' ) }
 										icon='edit'
 										onClick={open}
 									/>
 								)}
 							/>
-						</Toolbar>
+						</ToolbarGroup>
 					)}
 				</BlockControls>
 			</Fragment>
@@ -399,62 +407,54 @@ class Edit extends Component {
 				return images.map( ( img, index ) => {
 
 					return (
-						<Fragment>
+						<div className={`${baseClass}__item`} >
+							<MediaContainer
+								showCaption={showCaption}
+								captionStyle={captionStyle}
+								captionPosition={captionPosition}
+								isSelected={isSelected}
 
-							<div className={`${baseClass}__item`} key={img.id || img.url}>
-								<MediaContainer
-									showCaption={showCaption}
-									captionStyle={captionStyle}
-									captionPosition={captionPosition}
-
-									original_url={img.original_url}
-									isSelected={isSelected}
-									url={img.url}
-									alt={img.alt}
-									caption={img.caption}
-									id={img.id}
-									custom_link={img.custom_link}
-									custom_link_target={img.custom_link_target}
-									custom_link_rel={img.custom_link_rel}
-									setAttributes={attrs => this.setImageAttributes( index, attrs )}
-								/>
-								{ (linkTo == 'custom') && (
-									<Fragment>
-										<div className= {`${baseClass}__url-field-wrapper`}>
-											<div className= {`${baseClass}__url-field-container`}>
-												<Dashicon icon='admin-links'/>
-												<URLInput
-													className= {`${baseClass}__url-field has-border`}
-													autoFocus={ true }
-													value={ img.custom_link ? img.custom_link : '' }
-													onChange={ custom_link => {
-														this.setImageAttributes( index, {custom_link} );
-													} }
-												/>
-											</div>
-											<div className= {`${baseClass}__url-rel-container`}>
-												<ToggleControl
-													className= {`${baseClass}__url-toggle`}
-													label={ __( 'New Tab', 'getwid' ) }
-													onChange={ (value) => {
-														this.onSetNewTab(value, index);
-													} }
-													checked={ img.custom_link_target === '_blank' }
-												/>
-												<TextControl
-													className= {`${baseClass}__url-rel`}
-													placeholder={ __( 'Link Rel', 'getwid' ) }
-													value={ img.custom_link_rel || '' }
-													onChange={ custom_link_rel => {
-														this.setImageAttributes( index, {custom_link_rel} );
-													} }
-												/>
-											</div>
+								setAttributes={attrs => this.setImageAttributes( index, attrs )}
+								image={img}
+							/>
+							{ (linkTo == 'custom') && (
+								<Fragment>
+									<div className= {`${baseClass}__url-field-wrapper`}>
+										<div className= {`${baseClass}__url-field-container`}>
+											<Dashicon icon='admin-links'/>
+											<URLInput
+												className= {`${baseClass}__url-field has-border`}
+												autoFocus={ true }
+												value={ img.custom_link ? img.custom_link : '' }
+												onChange={ custom_link => {
+													this.setImageAttributes( index, {custom_link} );
+												} }
+												disableSuggestions={ true }
+												__nextHasNoMarginBottom
+											/>
 										</div>
-									</Fragment>
-								)}
-							</div>
-						</Fragment>
+										<div className= {`${baseClass}__url-rel-container`}>
+											<ToggleControl
+												className= {`${baseClass}__url-toggle`}
+												label={ __( 'New Tab', 'getwid' ) }
+												onChange={ (value) => {
+													this.onSetNewTab(value, index);
+												} }
+												checked={ img.custom_link_target === '_blank' }
+											/>
+											<TextControl
+												className= {`${baseClass}__url-rel`}
+												placeholder={ __( 'Link Rel', 'getwid' ) }
+												value={ img.custom_link_rel || '' }
+												onChange={ custom_link_rel => {
+													this.setImageAttributes( index, {custom_link_rel} );
+												} }
+											/>
+										</div>
+									</div>
+								</Fragment>
+							)}
+						</div>
 					);
 				} );
 			}
@@ -465,7 +465,7 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<div className={ containerClasses }>
+				<div className={ containerClasses } ref={ this.sliderRef }>
 					{ dropZone }
 					<div className={`${baseClass}__wrapper`}>
 						{ imageRender() }
@@ -492,12 +492,14 @@ class Edit extends Component {
 
 				</div>
 				{ controls }
-				<Inspector {...{
-					...this.props,
-					pickRelevantMediaFiles,
-					changeState,
-					getState
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						pickRelevantMediaFiles,
+						changeState,
+						getState
+					} }
+				/>
 			</Fragment>
 		);
 	}
@@ -505,12 +507,31 @@ class Edit extends Component {
 
 export default compose( [
 	withSelect( ( select, props ) => {
-		const { getMedia } = select( 'core' );
+		const { getMediaItems } = select( 'core' );
 		const { ids } = props.attributes;
 
-		if ( typeof ids !='undefined' ) {
+		if ( typeof ids != 'undefined' && ids.length > 0 ) {
+
+			let mediaItems = getMediaItems( {
+				include: ids.join( ',' ),
+				per_page: ids.length,
+			} );
+
+			if ( mediaItems ) {
+
+				return {
+					imgObj:mediaItems
+				};
+			} else {
+
+				return {
+					imgObj:[]
+				};
+			}
+
+		} else {
 			return {
-				imgObj: ids ? ids.map( id => getMedia( id ) ) : null
+				imgObj:[]
 			};
 		}
 	} )

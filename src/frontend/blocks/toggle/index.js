@@ -1,3 +1,7 @@
+/*!
+ * getwid-toggle
+ */
+
 (function ($) {
 	$(document).ready(function (e) {
 
@@ -13,11 +17,13 @@
 				//Add init class
 				$(this).addClass('getwid-init');
 
-				$(toggle).find('.wp-block-getwid-toggle__row').on('click', '.wp-block-getwid-toggle__header-wrapper', function (e) {
-					const row = $(this).parent();
-					const content_wrapper = row.find('.wp-block-getwid-toggle__content-wrapper');
-					const height = row.find('.wp-block-getwid-toggle__content').outerHeight(true);
+				$(toggle).find('.wp-block-getwid-toggle__row .wp-block-getwid-toggle__header-wrapper').on('click', function (e) {
 					e.preventDefault();
+					e.stopImmediatePropagation();
+
+					const row = $(this).parent();
+					const content_wrapper = row.find('.wp-block-getwid-toggle__content-wrapper').first();
+					const height = row.find('.wp-block-getwid-toggle__content').first().outerHeight(true);
 
 					//Close
 					if (row.hasClass('is-active')) {

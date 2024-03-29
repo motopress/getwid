@@ -4,6 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once GETWID_PLUGIN_DIR . 'includes/assets-optimization.php';
 require_once GETWID_PLUGIN_DIR . 'includes/functions.php';
 require_once GETWID_PLUGIN_DIR . 'includes/block-actions.php';
 require_once GETWID_PLUGIN_DIR . 'includes/translation.php';
@@ -18,6 +19,9 @@ require_once GETWID_PLUGIN_DIR . 'includes/rest-api.php';
 require_once GETWID_PLUGIN_DIR . 'includes/post-template-part.php';
 require_once GETWID_PLUGIN_DIR . 'includes/mailer.php';
 require_once GETWID_PLUGIN_DIR . 'includes/allowed-css-tags.php';
+require_once GETWID_PLUGIN_DIR . 'includes/ai/request.php';
+require_once GETWID_PLUGIN_DIR . 'includes/ai/ai.php';
+require_once GETWID_PLUGIN_DIR . 'includes/string-encryption.php';
 
 if ( class_exists('\DrewM\MailChimp\MailChimp') === false ) {
 	require_once GETWID_PLUGIN_DIR . 'includes/libraries/mailchimp-api/src/MailChimp.php';

@@ -23,7 +23,6 @@ const {
 	MediaUpload,
 	MediaUploadCheck,
 	RichText,
-	URLInput,
 	withColors,
 } = wp.blockEditor || wp.editor;
 const {compose} = wp.compose;
@@ -65,33 +64,12 @@ class Edit extends Component {
 		super(...arguments);
 	}
 
-	initPopUp() {
-		const {
-			clientId
-		} = this.props;
-
-		const thisBlock = $(`[data-block='${clientId}']`);
-		const videoWrapper = $('.wp-block-getwid-video-popup__link', thisBlock);
-		videoWrapper.on('click', function (e) {
-			e.preventDefault();
-		});
-	}
-
-	componentDidMount() {
-		this.initPopUp();
-	}
-
-	componentDidUpdate(prevProps) {
-		this.initPopUp();
-	}
-
 	render() {
 		const {
 			attributes: {
 				id,
 				url,
 				title,
-				text,
 				link,
 				align,
 				minHeight,
@@ -136,7 +114,12 @@ class Edit extends Component {
 				mediaType = media.type;
 			}
 
-			const url_link = get(media, ['sizes', imageSize, 'url']) || get(media, ['media_details', 'sizes', imageSize, 'source_url']) || media.url;
+			const url_link =
+				get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) ||
+				get( media, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+				get( media, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+				get( media, [ 'sizes', imageSize, 'url' ] ) ||
+				media.url;
 
 			setAttributes({
 				id: media.id,
@@ -151,7 +134,7 @@ class Edit extends Component {
 				},
 			} = this.props;
 
-			if (!['full', 'large', 'medium', 'thumbnail'].includes(imageSize)) {
+			if (! [ 'full', 'large', 'medium', 'thumbnail' ].includes(imageSize)) {
 				imageSize = attributes.imageSize.default;
 				setAttributes({
 					imageSize
@@ -239,8 +222,29 @@ class Edit extends Component {
 			href: typeof link != 'undefined' ? link : '',
 			style: {
 				maxWidth: !!!url ? buttonMaxWidth : ''
+			},
+			onClick: ( event ) => {
+				event.preventDefault();
+				event.stopPropagation();
 			}
 		};
+
+		const imgAttributes = {
+			src: url,
+			alt: '',
+			className: classnames(
+				`${baseClass}__image`,
+				`${baseClass}__source`,
+				(id ? `wp-image-${id}` : ''),
+			)
+		};
+
+		const hasTitle = !RichText.isEmpty(title);
+
+		if (hasTitle) {
+			linkAttributes['aria-label'] = title;
+			imgAttributes.alt = title;
+		}
 
 		const controls = (
 			<Fragment>
@@ -250,39 +254,40 @@ class Edit extends Component {
 						value={align}
 						onChange={align => setAttributes({align})}
 					/>
-
-					<Fragment>
-						<MediaUploadCheck>
-							<ToolbarGroup>
-								<MediaUpload
-									onSelect={onSelectMedia}
-									allowedTypes={ALLOWED_MEDIA_TYPES}
-									value={id}
-									render={({open}) => (
-										<ToolbarButton
-											className="components-toolbar__control"
-											label={__('Select Image', 'getwid')}
-											icon="format-image"
-											onClick={open}
-										/>
-									)}
-								/>
-								{!!url && (
+					<MediaUploadCheck>
+						<ToolbarGroup>
+							<MediaUpload
+								onSelect={onSelectMedia}
+								allowedTypes={ALLOWED_MEDIA_TYPES}
+								value={id}
+								render={({open}) => (
 									<ToolbarButton
-										className="components-toolbar__control"
-										label={__('Delete Image', 'getwid')}
-										icon="trash"
-										onClick={(e) => {
-											setAttributes({id: null, url: null})
-										}}
+										label={__('Select Image', 'getwid')}
+										icon="format-image"
+										onClick={open}
 									/>
 								)}
-							</ToolbarGroup>
-						</MediaUploadCheck>
-					</Fragment>
-
+							/>
+							{!!url && (
+								<ToolbarButton
+									label={__('Delete Image', 'getwid')}
+									icon="trash"
+									onClick={(e) => {
+										setAttributes({id: null, url: null})
+									}}
+								/>
+							)}
+						</ToolbarGroup>
+					</MediaUploadCheck>
 				</BlockControls>
-				<Inspector {...{setAttributes, ...this.props, changeImageSize, onSelectMedia}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						setAttributes,
+						changeImageSize,
+						onSelectMedia
+					} }
+				/>
 			</Fragment>
 		);
 
@@ -290,23 +295,20 @@ class Edit extends Component {
 			<Fragment>
 				<div {...wrapperProps}>
 					{isSelected && (
-						<Fragment>
-							<div className={`${baseClass}__url-field`}>
-								<Dashicon icon="admin-links"/>
-								<TextControl
-									placeholder={__('Video URL', 'getwid')}
-									value={link}
-									onChange={link => setAttributes({link})}
-								/>
-							</div>
-						</Fragment>
+						<div className={`${baseClass}__url-field`}>
+							<Dashicon icon="admin-links"/>
+							<TextControl
+								placeholder={__('Video URL', 'getwid')}
+								value={ link || '' }
+								onChange={link => setAttributes({link})}
+							/>
+						</div>
 					)}
 					{controls}
 					<a {...linkAttributes}>
 						<div {...containerProps}>
 							{!!url && (
-								<img src={url} alt=""
-									 className={`${baseClass}__image ${baseClass}__source ` + (id ? `wp-image-${id}` : '')}/>
+								<img {...imgAttributes}/>
 							)}
 							<div {...buttonProps}>
 								<div {...iconProps}>

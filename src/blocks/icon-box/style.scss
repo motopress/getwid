@@ -1,9 +1,13 @@
+/*!
+ * getwid-icon-box
+ */
+
 .wp-block-getwid-icon-box {
 
 	&.has-icon-left,
 	&.has-icon-right {
 		display: flex;
-		flex-direction: row;
+		flex-direction: row #{'/*rtl: row-reverse*/'};
 		flex-wrap: nowrap;
 		justify-content: flex-start;
 		align-content: stretch;

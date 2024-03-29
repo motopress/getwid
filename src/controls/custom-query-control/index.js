@@ -3,64 +3,58 @@
  */
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
-import {map, isEmpty, isUndefined, pickBy } from 'lodash';
+import GroupComponent from "./components/query-group";
+import { isEmpty, cloneDeep } from 'lodash';
 import classnames from "classnames";
 
 /**
  * WordPress dependencies
  */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
+import React from "react";
+
 const { Component, Fragment } = wp.element;
-const { withInstanceId } = wp.compose;
 const apiFetch = wp.apiFetch;
 const {
 	addQueryArgs
 } = wp.url;
 const {
+	Modal,
+	ButtonGroup,
+	Button,
 	SelectControl,
 	RangeControl,
 	RadioControl,
 	ToggleControl,
 	Spinner,
 	TextControl,
-	PanelBody,
+	PanelBody
 } = wp.components;
-
+const {
+	withSelect
+} = wp.data;
 
 /**
 * Create an Control
 */
 class GetwidCustomQueryControl extends Component {
+
 	constructor() {
 		super( ...arguments );
 
 		this.firstCheckTaxonomy = true;
-		this.firstCheckTerms = true;
+		this.firstCheckTerms    = true;
 
 		this.state = {
 			postTypeList: null,
 			taxonomyList: null,
 			termsList: null,
+			modalOpen: false,
+			metaScheme: cloneDeep( this.props.values.metaQuery )
 		};
-	}
 
-	//Get Post Types
-	componentWillMount() {
-		this.isStillMounted = true;
-		this.waitLoadPostTypes = true;
-		this.fetchRequest = apiFetch( {
-			path: addQueryArgs( `/wp/v2/types` ),
-		} ).then(
-			( postTypeList ) => {
-				this.waitLoadPostTypes = false;
-				if ( this.isStillMounted ) {
-					this.setState( { postTypeList } );
-				}
-			}
-		).catch(() => {
-			this.waitLoadPostTypes = false;
-		});
+		this.getState    = this.getState.bind( this );
+		this.changeState = this.changeState.bind( this );
 	}
 
 	//Get Taxonomy
@@ -73,7 +67,7 @@ class GetwidCustomQueryControl extends Component {
 			} ).then(
 				( taxonomyList ) => {
 					this.waitLoadTaxonomy = false;
-					if ( this.isStillMounted && Array.isArray(taxonomyList) && taxonomyList.length ) {
+					if ( Array.isArray(taxonomyList) && taxonomyList.length ) {
 						this.setState( { taxonomyList } );
 					} else {
 						this.setState( { taxonomyList: null } );
@@ -86,7 +80,7 @@ class GetwidCustomQueryControl extends Component {
 	}
 
 	//Get Terms
-	getTermsFromTaxonomy(taxonomy){
+	getTermsFromTaxonomy(taxonomy) {
 		if (typeof taxonomy != 'undefined' && taxonomy != ''){
 			this.waitLoadTerms = true;
 			this.firstCheckTerms = false;
@@ -95,7 +89,7 @@ class GetwidCustomQueryControl extends Component {
 			} ).then(
 				( termsList ) => {
 					this.waitLoadTerms = false;
-					if ( this.isStillMounted && termsList instanceof Object && !isEmpty( termsList ) ) {
+					if ( termsList instanceof Object && !isEmpty( termsList ) ) {
 						this.setState( { termsList } );
 					} else {
 						this.setState( { termsList: null } );
@@ -107,24 +101,20 @@ class GetwidCustomQueryControl extends Component {
 		}
 	}
 
-	componentWillUnmount() {
-		this.isStillMounted = false;
+	changeState(param, value) {
+		if (typeof param == 'object') {
+			this.setState(param);
+		} else if (typeof param == 'string') {
+			this.setState({[param]: value});
+		}
+	}
+
+	getState(value) {
+		return this.state[value];
 	}
 
 	render() {
-
 		const controlClassPrefix = 'components-getwid-custom-query-control';
-		const postTypeArr = [];
-		if (this.state.postTypeList){
-			for (const key in this.state.postTypeList) {
-				if (!['attachment', 'wp_block', 'getwid_template_part', 'getwid_template'].includes(key)){
-					let postType = {};
-					postType['value'] = this.state.postTypeList[key]['slug'];
-					postType['label'] = this.state.postTypeList[key]['name'];
-					postTypeArr.push(postType);
-				}
-			}
-		}
 
 		const renderPagination = () => {
 
@@ -221,8 +211,6 @@ class GetwidCustomQueryControl extends Component {
 
 			return (
 				<Fragment>
-					{(this.waitLoadPostTypes) ? <Spinner/> : undefined}
-
 					<SelectControl
 						label={ __( 'Choose what to display', 'getwid' ) }
 						className={[`${controlClassPrefix}__post-type`]}
@@ -244,6 +232,7 @@ class GetwidCustomQueryControl extends Component {
 										postType: undefined,
 										taxonomy: undefined,
 										terms: undefined,
+
 									});
 								} else {
 									this.props.setValues({
@@ -256,10 +245,9 @@ class GetwidCustomQueryControl extends Component {
 
 							this.getTaxonomyFromCustomPostType(value);
 						} }
-						options={[
-							...(postTypeArr ? postTypeArr : [{'value': '', 'label': '-' }])
-						]}
-						disabled={(null == this.state.postTypeList)}
+						options={
+							this.props.postTypes ? this.props.postTypes : [{'value': '', 'label': '-' }]
+						}
 					/>
 				</Fragment>
 			);
@@ -279,7 +267,7 @@ class GetwidCustomQueryControl extends Component {
 						label={ __( 'Taxonomies', 'getwid' ) }
 						help={ __( 'Hold ctrl/cmd to select multiple or deselect', 'getwid' ) }
 						className={[`${controlClassPrefix}__taxonomy`]}
-						value={ this.props.values.taxonomy ? this.props.values.taxonomy : '' }
+						value={ this.props.values.taxonomy ? this.props.values.taxonomy : [] }
 						onChange={ (value) => {
 							//Reset values
 							this.setState( {
@@ -295,11 +283,13 @@ class GetwidCustomQueryControl extends Component {
 									this.props.setValues({
 										taxonomy: undefined,
 										terms: undefined,
+
 									});
 								} else {
 									this.props.setValues({
 										taxonomy: value,
 										terms: undefined,
+
 									});
 								}
 							}
@@ -307,7 +297,7 @@ class GetwidCustomQueryControl extends Component {
 							this.getTermsFromTaxonomy(value);
 						} }
 						multiple
-						size = {5}
+						size = {6}
 						options={this.state.taxonomyList ? this.state.taxonomyList : [{'value': '', 'label': ''}]}
 						disabled={(null == this.state.taxonomyList)}
 					/>
@@ -327,7 +317,7 @@ class GetwidCustomQueryControl extends Component {
 						className={[`${controlClassPrefix}__terms`]}
 						multiple
 						groups
-						size = {5}
+						size = {10}
 						value={ this.props.values.terms ? this.props.values.terms : [] }
 						onChange={ (value) => {
 							//Callback
@@ -363,6 +353,38 @@ class GetwidCustomQueryControl extends Component {
 				</Fragment>
 			);
 		};
+
+		const defaultQuery = [
+			{
+				relation: 'OR',
+				children: []
+			}
+		];
+
+		const renderConditionsTree = () => {
+			const metaQueryArray = this.state.metaScheme;
+			let tree = [];
+
+			if ( metaQueryArray.length > 0 ) {
+				tree = metaQueryArray.map( ( query ) =>
+					{
+						return (
+							<GroupComponent
+								query={ query }
+								parentQuery={ query }
+								getControlState={ this.getState }
+								setControlState={ this.changeState }
+								controlClassPrefix={ controlClassPrefix }
+							/>
+						)
+					}
+				)
+			} else {
+				this.setState( { metaScheme: defaultQuery } );
+			}
+
+			return tree;
+		}
 
 		return (
 			<div
@@ -512,6 +534,65 @@ class GetwidCustomQueryControl extends Component {
 							} }
 						/>
 					) }
+
+					<Button
+						isPrimary
+						icon={ 'filter' }
+						onClick={ () => {
+							this.setState( {
+								modalOpen: true
+							} );
+						} }
+					>
+						{ __( 'Custom Field Filter', 'getwid' ) }
+					</Button>
+					{ this.state.modalOpen ? (
+						<Modal
+							title={ __( 'Meta Query Builder', 'getwid' ) }
+							onRequestClose={ () => {
+								this.setState( {
+									modalOpen: false,
+								} );
+							} }
+						>
+							<div className={ [ `${controlClassPrefix}__custom-conditions` ] }>
+								{ renderConditionsTree() }
+								<ButtonGroup className={ [ `${controlClassPrefix}__custom-btn-group` ] }>
+									<Button
+										isSecondary
+										onClick={
+											() => {
+												this.setState( {
+													modalOpen: false
+												} );
+											}
+										}
+									>
+										{ __( 'Close', 'getwid' ) }
+									</Button>
+									<Button
+										isPrimary
+										onClick={
+											() => {
+												if ( !this.state.metaScheme[0][ 'children' ].length ) {
+													this.props.setValues( {
+														metaQuery: []
+													} );
+												} else {
+													this.props.setValues( {
+														metaQuery: cloneDeep( this.state.metaScheme )
+													} );
+												}
+											}
+										}
+									>
+										{ __( 'Update', 'getwid' ) }
+									</Button>
+								</ButtonGroup>
+							</div>
+						</Modal>
+					) : null }
+
 				</PanelBody>
 
 			</div>
@@ -519,4 +600,29 @@ class GetwidCustomQueryControl extends Component {
 	}
 }
 
-export default ( GetwidCustomQueryControl );
+export default withSelect( ( select, props ) => {
+	const { getPostTypes } = select( 'core' );
+
+	const _postTypes = getPostTypes( { per_page: -1 } );
+	let postTypes = [];
+
+	if( _postTypes ) {
+
+		_postTypes.map( type => {
+
+			if ( ! [ 'attachment', 'wp_block', 'getwid_template_part', 'getwid_template' ].includes( type.slug ) ) {
+				postTypes.push( {
+					'value': type.slug,
+					'label': type.name
+				} );
+			}
+
+		} );
+
+	}
+
+	return {
+		postTypes
+	};
+} )( GetwidCustomQueryControl );
+

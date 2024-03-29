@@ -207,7 +207,7 @@ class Inspector extends Component {
 		};
 
 		return (
-			<InspectorControls key='inspector'>
+			<InspectorControls>
 				<GetwidCustomTabsControl
 					state={tabName}
 					stateName='tabName'
@@ -224,7 +224,7 @@ class Inspector extends Component {
 								value={slideCount}
 								onChange={nextSlide => addNewSlide( nextSlide )}
 								min={1}
-								max={12}
+								max={50}
 							/>
 							<SelectControl
 								label={__( 'Image Size', 'getwid' )}

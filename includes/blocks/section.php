@@ -5,6 +5,7 @@ namespace Getwid\Blocks;
 class Section extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $blockName = 'getwid/section';
+	private $assetsAlreadyEnqueued = false;
 
     public function __construct() {
 
@@ -39,14 +40,6 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 				true
 			);
 
-			wp_register_script(
-				'draggabilly',
-				getwid_get_plugin_url( 'vendors/draggabilly/draggabilly.pkgd.min.js' ),
-				[ 'jquery' ],
-				'2.2.0',
-				true
-			);
-
 			wp_register_style(
 				'animate',
 				getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
@@ -75,8 +68,6 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 	}
 
     public function block_frontend_styles($styles) {
-
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
 
 		//fontawesome
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
@@ -111,15 +102,10 @@ class Section extends \Getwid\Blocks\AbstractBlock {
             array_push( $scripts, 'slick' );
         }
 
-		//draggabilly.pkgd.min.js
-        if ( ! in_array( 'draggabilly', $scripts ) ) {
-            array_push( $scripts, 'draggabilly' );
-		}
-
         return $scripts;
     }
 
-    private function block_frontend_assets( $attributes = [], $content = '' ) {
+    public function block_frontend_assets( $attributes = [], $content = '' ) {
 
         if ( is_admin() ) {
             return;
@@ -137,7 +123,6 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 			}
         }
 
-		//todo:
 		$has_background_slider = false !== strpos( $content, 'wp-block-getwid-section__background-slider-item' );
         //slick.min.js
 		if ( $has_background_slider && ! wp_script_is( 'slick', 'enqueued' ) ) {
@@ -148,6 +133,77 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 		if ( $has_background_slider && ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
 			wp_enqueue_script('imagesloaded');
 		}
+
+		/* optimization */
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$deps_css = [
+			'slick', 'slick-theme'
+		];
+
+		$deps_js = [ 'jquery', 'imagesloaded' ];
+
+		if ( $has_background_slider && ! wp_script_is( 'slick', 'enqueued' ) ) {
+            $deps_js[] = 'slick';
+		}
+
+		if ( ! empty( $attributes['entranceAnimation'] ) ) {
+			$deps_css[] = 'animate';
+			$deps_js[] = 'wow';
+		}
+
+		//fontawesome
+		$deps_css = getwid()->fontIconsManager()->enqueueFonts( $deps_css );
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = 'slick';
+				$assets[] = 'slick-theme';
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		$rtl = is_rtl() ? '.rtl' : '';
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/section/style' . $rtl . '.css' ),
+			$deps_css,
+			getwid()->settings()->getVersion()
+		);
+
+		// ensure that inline styles are enqueued only once
+		if ( !$this->assetsAlreadyEnqueued ) {
+			wp_add_inline_style( self::$blockName, getwid_generate_section_content_width_css() . getwid_generate_smooth_animation_css() );
+		}
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/section/frontend.js' ),
+            $deps_js,
+            getwid()->settings()->getVersion(),
+            true
+        );
+
+		if ( !$this->assetsAlreadyEnqueued ) {
+			$inline_script =
+				'var Getwid = Getwid || {};' .
+				'Getwid["isRTL"] = ' . json_encode( is_rtl() ) . ';';
+
+			wp_add_inline_script(
+				self::$blockName,
+				$inline_script,
+				'before'
+			);
+		}
+
+		$this->assetsAlreadyEnqueued = true;
     }
 
     public function render_callback( $attributes, $content ) {

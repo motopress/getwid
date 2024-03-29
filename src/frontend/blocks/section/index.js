@@ -1,3 +1,7 @@
+/*!
+ * getwid-section
+ */
+
 (function($){
 	$(document).ready(function(e) {
 
@@ -49,24 +53,30 @@
 					var mutebutton = $( this ).closest('.wp-block-getwid-section__wrapper').find('.getwid-background-video-controls .getwid-background-video-mute');
 
 					window.YT.ready( () => {
+
+						let playerVars = {
+							playsinline: 1,
+							autoplay: (autoplay == 'true' ? 1 : 0), //autoplay
+							controls: 0, //hide controls
+							disablekb: 1, //disable keyboard
+							fs: 0, //disable fullscreen
+							cc_load_policy: 0, //disable titles
+							iv_load_policy: 3, //disable annotations
+							loop: (loop == 'true' ? 1 : 0), //enable video loop
+							modestbranding: 1, //disable logo
+							rel: 0, //show related videos
+							showinfo: 0, //hide video info
+							enablejsapi: 1, //enable events
+							mute: (muted == 'true' ? 1 : 0), //mute sound
+							autohide: 1,
+						};
+
+						if ( loop == 'true' ) {
+							playerVars['playlist'] = video_id;
+						}
+
 						let player = new YT.Player(getwid_background_video_YT[index], { //$('#'+video_id)[index]
-							playerVars: {
-								playsinline: 1,
-								autoplay: (autoplay == 'true' ? 1 : 0), //autoplay
-								controls: 0, //hide controls
-								disablekb: 1, //disable keyboard
-								fs: 0, //disable fullscreen
-								cc_load_policy: 0, //disable titles
-								iv_load_policy: 3, //disable annotations
-								loop: (loop == 'true' ? 1 : 0), //enable video loop
-								playlist: (loop == 'true' ? video_id : ''),
-								modestbranding: 1, //disable logo
-								rel: 0, //show related videos
-								showinfo: 0, //hide video info
-								enablejsapi: 1, //enable events
-								mute: (muted == 'true' ? 1 : 0), //mute sound
-								autohide: 1,
-							},
+							playerVars: playerVars,
 							height: '100%',
 							width: '100%',
 							videoId: video_id,
@@ -267,7 +277,8 @@
 						autoplaySpeed: getwid_autoplay_speed,
 						fade: getwid_fade_effect,
 						speed: getwid_slide_speed,
-						infinite: getwid_infinite
+						infinite: getwid_infinite,
+						rtl: !!Getwid.isRTL
 					});
 
 				});

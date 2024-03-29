@@ -176,6 +176,7 @@ class Inspector extends Component {
 									autoFocus={ false }
 									value={ link }
 									onChange={(link) => setAttributes({link})}
+									__nextHasNoMarginBottom
 								/>
 							</BaseControl>
 							<BaseControl>
@@ -267,7 +268,7 @@ class Inspector extends Component {
 							<TextControl
 								type="number"
 								label={__('Space Around Icon', 'getwid')}
-								value={padding}
+								value={ padding !== undefined ? padding : '' }
 								onChange={padding => {
 									padding = parseInt(padding);
 									if (isNaN(padding)) {

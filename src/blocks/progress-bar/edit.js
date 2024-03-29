@@ -16,7 +16,7 @@ import classnames from 'classnames';
 * WordPress dependencies
 */
 const { compose } = wp.compose;
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createRef } = wp.element;
 const { RichText, withColors } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
@@ -43,55 +43,55 @@ class Edit extends Component {
 
 		const { isAnimated } = this.props.attributes;
 
+		this.progressBarRef = createRef();
+
 		this.drawFrame  = this.drawFrame.bind( this );
 		this.drawLinearBar  = this.drawLinearBar.bind( this );
 
 		this.state = {
-			fillComplete: !$.parseJSON(isAnimated) ? true : false,
+			fillComplete: !JSON.parse( isAnimated ) ? true : false,
 			holderWidth: undefined
 		}
 	}
 
-	drawFrame() {
+	drawFrame( $progressBar ) {
 		const { clientId } = this.props;
 
 		const { baseClass } = this.props;
 		const { fillAmount } = this.props.attributes;
 
-		const thisBlock = $( `[data-block='${clientId}']` );
-		let $content = $( `.${baseClass}__progress`, thisBlock );
+		const percent = () => { return Math.round(( $progressBar.width()/$progressBar.parent().width() ) * 100); }
 
-		const percent = () => { return Math.round(( $content.width()/$content.parent().width() ) * 100); }
-
-		$content.animate({ width: `${fillAmount}%` }, {
+		$progressBar.animate({ width: `${fillAmount}%` }, {
 			duration: 2000,
 			progress: () => {
-				let $percent = $(`.${baseClass}__percent`, thisBlock);
+				let $percent = $(`.${baseClass}__percent`, $progressBar.closest('.wp-block-getwid-progress-bar'));
 				$percent.text(percent() + '%');
 			},
 			complete: () => {
 				this.setState({
 					fillComplete: true,
-					holderWidth: $content.parent().width()
+					holderWidth: $progressBar.parent().width()
 				});
 			}
 		});
 	}
 
 	drawLinearBar() {
-		const { baseClass, clientId } = this.props;
+		const { baseClass } = this.props;
 		const { isAnimated, fillAmount } = this.props.attributes;
 
-		const thisBlock = $( `[data-block='${clientId}']` );
+		const currentDocument = this.progressBarRef.current.ownerDocument;
+		const thisBlock = $( this.progressBarRef.current );
 		const $bar = $( `.${baseClass}__progress`, thisBlock );
 
 		const root = getScrollableClassName();
 
-		if ( $.parseJSON( isAnimated ) ) {
+		if ( JSON.parse( isAnimated ) ) {
 			if ( isInViewport( $bar ) || root === false ) {
 				this.drawFrame( $bar );
 			} else {
-				scrollHandler( `.${root}`, $bar, () => {
+				scrollHandler( currentDocument.querySelector(`.${root}`) || currentDocument, $bar, () => {
 					this.drawFrame( $bar );
 				});
 			}
@@ -105,18 +105,14 @@ class Edit extends Component {
 
 		if (prevProps.isSelected === this.props.isSelected) {
 
-			const { baseClass, clientId } = this.props;
-			const { isAnimated, fillAmount } = this.props.attributes;
+			const { baseClass } = this.props;
+			const { fillAmount } = this.props.attributes;
 
 			const value = fillAmount ? fillAmount : '0';
 
-			if ( !$.parseJSON( isAnimated ) ) {
-				$( `.${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%` );
-			}
-
 			if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
-				$(`#block-${clientId}`).find(`.${baseClass}__progress`).css('width', `${value}%`);
-				$(`#block-${clientId}`).find(`.${baseClass}__percent`).text(`${value}%`);
+				$( this.progressBarRef.current ).find(`.${baseClass}__progress`).css('width', `${value}%`);
+				$( this.progressBarRef.current ).find(`.${baseClass}__percent`).text(`${value}%`);
 			}
 		}
 	}
@@ -144,7 +140,7 @@ class Edit extends Component {
 		return (
 			<Fragment>
 				<Inspector {...this.props} />
-				<div className={className}>
+				<div className={className} ref={ this.progressBarRef }>
 					<div className={`${baseClass}__wrapper`}>
 						<div className={`${baseClass}__header`}>
 
@@ -154,7 +150,6 @@ class Edit extends Component {
 								placeholder={__('Write heading…', 'getwid')}
 								value={title ? title : ''}
 								onChange={title => setAttributes({ title })}
-								keepPlaceholderOnFocus={true}
 								multiline={false}
 								allowedFormats={allowedFormats}
 							/>

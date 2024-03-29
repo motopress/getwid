@@ -19,6 +19,8 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
 
 		add_action( 'wp_ajax_get_google_api_key', [ $this, 'get_google_api_key'] );
 
+		getwid_maybe_add_option( 'getwid_google_api_key', '', true );
+
 		if ( $this->isEnabled() ) {
 
 			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
@@ -57,9 +59,9 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
 
     public function get_google_api_key() {
 
-		$nonce = $_POST['nonce'];
-        $action = $_POST['option'];
-        $data = trim( $_POST['data'] );
+		$nonce = sanitize_key( $_POST['nonce'] );
+        $action = sanitize_text_field( wp_unslash( $_POST['option'] ) );
+        $data = sanitize_text_field( wp_unslash( $_POST['data'] ) );
 
         if ( ! wp_verify_nonce( $nonce, 'getwid_nonce_google_api_key' ) ) {
             wp_send_json_error();
@@ -77,7 +79,7 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
         wp_send_json_success( $response );
     }
 
-    private function block_frontend_assets( $attributes = [], $content = '' ) {
+    public function block_frontend_assets( $attributes = [], $content = '' ) {
 
         if ( is_admin() ) {
             return;
@@ -100,13 +102,34 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
         $api_key = get_option( 'getwid_google_api_key', '' );
 
         if ( $api_key ) {
-            wp_enqueue_script( 'google_api_key_js', "https://maps.googleapis.com/maps/api/js?key={$api_key}" );
+            wp_enqueue_script( 'google_api_key_js', "https://maps.googleapis.com/maps/api/js?key={$api_key}", [], null );
 		}
 
 		//unescape.min.js
 		if ( ! wp_script_is( 'unescape', 'enqueued' ) ) {
 			wp_enqueue_script( 'unescape' );
 		}
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$rtl = is_rtl() ? '.rtl' : '';
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/map/style' . $rtl . '.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+
+		wp_enqueue_script(
+            self::$blockName,
+            getwid_get_plugin_url( 'assets/blocks/map/frontend.js' ),
+            [ 'jquery', 'unescape' ],
+            getwid()->settings()->getVersion(),
+            true
+        );
     }
 
     public function render_callback( $attributes, $content ) {

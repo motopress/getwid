@@ -1,3 +1,7 @@
+/*!
+ * getwid-progress-bar
+ */
+
 (function ($) {
 	$(document).ready(function (event) {
 
@@ -55,7 +59,7 @@
 					offset: '100%'
 				});
 
-				$(window).resize(function() { drawLines(getwid_fill_amount); });
+				$(window).on( 'resize', function() { drawLines( getwid_fill_amount ); } );
 			});
 		};
 

@@ -5,20 +5,16 @@ import { __ } from 'wp.i18n';
 import classnames from 'classnames';
 import { isEqual, pick, has } from 'lodash';
 import default_attributes from './attributes';
-import * as gradientParser from 'gradient-parser';
-import * as hexToRgb from 'hex-to-rgb';
 
 /**
 * Internal dependencies
 */
-import Dividers 	   from './sub-components/dividers';
+import Dividers from './sub-components/dividers';
 import BackgroundVideo from './sub-components/video';
-import GetwidRullers   from './sub-components/getwid-rullers';
-
 import GetwidCustomDropdown from 'GetwidControls/custom-dropdown-control';
 
-import { BackgroundSliderEdit as BackgroundSlider   } from './sub-components/slider';
-import { renderMediaControl   as GetwidMediaControl } from 'GetwidUtils/render-inspector';
+import BackgroundSlider from './sub-components/slider';
+import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 import { getScrollableClassName, getYouTubeID } from 'GetwidUtils/help-functions';
 
 import Inspector from './inspector';
@@ -27,10 +23,10 @@ import Inspector from './inspector';
 * WordPress dependencies
 */
 const { addFilter } = wp.hooks
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createRef } = wp.element;
 const { select, withSelect } = wp.data;
-const { Button, SelectControl, ToolbarButton, ButtonGroup, BaseControl, Dashicon, Tooltip, ToolbarGroup, DropdownMenu, Path, SVG, FocalPointPicker, __experimentalGradientPicker: GradientPicker } = wp.components;
-const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, MediaPlaceholder, MediaUpload, PanelColorSettings } = wp.blockEditor || wp.editor;
+const { Button, SelectControl, ToolbarButton, Dashicon, Tooltip, ToolbarGroup, ToolbarDropdownMenu, Path, SVG, FocalPointPicker } = wp.components;
+const { InnerBlocks, withColors, BlockControls, BlockAlignmentToolbar, PanelColorSettings } = wp.blockEditor || wp.editor;
 const { compose } = wp.compose;
 
 const { jQuery: $ } = window;
@@ -41,48 +37,6 @@ const { jQuery: $ } = window;
 const TEMPLATE = [];
 const baseClass = 'wp-block-getwid-section';
 const ALLOWED_IMAGE_MEDIA_TYPES = [ 'image' ];
-
-let YouTubeJS = false;
-//Callback Youtube API JS
-window.onYouTubeIframeAPIReady = function () {
-	YouTubeJS = true;
-};
-
-const getRgb = (colorStops, index) =>
-	`${colorStops[index].type}(${colorStops[index].value.toString()})`;
-
-const getHex = (colorStops, index) =>
-	colorStops[index].value.toString();
-
-const fromHexToRbg = backgroundGradient => {
-	const parsedGradient = gradientParser.parse( backgroundGradient )[0];
-	const colorStops = parsedGradient.colorStops;
-
-	if ( isEqual( colorStops[0].type, 'hex' ) ) {
-
-		const firstColor = hexToRgb( getHex( colorStops, 0 ) ).toString();
-		const secondColor = hexToRgb( getHex( colorStops, 1 ) ).toString();
-
-		const firstLocation = colorStops[0].length.value;
-		const secondLocation = colorStops[1].length.value;
-
-		const type = parsedGradient.type;
-		const angle = parsedGradient.orientation
-			? parsedGradient.orientation.value
-			: undefined;
-
-		let gradient;
-		if ( isEqual( type, 'linear-gradient' ) ) {
-			gradient = `${type}(${angle}deg,rgba(${firstColor}) ${firstLocation}%,rgba(${secondColor}) ${secondLocation}%)`;
-		} else {
-			gradient = `${type}(rgba(${firstColor}) ${firstLocation}%,rgba(${secondColor}) ${secondLocation}%)`;
-		}
-
-		return gradient;
-	}
-
-	return backgroundGradient;
-}
 
 const setSkipLayoutAttribute = (element, block, attribute) => {
 	if (block.name == 'getwid/section'){
@@ -115,12 +69,12 @@ class Edit extends Component {
 			youTubeVideoAutoplay
 		} = this.props.attributes;
 
+		this.sectionRef = createRef();
 		this.videoRef = null;
 		this.videoButtonRef = null;
 
 		this.state = {
 			draggablesObj: {},
-			showRullers: true,
 			videoPlayState: 'paused',
 			videoMuteState: true,
 
@@ -172,7 +126,6 @@ class Edit extends Component {
 		const { marginTopMobile, marginRightMobile, marginBottomMobile, marginLeftMobile } = this.props.attributes;
 		const { className,backgroundColor,setBackgroundColor, prepareMultiGradientStyle, prepareBackgroundImageStyles, setAttributes, isSelected } = this.props;
 
-		const { showRullers } = this.state;
 		const { isLockedPaddingsOnDesktop, isLockedPaddingsOnTablet, isLockedPaddingsOnMobile } = this.state;
 		const { isLockedMarginsOnDesktop , isLockedMarginsOnTablet , isLockedMarginsOnMobile  } = this.state;
 
@@ -235,9 +188,8 @@ class Edit extends Component {
 		);
 
 		//Gradient
-		let { backgroundGradient, foregroundGradient } = this.props.attributes;
-		backgroundGradient = prepareMultiGradientStyle('background', this.props);
-		foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
+		const backgroundGradient = prepareMultiGradientStyle('background', this.props);
+		const foregroundGradient = prepareMultiGradientStyle('foreground', this.props);
 
 		const backgroundStyle = {
 			backgroundColor: backgroundColor.color ? backgroundColor.color : customBackgroundColor,
@@ -397,7 +349,7 @@ class Edit extends Component {
 							<ul className='block-editor-inner-blocks__template-picker-options'>{
 								templates.map((key, index) => {
 									return (
-										<li>
+										<li key={ index }>
 											<Tooltip text={key.title}>
 												<Button
 													className='components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large'
@@ -412,7 +364,7 @@ class Edit extends Component {
 								})
 							}
 							</ul>
-							<div class='block-editor-inner-blocks__template-picker-skip'>
+							<div className='block-editor-inner-blocks__template-picker-skip'>
 								<Button
 									className='components-button is-link'
 									onClick={ () => setAttributes({ skipLayout: true }) }
@@ -432,57 +384,50 @@ class Edit extends Component {
 								onChange={ value => setAttributes({ align: value }) }
 							/>
 							<ToolbarGroup>
-								<>
-									<DropdownMenu
-										icon={verticalAligns[ verticalAlign ].icon}
-										hasArrowIndicator={true}
-										className='components-toolbar'
-										label={__( 'Content Area Vertical Alignment', 'getwid' )}
-										controls={
-											verticalAlignControls.map(control => {
-												return {
-													...verticalAligns[ control ],
-													isActive: verticalAlign === control,
-													onClick: () => {
-														setAttributes({ verticalAlign: control });
-													}
-												};
-											})
-										}
-									/>
-									<DropdownMenu
-										icon={horizontalAligns[ horizontalAlign ].icon}
-										hasArrowIndicator={true}
-										className='components-toolbar'
-										label={__( 'Content Area Horizontal Alignment', 'getwid' )}
-										controls={
-											horizontalAlignControls.map( control => {
-												return {
-													...horizontalAligns[ control ],
-													isActive: horizontalAlign === control,
-													onClick: ()=>{
-														setAttributes({ horizontalAlign: control });
-													},
-												};
-											} )
-										}
-									/>
-								</>
+								<ToolbarDropdownMenu
+									icon={verticalAligns[ verticalAlign ].icon}
+									label={__( 'Content Area Vertical Alignment', 'getwid' )}
+									controls={
+										verticalAlignControls.map(control => {
+											return {
+												...verticalAligns[ control ],
+												isActive: verticalAlign === control,
+												onClick: () => {
+													setAttributes({ verticalAlign: control });
+												}
+											};
+										})
+									}
+								/>
+								<ToolbarDropdownMenu
+									icon={horizontalAligns[ horizontalAlign ].icon}
+									label={__( 'Content Area Horizontal Alignment', 'getwid' )}
+									controls={
+										horizontalAlignControls.map( control => {
+											return {
+												...horizontalAligns[ control ],
+												isActive: horizontalAlign === control,
+												onClick: ()=>{
+													setAttributes({ horizontalAlign: control });
+												},
+											};
+										} )
+									}
+								/>
 							</ToolbarGroup>
 
 							<GetwidCustomDropdown
 								className='components-dropdown-menu components-toolbar'
 								renderToggle={({ isOpen, onToggle }) => (
 									<ToolbarButton
-										className='components-button components-icon-button components-dropdown-menu__toggle'
 										icon={<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 20 20" width="20" height="20"><path d="M3,16h14c0.55,0,1,0.45,1,1v0c0,0.55-0.45,1-1,1H3c-0.55,0-1-0.45-1-1v0C2,16.45,2.45,16,3,16z"/><path d="M9.05,13.95L13.3,9.7c0.39-0.39,0.39-1.02,0-1.41L9.05,4.05L8.34,3.34L7.63,2.63c-0.39-0.39-1.02-0.39-1.41,0L6.22,2.64	c-0.39,0.39-0.39,1.02,0,1.41l0.7,0.7L3.39,8.3C3,8.69,3,9.31,3.39,9.7l4.24,4.25C8.02,14.34,8.66,14.34,9.05,13.95z M9.04,6.87	L11.17,9H5.51l2.13-2.13C8.02,6.49,8.66,6.49,9.04,6.87z"/><path d="M13,13c0,0.55,0.45,1,1,1s1-0.45,1-1s-1-3-1-3S13,12.45,13,13z"/></svg>}
 										onClick={onToggle}
 									/>
 								)}
 								renderContent={({ onClose }) => (
 									<Fragment>
-										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
-											<ToolbarButton
+										<div className='components-getwid-toolbar-popup-wrapper-close small-icon'>
+											<Button
 												icon='no-alt'
 												className='getwid-popover-close-button'
 												onClick={() => {
@@ -511,15 +456,14 @@ class Edit extends Component {
 								contentClassName={`getwid-popover-wrapper`}
 								renderToggle={({ isOpen, onToggle }) =>
 									<ToolbarButton
-										className='components-button components-icon-button components-dropdown-menu__toggle'
 										icon='format-image'
 										onClick={onToggle}
 									/>
 								}
 								renderContent={({ onClose }) => (
 									<Fragment>
-										<div class='components-getwid-toolbar-popup-wrapper-close small-icon'>
-											<ToolbarButton
+										<div className='components-getwid-toolbar-popup-wrapper-close small-icon'>
+											<Button
 												icon='no-alt'
 												className='getwid-popover-close-button'
 												onClick={() => {
@@ -616,151 +560,127 @@ class Edit extends Component {
 									</Fragment>
 								)}
 							/>
-
-							<ToolbarGroup controls={[
-								{
-									icon: <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g><g><path d="M24.4003906,22.5996094H7.5996094c-0.5527344,0-1-0.4472656-1-1V10.4003906c0-0.5527344,0.4472656-1,1-1h16.8007813    c0.5527344,0,1,0.4472656,1,1v11.1992188C25.4003906,22.1523438,24.953125,22.5996094,24.4003906,22.5996094z     M8.5996094,20.5996094h14.8007813v-9.1992188H8.5996094V20.5996094z"/></g><g><path d="M2,11.5996094c-0.5527344,0-1-0.4472656-1-1V5c0-0.5527344,0.4472656-1,1-1h5.5996094c0.5527344,0,1,0.4472656,1,1    s-0.4472656,1-1,1H3v4.5996094C3,11.1523438,2.5527344,11.5996094,2,11.5996094z"/></g><g><path d="M30,11.5996094c-0.5527344,0-1-0.4472656-1-1V6h-4.5996094c-0.5527344,0-1-0.4472656-1-1s0.4472656-1,1-1H30    c0.5527344,0,1,0.4472656,1,1v5.5996094C31,11.1523438,30.5527344,11.5996094,30,11.5996094z"/></g><g><path d="M7.5996094,28H2c-0.5527344,0-1-0.4472656-1-1v-5.5996094c0-0.5527344,0.4472656-1,1-1s1,0.4472656,1,1V26h4.5996094    c0.5527344,0,1,0.4472656,1,1S8.1523438,28,7.5996094,28z"/></g><g><path d="M30,28h-5.5996094c-0.5527344,0-1-0.4472656-1-1s0.4472656-1,1-1H29v-4.5996094c0-0.5527344,0.4472656-1,1-1    s1,0.4472656,1,1V27C31,27.5527344,30.5527344,28,30,28z"/></g></g></svg>,
-									title: __( 'Show Guides', 'getwid' ),
-									isActive: showRullers,
-									onClick: () => {
-										this.setState({ showRullers: !showRullers });
-									}
-								}
-							]}/>
 						</BlockControls>
 
-						<Inspector {...{
-							...this.props,
-							...{ isLockedPaddingsOnDesktop, isLockedPaddingsOnTablet, isLockedPaddingsOnMobile },
-							...{ isLockedMarginsOnDesktop, isLockedMarginsOnTablet, isLockedMarginsOnMobile },
-							baseClass,
-							changeState
-						}} key='inspector'/>
+						<Inspector
+							{ ...{
+								...this.props,
+								...{ isLockedPaddingsOnDesktop, isLockedPaddingsOnTablet, isLockedPaddingsOnMobile },
+								...{ isLockedMarginsOnDesktop, isLockedMarginsOnTablet, isLockedMarginsOnMobile },
+								baseClass,
+								changeState
+							} }
+						/>
 						<div
-							id={id}
-							className={sectionClasses}
-							style={sectionStyle}
-							{...wowData}
+							ref={ this.sectionRef }
+							id={ id }
+							className={ sectionClasses }
+							style={ sectionStyle }
+							{ ...wowData }
 						>
-							<GetwidRullers {...{
-								...{ paddingBottom, paddingRight, paddingLeft, paddingTop },
-								...{ paddingBottomValue, paddingRightValue, paddingLeftValue, paddingTopValue },
-
-								...{ marginBottom, marginRight, marginLeft, marginTop },
-								...{ marginBottomValue, marginRightValue, marginLeftValue, marginTopValue },
-
-								changeState,
-								setAttributes,
-                                showRullers,
-                                isSelected,
-                                baseClass,
-								clientId,
-                                isLayoutSet : (hasInnerBlocks || skipLayout || hasAttributesChanges || hasParentBlocks || !Getwid.settings.wide_support),
-							}}>
-								<div className={wrapperClasses} style={wrapperStyle}>
-									<Dividers {...{...this.props, baseClass}} />
-										{
-											((!!backgroundVideoUrl || !!youTubeVideoUrl) && backgroundVideoControlsPosition !== 'none') && (
-												<div
-													className={
-														classnames( 'getwid-background-video-controls', {
-																[ `is-position-${backgroundVideoControlsPosition}` ]: backgroundVideoControlsPosition !== 'top-right'
-															}
-														)
+							<div className={wrapperClasses} style={wrapperStyle}>
+								<Dividers {...{...this.props, baseClass}} />
+								{
+									((!!backgroundVideoUrl || !!youTubeVideoUrl) && backgroundVideoControlsPosition !== 'none') && (
+										<div
+											className={
+												classnames( 'getwid-background-video-controls', {
+														[ `is-position-${backgroundVideoControlsPosition}` ]: backgroundVideoControlsPosition !== 'top-right'
 													}
-												>
-													<button
-														onClick={this.playBackgroundVideo}
-														className='getwid-background-video-play'
-														ref={node => this.videoButtonRef = node}
-													>
-														{ ((backgroundVideoType == 'self' && this.state.videoPlayState === 'paused') || (backgroundVideoType == 'youtube' && this.state.YTvideoPlayState === 'paused')) &&
-															<i className='getwid-icon getwid-icon-play'></i>
-														}
-														{ ((backgroundVideoType == 'self' && this.state.videoPlayState === 'playing') || (backgroundVideoType == 'youtube' && this.state.YTvideoPlayState === 'playing')) &&
-															<i className='getwid-icon getwid-icon-pause'></i>
-														}
-													</button>
-													<button
-														onClick={this.muteBackgroundVideo}
-														className='getwid-background-video-mute'
-													>
-														{ ((backgroundVideoType == 'self' && this.state.videoMuteState === true) || (backgroundVideoType == 'youtube' && this.state.YTvideoMuteState === true)) &&
-															<i className='getwid-icon getwid-icon-mute'></i>
-														}
-														{ ((backgroundVideoType == 'self' && this.state.videoMuteState === false) || (backgroundVideoType == 'youtube' && this.state.YTvideoMuteState === false)) &&
-															<i className='getwid-icon getwid-icon-volume-up'></i>
-														}
-													</button>
-												</div>
-											)
-										}
-
-										<div className={classnames( `${baseClass}__inner-wrapper`, {
-												[ `has-dividers-over` ]: dividersBringTop,
-											})} style={innerWrapperStyle}>
-											<div className={`${baseClass}__background-holder`}>
-												<div className={backgroundClass} style={backgroundStyle}>
-
-													{
-														!!backgroundImage && (
-															<div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
-																alt={backgroundImage.alt} data-id={backgroundImage.id}/></div>
-														)
-													}
-													{
-														!!sliderImages.length && (
-															<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}}/></div>
-														)
-													}
-													{ ( !!backgroundVideoUrl || !!youTubeVideoUrl) &&
-														(
-															<div className={`${baseClass}__background-video-wrapper`}>
-																{ ( !!youTubeVideoUrl && backgroundVideoType == 'youtube') && (
-																	<div className={classnames(`${baseClass}__background-video`,
-																		`source-youtube`,
-																		{
-																			[`scale-youtube-${youTubeVideoScale}`]: youTubeVideoScale != '',
-																		}
-																	)}>
-																		<div className={`${baseClass}__background-video-youtube`} id={`ytplayer-${clientId}`}></div>
-																	</div>
-																)}
-
-																{ ( !!backgroundVideoUrl && backgroundVideoType == 'self') && (
-																	<BackgroundVideo
-																		{...{...this.props, baseClass}}
-																		onVideoEnd={this.onBackgroundVideoEnd}
-																		videoAutoplay={false}
-																		videoMute={this.state.videoMuteState}
-																		videoElemRef={node => this.videoRef = node}
-																	/>
-																)}
-															</div>
-														)
-													}
-												</div>
-												<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
-											</div>
-											<div className={`${baseClass}__content`}>
-
-												<div className={`${baseClass}__inner-content`}>
-													<InnerBlocks
-														renderAppender={ () => (
-															isSelected && (
-																<InnerBlocks.ButtonBlockAppender/>
-															)
-														) }
-														defaultBlock={false}
-														template={TEMPLATE}
-														templateInsertUpdatesSelection={false}
-														templateLock={false}
-													/>
-												</div>
-											</div>
+												)
+											}
+										>
+											<button
+												onClick={this.playBackgroundVideo}
+												className='getwid-background-video-play'
+												ref={node => this.videoButtonRef = node}
+											>
+												{ ((backgroundVideoType == 'self' && this.state.videoPlayState === 'paused') || (backgroundVideoType == 'youtube' && this.state.YTvideoPlayState === 'paused')) &&
+													<i className='getwid-icon getwid-icon-play'></i>
+												}
+												{ ((backgroundVideoType == 'self' && this.state.videoPlayState === 'playing') || (backgroundVideoType == 'youtube' && this.state.YTvideoPlayState === 'playing')) &&
+													<i className='getwid-icon getwid-icon-pause'></i>
+												}
+											</button>
+											<button
+												onClick={this.muteBackgroundVideo}
+												className='getwid-background-video-mute'
+											>
+												{ ((backgroundVideoType == 'self' && this.state.videoMuteState === true) || (backgroundVideoType == 'youtube' && this.state.YTvideoMuteState === true)) &&
+													<i className='getwid-icon getwid-icon-mute'></i>
+												}
+												{ ((backgroundVideoType == 'self' && this.state.videoMuteState === false) || (backgroundVideoType == 'youtube' && this.state.YTvideoMuteState === false)) &&
+													<i className='getwid-icon getwid-icon-volume-up'></i>
+												}
+											</button>
 										</div>
+									)
+								}
+
+								<div className={classnames( `${baseClass}__inner-wrapper`, {
+										[ `has-dividers-over` ]: dividersBringTop,
+									})} style={innerWrapperStyle}>
+									<div className={`${baseClass}__background-holder`}>
+										<div className={backgroundClass} style={backgroundStyle}>
+
+											{
+												!!backgroundImage && (
+													<div className={`${baseClass}__background-image-wrapper`}><img className={`${baseClass}__background-image`} src={backgroundImage.url}
+														alt={backgroundImage.alt} data-id={backgroundImage.id}/></div>
+												)
+											}
+											{
+												!!sliderImages.length && (
+													<div className={`${baseClass}__background-slider-wrapper`}><BackgroundSlider {...{...this.props, baseClass}}/></div>
+												)
+											}
+											{ ( !!backgroundVideoUrl || !!youTubeVideoUrl) &&
+												(
+													<div className={`${baseClass}__background-video-wrapper`}>
+														{ ( !!youTubeVideoUrl && backgroundVideoType == 'youtube') && (
+															<div className={classnames(`${baseClass}__background-video`,
+																`source-youtube`,
+																{
+																	[`scale-youtube-${youTubeVideoScale}`]: youTubeVideoScale != '',
+																}
+															)}>
+																<div className={`${baseClass}__background-video-youtube`} id={`ytplayer-${clientId}`}></div>
+															</div>
+														)}
+
+														{ ( !!backgroundVideoUrl && backgroundVideoType == 'self') && (
+															<BackgroundVideo
+																{...{...this.props, baseClass}}
+																onVideoEnd={this.onBackgroundVideoEnd}
+																videoAutoplay={false}
+																videoMute={this.state.videoMuteState}
+																videoElemRef={node => this.videoRef = node}
+															/>
+														)}
+													</div>
+												)
+											}
+										</div>
+										<div className={`${baseClass}__foreground`} style={foregroundStyle}></div>
+									</div>
+									<div className={`${baseClass}__content`}>
+
+										<div className={`${baseClass}__inner-content`}>
+											<InnerBlocks
+												renderAppender={ () => (
+													isSelected && (
+														<InnerBlocks.ButtonBlockAppender/>
+													)
+												) }
+												defaultBlock={false}
+												template={TEMPLATE}
+												templateInsertUpdatesSelection={false}
+												templateLock={false}
+											/>
+										</div>
+									</div>
 								</div>
-							</GetwidRullers>
+							</div>
 						</div>
 					</Fragment>
 				)}
@@ -831,42 +751,57 @@ class Edit extends Component {
 			youTubeVideoAutoplay
 		} = this.props.attributes;
 
+		const sectionRef = this.sectionRef.current;
+		const currentWindow = sectionRef.ownerDocument.defaultView;
 		// YouTube player
 		let player;
 
 		function checkYouTubeScript()
 		{
 			const waitLoadYouTube = setInterval( () => {
-				if (YouTubeJS){
-					clearInterval(waitLoadYouTube);
+
+				if ( currentWindow.YT?.loaded ) {
+
+					clearInterval( waitLoadYouTube );
+
+					const YT = currentWindow.YT;
+
 					//Remove player if exist
 					if (YT.get(`ytplayer-${clientId}`)){
 						YT.get(`ytplayer-${clientId}`).destroy();
 					}
 
 					if (youTubeVideoUrl && youTubeVideoUrl != ''){
+
+						let video_id = getYouTubeID(youTubeVideoUrl);
+
+						let playerVars = {
+							autoplay: 0, //autoplay
+							// autoplay: (youTubeVideoAutoplay == 'true' ? 1 : 0), //autoplay
+							controls: 0, //hide controls
+							disablekb: 1, //disable keyboard
+							fs: 0, //disable fullscreen
+							cc_load_policy: 0, //disable titles
+							iv_load_policy: 3, //disable annotations
+							loop: (youTubeVideoLoop == 'true' ? 1 : 0), //enable video loop
+							modestbranding: 1, //disable logo
+							rel: 0, //show related videos
+							showinfo: 0, //hide video info
+							enablejsapi: 1, //enable events
+							mute: (youTubeVideoMute == 'true' ? 1 : 0), //mute sound
+							autohide: 1,
+						}
+
+						if ( youTubeVideoLoop == 'true' ) {
+							playerVars['playlist'] = video_id;
+						}
+
 						//Init new player
 						player = new YT.Player(`ytplayer-${clientId}`, {
-							playerVars: {
-								autoplay: 0, //autoplay
-								// autoplay: (youTubeVideoAutoplay == 'true' ? 1 : 0), //autoplay
-								controls: 0, //hide controls
-								disablekb: 1, //disable keyboard
-								fs: 0, //disable fullscreen
-								cc_load_policy: 0, //disable titles
-								iv_load_policy: 3, //disable annotations
-								loop: (youTubeVideoLoop == 'true' ? 1 : 0), //enable video loop
-								playlist: (youTubeVideoLoop == 'true' ? getYouTubeID(youTubeVideoUrl) : ''),
-								modestbranding: 1, //disable logo
-								rel: 0, //show related videos
-								showinfo: 0, //hide video info
-								enablejsapi: 1, //enable events
-								mute: (youTubeVideoMute == 'true' ? 1 : 0), //mute sound
-								autohide: 1,
-							},
+							playerVars: playerVars,
 							height: '100%',
 							width: '100%',
-							videoId: getYouTubeID(youTubeVideoUrl),
+							videoId: video_id,
 							events: {
 								'onReady': (e) => {
 								},
@@ -895,7 +830,7 @@ class Edit extends Component {
 		    script.src =  "https://www.youtube.com/iframe_api";
 		    script.id = "youtube_video_api_js";
 		    var done = false;
-		    document.getElementsByTagName('head')[0].appendChild(script);
+			sectionRef.ownerDocument.getElementsByTagName('head')[0].appendChild(script);
 
 		    script.onload = script.onreadystatechange = function() {
 		        if ( !done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete") )
@@ -907,7 +842,7 @@ class Edit extends Component {
 		}
 
 		//Add script once
-		if (!$('#youtube_video_api_js').length){
+		if ( $( sectionRef.ownerDocument ).find( '#youtube_video_api_js' ).length === 0 ) {
 			addYouTubeScript();
 		}
 
@@ -935,8 +870,9 @@ class Edit extends Component {
 		const { backgroundVideoType } = this.props.attributes;
 		const { clientId } = this.props;
 		const YTvideoPlayState = this.state.YTvideoPlayState;
+		const currentWindow = this.sectionRef.current.ownerDocument.defaultView;
 
-		if (backgroundVideoType == 'self'){
+		if ( backgroundVideoType == 'self' ) {
 			const video = this.videoRef;
 
 			if( ! video.paused) {
@@ -950,8 +886,8 @@ class Edit extends Component {
 					videoPlayState: 'playing'
 				});
 			}
-		} else if(backgroundVideoType == 'youtube'){
-			let player = YT.get(`ytplayer-${clientId}`);
+		} else if( backgroundVideoType == 'youtube' ) {
+			let player = currentWindow.YT.get(`ytplayer-${clientId}`);
 
 			if (player && YTvideoPlayState == 'paused'){
 				//player.f.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
@@ -981,8 +917,9 @@ class Edit extends Component {
 		const { backgroundVideoType } = this.props.attributes;
 		const { clientId } = this.props;
 		const YTvideoMuteState = this.state.YTvideoMuteState;
+		const currentWindow = this.sectionRef.current.ownerDocument.defaultView;
 
-		if (backgroundVideoType == 'self'){
+		if ( backgroundVideoType == 'self' ) {
 			const video = this.videoRef;
 
 			video.muted = ! video.muted;
@@ -990,8 +927,8 @@ class Edit extends Component {
 			this.setState({
 				videoMuteState: video.muted
 			});
-		} else if(backgroundVideoType == 'youtube'){
-			let player = YT.get(`ytplayer-${clientId}`);
+		} else if ( backgroundVideoType == 'youtube' ) {
+			let player = currentWindow.YT.get(`ytplayer-${clientId}`);
 
 			if (player && YTvideoMuteState == true){
 				//player.f.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');

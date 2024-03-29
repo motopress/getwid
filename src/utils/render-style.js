@@ -5,12 +5,6 @@ import { isEqual } from 'lodash';
 import * as gradientParser from 'gradient-parser';
 import * as hexToRgb from 'hex-to-rgb';
 
-
-/**
-* WordPress dependencies
-*/
-const { __experimentalGradientPicker: GradientPicker } = wp.components;
-
 /* #region Gradient API */
 const getRgb = (colorStops, index) =>
 	`${colorStops[index].type}(${colorStops[index].value.toString()})`;
@@ -61,76 +55,43 @@ export default class renderStyle {
 
 		let { backgroundGradient, foregroundGradient } = props.attributes;
 
-		if ( GradientPicker ) {
-
-			if (gradientType == 'background'){
-
-				if (backgroundGradient){
-					return backgroundGradient;
-				} else {
-					if (backgroundGradientFirstColor){
-						backgroundGradient = renderStyle.prepareGradientStyle( 'background', props );
-						backgroundGradient = backgroundGradient.backgroundImage;
-
-						if ( backgroundGradient ) {
-							backgroundGradient = backgroundGradient.replace( /, /g, () => ',' );
-							backgroundGradient = fromHexToRbg( backgroundGradient );
-						}
-
-						return backgroundGradient;
-					} else {
-						return undefined;
-					}
-				}
-
+		if (gradientType == 'background') {
+			if (backgroundGradient) {
+				return backgroundGradient;
 			}
 
-			if (gradientType == 'foreground'){
+			if (backgroundGradientFirstColor){
+				backgroundGradient = renderStyle.prepareGradientStyle( 'background', props );
+				backgroundGradient = backgroundGradient.backgroundImage;
 
-				if (foregroundGradient){
-					return foregroundGradient;
-				} else {
-					if (foregroundGradientFirstColor){
-						foregroundGradient = renderStyle.prepareGradientStyle( 'foreground', props );
-						foregroundGradient = foregroundGradient.backgroundImage;
-
-						if ( foregroundGradient ) {
-							foregroundGradient = foregroundGradient.replace( /, /g, () => ',' );
-							foregroundGradient = fromHexToRbg( foregroundGradient );
-						}
-
-						return foregroundGradient;
-					} else {
-						return undefined;
-					}
+				if ( backgroundGradient ) {
+					backgroundGradient = backgroundGradient.replace( /, /g, () => ',' );
+					backgroundGradient = fromHexToRbg( backgroundGradient );
 				}
 
+				return backgroundGradient;
 			}
-
-		} else {
-
-			if (gradientType == 'background'){
-				if (backgroundGradientFirstColor){
-					backgroundGradient = renderStyle.prepareGradientStyle( 'background', props );
-					backgroundGradient = backgroundGradient.backgroundImage;
-					return backgroundGradient;
-				} else {
-					return undefined;
-				}
-			}
-
-			if (gradientType == 'foreground'){
-				if (foregroundGradientFirstColor){
-					foregroundGradient = renderStyle.prepareGradientStyle( 'foreground', props );
-					foregroundGradient = foregroundGradient.backgroundImage;
-					return foregroundGradient;
-				} else {
-					return undefined;
-				}
-			}
-
 		}
 
+		if (gradientType == 'foreground') {
+			if (foregroundGradient) {
+				return foregroundGradient;
+			}
+
+			if (foregroundGradientFirstColor){
+				foregroundGradient = renderStyle.prepareGradientStyle( 'foreground', props );
+				foregroundGradient = foregroundGradient.backgroundImage;
+
+				if ( foregroundGradient ) {
+					foregroundGradient = foregroundGradient.replace( /, /g, () => ',' );
+					foregroundGradient = fromHexToRbg( foregroundGradient );
+				}
+
+				return foregroundGradient;
+			}
+		}
+
+		return undefined;
 	}
 
 

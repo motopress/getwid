@@ -1,6 +1,7 @@
 /**
  * Import blocks
  */
+import './acf';
 import './post-title';
 import './post-featured-image';
 import './post-content';

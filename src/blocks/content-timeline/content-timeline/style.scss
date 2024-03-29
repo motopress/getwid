@@ -1,3 +1,7 @@
+/*!
+ * getwid-content-timeline
+ */
+
 .wp-block-getwid-content-timeline {
 	position: relative;
 
@@ -45,7 +49,7 @@
 	&.has-card-right {
 		@media screen and (min-width: 992px) {
 			.wp-block-getwid-content-timeline-item__wrapper {
-				flex-direction: row-reverse;
+				flex-direction: row-reverse #{'/*rtl: row*/'};
 			}
 			.wp-block-getwid-content-timeline-item__meta {
 				text-align: right;
@@ -67,7 +71,7 @@
 	&.has-card-left {
 		@media screen and(min-width: 992px) {
 			.wp-block-getwid-content-timeline-item__wrapper {
-				flex-direction: row;
+				flex-direction: row #{'/*rtl: row-reverse*/'};
 			}
 			.wp-block-getwid-content-timeline-item__meta {
 				text-align: left;
@@ -87,7 +91,7 @@
 		position: relative;
 
 		@media screen and(min-width: 992px) {
-			flex-direction: row;
+			flex-direction: row #{'/*rtl: row-reverse*/'};
 		}
 	}
 
@@ -162,6 +166,7 @@
 
 	&__meta {
 		display: none;
+		/*rtl:raw: text-align: left*/
 		@media screen and(min-width: 992px) {
 			display: block;
 			flex: 1 1 50%;

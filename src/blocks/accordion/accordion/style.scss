@@ -1,3 +1,7 @@
+/*!
+ * getwid-accordion
+ */
+
 .wp-block-getwid-accordion {
 
 	//Specific variables for this block
@@ -30,10 +34,13 @@
 			a {
 				display: flex;
 				align-items: center;
+				/*rtl:begin:remove*/
 				justify-content: space-between;
+				/*rtl:end:remove*/
 				text-decoration: none !important;
 				border: 0;
 				box-shadow: none;
+				/*rtl:raw: flex-direction: row-reverse;justify-content: flex-end; */
 
 				&:before,
 				&:after {
@@ -158,8 +165,8 @@
 .has-icon-left {
 	.wp-block-getwid-accordion__header-wrapper {
 		a {
-			flex-direction: row-reverse;
-			justify-content: flex-end;
+			flex-direction: row-reverse #{'/*rtl: row*/'};
+			justify-content: flex-end #{'/*rtl: space-between*/'};
 		}
 	}
 

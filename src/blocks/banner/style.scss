@@ -1,3 +1,7 @@
+/*!
+ * getwid-banner
+ */
+
 .wp-block-getwid-banner {
 	position: relative;
 	overflow: hidden;
@@ -91,13 +95,15 @@
 	.wp-block-getwid-banner__image,
 	.wp-block-getwid-banner__video {
 		width: calc(100% + 25px);
-		transform: translateX(-25px)
+		/*rtl:begin:remove*/
+		transform: translateX(-25px);
+		/*rtl:end:remove*/
 	}
 
 	&:hover {
 		.wp-block-getwid-banner__image,
 		.wp-block-getwid-banner__video {
-			transform: none;
+			transform: none #{'/*rtl:translateX(25px)*/'};
 		}
 	}
 }
@@ -195,7 +201,7 @@
 	&:hover {
 		.wp-block-getwid-banner__image,
 		.wp-block-getwid-banner__video {
-			transform: none;
+			transform: none #{'/*rtl:translateX(25px)*/'};
 		}
 
 		.wp-block-getwid-banner__caption {
@@ -210,7 +216,9 @@
 	.wp-block-getwid-banner__image,
 	.wp-block-getwid-banner__video {
 		width: calc(100% + 25px);
+		/*rtl:begin:remove*/
 		transform: translateX(-25px);
+		/*rtl:end:remove*/
 	}
 
 	.wp-block-getwid-banner__caption {

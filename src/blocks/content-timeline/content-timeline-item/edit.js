@@ -10,14 +10,14 @@ import { isEqual, get, pick } from 'lodash';
  * Internal dependencies
  */
 import Inspector from './inspector';
-import { createResizeObserver } from 'GetwidUtils/help-functions';
+import { createResizeObserver, getScrollableClassName } from 'GetwidUtils/help-functions';
 
 /**
 * WordPress dependencies
 */
 const { compose } = wp.compose;
 const { withSelect } = wp.data;
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createRef } = wp.element;
 const { ToolbarGroup, ToolbarButton } = wp.components;
 const { MediaUploadCheck, MediaUpload, BlockControls, InnerBlocks, RichText, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
 
@@ -46,6 +46,8 @@ class GetwidTimelineItem extends Component {
 		this.onSelectImage = this.onSelectImage.bind( this );
 		this.onChangeImageSize = this.onChangeImageSize.bind( this );
 
+		this.timelineItemRef = createRef();
+
 		this.state = {
 			rootClientId: this.setRootId()
 		}
@@ -57,10 +59,20 @@ class GetwidTimelineItem extends Component {
 	}
 
 	pickRelevantMediaFiles(image, imageSize) {
+
 		const imageProps = pick( image, [ 'id', 'link', 'caption' ] );
+
 		imageProps.original_url = image.url || image.source_url;
 		imageProps.alt = image.alt || image.alt_text;
-		imageProps.url = get( image, [ 'sizes', imageSize, 'url' ] ) || get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || image.url;
+
+		imageProps.url =
+			get( image, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) ||
+			get( image, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+			get( image, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+			get( image, [ 'sizes', imageSize, 'url' ] ) ||
+			image.url ||
+			image.source_url;
+
 		return imageProps;
 	};
 
@@ -103,8 +115,8 @@ class GetwidTimelineItem extends Component {
 
 		const { filling } = getBlock( rootClientId ).attributes;
 
-		if ( $.parseJSON( filling ) ) {
-			const $block = $( `#block-${rootClientId}` );
+		if ( JSON.parse( filling ) ) {
+			const $block = $( this.timelineItemRef.current.parentNode );
 
 			updateBarHeight( $block );
 			setColorByScroll( $block );
@@ -112,14 +124,14 @@ class GetwidTimelineItem extends Component {
 	}
 
 	getColors() {
-		const { getEditorSettings } = this.props;
+		const { getSettings } = this.props;
 		const { outerParent } = this.props.attributes;
 
 		const customBackgroundColor = outerParent && outerParent.attributes.customBackgroundColor ? outerParent.attributes.customBackgroundColor : undefined;
 		const backgroundColor       = outerParent && outerParent.attributes.backgroundColor       ? outerParent.attributes.backgroundColor       : undefined;
 
 		const getColorBySlug = slug => {
-			const editorColors = get( getEditorSettings(), [ 'colors' ], [] );
+			const editorColors = get( getSettings(), [ 'colors' ], [] );
 			return getColorObjectByAttributeValues( editorColors, slug ).color;
 		}
 
@@ -178,11 +190,13 @@ class GetwidTimelineItem extends Component {
 
 		return (
 			<Fragment>
-				<Inspector { ...{
-					...this.props,
-					...{onChangeImageSize},
-					...{onSelectImage}
-				} } key={ 'inspector' }/>
+				<Inspector
+					{ ...{
+						...this.props,
+						onChangeImageSize,
+						onSelectImage
+					} }
+				/>
 				<BlockControls>
 					<ToolbarGroup>
 						<MediaUploadCheck>
@@ -193,7 +207,6 @@ class GetwidTimelineItem extends Component {
 								render={({ open }) => (
 									<div>
 										<ToolbarButton
-											className='components-toolbar__control'
 											label={__( 'Select Image', 'getwid' )}
 											icon='format-image'
 											onClick={open}
@@ -203,7 +216,6 @@ class GetwidTimelineItem extends Component {
 							/>
 						</MediaUploadCheck>
 						{url && ( <ToolbarButton
-								className='components-toolbar__control'
 								label={__( 'Delete Image', 'getwid' )}
 								icon='trash'
 								onClick={() => {
@@ -216,7 +228,11 @@ class GetwidTimelineItem extends Component {
 						)}
 					</ToolbarGroup>
 				</BlockControls>
-				<div {...itemClass} {...timeLineStyle}>
+				<div
+					ref={ this.timelineItemRef }
+					{ ...itemClass }
+					{ ...timeLineStyle }
+				>
 					<div className={`${baseClass}__wrapper`}>
 						<div className={`${baseClass}__card`} {...cardItemStyle}>
 							<div className={`${baseClass}__card-wrapper`}>
@@ -250,7 +266,6 @@ class GetwidTimelineItem extends Component {
 									this.props.setAttributes({ meta })
 								}
 								className={`${baseClass}__meta-content`}
-								keepPlaceholderOnFocus
 							/>
 						</div>
 					</div>
@@ -283,9 +298,12 @@ class GetwidTimelineItem extends Component {
 
 		let scrolling = false;
 
-		const { clientId, baseClass } = this.props;
+		const { baseClass } = this.props;
 
-		const $block = $( `#block-${clientId}` );
+		const $block = $( this.timelineItemRef.current );
+		const currentDocument = this.timelineItemRef.current.ownerDocument;
+		const currentWindow = currentDocument.defaultView;
+		const root = getScrollableClassName();
 
 		const $card  = $block.find( `.${baseClass}__card` );
 		const $point = $block.find( `.${baseClass}__point-content` );
@@ -294,14 +312,14 @@ class GetwidTimelineItem extends Component {
 		const { outerParent } = this.props.attributes;
 		const animation = outerParent ? outerParent.attributes.animation : 'none';
 
-		if ( $card[ 0 ].getBoundingClientRect().top > window.innerHeight * 0.8 && animation != 'none' ) {
+		if ( $card[ 0 ].getBoundingClientRect().top > currentWindow.innerHeight * 0.8 && animation != 'none' ) {
 			$card .addClass( 'is-hidden' );
 			$meta .addClass( 'is-hidden' );
 			$point.addClass( 'is-hidden' );
 		}
 
 		const checkScroll = () => {
-			if ( $card.hasClass( 'is-hidden' ) && $card[ 0 ].getBoundingClientRect().top <= window.innerHeight * 0.8 ) {
+			if ( $card.hasClass( 'is-hidden' ) && $card[ 0 ].getBoundingClientRect().top <= currentWindow.innerHeight * 0.8 ) {
 
 				$card .addClass( animation );
 				$meta .addClass( animation );
@@ -314,20 +332,20 @@ class GetwidTimelineItem extends Component {
 			scrolling = false;
 		}
 
-		const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
+		const $root = $( currentDocument.querySelector(`.${root}`) || currentDocument );
 
 		if ( animation != 'none' ) {
-			$root.scroll( () => {
+			$root.on( 'scroll', () => {
 				if ( ! scrolling ) {
 					scrolling = true;
 
-					( ! window.requestAnimationFrame ) ? setTimeout(
+					( ! currentWindow.requestAnimationFrame ) ? setTimeout(
 						() => checkScroll(), 250
-					) : window.requestAnimationFrame(
+					) : currentWindow.requestAnimationFrame(
 						() => checkScroll()
 					);
 				}
-			});
+			} );
 		}
 
 		const $cardInner = $block.find( `.${baseClass}__card-wrapper` );
@@ -341,11 +359,11 @@ class GetwidTimelineItem extends Component {
 export default compose( [
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' );
-		const { getBlock, getEditorSettings, getBlockRootClientId } = select( 'core/block-editor' );
+		const { getBlock, getSettings, getBlockRootClientId } = select( 'core/block-editor' );
 		const { id } = props.attributes;
 		return {
 			getBlock,
-			getEditorSettings,
+			getSettings,
 			getBlockRootClientId,
 			imgObj: id ? getMedia( id ) : null
 		};

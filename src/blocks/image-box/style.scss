@@ -1,3 +1,7 @@
+/*!
+ * getwid-image-box
+ */
+
 .wp-block-getwid-image-box {
 
 	&__image-container {
@@ -57,7 +61,7 @@
 	&.has-image-left,
 	&.has-image-right {
 		display: flex;
-		justify-content: flex-start;
+		justify-content: flex-start #{'/*rtl: flex-end*/'};
 		align-items: stretch;
 		flex-direction: row;
 		flex-wrap: nowrap;
@@ -98,12 +102,13 @@
 	.wp-block-getwid-image-box__image-container {
 		margin: 0 20px 0 0;
 		max-width: 50%;
+		/*rtl:raw: order: 1; */
 	}
 }
 
 .has-image-right {
 	.wp-block-getwid-image-box__image-container {
-		order: 1;
+		order: 1 #{'/*rtl:0*/'};
 		margin: 0 0 0 20px;
 		max-width: 50%;
 	}

@@ -1,19 +1,25 @@
 .wp-block-getwid-button-group {
 	overflow: initial !important;
 
-	[data-block] {
-		width: 100%;
-	}
-
 	.wp-block-button {
-		width: auto !important;
+		width: auto;
+		max-width: none;
+
+		&__link {
+			display: block;
+			width: 100%;
+		}
 	}
 
 	.wp-block-getwid-button-group__wrapper {
 		display: block !important;
 
 		.wp-block[data-type="core/button"] {
-			width: auto;
+			max-width: none;
+
+			.wp-block-button {
+				width: 100%;
+			}
 		}
 
 		&.has-spacing-small {
@@ -196,7 +202,8 @@
 		}
 
 		&.has-width-100 {
-			.wp-block[data-type="core/button"] {
+			// @todo delete the code below after the minimum WP version is raised to 5.5
+			.wp-block[data-type="core/button"]:not(.wp-block-button) {
 				width: 100%;
 
 				.wp-block-button__link,
@@ -212,7 +219,8 @@
 		}
 
 		&.has-width-50 {
-			.wp-block[data-type="core/button"] {
+			// @todo delete the code below after the minimum WP version is raised to 5.5
+			.wp-block[data-type="core/button"]:not(.wp-block-button) {
 				width: 50%;
 
 				.wp-block-button__link,
@@ -224,7 +232,8 @@
 		}
 
 		&.has-width-33 {
-			.wp-block[data-type="core/button"] {
+			// @todo delete the code below after the minimum WP version is raised to 5.5
+			.wp-block[data-type="core/button"]:not(.wp-block-button) {
 				width: 33.3333%;
 
 				.wp-block-button__link,
@@ -236,7 +245,8 @@
 		}
 
 		&.has-width-25 {
-			.wp-block[data-type="core/button"] {
+			// @todo delete the code below after the minimum WP version is raised to 5.5
+			.wp-block[data-type="core/button"]:not(.wp-block-button) {
 				width: 25%;
 
 				.wp-block-button__link,
@@ -248,7 +258,8 @@
 		}
 
 		&.has-width-20 {
-			.wp-block[data-type="core/button"] {
+			// @todo delete the code below after the minimum WP version is raised to 5.5
+			.wp-block[data-type="core/button"]:not(.wp-block-button) {
 				width: 20%;
 
 				.wp-block-button__link,

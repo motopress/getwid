@@ -57,10 +57,11 @@ export function addScript(src, callback) {
     };
 }
 
-export function isInViewport(element) {
-    const itemTop = element.offset().top;
-    const viewportTop  = $( window ).scrollTop();
-    const windowHeight = $( window ).height();
+export function isInViewport($element) {
+    const itemTop = $element.offset().top;
+	const currentWindow = $element.get(0).ownerDocument.defaultView;
+    const viewportTop  = $( currentWindow ).scrollTop();
+    const windowHeight = $( currentWindow ).height();
 
     return (itemTop - viewportTop - windowHeight) < 0;
 }
@@ -95,19 +96,23 @@ export function getScrollableClassName() {
 	// wp5.1 - wp5.3
 	editor = $( '.edit-post-layout__content' );
 	if ( editor.length ) {
-		return editor[0].className;
+		return 'edit-post-layout__content';
 	}
 
 	// wp5.4
 	editor = $( '.block-editor-editor-skeleton__content' );
 	if ( editor.length ) {
-		return editor[0].className;
+		return 'block-editor-editor-skeleton__content';
 	}
 
-	// wp5.5
+	// wp5.5+
 	editor = $( '.interface-interface-skeleton__content' );
 	if ( editor.length ) {
-		return editor[0].className;
+        // in wp6.2 'editor' variable classList contains 2 classes
+		return 'interface-interface-skeleton__content';
+
+        // wp5.0 <> wp6.1 - 'editor' variable classList contains only 1 class
+        // return editor[0].className;
 	}
 
 	return false;
@@ -137,8 +142,8 @@ export function createResizeObserver($parent, baseClass, callback) {
     iframe.style.backgroundColor = 'transparent';
     iframe.className = `${baseClass}__resize-observer`;
 
-    $( iframe ).load( () => {
-        $( iframe.contentWindow ).resize( () => {
+    $( iframe ).on( 'load', () => {
+        $( iframe.contentWindow ).on( 'resize', () => {
             callback();
         } );
     } );

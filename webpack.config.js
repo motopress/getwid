@@ -1,5 +1,7 @@
 const path = require( 'path' );
 const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
+const buildSeparateFiles = require( './webpack.splitted' );
+const RTL = require( 'webpack-rtl-plugin' );
 
 /* #region include new plugin */
 //const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin;
@@ -11,6 +13,29 @@ const blocksCSSPlugin = new ExtractTextPlugin( {
 } );
 const editBlocksCSSPlugin = new ExtractTextPlugin( {
 	filename: './assets/css/blocks.editor.css'
+} );
+
+const rtlStylesPlugin = new RTL( {
+	minify: 'production' === process.env.NODE_ENV,
+	plugins: [
+		{
+			'name': 'disable processors',
+			'priority': 50,
+			'directives': {
+				'control': {},
+				'value': []
+			},
+			'processors': [
+				{
+					'name': 'ignore all',
+					'expr': /./im,
+					'action': function (prop, value) {
+						return { 'prop': prop, 'value': value }
+					}
+				}
+			]
+		}
+	],
 } );
 
 /* #region Webpack Bundle Analyzer */
@@ -36,14 +61,13 @@ const extractConfig = {
 		{
 			loader: 'sass-loader',
 			query: {
-				outputStyle:
-					'production' === process.env.NODE_ENV ? 'compressed' : 'nested'
+				outputStyle: 'expanded'
 			}
 		}
 	]
 };
 
-const config = {
+const defaultConfig = {
 	entry: {
 		'./assets/js/editor.blocks'  : './src/index.js',
 		'./assets/js/frontend.blocks': './src/frontend.js'
@@ -95,8 +119,16 @@ const config = {
 	plugins: [
 		blocksCSSPlugin,
 		editBlocksCSSPlugin,
+		rtlStylesPlugin,
 		//bundleAnalyzerPlugin
 	]
 };
 
-module.exports = config;
+module.exports = (env) => {
+	if (env && env.splitted) {
+		return buildSeparateFiles;
+	}
+
+	return defaultConfig;
+};
+

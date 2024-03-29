@@ -90,14 +90,14 @@ class Edit extends Component{
 			}
 		}
 
-		const innerBlocksOuter = select('core/editor').getBlock(this.props.clientId).innerBlocks;
+		const innerBlocksOuter = select('core/block-editor').getBlock(this.props.clientId).innerBlocks;
 		//Add parent attributes to children nodes
 		if (innerBlocksOuter.length){
 			jQuery.each(innerBlocksOuter, (index, item) => {
 
 				if ((callFrom == 'Mount' && typeof item.attributes.blockDivider == 'undefined') || callFrom == 'Update'){
 					//Inner blocks
-					dispatch('core/editor').updateBlockAttributes(item.clientId, { blockDivider: blockDivider });
+					dispatch('core/block-editor').updateBlockAttributes(item.clientId, { blockDivider: blockDivider });
 				}
 
 			});
@@ -122,7 +122,7 @@ class Edit extends Component{
 			{
 				[`has-direction-${direction}`]: direction !== 'row',
 				'has-text-color': textColor.color,
-				[ textColor.class ]: textColor.class,		
+				[ textColor.class ]: textColor.class,
 			}
 		);
 
@@ -131,14 +131,12 @@ class Edit extends Component{
 		if (current_post_type && current_post_type == Getwid.templates.name){
 			return (
 				<Fragment>
-					<Inspector {...{
-						...this.props,
-					}} key='inspector'/>
+					<Inspector { ...this.props } />
 					<BlockControls>
 						<AlignmentToolbar
 							value={ textAlignment }
 							onChange={ textAlignment => setAttributes({textAlignment}) }
-						/>										
+						/>
 					</BlockControls>
 
 					<div
@@ -155,7 +153,7 @@ class Edit extends Component{
 						/>
 					</div>
 				</Fragment>
-			);			
+			);
 		} else {
 			return (
 				<Fragment>

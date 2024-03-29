@@ -28,7 +28,7 @@ function insertLayout(){
 
 	waitLoadBlock = setInterval( () => {
 		if ($(`[data-block='${block.clientId}'] .wp-block-getwid-template-library .open-modal-button`).length){
-			$(`[data-block='${block.clientId}'] .wp-block-getwid-template-library .open-modal-button`).click();
+			$(`[data-block='${block.clientId}'] .wp-block-getwid-template-library .open-modal-button`).trigger( 'click' );
 			clearInterval(waitLoadBlock);
 		}
 	}, 1);
@@ -53,7 +53,7 @@ function addToolbarButton() {
 					}
 
 				}
-			} );
+			}, 100 );
 		}
 	);
 

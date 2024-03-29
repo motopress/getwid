@@ -103,7 +103,7 @@ class Save extends Component {
 				}
 
 				return (
-					<Fragment>
+					<Fragment key={ index }>
 						<div data-point-id={index} className={dotClass} style={dotStyle}>
 							<div className={`${baseClass}__dot-wrapper`}>
 								<div style={innerDotStyle} className={`${baseClass}__dot-content`}><i className={`${icon} ${baseClass}__dot-icon`}></i></div>

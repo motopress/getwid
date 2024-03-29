@@ -44,7 +44,7 @@ class CustomPanelBody extends Component {
 		} else {
 			if (typeof this.state.onClose != 'undefined'){
 				this.state.onClose();
-			}			
+			}
 		}
 
 		if ( this.props.opened === undefined ) {
@@ -90,10 +90,15 @@ class CustomPanelBody extends Component {
 									<div className="components-getwid-panel-body-row">
 										{hints.map((el, index)=>{
 											return (
-												<div className="components-getwid-panel-body-columns"><span>{el.value !='' && el.label} </span>{el.value !='' && el.value}</div>
+												<div
+													key={ index }
+													className="components-getwid-panel-body-columns"
+												>
+													<span>{el.value !='' && el.label} </span>{el.value !='' && el.value}
+												</div>
 											);
 										})}
-										
+
 									</div>
 								</Fragment>
 							))}

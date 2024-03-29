@@ -42,8 +42,12 @@ class Edit extends Component {
 		this.getState = this.getState.bind(this);
 	}
 
-	changeState (param, value) {
-		this.setState({[param]: value});
+	changeState ( param, value ) {
+		if ( typeof param == 'object' ) {
+			this.setState( param );
+		} else if ( typeof param == 'string' ) {
+			this.setState( { [ param ]: value } );
+		}
 	}
 
 	getState (value) {
@@ -68,12 +72,14 @@ class Edit extends Component {
 		if ( ! hasPosts ) {
 			return (
 				<Fragment>
-					<Inspector {...{
-						...this.props,
-						...{changeState},
-						...{getState},
-						...{hasPosts},
-					}} key='inspector'/>
+					<Inspector
+						{ ...{
+							...this.props,
+							changeState,
+							getState,
+							hasPosts,
+						} }
+					/>
 					<Placeholder
 						icon="admin-post"
 						label={ __( 'Custom Post Type', 'getwid' ) }
@@ -89,12 +95,14 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector {...{
-					...this.props,
-					...{changeState},
-					...{getState},
-					...{hasPosts},
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState,
+						getState,
+						hasPosts
+					} }
+				/>
 				<BlockControls>
 					<BlockAlignmentToolbar
 						value={ align }

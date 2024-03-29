@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-import { __ } from 'wp.i18n';
+import { __, isRTL } from 'wp.i18n';
 const {jQuery: $} = window;
 import { isEqual, pickBy, isUndefined } from 'lodash';
 
@@ -15,8 +15,8 @@ import './editor.scss';
 * WordPress dependencies
 */
 const { serverSideRender: ServerSideRender } = wp;
-const { Component, Fragment } = wp.element;
-const { Placeholder, Spinner, Disabled } = wp.components;
+const { Component, Fragment, createRef } = wp.element;
+const { Placeholder, Spinner } = wp.components;
 const { BlockAlignmentToolbar, AlignmentToolbar, BlockControls } = wp.blockEditor || wp.editor;
 const {	withSelect} = wp.data;
 
@@ -35,6 +35,8 @@ class Edit extends Component {
 
 		this.changeState = this.changeState.bind( this );
 		this.getState    = this.getState.bind( this );
+
+		this.sliderRef = createRef();
 	}
 
 	changeState(param, value) {
@@ -49,20 +51,7 @@ class Edit extends Component {
 		return this.state[ value ];
 	}
 
-	destroySlider() {
-		const {
-			clientId
-		} = this.props;
-
-		clearInterval( this.waitLoadPosts );
-
-		const thisBlock = $(`[data-block='${clientId}']`);
-		const sliderSelector = $( `.${baseClass}__content`, thisBlock );
-
-		sliderSelector.hasClass( 'slick-initialized' ) && sliderSelector.slick( 'unslick' );
-	}
-
-	initSlider() {
+	initSlider(block) {
 		const {
 			attributes: {
 				sliderAnimationEffect,
@@ -75,56 +64,42 @@ class Edit extends Component {
 			}
 		} = this.props;
 
-		this.waitLoadPosts = setInterval( () => {
+		const slider = $(block).find( `.${baseClass}__content` );
 
-			const elementById = $( `#block-${this.props.clientId}` );
-			const sliderSelector = elementById.find( `.${baseClass}__content` );
+		slider.not( '.slick-initialized' ).slick( {
+			arrows: sliderArrows !== 'none',
+			dots: sliderDots !== 'none',
+			autoplay: sliderAutoplay,
+			infinite: sliderInfinite,
+			speed: parseInt( sliderAnimationSpeed ),
+			autoplaySpeed: parseInt( sliderAutoplaySpeed ),
+			fade: sliderAnimationEffect === 'fade',
+			rows: 0,
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			centerMode: false,
+			variableWidth: false,
+			pauseOnHover: true,
+			adaptiveHeight: true,
+			rtl: isRTL()
+		} );
+	}
 
-			if ( sliderSelector.length && sliderSelector.hasClass( 'no-init-slider' ) && (typeof sliderSelector.imagesLoaded === "function") ){
+	observeSliderMarkupChange() {
+		const block = this.sliderRef.current;
 
-				sliderSelector.imagesLoaded().done( () => {
+		const mutationObserver = new MutationObserver( () => {
+			this.initSlider(block);
+		} );
 
-					sliderSelector.not( '.slick-initialized' ).slick( {
-						arrows: sliderArrows != 'none' ? true : false,
-						dots  : sliderDots   != 'none' ? true : false,
-
-						autoplay: sliderAutoplay,
-						infinite: sliderInfinite,
-
-						speed		 : parseInt( sliderAnimationSpeed ),
-						autoplaySpeed: parseInt( sliderAutoplaySpeed ),
-						fade		 : sliderAnimationEffect == 'fade' ? true : false,
-
-						rows: 0,
-						slidesToShow: 1,
-						slidesToScroll: 1,
-
-						centerMode    : false,
-						variableWidth : false,
-						pauseOnHover  : true,
-						adaptiveHeight: true
-					} );
-					sliderSelector.removeClass( 'no-init-slider' );
-				});
-
-				clearInterval( this.waitLoadPosts );
-			}
-		}, 1000);
+		mutationObserver.observe( block, {
+			childList: true,
+			subtree: true
+		} );
 	}
 
 	componentDidMount() {
-		this.initSlider();
-	}
-
-	componentWillUnmount() {
-		this.destroySlider();
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
-			this.destroySlider();
-			this.initSlider();
-		}
+		this.observeSliderMarkupChange();
 	}
 
 	render() {
@@ -144,12 +119,14 @@ class Edit extends Component {
 		if ( ! hasPosts ) {
 			return (
 				<Fragment>
-					<Inspector {...{
-						...this.props,
-						...{changeState},
-						...{getState},
-						...{hasPosts},
-					}} key='inspector'/>
+					<Inspector
+						{ ...{
+							...this.props,
+							changeState,
+							getState,
+							hasPosts
+						} }
+					/>
 					<Placeholder
 						icon="admin-post"
 						label={ __( 'Post Slider', 'getwid' ) }
@@ -160,17 +137,20 @@ class Edit extends Component {
 							__( 'No posts found.', 'getwid' )
 						}
 					</Placeholder>
+					<div ref={ this.sliderRef }></div>
 				</Fragment>
 			);
 		}
 
 		return (
 			<Fragment>
-				<Inspector {...{
-					...this.props,
-					...{ changeState },
-					...{ getState },
-				}} key={ 'inspector' }/>
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState,
+						getState
+					} }
+				/>
 				<BlockControls>
 					<BlockAlignmentToolbar
 						value={ align }
@@ -187,10 +167,12 @@ class Edit extends Component {
 					)}
 				</BlockControls>
 
-				<ServerSideRender
-					block={ 'getwid/post-slider' }
-					attributes={ this.props.attributes }
-				/>
+				<div ref={ this.sliderRef } >
+					<ServerSideRender
+						block={ 'getwid/post-slider' }
+						attributes={ this.props.attributes }
+					/>
+				</div>
 
 			</Fragment>
 		);

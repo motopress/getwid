@@ -2,8 +2,7 @@
  * External dependencies
  */
 import { __ } from 'wp.i18n';
-import classnames from 'classnames';
-import { isEqual, has } from 'lodash';
+import { isEqual } from 'lodash';
 
 /**
  * Internal dependencies
@@ -19,7 +18,7 @@ const { jQuery: $ } = window;
 
 const { MediaPlaceholder, MediaUpload } = wp.blockEditor || wp.editor;
 const { Fragment } = wp.element;
-const { SelectControl, TabPanel, BaseControl, TextControl, ToggleControl, Button, IconButton, RangeControl, TextareaControl, RadioControl, CheckboxControl, ButtonGroup } = wp.components;
+const { SelectControl, TabPanel, BaseControl, TextControl, ToggleControl, Button, RangeControl, TextareaControl, RadioControl, CheckboxControl, ButtonGroup } = wp.components;
 
 /**
 * Module Constants
@@ -66,19 +65,19 @@ export const renderPaddingsPanelWithTabs = self => {
             initialOpen={false}
             hints={[
                 {
-                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect width="16" height="3"/><polygon style={{fill : '#C6C6C6'}} points="0,4 1,4 1,15 15,15 15,4 16,4 16,16 0,16 "/><polygon style={{fill : '#C6C6C6'}} points="12.35,5.35 8.71,9 12.35,12.65 11.65,13.35 8,9.71 4.35,13.35 3.65,12.65 7.29,9 3.65,5.35 4.35,4.65 8,8.29 11.65,4.65 "/></svg>,
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16', width: 16}}><rect width="16" height="3"/><polygon style={{fill : '#C6C6C6'}} points="0,4 1,4 1,15 15,15 15,4 16,4 16,16 0,16 "/><polygon style={{fill : '#C6C6C6'}} points="12.35,5.35 8.71,9 12.35,12.65 11.65,13.35 8,9.71 4.35,13.35 3.65,12.65 7.29,9 3.65,5.35 4.35,4.65 8,8.29 11.65,4.65 "/></svg>,
                     'value': (paddingTop ? (paddingTop !='custom' ? paddingTop : paddingTopValue) : '')
                 },
                 {
-                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect x="13" width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="12,0 12,1 1,1 1,15 12,15 12,16 0,16 0,0 "/><polygon style={{fill : '#C6C6C6'}} points="10.65,12.35 7,8.71 3.35,12.35 2.65,11.65 6.29,8 2.65,4.35 3.35,3.65 7,7.29 10.65,3.65 11.35,4.35 7.71,8 11.35,11.65 "/></svg>,
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16', width: 16}}><rect x="13" width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="12,0 12,1 1,1 1,15 12,15 12,16 0,16 0,0 "/><polygon style={{fill : '#C6C6C6'}} points="10.65,12.35 7,8.71 3.35,12.35 2.65,11.65 6.29,8 2.65,4.35 3.35,3.65 7,7.29 10.65,3.65 11.35,4.35 7.71,8 11.35,11.65 "/></svg>,
                     'value': (paddingRight ? (paddingRight !='custom' ? paddingRight : paddingRightValue) : '')
                 },
                 {
-                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect y="13" width="16" height="3"/><polygon style={{fill : '#C6C6C6'}} points="0,12 1,12 1,1 15,1 15,12 16,12 16,0 0,0 "/><polygon style={{fill : '#C6C6C6'}} points="12.35,10.65 8.71,7 12.35,3.35 11.65,2.65 8,6.29 4.35,2.65 3.65,3.35 7.29,7 3.65,10.65 4.35,11.35 8,7.71 11.65,11.35 "/></svg>,
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16', width: 16}}><rect y="13" width="16" height="3"/><polygon style={{fill : '#C6C6C6'}} points="0,12 1,12 1,1 15,1 15,12 16,12 16,0 0,0 "/><polygon style={{fill : '#C6C6C6'}} points="12.35,10.65 8.71,7 12.35,3.35 11.65,2.65 8,6.29 4.35,2.65 3.65,3.35 7.29,7 3.65,10.65 4.35,11.35 8,7.71 11.65,11.35 "/></svg>,
                     'value': (paddingBottom ? (paddingBottom !='custom' ? paddingBottom : paddingBottomValue) : '')
                 },
                 {
-                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="4,0 4,1 15,1 15,15 4,15 4,16 16,16 16,0 "/><polygon style={{fill : '#C6C6C6'}} points="5.35,12.35 9,8.71 12.65,12.35 13.35,11.65 9.71,8 13.35,4.35 12.65,3.65 9,7.29 5.35,3.65 4.65,4.35 8.29,8 4.65,11.65 "/></svg>,
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16', width: 16}}><rect width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="4,0 4,1 15,1 15,15 4,15 4,16 16,16 16,0 "/><polygon style={{fill : '#C6C6C6'}} points="5.35,12.35 9,8.71 12.65,12.35 13.35,11.65 9.71,8 13.35,4.35 12.65,3.65 9,7.29 5.35,3.65 4.65,4.35 8.29,8 4.65,11.65 "/></svg>,
                     'value': (paddingLeft ? (paddingLeft !='custom' ? paddingLeft : paddingLeftValue) : '')
                 },
             ]}
@@ -184,7 +183,7 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                                 { value: 'none', label: __('None', 'getwid') }
                             ]}
                         />
-                        <IconButton
+                        <Button
                             icon={isLockedPaddingsOnDesktop ? 'lock' : 'unlock'}
                             onClick={() => {
                                 const setPaddingsOnDesktop = () => {
@@ -337,7 +336,7 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                                 { value: 'none', label: __('None', 'getwid') }
                             ]}
                         />
-                        <IconButton
+                        <Button
                             icon={isLockedPaddingsOnTablet ? 'lock' : 'unlock'}
                             onClick={() => {
                                 const setPaddingsOnTablet = () => {
@@ -426,7 +425,7 @@ const renderResponsivePaddingsTabs = (self, tab) => {
                                 { value: 'none', label: __('None', 'getwid') }
                             ]}
                         />
-                        <IconButton
+                        <Button
                             icon={isLockedPaddingsOnMobile ? 'lock' : 'unlock'}
                             onClick={() => {
                                 const setPaddingsOnMobile = () => {
@@ -532,19 +531,19 @@ export const renderMarginsPanelWithTabs = self => {
             initialOpen={false}
             hints={[
                 {
-                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect width="16" height="3"/><polygon style={{fill : '#C6C6C6'}} points="0,4 1,4 1,15 15,15 15,4 16,4 16,16 0,16 "/><polygon style={{fill : '#C6C6C6'}} points="12.35,5.35 8.71,9 12.35,12.65 11.65,13.35 8,9.71 4.35,13.35 3.65,12.65 7.29,9 3.65,5.35 4.35,4.65 8,8.29 11.65,4.65 "/></svg>,
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16', width: 16}}><rect width="16" height="3"/><polygon style={{fill : '#C6C6C6'}} points="0,4 1,4 1,15 15,15 15,4 16,4 16,16 0,16 "/><polygon style={{fill : '#C6C6C6'}} points="12.35,5.35 8.71,9 12.35,12.65 11.65,13.35 8,9.71 4.35,13.35 3.65,12.65 7.29,9 3.65,5.35 4.35,4.65 8,8.29 11.65,4.65 "/></svg>,
                     'value': (marginTop ? (marginTop !='custom' ? marginTop : marginTopValue) : '')
                 },
                 {
-                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect x="13" width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="12,0 12,1 1,1 1,15 12,15 12,16 0,16 0,0 "/><polygon style={{fill : '#C6C6C6'}} points="10.65,12.35 7,8.71 3.35,12.35 2.65,11.65 6.29,8 2.65,4.35 3.35,3.65 7,7.29 10.65,3.65 11.35,4.35 7.71,8 11.35,11.65 "/></svg>,
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16', width: 16}}><rect x="13" width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="12,0 12,1 1,1 1,15 12,15 12,16 0,16 0,0 "/><polygon style={{fill : '#C6C6C6'}} points="10.65,12.35 7,8.71 3.35,12.35 2.65,11.65 6.29,8 2.65,4.35 3.35,3.65 7,7.29 10.65,3.65 11.35,4.35 7.71,8 11.35,11.65 "/></svg>,
                     'value': (marginRight ? (marginRight !='custom' ? marginRight : marginRightValue) : '')
                 },
                 {
-                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect y="13" width="16" height="3"/><polygon style={{fill : '#C6C6C6'}} points="0,12 1,12 1,1 15,1 15,12 16,12 16,0 0,0 "/><polygon style={{fill : '#C6C6C6'}} points="12.35,10.65 8.71,7 12.35,3.35 11.65,2.65 8,6.29 4.35,2.65 3.65,3.35 7.29,7 3.65,10.65 4.35,11.35 8,7.71 11.65,11.35 "/></svg>,
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16', width: 16}}><rect y="13" width="16" height="3"/><polygon style={{fill : '#C6C6C6'}} points="0,12 1,12 1,1 15,1 15,12 16,12 16,0 0,0 "/><polygon style={{fill : '#C6C6C6'}} points="12.35,10.65 8.71,7 12.35,3.35 11.65,2.65 8,6.29 4.35,2.65 3.65,3.35 7.29,7 3.65,10.65 4.35,11.35 8,7.71 11.65,11.35 "/></svg>,
                     'value': (marginBottom ? (marginBottom !='custom' ? marginBottom : marginBottomValue) : '')
                 },
                 {
-                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16;', width: 16}}><rect width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="4,0 4,1 15,1 15,15 4,15 4,16 16,16 16,0 "/><polygon style={{fill : '#C6C6C6'}} points="5.35,12.35 9,8.71 12.65,12.35 13.35,11.65 9.71,8 13.35,4.35 12.65,3.65 9,7.29 5.35,3.65 4.65,4.35 8.29,8 4.65,11.65 "/></svg>,
+                    'label' : <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 16 16" style={{enableBackground : 'new 0 0 16 16', width: 16}}><rect width="3" height="16"/><polygon style={{fill : '#C6C6C6'}} points="4,0 4,1 15,1 15,15 4,15 4,16 16,16 16,0 "/><polygon style={{fill : '#C6C6C6'}} points="5.35,12.35 9,8.71 12.65,12.35 13.35,11.65 9.71,8 13.35,4.35 12.65,3.65 9,7.29 5.35,3.65 4.65,4.35 8.29,8 4.65,11.65 "/></svg>,
                     'value': (marginLeft ? (marginLeft !='custom' ? marginLeft : marginLeftValue) : '')
                 },
             ]}
@@ -650,7 +649,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                 { value: 'none', label: __('None', 'getwid') }
                             ]}
                         />
-                        <IconButton
+                        <Button
                             icon={isLockedMarginsOnDesktop ? 'lock' : 'unlock'}
                             onClick={() => {
                                 const setMarginsOnDesktop = () => {
@@ -807,7 +806,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                 { value: 'none', label: __('None', 'getwid') }
                             ]}
                         />
-                        <IconButton
+                        <Button
                             icon={isLockedMarginsOnTablet ? 'lock' : 'unlock'}
                             onClick={() => {
                                 const setMarginsOnTablet = () => {
@@ -895,7 +894,7 @@ const renderResponsiveMarginsTabs = (self, tab) => {
                                 { value: 'none', label: __('None', 'getwid') }
                             ]}
                         />
-                        <IconButton
+                        <Button
                             icon={isLockedMarginsOnMobile ? 'lock' : 'unlock'}
                             onClick={() => {
                                 const setMarginsOnMobile = () => {
@@ -1087,7 +1086,6 @@ export const renderSlideHeightPanel = self => {
                         {
                             name: 'mobile',
                             title: __('Mobile', 'getwid'),
-                            disabled: true,
                             className: 'components-button is-link is-small'
                         }
                     ]}>
@@ -1213,7 +1211,7 @@ export const renderMarginsPanel = self => {
                     allowNegative
                 //allowAuto
                 />
-                <IconButton
+                <Button
                     icon={isLockedMargins ? 'lock' : 'unlock'}
                     onClick={() => {
                         const setMargins = () => {
@@ -1262,7 +1260,7 @@ export const renderMarginsPanel = self => {
             <BaseControl>
                 <Button isLink isDestructive
                     onClick={resetMargin}
-                    isLocked={!hasMargin()}>
+                    disabled={!hasMargin()}>
                     {__('Reset', 'getwid')}
                 </Button>
             </BaseControl>
@@ -1310,7 +1308,7 @@ export const renderPaddingsPanel = that => {
                     allowNegative
                 //allowAuto
                 />
-                <IconButton
+                <Button
                     icon={isLockedPaddings ? 'lock' : 'unlock'}
                     onClick={() => {
                         const setPaddings = () => {
@@ -1375,8 +1373,6 @@ export const renderMediaControl = that => {
         label = __( 'Background Image', 'getwid' )
     } = that;
 
-    const Tag = removeButton ? 'ButtonGroup' : 'Fragment';
-
     return (
         <Fragment>
             <BaseControl
@@ -1410,7 +1406,7 @@ export const renderMediaControl = that => {
                                             <img src={url} />
                                         </div>
                                     }
-                                    <Tag>
+                                    <div>
                                         <Button
                                             isPrimary
                                             onClick={open}
@@ -1421,13 +1417,13 @@ export const renderMediaControl = that => {
 
                                         {( !!id && removeButton ) && (
                                             <Button
-                                                isDefault
+                                                isSecondary
                                                 onClick={onRemoveMedia}
                                             >
                                                 {__( 'Remove Image', 'getwid' )}
                                             </Button>
                                         )}
-                                    </Tag>
+                                    </div>
                                 </BaseControl>
                             )}
                         />
@@ -1448,7 +1444,7 @@ export const renderPointSettingsPanel = self => {
     }
 
     const { imagePoints } = self.props.attributes;
-    const { updateArrValues, changeState } = self.props;
+    const { updatePoint, changeState } = self.props;
 
     const points = imagePoints ? JSON.parse( imagePoints ) : [];
     const index = getState( 'currentPoint' );
@@ -1459,7 +1455,7 @@ export const renderPointSettingsPanel = self => {
                 label={__( 'Title', 'getwid' )}
                 value={points[ index ].title}
                 onChange={value => {
-                    updateArrValues( { title: value }, index );
+					updatePoint( index, { title: value } );
                     changeState( 'updatePoints', true );
                 }}
             />
@@ -1467,14 +1463,14 @@ export const renderPointSettingsPanel = self => {
                 placeholder={__( 'Enter URL', 'getwid' )}
                 value={points[ index ].link}
                 onChange={value => {
-                    updateArrValues( { link: value }, index);
+                    updatePoint( index, { link: value } );
                 }}
             />
             <ToggleControl
                 label={__( 'Open in New Tab', 'getwid' )}
                 checked={points[ index ].newTab}
                 onChange={value => {
-                    updateArrValues( { newTab: value }, index );
+                    updatePoint( index, { newTab: value } );
                 }}
             />
             <TextareaControl
@@ -1482,7 +1478,7 @@ export const renderPointSettingsPanel = self => {
                 rows='5'
                 value={unescape( points[ index ].content )}
                 onChange={value => {
-                    updateArrValues( { content: value }, index );
+                    updatePoint( index, { content: value } );
                     changeState( 'updatePoints', true );
                 }}
             />
@@ -1490,7 +1486,7 @@ export const renderPointSettingsPanel = self => {
                 label={__( 'Opened by default', 'getwid' )}
                 checked={points[ index ].popUpOpen}
                 onChange={value => {
-                    updateArrValues( { popUpOpen: value }, index );
+                    updatePoint( index, { popUpOpen: value } );
                 }}
             />
             <RangeControl
@@ -1500,12 +1496,13 @@ export const renderPointSettingsPanel = self => {
                     if ( typeof value == 'undefined' ) {
                         value = 50;
                     }
-                    updateArrValues({
-                        position: {
+                    updatePoint(
+						index,
+						{ position: {
                             x: parseFloat( value ) + '%',
                             y: points[ index ].position.y
-                        }
-                    }, index );
+                        } }
+					);
                     changeState( 'updatePoints', true );
                 }}
                 allowReset
@@ -1520,12 +1517,13 @@ export const renderPointSettingsPanel = self => {
                     if ( typeof value == 'undefined' ) {
                         value = 50;
                     }
-                    updateArrValues({
-                        position: {
+                    updatePoint(
+						index,
+						{ position: {
                             x: points[ index ].position.x,
                             y: parseFloat( value ) + '%'
-                        }
-                    }, index );
+                        } }
+					);
                     changeState( 'updatePoints', true );
                 }}
                 allowReset
@@ -1538,7 +1536,7 @@ export const renderPointSettingsPanel = self => {
                         title: __( 'Point Background', 'getwid' ),
                         colors: { customColor: points[ index ].backgroundColor },
                         changeColor: value => {
-                            updateArrValues( { backgroundColor: value }, index );
+                            updatePoint( index, { backgroundColor: value } );
                             changeState({
                                 updatePoints: true,
                                 highlightDot: true
@@ -1548,7 +1546,7 @@ export const renderPointSettingsPanel = self => {
                         title: __( 'Icon Color', 'getwid' ),
                         colors: { customColor: points[ index ].color },
                         changeColor: value => {
-                            updateArrValues( { color: value }, index );
+                            updateArrValues( index, { color: value } );
                             changeState({
                                 updatePoints: true,
                                 highlightDot: true
@@ -1567,7 +1565,7 @@ export const renderPointSettingsPanel = self => {
                     { value: 'left'  , label: __( 'Left'  , 'getwid' ) }
                 ]}
                 onChange={value => {
-                    updateArrValues( { placement: value }, index );
+                    updatePoint( index, { placement: value } );
                     changeState( {
                         updatePoints: true,
                         highlightDot: true
@@ -1579,7 +1577,7 @@ export const renderPointSettingsPanel = self => {
                 value={points[ index ].popUpWidth}
                 type='number'
                 onChange={value => {
-                    updateArrValues( { popUpWidth: value }, index );
+                    updatePoint( index, { popUpWidth: value } );
                 }}
             />
             <BaseControl
@@ -1588,7 +1586,7 @@ export const renderPointSettingsPanel = self => {
                 <GetwidIconPicker
                     value={points[ index ].icon}
                     onChange={value => {
-                        updateArrValues( { icon: value }, index );
+                        updatePoint( index, { icon: value } );
                         changeState( {
                             updatePoints: true,
                             highlightDot: true
@@ -1618,7 +1616,7 @@ export const renderBorderSettingPanel = self => {
         >
             <ButtonGroup className='components-getwid-border-group'>
                 <div className='getwid-border-item'>
-                    <IconButton
+                    <Button
                         icon={
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M7 21h2v-2H7v2zm0-8h2v-2H7v2zm4 0h2v-2h-2v2zm0 8h2v-2h-2v2zm-8-4h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2v-2H3v2zm0-4h2V7H3v2zm8 8h2v-2h-2v2zm8-8h2V7h-2v2zm0 4h2v-2h-2v2zM3 3v2h18V3H3zm16 14h2v-2h-2v2zm-4 4h2v-2h-2v2zM11 9h2V7h-2v2zm8 12h2v-2h-2v2zm-4-8h2v-2h-2v2z"/>
@@ -1626,10 +1624,7 @@ export const renderBorderSettingPanel = self => {
                             </svg>
                         }
                         label={__( 'Top Border', 'getwid' )}
-                        className={ classnames(
-                            'getwid-border-icon',
-                            'is-button'
-                        ) }
+                        className={  'getwid-border-icon' }
                         onClick={ () => {
                             if ( selectedCell || rangeSelected || multiSelected ) {
                                 updateCellsStyles({
@@ -1640,7 +1635,7 @@ export const renderBorderSettingPanel = self => {
                     />
                 </div>
                 <div className='getwid-border-item'>
-                    <IconButton
+                    <Button
                         icon={
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M7 21h2v-2H7v2zM3 5h2V3H3v2zm4 0h2V3H7v2zm0 8h2v-2H7v2zm-4 8h2v-2H3v2zm8 0h2v-2h-2v2zm-8-8h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm8 8h2v-2h-2v2zm4-4h2v-2h-2v2zm4-10v18h2V3h-2zm-4 18h2v-2h-2v2zm0-16h2V3h-2v2zm-4 8h2v-2h-2v2zm0-8h2V3h-2v2zm0 4h2V7h-2v2z"/>
@@ -1648,10 +1643,7 @@ export const renderBorderSettingPanel = self => {
                             </svg>
                         }
                         label={__( 'Right Border', 'getwid' )}
-                        className={ classnames(
-                            'getwid-border-icon',
-                            'is-button'
-                        ) }
+                        className={ 'getwid-border-icon' }
                         onClick={ () => {
                             if ( selectedCell || rangeSelected || multiSelected ) {
                                 updateCellsStyles({
@@ -1662,7 +1654,7 @@ export const renderBorderSettingPanel = self => {
                     />
                 </div>
                 <div className='getwid-border-item'>
-                    <IconButton
+                    <Button
                         icon={
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M9 11H7v2h2v-2zm4 4h-2v2h2v-2zM9 3H7v2h2V3zm4 8h-2v2h2v-2zM5 3H3v2h2V3zm8 4h-2v2h2V7zm4 4h-2v2h2v-2zm-4-8h-2v2h2V3zm4 0h-2v2h2V3zm2 10h2v-2h-2v2zm0 4h2v-2h-2v2zM5 7H3v2h2V7zm14-4v2h2V3h-2zm0 6h2V7h-2v2zM5 11H3v2h2v-2zM3 21h18v-2H3v2zm2-6H3v2h2v-2z"/>
@@ -1670,10 +1662,7 @@ export const renderBorderSettingPanel = self => {
                             </svg>
                         }
                         label={__( 'Bottom Border', 'getwid' )}
-                        className={ classnames(
-                            'getwid-border-icon',
-                            'is-button'
-                        ) }
+                        className={ 'getwid-border-icon' }
                         onClick={ () => {
                             if ( selectedCell || rangeSelected || multiSelected ) {
                                 updateCellsStyles({
@@ -1684,7 +1673,7 @@ export const renderBorderSettingPanel = self => {
                     />
                 </div>
                 <div className='getwid-border-item'>
-                    <IconButton
+                    <Button
                         icon={
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M11 21h2v-2h-2v2zm0-4h2v-2h-2v2zm0-12h2V3h-2v2zm0 4h2V7h-2v2zm0 4h2v-2h-2v2zm-4 8h2v-2H7v2zM7 5h2V3H7v2zm0 8h2v-2H7v2zm-4 8h2V3H3v18zM19 9h2V7h-2v2zm-4 12h2v-2h-2v2zm4-4h2v-2h-2v2zm0-14v2h2V3h-2zm0 10h2v-2h-2v2zm0 8h2v-2h-2v2zm-4-8h2v-2h-2v2zm0-8h2V3h-2v2z"/>
@@ -1692,10 +1681,7 @@ export const renderBorderSettingPanel = self => {
                             </svg>
                         }
                         label={__( 'Left Border', 'getwid' )}
-                        className={ classnames(
-                            'getwid-border-icon',
-                            'is-button'
-                        ) }
+                        className={ 'getwid-border-icon' }
                         onClick={ () => {
                             if ( selectedCell || rangeSelected || multiSelected ) {
                                 updateCellsStyles({
@@ -1706,7 +1692,7 @@ export const renderBorderSettingPanel = self => {
                     />
                 </div>
                 <div className='getwid-border-item'>
-                    <IconButton
+                    <Button
                         icon={
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M3 3v18h18V3H3zm8 16H5v-6h6v6zm0-8H5V5h6v6zm8 8h-6v-6h6v6zm0-8h-6V5h6v6z"/>
@@ -1714,10 +1700,7 @@ export const renderBorderSettingPanel = self => {
                             </svg>
                         }
                         label={__( 'All', 'getwid' )}
-                        className={ classnames(
-                            'getwid-border-icon',
-                            'is-button'
-                        ) }
+                        className={ 'getwid-border-icon' }
                         onClick={() => {
                             if ( selectedCell || rangeSelected || multiSelected ) {
                                 updateCellsStyles({
@@ -1728,7 +1711,7 @@ export const renderBorderSettingPanel = self => {
                     />
                 </div>
                 <div className='getwid-border-item'>
-                    <IconButton
+                    <Button
                         icon={
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M7 5h2V3H7v2zm0 8h2v-2H7v2zm0 8h2v-2H7v2zm4-4h2v-2h-2v2zm0 4h2v-2h-2v2zm-8 0h2v-2H3v2zm0-4h2v-2H3v2zm0-4h2v-2H3v2zm0-4h2V7H3v2zm0-4h2V3H3v2zm8 8h2v-2h-2v2zm8 4h2v-2h-2v2zm0-4h2v-2h-2v2zm0 8h2v-2h-2v2zm0-12h2V7h-2v2zm-8 0h2V7h-2v2zm8-6v2h2V3h-2zm-8 2h2V3h-2v2zm4 16h2v-2h-2v2zm0-8h2v-2h-2v2zm0-8h2V3h-2v2z"/>
@@ -1736,10 +1719,7 @@ export const renderBorderSettingPanel = self => {
                             </svg>
                         }
                         label={__( 'None', 'getwid' )}
-                        className={ classnames(
-                            'getwid-border-icon',
-                            'is-button'
-                        ) }
+                        className={ 'getwid-border-icon' }
                         onClick={() => {
                             if ( selectedCell || rangeSelected || multiSelected ) {
                                 updateCellsStyles({

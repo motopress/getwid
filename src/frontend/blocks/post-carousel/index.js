@@ -1,3 +1,7 @@
+/*!
+ * getwid-post-carousel
+ */
+
 (function($){
     $(document).ready(function(e){
 
@@ -63,6 +67,7 @@
 						pauseOnHover: getwid_pause_on_hover,
 
 						adaptiveHeight: true,
+						rtl: !!Getwid.isRTL,
 
 						responsive: [
 							{

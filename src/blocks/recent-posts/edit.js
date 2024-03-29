@@ -20,12 +20,7 @@ const {
 	Disabled,
 	ToolbarGroup
 } = wp.components;
-const apiFetch = wp.apiFetch;
-const {
-	addQueryArgs
-} = wp.url;
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
 	BlockAlignmentToolbar,
 	BlockControls,
@@ -49,9 +44,6 @@ const CATEGORIES_LIST_QUERY = {
 class Edit extends Component {
 	constructor() {
 		super( ...arguments );
-		this.state = {
-			categoriesList: [],
-		};
 
 		this.changeState = this.changeState.bind(this);
 		this.getState = this.getState.bind(this);
@@ -63,29 +55,6 @@ class Edit extends Component {
 
 	getState (value) {
 		return this.state[value];
-	}
-
-	componentWillMount() {
-		this.isStillMounted = true;
-		this.fetchRequest = apiFetch( {
-			path: addQueryArgs( `/wp/v2/categories`, CATEGORIES_LIST_QUERY ),
-		} ).then(
-			( categoriesList ) => {
-				if ( this.isStillMounted ) {
-					this.setState( { categoriesList } );
-				}
-			}
-		).catch(
-			() => {
-				if ( this.isStillMounted ) {
-					this.setState( { categoriesList: [] } );
-				}
-			}
-		);
-	}
-
-	componentWillUnmount() {
-		this.isStillMounted = false;
 	}
 
 	render() {
@@ -106,12 +75,14 @@ class Edit extends Component {
 		if ( ! hasPosts ) {
 			return (
 				<Fragment>
-					<Inspector {...{
-						...this.props,
-						...{changeState},
-						...{getState},
-						...{hasPosts},
-					}} key='inspector'/>
+					<Inspector
+						{ ...{
+							...this.props,
+							changeState,
+							getState,
+							hasPosts
+						} }
+					/>
 					<Placeholder
 						icon="admin-post"
 						label={ __( 'Recent Posts', 'getwid' ) }
@@ -127,12 +98,14 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector {...{
-					...this.props,
-					...{changeState},
-					...{getState},
-					...{hasPosts},
-				}} key='inspector'/>
+				<Inspector
+					{ ...{
+						...this.props,
+						changeState,
+						getState,
+						hasPosts
+					} }
+				/>
 				<BlockControls>
 					<BlockAlignmentToolbar
 						value={ align }
@@ -171,7 +144,7 @@ class Edit extends Component {
 
 export default withSelect( ( select, props ) => {
 	const { postsToShow, order, orderBy, categories } = props.attributes;
-	const { getEntityRecords, getMedia } = select( 'core' );
+	const { getEntityRecords } = select( 'core' );
 	const postsQuery = pickBy( {
 		categories,
 		order,
@@ -181,5 +154,6 @@ export default withSelect( ( select, props ) => {
 
 	return {
 		recentPosts: getEntityRecords( 'postType', 'post', postsQuery ),
+		categoriesList: getEntityRecords( 'taxonomy', 'category', CATEGORIES_LIST_QUERY )
 	};
 } )( Edit );

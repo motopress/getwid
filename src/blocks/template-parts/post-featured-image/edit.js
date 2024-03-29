@@ -55,9 +55,7 @@ class Edit extends Component {
 		if (current_post_type && current_post_type == Getwid.templates.name){
 			return (
 				<Fragment>
-					<Inspector {...{
-						...this.props,
-					}} key='inspector'/>
+					<Inspector { ...this.props } />
 					<BlockControls>
 						<BlockAlignmentToolbar
 							value={ align }

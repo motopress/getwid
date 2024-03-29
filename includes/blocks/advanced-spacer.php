@@ -11,7 +11,10 @@ class AdvancedSpacer extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
 		register_block_type(
-			'getwid/advanced-spacer'
+			'getwid/advanced-spacer',
+			array(
+				'render_callback' => [ $this, 'render_callback' ]
+			)
 		);
 
 	}
@@ -19,6 +22,35 @@ class AdvancedSpacer extends \Getwid\Blocks\AbstractBlock {
 	public function getLabel() {
 		return __('Advanced Spacer', 'getwid');
 	}
+
+    public function block_frontend_assets( $attributes = null ) {
+
+        if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+    }
+
+    public function render_callback( $attributes, $content ) {
+
+        $this->block_frontend_assets( $attributes );
+
+        return $content;
+    }
+
 }
 
 getwid()->blocksManager()->addBlock(

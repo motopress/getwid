@@ -77,9 +77,7 @@ class Edit extends Component {
 		if (current_post_type && current_post_type == Getwid.templates.name){
 			return (
 				<Fragment>
-					<Inspector {...{
-						...this.props,
-					}} key='inspector'/>
+					<Inspector { ...this.props } />
 					<BlockControls>
 						<AlignmentToolbar
 							value={ textAlignment }
@@ -102,7 +100,6 @@ class Edit extends Component {
 								placeholder={ __('Read More', 'getwid') }
 								value={ buttonText }
 								onChange={ ( value ) => setAttributes( { buttonText: value } ) }
-								allowedFormats={ [ 'bold', 'italic', 'strikethrough' ] }
 								className={ classnames(
 									{
 										'has-text-color': textColor.color,
@@ -112,7 +109,6 @@ class Edit extends Component {
 								style={ {
 									color: textColor.color,
 								} }
-								keepPlaceholderOnFocus
 								allowedFormats={allowedFormats}
 							/>
 						</div>

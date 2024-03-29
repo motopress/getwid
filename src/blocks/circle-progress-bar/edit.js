@@ -15,7 +15,7 @@ import Inspector from './inspector';
 /**
 * WordPress dependencies
 */
-const { Component, Fragment } = wp.element;
+const { Component, Fragment, createRef } = wp.element;
 const { BlockControls, AlignmentToolbar } = wp.blockEditor || wp.editor;
 
 const { jQuery: $ } = window;
@@ -28,20 +28,21 @@ class Edit extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.getConfig       = this.getConfig.bind(this);
-		this.drawAnimatedArcs = this.drawAnimatedArcs.bind(this);
+		this.progressBarRef = createRef();
 
-		this.drawArcs 	  = this.drawArcs    .bind( this );
+		this.getConfig = this.getConfig.bind(this);
+		this.drawAnimatedArcs = this.drawAnimatedArcs.bind(this);
+		this.drawArcs = this.drawArcs.bind( this );
 		this.getThickness = this.getThickness.bind( this );
-		this.setSize 	  = this.setSize     .bind( this );
+		this.setSize = this.setSize.bind( this );
 	}
 
 	getConfig() {
-		const { attributes: { size, backgroundColor, textColor }, clientId } = this.props;
+		const { attributes: { size, backgroundColor, textColor } } = this.props;
 		const { baseClass } = this.props;
 
 		return {
-			context: $( `.${clientId}` ).find( `.${baseClass}__canvas` )[ 0 ].getContext( '2d' ),
+			context: $( this.progressBarRef.current ).find( `.${baseClass}__canvas` )[ 0 ].getContext( '2d' ),
 
 			backgroundColor: backgroundColor ? backgroundColor : '#eeeeee',
 			textColor : textColor ? textColor : '#0000ee',
@@ -52,18 +53,20 @@ class Edit extends Component {
 	}
 
 	draw() {
-		const { clientId, baseClass } = this.props;
+		const { baseClass } = this.props;
 		const { isAnimated, fillAmount } = this.props.attributes;
 
-		const root = getScrollableClassName();
 
-		if ( $.parseJSON( isAnimated ) ) {
-			const $bar = $( `.${clientId}` ).find( `.${baseClass}__wrapper` );
+		const root = getScrollableClassName();
+		const currentDocument = this.progressBarRef.current.ownerDocument;
+
+		if ( JSON.parse( isAnimated ) ) {
+			const $bar = $( this.progressBarRef.current ).find( `.${baseClass}__wrapper` );
 
 			if ( isInViewport( $bar ) || root === false ) {
 				this.drawAnimatedArcs();
 			} else {
-				scrollHandler(`.${root}`, $bar, () => {
+				scrollHandler(currentDocument.querySelector(`.${root}`) || currentDocument, $bar, () => {
 					this.drawAnimatedArcs();
 				});
 			}
@@ -82,8 +85,8 @@ class Edit extends Component {
 			angle   = config.angle,
 
 			backgroundColor = config.backgroundColor,
-			textColor 		= config.textColor,
-			thickness = parseInt( this.getThickness() );
+			textColor = config.textColor,
+			thickness = this.getThickness();
 
 		this.setSize();
 		context.clearRect(0, 0, parseFloat( size ), parseFloat( size ) );
@@ -123,12 +126,13 @@ class Edit extends Component {
 
 	getThickness() {
 		const { thickness, size } = this.props.attributes;
-		return $.isNumeric( thickness ) ? thickness : size / 14;
+
+		return parseInt( thickness ) || parseInt( size / 14 );
 	}
 
 	setSize() {
-		const { attributes: { size }, clientId, baseClass } = this.props;
-		const canvas = $( `.${clientId}` ).find( `.${baseClass}__canvas` )[0];
+		const { attributes: { size }, baseClass } = this.props;
+		const canvas = $( this.progressBarRef.current ).find( `.${baseClass}__canvas` )[0];
 
 		canvas.width  = parseFloat( size );
 		canvas.height = parseFloat( size );
@@ -155,24 +159,26 @@ class Edit extends Component {
 
 	render() {
 		const { wrapperAlign } = this.props.attributes;
-		const { setAttributes, clientId, className, baseClass } = this.props;
+		const { setAttributes, className, baseClass } = this.props;
 
-		return ([
-			<BlockControls>
-				<AlignmentToolbar
-					value={wrapperAlign}
-					onChange={wrapperAlign => setAttributes({ wrapperAlign })}
-				/>
-			</BlockControls>,
-			<Inspector {...this.props}/>,
+		return (
 			<Fragment>
-				<div className={classnames( className, clientId )}>
+				<BlockControls>
+					<AlignmentToolbar
+						value={wrapperAlign}
+						onChange={wrapperAlign => setAttributes({ wrapperAlign })}
+					/>
+				</BlockControls>
+
+				<Inspector { ...this.props } />
+
+				<div className={ className } ref={ this.progressBarRef }>
 					<div className={`${baseClass}__wrapper`} style={{ textAlign: wrapperAlign ? wrapperAlign : null }}>
 						<canvas className={`${baseClass}__canvas`}/>
 					</div>
 				</div>
 			</Fragment>
-		]);
+		);
 	}
 }
 

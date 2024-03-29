@@ -61,6 +61,7 @@
 	}
 }
 
+.wp-block-getwid-content-slider,
 .wp-block-getwid-images-slider,
 .wp-block-getwid-media-text-slider,
 .wp-block-getwid-post-slider,
@@ -111,11 +112,17 @@
 		}
 
 		.slick-prev {
+			/*rtl:begin:remove*/
 			left: 25px;
+			/*rtl:end:remove*/
+			/*rtl:raw: right: 25px; */
 		}
 
 		.slick-next {
+			/*rtl:begin:remove*/
 			right: 25px;
+			/*rtl:end:remove*/
+			/*rtl:raw: left: 25px; */
 		}
 	}
 

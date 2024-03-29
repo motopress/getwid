@@ -18,13 +18,14 @@ $unitsMargin: 10px;
 		}
 
 		.components-getwid-style-length-control__value_input {
-			input{
+			input {
 				min-height: 31px;
 			}
 		}
 
 		.components-getwid-style-length-control__unit_select {
-			padding-left: 10px;
+			padding-left: 10px #{'/*rtl: 0*/'};
+			/*rtl:raw: padding-right: 10px; */
 			margin-bottom: 0;
 
 			select {

@@ -1,27 +1,31 @@
-.wp-block-getwid-template-post-featured-background-image{
-    $base-class: '.wp-block-getwid-template-post-featured-background-image';
+/*!
+ * getwid-template-post-featured-background-image
+ */
+
+.wp-block-getwid-template-post-featured-background-image {
+	$base-class: '.wp-block-getwid-template-post-featured-background-image';
 
 	padding: 25px;
 	height: 100%;
-    width: 100%;
-    position: relative;
+	width: 100%;
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	box-sizing: border-box;
 
-    & &__image{
-        position: absolute;
-        background-position: center center;
-        background-attachment: scroll;
-        background-size: cover;
+	& &__image {
+		position: absolute;
+		background-position: center center;
+		background-attachment: scroll;
+		background-size: cover;
 		top: 0;
 		bottom: 0;
 		right: 0;
 		left: 0;
-    }
+	}
 
-	&__foreground{
+	&__foreground {
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -30,12 +34,29 @@
 		opacity: .35;
 	}
 
-	&__content{
+	&__content {
 		position: relative;
 		width: 100%;
+
 		.wp-block-getwid-section {
 			height: 100%;
 		}
 	}
 
+	// class applied when setting Link To != none
+	&.has-link {
+		#{$base-class}__content {
+			// code below allow make some content to be transparent for mouse clicks
+
+			// make content insensitive to mouse events
+			pointer-events: none;
+
+			// allow mouse events on certain child elements
+			a,
+			button,
+			input {
+				pointer-events: auto;
+			}
+		}
+	}
 }

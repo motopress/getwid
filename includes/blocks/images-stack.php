@@ -11,7 +11,10 @@ class ImagesStack extends \Getwid\Blocks\AbstractBlock {
 		parent::__construct( self::$blockName );
 
 		register_block_type(
-			'getwid/images-stack'
+			'getwid/images-stack',
+			array(
+                'render_callback' => [ $this, 'render_callback' ]
+            )
 		);
 
 	}
@@ -19,6 +22,34 @@ class ImagesStack extends \Getwid\Blocks\AbstractBlock {
 	public function getLabel() {
 		return __('Image Stack Gallery', 'getwid');
 	}
+
+    public function block_frontend_assets() {
+
+        if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$rtl = is_rtl() ? '.rtl' : '';
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/images-stack/style' . $rtl . '.css' ),
+			[],
+			getwid()->settings()->getVersion()
+		);
+    }
+
+    public function render_callback( $attributes, $content ) {
+
+        $this->block_frontend_assets();
+
+        return $content;
+    }
+
 }
 
 getwid()->blocksManager()->addBlock(

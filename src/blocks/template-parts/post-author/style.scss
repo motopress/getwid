@@ -1,16 +1,23 @@
-.wp-block-getwid-template-post-author{
-    margin-bottom: .5em;
+/*!
+ * getwid-template-post-author
+ */
 
-    i{
-        font-size: 0.7em;
-        margin-right: .5em;
-        min-width: 1.25em;
-    }
+.wp-block-getwid-template-post-author {
+	margin-bottom: .5em;
 
-    &.has-text-color{
-        a{
-            color: inherit;
-        }
-    }
+	i {
+		font-size: 0.7em;
+		/*rtl:begin:remove*/
+		margin-right: .5em;
+		/*rtl:end:remove*/
+		min-width: 1.25em;
+		/*rtl:raw: margin-left: .5em; */
+	}
+
+	&.has-text-color {
+		a {
+			color: inherit;
+		}
+	}
 
 }

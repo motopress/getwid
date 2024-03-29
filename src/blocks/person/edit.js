@@ -63,11 +63,17 @@ class Edit extends Component {
 				return;
 			}
 
-			const urlLink = get( media, [ 'sizes', imageSize, 'url' ] ) || get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) || media.url;
+			const urlLink =
+				get( media, [ 'media_details', 'sizes', imageSize, 'source_url' ] ) ||
+				get( media, [ 'media_details', 'sizes', 'large', 'source_url' ] ) ||
+				get( media, [ 'media_details', 'sizes', 'full', 'source_url' ] ) ||
+				get( media, [ 'sizes', imageSize, 'url' ] ) ||
+				media.url;
 
 			setAttributes({
 				imgId: media.id,
-				imgUrl: typeof urlLink != 'undefined' ? urlLink : imgUrl
+				imgUrl: typeof urlLink != 'undefined' ? urlLink : imgUrl,
+				imgAlt: media.alt || media.alt_text
 			});
 		};
 
@@ -87,32 +93,28 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<BlockControls key={'toolbar'}>
+				<BlockControls>
 					{!!imgUrl && (
-						<Fragment>
-							<MediaUploadCheck>
-								<ToolbarGroup>
-									<MediaUpload
-										onSelect={ onSelectMedia }
-										allowedTypes={ ['image'] }
-										value={ imgId }
-										render={ ( { open } ) => (
-											<ToolbarButton
-												className="components-toolbar__control"
-												label={ __( 'Edit Media', 'getwid' ) }
-												icon="edit"
-												onClick={ open }
-											/>
-										) }
-									/>
-								</ToolbarGroup>
-							</MediaUploadCheck>
-						</Fragment>
+						<MediaUploadCheck>
+							<ToolbarGroup>
+								<MediaUpload
+									onSelect={ onSelectMedia }
+									allowedTypes={ ['image'] }
+									value={ imgId }
+									render={ ( { open } ) => (
+										<ToolbarButton
+											label={ __( 'Edit Media', 'getwid' ) }
+											icon="edit"
+											onClick={ open }
+										/>
+									) }
+								/>
+							</ToolbarGroup>
+						</MediaUploadCheck>
 					) }
 				</BlockControls>
 				<div
 					className={classnames( className, imageCrop ? `is-image-cropped` : null )}
-					key='edit'
 				>
 					{ !imgUrl && (
 						<MediaPlaceholder
@@ -127,11 +129,13 @@ class Edit extends Component {
 					)}
 					{imgUrl && (
 						<Fragment>
-							<Inspector {...{
-								...this.props,
-								...{changeImageSize},
-								...{onSelectMedia}
-							}} key='inspector'/>
+							<Inspector
+								{ ...{
+									...this.props,
+									changeImageSize,
+									onSelectMedia
+								} }
+							/>
 							<div className={`${baseClass}__image`}>
 								<img
 									src={imgUrl}

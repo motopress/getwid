@@ -81,8 +81,8 @@ class Inspector extends Component {
 									defaultColor: backgroundColor
 								},
 								changeColor: setBackgroundColor
-							}, 
-						...($.parseJSON( filling ) ? [{
+							},
+						...( JSON.parse( filling ) ? [{
 								title: __( 'Progress Color', 'getwid' ),
 								colors: {
 									customColor: customFillColor,

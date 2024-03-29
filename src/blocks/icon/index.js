@@ -12,14 +12,11 @@ import './editor.scss'
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
-import { get } from 'lodash';
 import classnames from 'classnames';
 
-const { select } = wp.data;
 const { Fragment } = wp.element;
 const { registerBlockType, createBlock } = wp.blocks;
-const { BlockControls, AlignmentToolbar, getColorClassName, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
+const { BlockControls, AlignmentToolbar, getColorClassName } = wp.blockEditor || wp.editor;
 
 /**
 * Module Constants
@@ -39,14 +36,10 @@ function prepareWrapperStyle(props, callFrom){
 			borderWidth,
 			borderRadius,
 
-			backgroundColor,
 			textColor,
 			customTextColor
 		}
 	} = props;
-
-	const editorColors = get( select( 'core/editor' ).getEditorSettings(), [ 'colors' ], [] );
-	const colorObject = getColorObjectByAttributeValues( editorColors, backgroundColor );
 
 	let textColorProcessed, backgroundColorProcessed, borderColorProcessed;
 
@@ -116,10 +109,21 @@ export default registerBlockType(
 				props.attributes.id = props.clientId;
 			}
 
-			return [
-				<Inspector {...{ setAttributes, ...props }} key='inspector'/>,
-				<Edit {...{ setAttributes, prepareWrapperStyle, ...props }} key='edit'/>,
-	        	<Fragment>
+			return (
+				<Fragment>
+					<Inspector
+						{ ...{
+							setAttributes,
+							...props
+						} }
+					/>
+					<Edit
+						{ ...{
+							setAttributes,
+							prepareWrapperStyle,
+							...props
+						} }
+					/>
 	        		{(align !='left' && align !='right') && (
 		                <BlockControls>
 		                    <AlignmentToolbar
@@ -129,7 +133,7 @@ export default registerBlockType(
 		                </BlockControls>
 					)}
 	            </Fragment>
-			];
+			);
 		}),
 		save: props => {
 			const {

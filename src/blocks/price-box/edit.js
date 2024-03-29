@@ -59,8 +59,8 @@ class Edit extends Component {
 					'has-text-color': textColor.color,
 					[ textColor.class ]: textColor.class,
 				}),
-			style: { backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color : 
-				(customBackgroundColor ? customBackgroundColor : undefined) 
+			style: { backgroundColor: this.props.backgroundColor.color ? this.props.backgroundColor.color :
+				(customBackgroundColor ? customBackgroundColor : undefined)
 			}
 		}
 
@@ -75,7 +75,6 @@ class Edit extends Component {
 						placeholder={ __( 'Write heading…', 'getwid' ) }
 						value={title ? title : ''}
 						onChange={ title => setAttributes( { title } ) }
-						keepPlaceholderOnFocus={ true }
 						style={ textStyle }
 						multiline={ false }
 						allowedFormats={allowedFormats}
@@ -88,7 +87,6 @@ class Edit extends Component {
 							placeholder='$'
 							value={ currency ? currency : '' }
 							onChange={ currency => { setAttributes( { currency } ) } }
-							keepPlaceholderOnFocus={ true }
 							style={ textStyle }
 							multiline={ false }
 							allowedFormats={allowedFormats}
@@ -100,7 +98,6 @@ class Edit extends Component {
 							placeholder='99'
 							value={ amount ? amount : '' }
 							onChange={ amount => setAttributes( { amount } ) }
-							keepPlaceholderOnFocus={ true }
 							style={ textStyle }
 							multiline={ false }
 							allowedFormats={allowedFormats}
@@ -112,7 +109,6 @@ class Edit extends Component {
 							placeholder={ _x( '/month', 'Period, placeholder', 'getwid' ) }
 							value={ period ? period : ''}
 							onChange={ period => setAttributes( { period } ) }
-							keepPlaceholderOnFocus={ true }
 							style={ textStyle}
 							multiline={ false }
 							allowedFormats={allowedFormats}
@@ -125,7 +121,6 @@ class Edit extends Component {
 						placeholder={ __( 'Write text…', 'getwid' ) }
 						value={ features ? features : '' }
 						onChange={ features => setAttributes( { features } ) }
-						keepPlaceholderOnFocus={ true }
 						style={ textStyle }
 						multiline={ 'li' }
 						allowedFormats={allowedFormats}

@@ -99,7 +99,13 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
                     ),
                     'className' => array(
                         'type' => 'string'
-                    )
+                    ),
+
+					//Modal
+					'metaQuery' => array(
+						'type' => 'array',
+						'default' => []
+					),
                 ),
                 'render_callback' => [ $this, 'render_callback' ]
             )
@@ -117,14 +123,47 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 
 	public function block_frontend_styles($styles) {
 
-		getwid_log( self::$blockName . '::hasBlock', $this->hasBlock() );
-
 		//fontawesome
 		// for /template-parts/*
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
         return $styles;
     }
+
+    public function block_frontend_assets() {
+
+		if ( is_admin() ) {
+            return;
+        }
+
+		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		//fontawesome
+		// for /template-parts/*
+		$deps = getwid()->fontIconsManager()->enqueueFonts( [] );
+
+		add_filter( 'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
+		);
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+
+		$rtl = is_rtl() ? '.rtl' : '';
+
+		wp_enqueue_style(
+			self::$blockName,
+			getwid_get_plugin_url( 'assets/blocks/custom-post-type/style' . $rtl . '.css' ),
+			$deps,
+			getwid()->settings()->getVersion()
+		);
+
+	}
 
     public function render_callback( $attributes, $content ) {
 
@@ -157,25 +196,25 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
         );
 
         $class = $block_name;
-        $class .= ' custom-post-type-' . esc_attr($post_type);
+        $class .= ' custom-post-type-' . $post_type;
 
         if ( isset( $attributes[ 'align' ] ) ) {
-            $class .= ' align' . esc_attr( $attributes[ 'align' ] );
+            $class .= ' align' . $attributes[ 'align' ];
         }
         if ( isset( $attributes['postLayout'] ) ) {
-            $class .= " has-layout-".esc_attr( $attributes[ 'postLayout' ] );
+            $class .= ' has-layout-' . $attributes[ 'postLayout' ];
         }
         if ( isset( $attributes['spacing'] ) && $attributes[ 'spacing' ] != 'default' ) {
-            $class .= ' has-spacing-' . esc_attr( $attributes[ 'spacing' ] );
+            $class .= ' has-spacing-' . $attributes[ 'spacing' ];
         }
         if ( isset( $attributes[ 'className' ] ) ) {
-            $class .= ' ' . esc_attr( $attributes[ 'className' ] );
+            $class .= ' ' . $attributes[ 'className' ];
         }
 
-        $wrapper_class = esc_attr( $block_name ) . '__wrapper';
+        $wrapper_class = $block_name . '__wrapper';
 
         if ( isset( $attributes[ 'columns' ] ) && $attributes[ 'postLayout' ] === 'grid' ) {
-            $wrapper_class .= " getwid-columns getwid-columns-" . esc_attr( $attributes[ 'columns' ] );
+            $wrapper_class .= ' getwid-columns getwid-columns-' . $attributes[ 'columns' ];
         }
 
         ob_start();
@@ -202,7 +241,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 								<div class='wp-block-getwid-custom-post-type__post'>
 									<?php
 										if ($use_template){
-											echo do_blocks( $template_part_content );
+											echo do_blocks( $template_part_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 										} else {
 											getwid_get_template_part( 'custom-post-type/' . $template, $attributes, false, $extra_attr );
 										}
@@ -254,7 +293,7 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 		                    'add_fragment' => ''
 	                    );
 	                    $pagination_args = apply_filters( 'getwid/blocks/custom_post_type/pagination_args', $pagination_args );
-                        echo paginate_links( $pagination_args );
+                        echo paginate_links( $pagination_args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     ?>
                     </div>
                 </nav>
@@ -263,6 +302,9 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
         <?php
 
         $result = ob_get_clean();
+
+        $this->block_frontend_assets();
+
         return $result;
     }
 }
