@@ -271,10 +271,12 @@ class CustomPostType extends \Getwid\Blocks\AbstractBlock {
 							$total_pages = ceil( $total_rows / $attributes['postsToShow'] );
 						}
 
+						$paged = is_front_page() ? get_query_var( 'page', 1 ) : get_query_var( 'paged', 1 );
+
 	                    $pagination_args = array(
 		                    'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
 		                    'total'        => $total_pages,
-		                    'current'      => max( 1, get_query_var( 'paged' ) ),
+		                    'current'      => max( 1, $paged ),
 		                    'format'       => '?paged=%#%',
 		                    'show_all'     => false,
 		                    'type'         => 'plain',

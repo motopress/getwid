@@ -1,3 +1,7 @@
+= 2.0.0, Aug 15 2023 =
+* Added full support of WordPress Full Site Editing.
+* Improved compatibility with the Gutenberg plugin 16.3.0.
+
 = 1.9.1, Jul 25 2023 =
 * Fixed an issue that prevented custom post types from being displayed in the post-based blocks.
 
