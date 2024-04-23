@@ -43,6 +43,27 @@ export default registerBlockType(
             }
         },
         deprecated: [
+			{
+				attributes: attributes,
+				save: (props) => {
+					return (
+						<Save {...{
+							...props,
+							baseClass,
+						}}/>
+					)
+				},
+				migrate: (attributes) => {
+
+					return {
+						...attributes,
+						...{
+							separator: safeHTML( decodeEntities( separator ) ),
+							decimal: safeHTML( decodeEntities( decimal ) ),
+						}
+					};
+				}
+			},
             {
                 attributes: attributes,
                 save: (props) => {
