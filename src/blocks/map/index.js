@@ -4,6 +4,7 @@
 import attributes from './attributes';
 import Edit from './edit';
 import save from './save';
+import deprecated from './deprecated';
 import {checkDisableBlock} from 'GetwidUtils/help-functions';
 
 /**
@@ -31,6 +32,7 @@ registerBlockType( 'getwid/map', {
 		inserter: !Getwid.disabled_blocks.includes(blockName)
 	},
 	attributes,
+	deprecated,
 	getEditWrapperProps( { blockAlignment } ) {
 		if ( 'full' === blockAlignment || 'wide' === blockAlignment ) {
 			return { 'data-align': blockAlignment };

@@ -27,6 +27,8 @@ const {
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
+const { safeHTML } = wp.dom;
+const { decodeEntities } = wp.htmlEntities;
 
 /**
 * Module Constants
@@ -470,11 +472,11 @@ class Edit extends Component {
 		}
 
 		let message = '';
-
-		if (unescape(mapMarkersParsed[markerID].description) != ''){
+		const markerDescription = safeHTML( decodeEntities( mapMarkersParsed[markerID].description ) );
+		if ( markerDescription != '') {
 			message = `
 				<div class='getwid-poi-info-window'>
-					${unescape(mapMarkersParsed[markerID].description)}
+					${markerDescription}
 				</div>
 			`;
 		}
