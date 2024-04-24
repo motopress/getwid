@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-import { merge, isEqual, escape, unescape } from "lodash";
+import { merge, isEqual } from "lodash";
 import classnames from 'classnames';
 import Inspector from './inspector';
 import './editor.scss';
@@ -371,7 +371,7 @@ class Edit extends Component {
 					if (status === 'OK') {
 						if (results[0]) {
 							updateArrValues( {
-								description: escape(results[0].formatted_address),
+								description: results[0].formatted_address,
 							}, getState('currentMarker') );
 						}
 					}

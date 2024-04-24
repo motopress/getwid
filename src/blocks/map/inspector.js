@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-import { times, escape, unescape} from 'lodash';
+import { times } from 'lodash';
 import CustomPanelBody from 'GetwidControls/custom-panel-body';
 
 
@@ -114,9 +114,9 @@ class Inspector extends Component {
 								<TextareaControl
 									label={__('Popup Content. Plain Text or HTML.', 'getwid')}
 									rows={'5'}
-									value={ unescape(mapMarkersParsed[ index ].description) }
+									value={ mapMarkersParsed[ index ].description }
 									onChange={ value => {
-										updateArrValues( { description: escape(value) }, index );
+										updateArrValues( { description: value }, index );
 									} }
 								/>
 
@@ -217,6 +217,7 @@ class Inspector extends Component {
 
 				return (
 					<CustomPanelBody
+						key={ index }
 						title={ __( 'Marker', 'getwid' ) + ': ' + mapMarkersParsed[ index ].name }
 						initialOpen={ false }
 						onOpen={ () => {
@@ -237,9 +238,9 @@ class Inspector extends Component {
 						<TextareaControl
 							label={__('Popup Content. Plain Text or HTML.', 'getwid')}
 							rows={'5'}
-							value={ unescape(mapMarkersParsed[ index ].description) }
+							value={ mapMarkersParsed[ index ].description }
 							onChange={ value => {
-								updateArrValues( { description: escape(value) }, index );
+								updateArrValues( { description: value }, index );
 							} }
 						/>
 

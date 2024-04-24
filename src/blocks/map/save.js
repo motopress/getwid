@@ -2,7 +2,7 @@
 * External dependencies
 */
 import classnames from 'classnames';
-import { times, escape} from 'lodash';
+import { times } from 'lodash';
 import './editor.scss'
 import './style.scss'
 

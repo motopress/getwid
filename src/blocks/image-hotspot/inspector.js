@@ -10,8 +10,6 @@ import GetwidCustomColorPalette     from 'GetwidControls/custom-color-palette';
 import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
 import { renderPointSettingsPanel } from 'GetwidUtils/render-inspector';
 
-import { escape, unescape} from 'lodash';
-
 /**
 * WordPress dependencies
 */
@@ -20,8 +18,6 @@ import { __ } from 'wp.i18n';
 const { Component, Fragment } = wp.element;
 const { InspectorControls } = wp.blockEditor || wp.editor;
 const { PanelBody, BaseControl, RangeControl, SelectControl, TextareaControl, ToggleControl, TextControl, Button, Modal, ButtonGroup, RadioControl, Dashicon, TabPanel } = wp.components;
-const { withSelect } = wp.data;
-const { compose } = wp.compose;
 
 /**
 * Module Constants
@@ -180,9 +176,9 @@ class Inspector extends Component {
 				<TextareaControl
 					label={__( 'Popup Content. Plain Text or HTML.', 'getwid' )}
 					rows='5'
-					value={unescape( imagePointsParsed[ index ].content )}
+					value={ imagePointsParsed[ index ].content }
 					onChange={ value => {
-						updatePoint( index, { content: escape( value ) } );
+						updatePoint( index, { content: value } );
 					}}
 				/>
 				<ToggleControl
