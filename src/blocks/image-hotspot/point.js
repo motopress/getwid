@@ -3,6 +3,9 @@ import classnames from "classnames";
 const { useState, useCallback, useRef, useEffect } = wp.element;
 const { useRefEffect, useMergeRefs  } = wp.compose;
 
+const { safeHTML } = wp.dom;
+const { decodeEntities } = wp.htmlEntities;
+
 function Point( props ) {
 	const {
 		link,
@@ -28,6 +31,8 @@ function Point( props ) {
 	} = props;
 
 	const isDragged = useRef( false );
+	const safeTitle = safeHTML( decodeEntities( title ) );
+	const safeContent = safeHTML( decodeEntities( content ) );
 
 	const calculatePosition = useCallback( ( point, mouseX, mouseY ) => {
 		const parentRect = point.parentNode.getBoundingClientRect();
@@ -125,7 +130,7 @@ function Point( props ) {
 				arrow: tooltip.arrow,
 				placement: placement,
 				allowHTML: true,
-				content: `<div class="wp-block-getwid-image-hotspot__tooltip"><div class="wp-block-getwid-image-hotspot__tooltip-title">${title}</div><div class="wp-block-getwid-image-hotspot__tooltip-content">${content}</div></div>`
+				content: `<div class="wp-block-getwid-image-hotspot__tooltip"><div class="wp-block-getwid-image-hotspot__tooltip-title">${safeTitle}</div><div class="wp-block-getwid-image-hotspot__tooltip-content">${safeContent}</div></div>`
 			}
 		);
 
@@ -164,9 +169,9 @@ function Point( props ) {
 
 	let link_HTML = '';
 	if (link !== '') {
-		link_HTML = `<a href="${link}"` + ( newTab ? ' target="_blank" rel="noopener noreferrer"' : '' ) + `>${title}</a>`
+		link_HTML = `<a href="${link}"` + ( newTab ? ' target="_blank" rel="noopener noreferrer"' : '' ) + `>${safeTitle}</a>`
 	} else {
-		link_HTML = title;
+		link_HTML = safeTitle;
 	}
 
 	return (
