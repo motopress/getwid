@@ -1,37 +1,10 @@
-/**
-* External dependencies
-*/
 import classnames from 'classnames';
-import { times } from 'lodash';
-import './editor.scss'
-import './style.scss'
+import attributes from './attributes';
+import { times, escape} from 'lodash';
 
-
-/**
-* WordPress dependencies
-*/
-const {
-	Component,
-	Fragment,
-} = wp.element;
-
-const { safeHTML } = wp.dom;
-const { decodeEntities } = wp.htmlEntities;
-
-/**
-* Module Constants
-*/
-const baseClass = 'wp-block-getwid-map';
-
-
-/**
-* Create an Component
-*/
-class Save extends Component {
-	stripStringRender( string ) {
-		return string.toLowerCase().replace( /[^0-9a-z-]/g,'' );
-	}
-	render() {
+const v1 = {
+	attributes,
+	save: (props) => {
 		const {
 			attributes: {
 				mapHeight,
@@ -48,19 +21,12 @@ class Save extends Component {
 				mapMarkers,
 				className,
 			}
-		} = this.props;
+		} = props;
 
 		const mapMarkersParsed = (mapMarkers != '' ? JSON.parse(mapMarkers) : []);
 
-		mapMarkersParsed.map( ( marker ) => {
-			marker.name = safeHTML( decodeEntities( marker.name ) );
-			marker.description = safeHTML( decodeEntities( marker.description ) );
-
-			return marker;
-		} );
-
 		const wrapperClass = classnames(
-			baseClass,
+			"wp-block-getwid-map",
 			className,
 			blockAlignment ? `align${ blockAlignment }` : null,
 		);
@@ -84,12 +50,11 @@ class Save extends Component {
 		};
 
 		const mapMarkerArr = {
-			'data-map-markers' : JSON.stringify(mapMarkersParsed),
+			'data-map-markers' : escape(mapMarkers),
 		};
 
 		const markersPoints = ( index ) => {
 			if (typeof mapMarkersParsed[ index ] !== 'undefined') {
-
 				return (
 					<li key={ index }><a href={`https://maps.google.com/?q=${mapMarkersParsed[ index ].coords.lat},${mapMarkersParsed[ index ].coords.lng}&ll=${mapMarkersParsed[ index ].coords.lat},${mapMarkersParsed[ index ].coords.lng}&z=${mapZoom}`}>{`${mapMarkersParsed[ index ].name}`}</a></li>
 				);
@@ -97,21 +62,16 @@ class Save extends Component {
 		};
 
 		return (
-			<Fragment>
-				<div {...mapData} {...mapOptions} {...mapControls} {...mapMarkerArr} className={wrapperClass}>
-					<div style={{height: (mapHeight + 'px')}} className={`${baseClass}__container`}></div>
-
-						{(mapMarkersParsed.length != 0) && (
-							<Fragment>
-								<ul className={`${baseClass}__points`}>
-									{ times( mapMarkersParsed.length, n => markersPoints( n ) ) }
-								</ul>
-							</Fragment>
-						)}
-
-				</div>
-			</Fragment>
+			<div {...mapData} {...mapOptions} {...mapControls} {...mapMarkerArr} className={wrapperClass}>
+				<div style={{height: (mapHeight + 'px')}} className="wp-block-getwid-map__container"></div>
+					{(mapMarkersParsed.length != 0) && (
+						<ul className="wp-block-getwid-map__points">
+							{ times( mapMarkersParsed.length, n => markersPoints( n ) ) }
+						</ul>
+					)}
+			</div>
 		);
 	}
 }
-export default Save;
+
+export default [ v1 ];

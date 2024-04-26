@@ -7,6 +7,9 @@ const {
 	getColorClassName
 } = wp.blockEditor || wp.editor;
 
+const { safeHTML } = wp.dom;
+const { decodeEntities } = wp.htmlEntities;
+
 class Save extends Component {
 	render() {
 		const {
@@ -52,8 +55,8 @@ class Save extends Component {
 			'data-duration'       : duration,
 			'data-use-easing' 	  : useEasing,
 			'data-use-grouping'   : useGrouping,
-			'data-separator' 	  : separator,
-			'data-decimal'		  : decimal,
+			'data-separator' 	  : safeHTML( decodeEntities( separator ) ),
+			'data-decimal'		  : safeHTML( decodeEntities( decimal ) ),
 			'data-easing-fn'      : easing,
 			'data-numerals'		  : numerals
 		}
@@ -91,7 +94,7 @@ class Save extends Component {
 								value={suffix}
 							/>
 						}
-						
+
 					</div>
 				</div>
 			</Fragment>

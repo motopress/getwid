@@ -20,6 +20,9 @@ const { Component, Fragment, createRef } = wp.element;
 const { RichText, withColors, BlockControls, AlignmentToolbar } = wp.blockEditor || wp.editor;
 const { jQuery: $ } = window;
 
+const { safeHTML } = wp.dom;
+const { decodeEntities } = wp.htmlEntities;
+
 /**
 * Module Constants
 */
@@ -164,8 +167,8 @@ class Edit extends Component {
 			useEasing	: JSON.parse( useEasing ),
 			useGrouping : JSON.parse( useGrouping ),
 
-			separator : separator,
-			decimal	  : decimal,
+			separator : safeHTML( decodeEntities( separator ) ),
+			decimal	  : safeHTML( decodeEntities( decimal ) ),
 
 			easingFn: this.getEasingFunction(),
 			numerals: this.getNumerals()

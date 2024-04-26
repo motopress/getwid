@@ -1,3 +1,9 @@
+= 2.0.2, Oct 27 2023 =
+* Added Instagram Access Token encryption.
+
+= 2.0.1, Sep 18 2023 =
+* Fixed an issue when the Table block didn't work correctly in WordPress 6.3.
+
 = 2.0.0, Aug 15 2023 =
 * Added full support of WordPress Full Site Editing.
 * Improved compatibility with the Gutenberg plugin 16.3.0.

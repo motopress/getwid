@@ -2,12 +2,13 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 import classnames from 'classnames';
-import { times, escape } from 'lodash';
+import { times } from 'lodash';
 
 const { Component, Fragment } = wp.element;
 
+const { safeHTML } = wp.dom;
+const { decodeEntities } = wp.htmlEntities;
 
 /**
 * Module Constants
@@ -48,6 +49,13 @@ class Save extends Component {
 		} = this.props;
 
 		const imagePointsParsed = (imagePoints != '' ? JSON.parse(imagePoints) : []);
+
+		imagePointsParsed.map( ( point ) => {
+			point.title = safeHTML( decodeEntities( point.title ) );
+			point.content = safeHTML( decodeEntities( point.content ) );
+
+			return point;
+		});
 
 		const wrapperProps = {
 			className: classnames( className,
@@ -94,7 +102,7 @@ class Save extends Component {
 					rel: imagePointsParsed[ index ].newTab ? "noopener noreferrer" : undefined,
 				};
 
-				var icon = imagePointsParsed[ index ].icon ? imagePointsParsed[ index ].icon : (dotIcon ? dotIcon : undefined)
+				const icon = imagePointsParsed[ index ].icon ? imagePointsParsed[ index ].icon : (dotIcon ? dotIcon : undefined);
 
 				if (imagePointsParsed[ index ].link !=''){
 					link_HTML = (<a href={imagePointsParsed[ index ].link} {...link_attr}>{imagePointsParsed[ index ].title}</a>);
@@ -103,16 +111,14 @@ class Save extends Component {
 				}
 
 				return (
-					<Fragment key={ index }>
-						<div data-point-id={index} className={dotClass} style={dotStyle}>
-							<div className={`${baseClass}__dot-wrapper`}>
-								<div style={innerDotStyle} className={`${baseClass}__dot-content`}><i className={`${icon} ${baseClass}__dot-icon`}></i></div>
-							</div>
-							<div className={`${baseClass}__dot-description`}>
-								<div className={`${baseClass}__dot-title`}>{link_HTML}</div>
-							</div>
+					<div data-point-id={index} className={dotClass} style={dotStyle} key={index}>
+						<div className={`${baseClass}__dot-wrapper`}>
+							<div style={innerDotStyle} className={`${baseClass}__dot-content`}><i className={`${icon} ${baseClass}__dot-icon`}></i></div>
 						</div>
-					</Fragment>
+						<div className={`${baseClass}__dot-description`}>
+							<div className={`${baseClass}__dot-title`}>{link_HTML}</div>
+						</div>
+					</div>
 				);
 			}
 		};
@@ -124,7 +130,7 @@ class Save extends Component {
 		};
 
 		const imagePointsArr = {
-			'data-image-points' : escape(imagePoints),
+			'data-image-points' : JSON.stringify( imagePointsParsed )
 		};
 
 		const tooltipOptions = {

@@ -1,7 +1,7 @@
 /**
 * External dependencies
 */
-import { merge, isEqual, escape, unescape } from "lodash";
+import { merge, isEqual } from "lodash";
 import classnames from 'classnames';
 import Inspector from './inspector';
 import './editor.scss';
@@ -27,6 +27,8 @@ const {
 import { __ } from 'wp.i18n';
 const {jQuery: $} = window;
 
+const { safeHTML } = wp.dom;
+const { decodeEntities } = wp.htmlEntities;
 
 /**
 * Module Constants
@@ -369,7 +371,7 @@ class Edit extends Component {
 					if (status === 'OK') {
 						if (results[0]) {
 							updateArrValues( {
-								description: escape(results[0].formatted_address),
+								description: results[0].formatted_address,
 							}, getState('currentMarker') );
 						}
 					}
@@ -470,11 +472,11 @@ class Edit extends Component {
 		}
 
 		let message = '';
-
-		if (unescape(mapMarkersParsed[markerID].description) != ''){
+		const markerDescription = safeHTML( decodeEntities( mapMarkersParsed[markerID].description ) );
+		if ( markerDescription != '') {
 			message = `
 				<div class='getwid-poi-info-window'>
-					${unescape(mapMarkersParsed[markerID].description)}
+					${markerDescription}
 				</div>
 			`;
 		}
