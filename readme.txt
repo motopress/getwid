@@ -3,9 +3,9 @@ Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf, ai, openai, chatgpt
 Requires at least: 5.8
-Tested up to: 6.4
+Tested up to: 6.5
 Requires PHP: 5.6
-Stable tag: 2.0.7
+Stable tag: 2.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -225,6 +225,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 2.0.8, Apr 26 2024 =
+* Minor bugfixes and improvements.
+
 = 2.0.7, Mar 29 2024 =
 * Fixed an issue where pagination in post-based blocks didn't work correctly on the static front page.
 
@@ -242,12 +245,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 = 2.0.3, Nov 17 2023 =
 * Improved email formatting for contact form submissions.
-
-= 2.0.2, Oct 27 2023 =
-* Added Instagram Access Token encryption.
-
-= 2.0.1, Sep 18 2023 =
-* Fixed an issue when the Table block didn't work correctly in WordPress 6.3.
 
 
 --------
