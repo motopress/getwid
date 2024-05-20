@@ -281,11 +281,26 @@ class Inspector extends Component {
 								]}
 							/>
 						</PanelBody>
+						<PanelBody title={__( 'Slider Settings', 'getwid' )} initialOpen={false}>
+							{renderSliderSettings()}
+						</PanelBody>
 					</Fragment>
 				)}
 				{ tabName === 'style' && (
 					<Fragment>
 						<PanelBody>
+							<GetwidCustomColorPalette
+								colorSettings={[{
+										title: __( 'Text Color', 'getwid' ),
+										colors: { customColor: textColor },
+										changeColor: textColor => setAttributes({ textColor })
+									}, {
+										title: __( 'Overlay Color', 'getwid' ),
+										colors: { customColor: overlayColor },
+										changeColor: overlayColor => setAttributes({ overlayColor })
+									}
+								]}
+							/>
 							<RangeControl
 								label={__( 'Overlay Opacity', 'getwid' )}
 								value={overlayOpacity !== undefined ? overlayOpacity : 0}
@@ -293,18 +308,6 @@ class Inspector extends Component {
 								min={0}
 								max={100}
 								step={1}
-							/>
-							<GetwidCustomColorPalette
-								colorSettings={[{
-										title: __( 'Text Color', 'getwid' ),
-										colors: { customColor: textColor },
-										changeColor: textColor => setAttributes({ textColor })
-									}, {
-										title: __( 'Background Color', 'getwid' ),
-										colors: { customColor: overlayColor },
-										changeColor: overlayColor => setAttributes({ overlayColor })
-									}
-								]}
 							/>
 						</PanelBody>
 						<PanelBody title={__( 'Padding', 'getwid' )} initialOpen={false}>
@@ -316,9 +319,6 @@ class Inspector extends Component {
 					<Fragment>
 						<PanelBody title={__( 'Text Animation', 'getwid' )} initialOpen={true}>
 							{renderAnimationSettings()}
-						</PanelBody>
-						<PanelBody title={__( 'Slider Settings', 'getwid' )} initialOpen={false}>
-							{renderSliderSettings()}
 						</PanelBody>
 					</Fragment>
 				)}
