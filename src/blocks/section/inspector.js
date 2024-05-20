@@ -28,6 +28,8 @@ const { FocalPointPicker, BaseControl, Button, PanelBody, RangeControl, SelectCo
 const GradientPicker = wp.components.__experimentalGradientPicker || wp.components.GradientPicker; // since WP 5.9 we have to use non-experimental version of GradientPicker
 const { compose } = wp.compose;
 
+import LabelWithHelp from 'GetwidControls/label-with-help';
+
 /**
 * Module Constants
 */
@@ -605,57 +607,36 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				<RadioControl
+				<LabelWithHelp
 					label={__( 'Content Area Width', 'getwid' )}
-					selected={ contentMaxWidthPreset !== undefined ? contentMaxWidthPreset : 'boxed' }
-					options={ [
-						{ value: 'boxed' , label: __( 'Default', 'getwid' ) },
-						{ value: 'full'  , label: __( 'Full Width', 'getwid' ) },
-						{ value: 'custom', label: __( 'Custom Width', 'getwid' ) }
-					] }
-					onChange={contentMaxWidthPreset => setAttributes({ contentMaxWidthPreset })}
-				/>
-				{ contentMaxWidthPreset === 'custom' &&
-					<RangeControl
-						value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
-						onChange={contentMaxWidth => {
-							setAttributes({ contentMaxWidth });
-						}}
-						allowReset
-						min={0}
-						max={2000}
-						step={1}
+					help={ <p>{__( 'Set the default width of the content area in Getwid Settings.', 'getwid' )} <ExternalLink href={Getwid.options_url.appearance}>{ __( 'Getwid Settings', 'getwid' ) }</ExternalLink></p> }
+				>
+					<RadioControl
+						className="getwid-content-area-width-control"
+						selected={ contentMaxWidthPreset !== undefined ? contentMaxWidthPreset : 'boxed' }
+						options={ [
+							{ value: 'boxed' , label: __( 'Default', 'getwid' ) },
+							{ value: 'full'  , label: __( 'Full Width', 'getwid' ) },
+							{ value: 'custom', label: __( 'Custom Width', 'getwid' ) }
+						] }
+						onChange={contentMaxWidthPreset => setAttributes({ contentMaxWidthPreset })}
 					/>
-				}
-
-				{ !!contentHelpIsVisible && (
-					<Fragment>
-						<BaseControl
-							label={__( 'Set the default width of the content area in Getwid Settings.', 'getwid' )}
-						>
-							<ExternalLink href={Getwid.options_url.appearance}>{ __( 'Getwid Settings', 'getwid' ) }</ExternalLink>
-						</BaseControl>
-						<Button
-							isLink
-							onClick={contentHelpToggle}
-						>
-							{ __( 'Hide Help', 'getwid' ) }
-						</Button>
-					</Fragment>
-				) }
-
-				{ !contentHelpIsVisible && (
-					<BaseControl>
-						<Button
-							isLink
-							onClick={ contentHelpToggle }
-						>
-							{ __( 'Show Help', 'getwid' ) }
-						</Button>
-					</BaseControl>
-				) }
+					{ contentMaxWidthPreset === 'custom' &&
+						<RangeControl
+							value={contentMaxWidth !== undefined ? contentMaxWidth : ''}
+							onChange={contentMaxWidth => {
+								setAttributes({ contentMaxWidth });
+							}}
+							allowReset
+							min={0}
+							max={2000}
+							step={1}
+						/>
+					}
+				</LabelWithHelp>
 
 				<BaseControl>
+					<BaseControl.VisualLabel>{__( 'Section Height', 'getwid' )}</BaseControl.VisualLabel>
 					<TabPanel className="getwid-editor-tabs"
 								activeClass="is-active"
 								tabs={[
@@ -681,7 +662,6 @@ class Inspector extends Component {
 									case 'desktop': {
 										return (
 											<GetwidStyleLengthControl
-												label={__( 'Section Height', 'getwid' )}
 												value={minHeight}
 												units={[
 													{ label: 'px', value: 'px' },
@@ -741,118 +721,117 @@ class Inspector extends Component {
 		const { setAttributes } = this.props;
 
 		return (
-			<Fragment>
-				<BaseControl>
-					<TabPanel className='getwid-editor-tabs'
-							activeClass='is-active'
-							tabs={[
-								{
-									name: 'desktop',
-									title: __( 'Desktop', 'getwid' ),
-									className: 'components-button is-link is-small'
-								},
-								{
-									name: 'tablet',
-									title: __( 'Tablet', 'getwid' ),
-									className: 'components-button is-link is-small'
-								},
-								{
-									name: 'mobile',
-									title: __( 'Mobile', 'getwid' ),
-									className: 'components-button is-link is-small'
+			<BaseControl>
+				<BaseControl.VisualLabel>{__('Content Area Alignment', 'getwid')}</BaseControl.VisualLabel>
+				<TabPanel className='getwid-editor-tabs'
+						activeClass='is-active'
+						tabs={[
+							{
+								name: 'desktop',
+								title: __( 'Desktop', 'getwid' ),
+								className: 'components-button is-link is-small'
+							},
+							{
+								name: 'tablet',
+								title: __( 'Tablet', 'getwid' ),
+								className: 'components-button is-link is-small'
+							},
+							{
+								name: 'mobile',
+								title: __( 'Mobile', 'getwid' ),
+								className: 'components-button is-link is-small'
+							}
+						]}>
+					{
+						tab => {
+							switch ( tab.name ) {
+								case 'desktop':{
+									return(
+										<Fragment>
+											<SelectControl
+												label={__('Vertical Alignment', 'getwid')}
+												value={verticalAlign !== undefined ? verticalAlign : 'center'}
+												onChange={verticalAlign => setAttributes({ verticalAlign })}
+												options={[
+													{ value: 'flex-start', label: __( 'Top'   , 'getwid' ) },
+													{ value: 'center'    , label: __( 'Middle', 'getwid' ) },
+													{ value: 'flex-end'  , label: __( 'Bottom', 'getwid' ) }
+												]}
+											/>
+											<SelectControl
+												label={__('Horizontal Alignment', 'getwid')}
+												value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
+												onChange={horizontalAlign => setAttributes({ horizontalAlign })}
+												options={[
+													{ value: 'flex-start', label: __( 'Left'  , 'getwid' ) },
+													{ value: 'center'    , label: __( 'Center', 'getwid' ) },
+													{ value: 'flex-end'  , label: __( 'Right' , 'getwid' ) }
+												]}
+											/>
+										</Fragment>
+									)
 								}
-							]}>
-						{
-							tab => {
-								switch ( tab.name ) {
-									case 'desktop':{
-										return(
-											<Fragment>
-												<SelectControl
-													label={__('Content Area Vertical Alignment', 'getwid')}
-													value={verticalAlign !== undefined ? verticalAlign : 'center'}
-													onChange={verticalAlign => setAttributes({ verticalAlign })}
-													options={[
-														{ value: 'flex-start', label: __( 'Top'   , 'getwid' ) },
-														{ value: 'center'    , label: __( 'Middle', 'getwid' ) },
-														{ value: 'flex-end'  , label: __( 'Bottom', 'getwid' ) }
-													]}
-												/>
-												<SelectControl
-													label={__('Content Area Horizontal Alignment', 'getwid')}
-													value={horizontalAlign !== undefined ? horizontalAlign : 'center'}
-													onChange={horizontalAlign => setAttributes({ horizontalAlign })}
-													options={[
-														{ value: 'flex-start', label: __( 'Left'  , 'getwid' ) },
-														{ value: 'center'    , label: __( 'Center', 'getwid' ) },
-														{ value: 'flex-end'  , label: __( 'Right' , 'getwid' ) }
-													]}
-												/>
-											</Fragment>
-										)
-									}
-									case 'tablet': {
-										return(
-											<Fragment>
-												<SelectControl
-													label={__( 'Content Area Vertical Alignment', 'getwid' )}
-													value={verticalAlignTablet !== undefined ? verticalAlignTablet : 'center'}
-													onChange={verticalAlignTablet => setAttributes({verticalAlignTablet})}
-													options={[
-														{ value: ''          , label: __( 'Default', 'getwid' )},
-														{ value: 'flex-start', label: __( 'Top'    , 'getwid' )},
-														{ value: 'center'    , label: __( 'Middle' , 'getwid' )},
-														{ value: 'flex-end'  , label: __( 'Bottom' , 'getwid' )}
-													]}
-												/>
-												<SelectControl
-													label={__( 'Content Area Horizontal Alignment', 'getwid' )}
-													value={horizontalAlignTablet !== undefined ? horizontalAlignTablet : 'center'}
-													onChange={horizontalAlignTablet => setAttributes({horizontalAlignTablet})}
-													options={[
-														{ value: ''          , label: __( 'Default', 'getwid' ) },
-														{ value: 'flex-start', label: __( 'Left'   , 'getwid' ) },
-														{ value: 'center'	 , label: __( 'Center' , 'getwid' ) },
-														{ value: 'flex-end'  , label: __( 'Right'  , 'getwid' ) }
-													]}
-												/>
-											</Fragment>
-										)
-									}
-									case 'mobile': {
-										return(
-											<Fragment>
-												<SelectControl
-													label={__( 'Content Area Vertical Alignment', 'getwid' )}
-													value={verticalAlignMobile !== undefined ? verticalAlignMobile : 'center'}
-													onChange={verticalAlignMobile => setAttributes({ verticalAlignMobile })}
-													options={[
-														{ value: ''          , label: __( 'Default', 'getwid' ) },
-														{ value: 'flex-start', label: __( 'Top'    , 'getwid' ) },
-														{ value: 'center'    , label: __( 'Middle' , 'getwid' ) },
-														{ value: 'flex-end'  , label: __( 'Bottom' , 'getwid' ) }
-													]}
-												/>
-												<SelectControl
-													label={__( 'Content Area Horizontal Alignment', 'getwid' )}
-													value={horizontalAlignMobile !== undefined ? horizontalAlignMobile : 'center'}
-													onChange={horizontalAlignMobile => setAttributes({ horizontalAlignMobile })}
-													options={[
-														{ value: ''          , label: __( 'Default', 'getwid') },
-														{ value: 'flex-start', label: __( 'Left'   , 'getwid') },
-														{ value: 'center'    , label: __( 'Center' , 'getwid') },
-														{ value: 'flex-end'  , label: __( 'Right'  , 'getwid') }
-													]}
-												/>
-											</Fragment>
-										)
-									}
+								case 'tablet': {
+									return(
+										<Fragment>
+											<SelectControl
+												label={__( 'Vertical Alignment', 'getwid' )}
+												value={verticalAlignTablet !== undefined ? verticalAlignTablet : 'center'}
+												onChange={verticalAlignTablet => setAttributes({verticalAlignTablet})}
+												options={[
+													{ value: ''          , label: __( 'Default', 'getwid' )},
+													{ value: 'flex-start', label: __( 'Top'    , 'getwid' )},
+													{ value: 'center'    , label: __( 'Middle' , 'getwid' )},
+													{ value: 'flex-end'  , label: __( 'Bottom' , 'getwid' )}
+												]}
+											/>
+											<SelectControl
+												label={__( 'Horizontal Alignment', 'getwid' )}
+												value={horizontalAlignTablet !== undefined ? horizontalAlignTablet : 'center'}
+												onChange={horizontalAlignTablet => setAttributes({horizontalAlignTablet})}
+												options={[
+													{ value: ''          , label: __( 'Default', 'getwid' ) },
+													{ value: 'flex-start', label: __( 'Left'   , 'getwid' ) },
+													{ value: 'center'	 , label: __( 'Center' , 'getwid' ) },
+													{ value: 'flex-end'  , label: __( 'Right'  , 'getwid' ) }
+												]}
+											/>
+										</Fragment>
+									)
+								}
+								case 'mobile': {
+									return(
+										<Fragment>
+											<SelectControl
+												label={__( 'Vertical Alignment', 'getwid' )}
+												value={verticalAlignMobile !== undefined ? verticalAlignMobile : 'center'}
+												onChange={verticalAlignMobile => setAttributes({ verticalAlignMobile })}
+												options={[
+													{ value: ''          , label: __( 'Default', 'getwid' ) },
+													{ value: 'flex-start', label: __( 'Top'    , 'getwid' ) },
+													{ value: 'center'    , label: __( 'Middle' , 'getwid' ) },
+													{ value: 'flex-end'  , label: __( 'Bottom' , 'getwid' ) }
+												]}
+											/>
+											<SelectControl
+												label={__( 'Horizontal Alignment', 'getwid' )}
+												value={horizontalAlignMobile !== undefined ? horizontalAlignMobile : 'center'}
+												onChange={horizontalAlignMobile => setAttributes({ horizontalAlignMobile })}
+												options={[
+													{ value: ''          , label: __( 'Default', 'getwid') },
+													{ value: 'flex-start', label: __( 'Left'   , 'getwid') },
+													{ value: 'center'    , label: __( 'Center' , 'getwid') },
+													{ value: 'flex-end'  , label: __( 'Right'  , 'getwid') }
+												]}
+											/>
+										</Fragment>
+									)
 								}
 							}
 						}
-					</TabPanel>
-				</BaseControl>
-			</Fragment>
+					}
+				</TabPanel>
+			</BaseControl>
 		);
 	}
 

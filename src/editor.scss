@@ -100,6 +100,15 @@ body.getwid-fix-scroll-while-animation{
 	.components-tab-panel__tab-content {
 		padding: 1em;
 		border: 1px solid #e2e4e7;
+
+		> * {
+			&:last-child {
+				margin-bottom: 0;
+				> .components-base-control__field {
+					margin-bottom: 0;
+				}
+			}
+		}
 	}
 }
 
