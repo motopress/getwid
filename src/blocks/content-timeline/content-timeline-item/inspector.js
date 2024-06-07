@@ -32,6 +32,18 @@ class Inspector extends Component {
 		return (
 			<InspectorControls>
 				<PanelBody title={__( 'Settings', 'getwid' )} initialOpen={true}>
+					<SelectControl
+						label={ __( 'Block Alignment', 'getwid' ) }
+						value={ cardPosition }
+						onChange={ cardPosition => {
+							setAttributes( { cardPosition } );
+						} }
+						options={ [
+							{ value: '', label: __( 'Auto' , 'getwid' ) },
+							{ value: 'left', label: __( 'Left' , 'getwid' ) },
+							{ value: 'right', label: __( 'Right', 'getwid' ) }
+						] }
+					/>
 					<GetwidMediaControl
 						label={__( 'Image', 'getwid' )}
 						url={url}
@@ -51,22 +63,10 @@ class Inspector extends Component {
 							options={Getwid.settings.image_sizes}
 						/>
 					) }
-					<SelectControl
-						label={__( 'Alignment', 'getwid' )}
-						value={ cardPosition }
-						onChange={ cardPosition => {
-							setAttributes( { cardPosition } );
-						} }
-						options={ [
-							{ value: ''     , label: __( 'Auto' , 'getwid' ) },
-							{ value: 'left' , label: __( 'Left' , 'getwid' ) },
-							{ value: 'right', label: __( 'Right', 'getwid' ) }
-						] }
-					/>
 				</PanelBody>
 			</InspectorControls>
 		);
-	}	
+	}
 }
 
 export default Inspector;

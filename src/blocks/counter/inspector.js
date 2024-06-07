@@ -73,40 +73,6 @@ class Inspector extends Component {
 									setAttributes({ end: value.toString() })
 								}}
 							/>
-							<TextControl
-								type='number'
-								label={__( 'Animation Duration', 'getwid' )}
-								value={isNaN( duration ) ? 3 : parseInt( duration )}
-								onChange={value => {
-									setAttributes({ duration: value.toString() })
-								}}
-							/>
-							<CheckboxControl
-								label={__( 'Smooth Animation', 'getwid' )}
-								checked={ useEasing === 'true' ? true : false }
-								onChange={ value => {
-									setAttributes({ useEasing: value ? 'true' : 'false' })
-								}}
-							/>
-						</PanelBody>
-					</Fragment>
-				) }
-
-				{ tabName === 'style' && (
-					<Fragment>
-						<PanelBody>
-							<SelectControl
-								label={__( 'Animation Effect', 'getwid' )}
-								value={ easing === undefined ? 'outExpo' : easing }
-								onChange={easing => {
-									setAttributes({ easing })
-								}}
-								options={[
-									{ value: 'outExpo',    label: 'OutExpo'    },
-									{ value: 'outQuintic', label: 'OutQuintic' },
-									{ value: 'outCubic',   label: 'OutCubic'   }
-								]}
-							/>
 							<CheckboxControl
 								label={__( 'Display Thousands Separator', 'getwid' )}
 								checked={ useGrouping === 'true' ? true : false }
@@ -121,25 +87,14 @@ class Inspector extends Component {
 									setAttributes({ separator })
 								}}
 							/>
-							<GetwidCustomColorPalette
-								colorSettings={[{
-										title: __( 'Color', 'getwid' ),
-										colors: {
-											customColor: customTextColor,
-											defaultColor: textColor
-										},
-										changeColor: setTextColor
-									}
-								]}
-							/>
 							<TextControl
 								type='number'
 								label={__( 'Decimal Places', 'getwid' )}
 								value={ isNaN( decimalPlaces ) ? 0 : (parseInt( decimalPlaces ) < 0 ? 0 : parseInt( decimalPlaces ) )  }
-                                onChange={ value => {
+								onChange={ value => {
 									value = (value > 100) ? 100 : (value < 0) ? 0 : value;
-                                    setAttributes({ decimalPlaces: parseInt( value ) ? (parseInt( value ) < 0 ? '0' : value.toString()) : '0' })
-                                }}
+									setAttributes({ decimalPlaces: parseInt( value ) ? (parseInt( value ) < 0 ? '0' : value.toString()) : '0' })
+								}}
 							/>
 							<TextControl
 								label={__( 'Decimal Separator', 'getwid' )}
@@ -158,6 +113,54 @@ class Inspector extends Component {
 									{ value: 'default', 	   label: __( 'Default'       , 'getwid') },
 									{ value: 'eastern_arabic', label: __( 'Eastern Arabic', 'getwid') },
 									{ value: 'farsi', 		   label: __( 'Farsi'         , 'getwid') }
+								]}
+							/>
+						</PanelBody>
+					</Fragment>
+				) }
+
+				{ tabName === 'style' && (
+					<Fragment>
+						<PanelBody>
+
+							<TextControl
+								type='number'
+								label={__( 'Animation Duration', 'getwid' )}
+								value={isNaN( duration ) ? 3 : parseInt( duration )}
+								onChange={value => {
+									setAttributes({ duration: value.toString() })
+								}}
+							/>
+							<CheckboxControl
+								label={__( 'Smooth Animation', 'getwid' )}
+								checked={ useEasing === 'true' ? true : false }
+								onChange={ value => {
+									setAttributes({ useEasing: value ? 'true' : 'false' })
+								}}
+							/>
+							{ useEasing === 'true' && (
+								<SelectControl
+									label={__( 'Animation Effect', 'getwid' )}
+									value={ easing === undefined ? 'outExpo' : easing }
+									onChange={easing => {
+										setAttributes({ easing })
+									}}
+									options={[
+										{ value: 'outExpo',    label: 'OutExpo'    },
+										{ value: 'outQuintic', label: 'OutQuintic' },
+										{ value: 'outCubic',   label: 'OutCubic'   }
+									]}
+								/>
+							) }
+							<GetwidCustomColorPalette
+								colorSettings={[{
+										title: __( 'Color', 'getwid' ),
+										colors: {
+											customColor: customTextColor,
+											defaultColor: textColor
+										},
+										changeColor: setTextColor
+									}
 								]}
 							/>
 						</PanelBody>

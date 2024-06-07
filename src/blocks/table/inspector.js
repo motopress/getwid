@@ -9,6 +9,7 @@ import { isEqual } from 'lodash';
 */
 import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
 import { renderBorderSettingPanel } from 'GetwidUtils/render-inspector';
+import Notice from 'GetwidControls/notice';
 
 /**
 * WordPress dependencies
@@ -82,6 +83,12 @@ class Inspector extends Component {
 		return isShow;
 	}
 
+	controlsHint() {
+		return (
+			<Notice>{ __( 'Hint: Hold Ctrl key to select multiple cells. Hold Shift key to select range.', 'getwid' ) }</Notice>
+		)
+	}
+
 	render() {
 
 		const {
@@ -124,6 +131,7 @@ class Inspector extends Component {
 			<InspectorControls>
 				{ (!selectedCell && !isRangeSelected() && !isMultiSelected()) && (
 					<PanelBody title={ __( 'Table Settings', 'getwid' ) } initialOpen={true}>
+						{ this.controlsHint() }
 						<SelectControl
 							label={__( 'Table Layout', 'getwid' )}
 							value={ tableLayout }
@@ -208,6 +216,7 @@ class Inspector extends Component {
 				{ (selectedCell || isRangeSelected() || isMultiSelected()) && (
 					<>
 						<PanelBody>
+							{ this.controlsHint() }
 							<Button
 								isPrimary
 								onClick={ () => changeState({

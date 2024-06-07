@@ -24,6 +24,7 @@
 }
 .wp-block-getwid-social-links__popover {
 	.components-popover__content {
+		min-width: 250px;
 		padding: 1em;
 		overflow: initial !important;
 		.wp-block-getwid-social-links__popover-close {

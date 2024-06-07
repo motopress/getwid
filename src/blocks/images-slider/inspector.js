@@ -77,6 +77,7 @@ class Inspector extends Component {
 				sliderSlidesToShowMobile,
 				sliderSlidesToScroll,
 				sliderAutoplay,
+				sliderPauseOnHover,
 				sliderAutoplaySpeed,
 				sliderInfinite,
 				sliderAnimationSpeed,
@@ -223,19 +224,30 @@ class Inspector extends Component {
 
 							<ToggleControl
 								label={__( 'Enable Slideshow', 'getwid' )}
+								help={__( 'Enables automatic slide transitions.', 'getwid' )}
 								checked={sliderAutoplay}
 								onChange={ () => {
 									setAttributes( { sliderAutoplay: !sliderAutoplay } );
 								} }
 							/>
 							{ !! sliderAutoplay && (
-								<TextControl
-									label={__( 'Slideshow Speed', 'getwid' )}
-									type={'number'}
-									value={sliderAutoplaySpeed}
-									min={0}
-									onChange={sliderAutoplaySpeed => setAttributes( { sliderAutoplaySpeed } )}
-								/>
+								<>
+									<TextControl
+										label={__( 'Slideshow Speed', 'getwid' )}
+										type={'number'}
+										value={sliderAutoplaySpeed}
+										min={0}
+										onChange={sliderAutoplaySpeed => setAttributes( { sliderAutoplaySpeed } )}
+									/>
+									<ToggleControl
+										label={__( 'Pause On Hover', 'getwid' )}
+										help={__( 'Pause slideshow when mouse is over slider.', 'getwid' )}
+										checked={sliderPauseOnHover}
+										onChange={() => {
+											setAttributes( { sliderPauseOnHover: ! sliderPauseOnHover } );
+										}}
+									/>
+								</>
 							)}
 
 							<RadioControl
@@ -262,6 +274,7 @@ class Inspector extends Component {
 
 							<ToggleControl
 								label={__( 'Infinite', 'getwid' )}
+								help={__( 'Enables infinite loop sliding.', 'getwid' )}
 								checked={sliderInfinite}
 								onChange={() => {
 									setAttributes( { sliderInfinite: !sliderInfinite } );
@@ -280,11 +293,11 @@ class Inspector extends Component {
 
 				{ tabName === 'advanced' && (
 					<Fragment>
-						<PanelBody title={ __( 'Image Settings', 'getwid' ) } initialOpen={true}>
+						<PanelBody title={ __( 'Slider Settings', 'getwid' ) } initialOpen={true}>
 							<TextControl
 								disabled={ sliderAnimationEffect == 'fade' ? true : false }
 								label={__( 'Slides on Desktop', 'getwid' )}
-								help={__( 'Works with Slide effect only.', 'getwid' )}
+								help={__( 'Works with Slide effect only. Specifies the number of slides displayed at once. Applies to screens wider than 991 pixels.', 'getwid' )}
 								type={'number'}
 								value={parseInt( sliderSlidesToShow, 10 )}
 								min={1}
@@ -299,6 +312,7 @@ class Inspector extends Component {
 							<TextControl
 								disabled={ parseInt(sliderSlidesToShow, 10) > 1 ? null : true }
 								label={__( 'Slides on Laptop', 'getwid' )}
+								help={__( 'Applies to screens between 768 and 991 pixels wide.', 'getwid' )}
 								type={'number'}
 								value={parseInt( sliderSlidesToShowLaptop, 10 )}
 								min={1}
@@ -313,6 +327,7 @@ class Inspector extends Component {
 							<TextControl
 								disabled={parseInt(sliderSlidesToShow, 10) > 1 ? null : true}
 								label={__( 'Slides on Tablet', 'getwid' )}
+								help={__( 'Applies to screens between 468 and 768 pixels wide.', 'getwid' )}
 								type={'number'}
 								value={parseInt(sliderSlidesToShowTablet, 10)}
 								min={1}
@@ -327,6 +342,7 @@ class Inspector extends Component {
 							<TextControl
 								disabled={parseInt(sliderSlidesToShow, 10) > 1 ? null : true}
 								label={__( 'Slides on Mobile', 'getwid' )}
+								help={__( 'Applies to screens up to 468 pixels wide.', 'getwid' )}
 								type={'number'}
 								value={parseInt(sliderSlidesToShowMobile, 10)}
 								min={1}
@@ -340,7 +356,8 @@ class Inspector extends Component {
 							/>
 							<TextControl
 								disabled={parseInt(sliderSlidesToShow, 10) > 1 ? null : true}
-								label={__( 'Slides to Scroll', 'getwid' )}
+								label={__( 'Slides to Scroll on Desktop', 'getwid' )}
+								help={__( 'Specifies the number of slides that will scroll at once. Applies to screens wider than 991 pixels.', 'getwid' )}
 								type={'number'}
 								value={parseInt( sliderSlidesToScroll, 10 )}
 								min={1}
@@ -366,6 +383,7 @@ class Inspector extends Component {
 							)}
 							<ToggleControl
 								label={__( 'Center Mode', 'getwid' )}
+								help={__( 'Enables centered view with partial previous/next slides. Use with odd numbered "Slides on ..." counts.', 'getwid' )}
 								checked={sliderCenterMode}
 								onChange={() => {
 									setAttributes( { sliderCenterMode: ! sliderCenterMode } );
@@ -373,6 +391,7 @@ class Inspector extends Component {
 							/>
 							<ToggleControl
 								label={__( 'Variable Width', 'getwid' )}
+								help={__( 'Enables slides of different widths.', 'getwid' )}
 								checked={sliderVariableWidth}
 								onChange={() => {
 									setAttributes( { sliderVariableWidth: ! sliderVariableWidth } );
@@ -396,7 +415,7 @@ class Inspector extends Component {
 								<Button isLink
 									onClick={ resetSliderSettings }
 									disabled={ ! this.hasSliderSettings() }>
-									{__( 'Reset', 'getwid' )}
+									{__( 'Reset All', 'getwid' )}
 								</Button>
 							</BaseControl>
 						</PanelBody>

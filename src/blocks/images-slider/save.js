@@ -31,6 +31,7 @@ class Save extends Component {
 				sliderSlidesToShowMobile,
 				sliderSlidesToScroll,
 				sliderAutoplay,
+				sliderPauseOnHover,
 				sliderAutoplaySpeed,
 				sliderInfinite,
 				sliderAnimationSpeed,
@@ -87,6 +88,7 @@ class Save extends Component {
 
 			'data-slides-scroll' : sliderSlidesToScroll,
 			'data-autoplay'      : sliderAutoplay,
+			'data-pause-hover'      : sliderPauseOnHover,
 			'data-autoplay-speed': sliderAutoplaySpeed,
 			'data-infinite'      : sliderInfinite,
 

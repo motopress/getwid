@@ -967,7 +967,8 @@ export const renderFontSizePanel = self => {
     const { setAttributes } = self.props;
 
     return (
-        <Fragment>
+        <BaseControl className="getwid-font-size-control">
+            <BaseControl.VisualLabel>{ __( 'Font Size', 'getwid' ) }</BaseControl.VisualLabel>
             <TabPanel className='getwid-editor-tabs'
                 activeClass='is-active'
                 tabs={[
@@ -989,18 +990,16 @@ export const renderFontSizePanel = self => {
                 ]}>
                 {tab => renderResponsiveFontSizeTabs(self, tab)}
             </TabPanel>
-            <BaseControl>
-                <Button isLink
-                    onClick={() => setAttributes({
-                        fontSizeTablet: 'fs-tablet-100',
-                        fontSizeMobile: 'fs-mobile-100',
-                        fontSize: undefined
-                    })}
-                    disabled={!(fontSizeTablet != 'fs-tablet-100' || fontSizeMobile != 'fs-mobile-100' || fontSize != undefined)}>
-                    {__('Reset All', 'getwid')}
-                </Button>
-            </BaseControl>
-        </Fragment>
+            <Button isLink
+                onClick={ () => setAttributes( {
+                    fontSizeTablet: 'fs-tablet-100',
+                    fontSizeMobile: 'fs-mobile-100',
+                    fontSize: undefined
+                } ) }
+                disabled={ ! ( fontSizeTablet != 'fs-tablet-100' || fontSizeMobile != 'fs-mobile-100' || fontSize != undefined ) }>
+                { __(' Reset', 'getwid' ) }
+            </Button>
+        </BaseControl>
     );
 }
 
@@ -1013,7 +1012,6 @@ const renderResponsiveFontSizeTabs = (self, tab) => {
         case 'desktop': {
             return (
                 <GetwidStyleLengthControl
-                    label={__('Font Size', 'getwid')}
                     value={fontSize}
                     onChange={fontSize => setAttributes({ fontSize })}
                 />
@@ -1022,7 +1020,6 @@ const renderResponsiveFontSizeTabs = (self, tab) => {
         case 'tablet': {
             return (
                 <SelectControl
-                    label={__('Font Size', 'getwid')}
                     value={fontSizeTablet}
                     onChange={fontSizeTablet => setAttributes({ fontSizeTablet })}
                     options={[
@@ -1041,7 +1038,6 @@ const renderResponsiveFontSizeTabs = (self, tab) => {
         case 'mobile': {
             return (
                 <SelectControl
-                    label={__('Font Size', 'getwid')}
                     value={fontSizeMobile}
                     onChange={fontSizeMobile => setAttributes({ fontSizeMobile })}
                     options={[
@@ -1068,37 +1064,36 @@ export const renderSlideHeightPanel = self => {
     const { setAttributes } = self.props;
 
     return (
-        <Fragment>
-            <BaseControl>
-                <TabPanel className='getwid-editor-tabs'
-                    activeClass='is-active'
-                    tabs={[
-                        {
-                            name: 'desktop',
-                            title: __('Desktop', 'getwid'),
-                            className: 'components-button is-link is-small'
-                        },
-                        {
-                            name: 'tablet',
-                            title: __('Tablet', 'getwid'),
-                            className: 'components-button is-link is-small'
-                        },
-                        {
-                            name: 'mobile',
-                            title: __('Mobile', 'getwid'),
-                            className: 'components-button is-link is-small'
-                        }
-                    ]}>
-                    {tab => renderSlideHeightTabs(self, tab)}
-                </TabPanel>
+        <BaseControl className="getwid-slider-height-control">
+            <BaseControl.VisualLabel>{ __( 'Slider Height', 'getwid' ) }</BaseControl.VisualLabel>
+            <TabPanel className='getwid-editor-tabs'
+                activeClass='is-active'
+                tabs={[
+                    {
+                        name: 'desktop',
+                        title: __( 'Desktop', 'getwid' ),
+                        className: 'components-button is-link is-small'
+                    },
+                    {
+                        name: 'tablet',
+                        title: __( 'Tablet', 'getwid' ),
+                        className: 'components-button is-link is-small'
+                    },
+                    {
+                        name: 'mobile',
+                        title: __( 'Mobile', 'getwid' ),
+                        className: 'components-button is-link is-small'
+                    }
+                ]}>
+                { tab => renderSlideHeightTabs( self, tab ) }
+            </TabPanel>
 
-                <Button isLink
-                    onClick={() => setAttributes({ slideHeight: '' })}
-                    disabled={!(slideHeight != '' && typeof slideHeight != 'undefined')}>
-                    {__('Reset All', 'getwid')}
-                </Button>
-            </BaseControl>
-        </Fragment>
+            <Button isLink
+                onClick={ () => setAttributes( { slideHeight: '' } ) }
+                disabled={ ! ( slideHeight != '' && typeof slideHeight != 'undefined' ) }>
+                { __( 'Reset', 'getwid' ) }
+            </Button>
+        </BaseControl>
     );
 }
 
@@ -1127,7 +1122,6 @@ const renderSlideHeightTabs = (self, tab) => {
         case 'desktop': {
             return (
                 <GetwidStyleLengthControl
-                    label={__('Slider Height', 'getwid')}
                     value={slideHeight}
                     units={[
                         { label: 'px', value: 'px' },

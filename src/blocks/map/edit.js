@@ -22,6 +22,7 @@ const {
 const {
 	Button,
 	ToolbarGroup,
+	ToolbarButton,
 	TextControl,
 } = wp.components;
 import { __ } from 'wp.i18n';
@@ -711,19 +712,20 @@ class Edit extends Component {
 						controls={ [ 'wide', 'full' ] }
 						onChange={ value => setAttributes( { blockAlignment: value } ) }
 					/>
-					<ToolbarGroup controls={[
-						{
-							icon: 'location',
-							title: __('Drop Marker', 'getwid'),
-							isDisabled: (getState('currentMarker') != null),
-							isActive: (getState('action') == 'drop'),
-							onClick: () => {
+					<ToolbarGroup>
+						<ToolbarButton
+							isDisabled={ getState('currentMarker') != null }
+							onClick={ () => {
 								if (getState('action') != 'drop'){
 									this.onAddMarker();
 									changeState('action', 'drop');
 								}
-							}
-						},
+							} }
+						>
+							{ __('Drop Marker', 'getwid') }
+						</ToolbarButton>
+					</ToolbarGroup>
+					<ToolbarGroup controls={[
 						{
 							icon: 'edit',
 							title: __('Edit Marker', 'getwid'),

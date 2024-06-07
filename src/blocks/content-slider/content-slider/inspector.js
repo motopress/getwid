@@ -10,6 +10,8 @@ const { Component, Fragment } = wp.element;
 const { InspectorControls } = wp.blockEditor || wp.editor;
 const { PanelBody, SelectControl, ToggleControl, TextControl, RadioControl, TabPanel } = wp.components;
 
+import Notice from 'GetwidControls/notice';
+
 /**
 * Create an Inspector Controls
 */
@@ -68,8 +70,10 @@ class Inspector extends Component {
  		return (
 			<InspectorControls>
 				<PanelBody initialOpen={true}>
+					<Notice>{ __( 'These options are applied on frontend only.', 'getwid' ) }</Notice>
 					<ToggleControl
 						label={ __( 'Enable Slideshow', 'getwid' ) }
+						help={ __( 'Enables automatic slide transitions.', 'getwid' ) }
 						checked={ autoplay }
 						onChange={ () => {
 							setAttributes( { autoplay: !autoplay } );
@@ -77,6 +81,7 @@ class Inspector extends Component {
 					/>
 					{ autoplay && <ToggleControl
 						label={ __( 'Pause On Hover', 'getwid' ) }
+						help={__( 'Pause slideshow when mouse is over slider.', 'getwid' )}
 						checked={ pauseOnHover }
 						onChange={ () => {
 							setAttributes( { pauseOnHover: !pauseOnHover } );
@@ -84,6 +89,7 @@ class Inspector extends Component {
 					/> }
 					<ToggleControl
 						label={ __( 'Infinite', 'getwid' ) }
+						help={ __( 'Enables infinite loop sliding.', 'getwid' ) }
 						checked={ infinite }
 						onChange={ () => {
 							setAttributes( { infinite: !infinite } );
@@ -91,6 +97,7 @@ class Inspector extends Component {
 					/>
 					<ToggleControl
 						label={ __( 'Center Mode', 'getwid' ) }
+						help={ __( 'Enables centered view with partial previous/next slides. Use with odd numbered "Slides to show" counts.', 'getwid' ) }
 						checked={ centerMode }
 						onChange={ () => {
 							setAttributes( { centerMode: !centerMode } );
@@ -98,6 +105,7 @@ class Inspector extends Component {
 					/>
 					<ToggleControl
 						label={ __( 'Adaptive Height', 'getwid' ) }
+						help={ __( 'Enables adaptive height for single slide horizontal carousels.', 'getwid' ) }
 						checked={ adaptiveHeight }
 						onChange={ () => {
 							setAttributes( { adaptiveHeight: !adaptiveHeight } );
@@ -105,6 +113,7 @@ class Inspector extends Component {
 					/>
 					<ToggleControl
 						label={ __( 'Draggable', 'getwid' ) }
+						help={ __( 'Enable mouse dragging.', 'getwid' ) }
 						checked={ draggable }
 						onChange={ () => {
 							setAttributes( { draggable: !draggable } );
@@ -145,7 +154,8 @@ class Inspector extends Component {
 								slidesToShow: slidesToShow,
 								slidesToScroll: slidesToScroll,
 								suffix: '',
-								className: 'components-button is-link is-small'
+								className: 'components-button is-link is-small',
+								notice: __( 'Applies to screens wider than 991 pixels.', 'getwid' )
 							},
 							{
 								title: __( 'Laptop', 'getwid' ),
@@ -153,7 +163,8 @@ class Inspector extends Component {
 								slidesToShow: slidesToShowLaptop,
 								slidesToScroll: slidesToScrollLaptop,
 								suffix: 'Laptop',
-								className: 'components-button is-link is-small'
+								className: 'components-button is-link is-small',
+								notice: __( 'Applies to screens between 768 and 991 pixels wide.', 'getwid' )
 							},
 							{
 								title: __( 'Tablet', 'getwid' ),
@@ -161,7 +172,8 @@ class Inspector extends Component {
 								slidesToShow: slidesToShowTablet,
 								slidesToScroll: slidesToScrollTablet,
 								suffix: 'Tablet',
-								className: 'components-button is-link is-small'
+								className: 'components-button is-link is-small',
+								notice: __( 'Applies to screens between 468 and 768 pixels wide.', 'getwid' )
 							},
 							{
 								title: __( 'Mobile', 'getwid' ),
@@ -169,7 +181,8 @@ class Inspector extends Component {
 								slidesToShow: slidesToShowMobile,
 								slidesToScroll: slidesToScrollMobile,
 								suffix: 'Mobile',
-								className: 'components-button is-link is-small'
+								className: 'components-button is-link is-small',
+								notice: __( 'Applies to screens up to 468 pixels wide.', 'getwid' )
 							}
 						] }
 					>
@@ -188,6 +201,7 @@ class Inspector extends Component {
 											max={ 10 }
 											step={ 1 }
 											disabled={ this.shouldDisableSlidesNumberControl() }
+											help={ __( 'Specifies the number of slides displayed at once.', 'getwid' ) }
 										/>
 										<TextControl
 											label={ __( 'Slides to Scroll', 'getwid' ) }
@@ -200,7 +214,9 @@ class Inspector extends Component {
 											max={ 10 }
 											step={ 1 }
 											disabled={ this.shouldDisableSlidesNumberControl() }
+											help={ __( 'Specifies the number of slides that will scroll at once.', 'getwid' ) }
 										/>
+										<Notice>{ tab.notice }</Notice>
 									</Fragment>
 								)
 							}
@@ -208,6 +224,7 @@ class Inspector extends Component {
 					</TabPanel>
 				</PanelBody>
 				<PanelBody title={ __( 'Controls Settings', 'getwid' ) } initialOpen={ false }>
+					<Notice>{ __( 'These options are applied on frontend only.', 'getwid' ) }</Notice>
 					<RadioControl
 						label={ __('Arrows', 'getwid') }
 						selected={ arrows }

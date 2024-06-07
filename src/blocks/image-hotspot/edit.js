@@ -213,18 +213,6 @@ class Edit extends Component {
 
 		const toolbarControls = [
 			{
-				icon: 'location',
-				title: __('Drop Point', 'getwid'),
-				isDisabled: (getState('currentPoint') != null),
-				isActive: (getState('action') == 'drop'),
-				onClick: () => {
-					if (getState('action') != 'drop') {
-						changeState('action', 'drop');
-						image?.addEventListener('click', this.onImageClick, false);
-					}
-				},
-			},
-			{
 				icon: 'edit',
 				title: __('Edit', 'getwid'),
 				isDisabled: (getState('currentPoint') === null || getState('action') == 'drop'),
@@ -388,6 +376,19 @@ class Edit extends Component {
 					{ !! url && (
 						<Fragment>
 							<BlockControls>
+								<ToolbarGroup>
+									<ToolbarButton
+										isDisabled={ getState('currentPoint') != null }
+										onClick={ () => {
+											if (getState('action') != 'drop') {
+												changeState('action', 'drop');
+												image?.addEventListener('click', this.onImageClick, false);
+											}
+										} }
+									>
+										{ __('Drop Point', 'getwid') }
+									</ToolbarButton>
+								</ToolbarGroup>
 								<ToolbarGroup
 									controls={toolbarControls}
 								/>

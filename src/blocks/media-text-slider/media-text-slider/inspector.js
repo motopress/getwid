@@ -6,10 +6,11 @@ import { __ } from 'wp.i18n';
 /**
 * Internal dependencies
 */
-import GetwidCustomTabsControl      from 'GetwidControls/custom-tabs-control';
-import GetwidStyleLengthControl     from 'GetwidControls/style-length-control';
+import GetwidCustomTabsControl from 'GetwidControls/custom-tabs-control';
+import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidAnimationSelectControl from 'GetwidControls/animation-select-control';
-import GetwidCustomColorPalette 	from 'GetwidControls/custom-color-palette';
+import GetwidCustomColorPalette from 'GetwidControls/custom-color-palette';
+import Notice from 'GetwidControls/notice';
 
 import { renderPaddingsPanel } from 'GetwidUtils/render-inspector';
 
@@ -75,6 +76,7 @@ class Inspector extends Component {
 		const renderSliderSettings = () => {
 			return (
 				<Fragment>
+					<Notice>{ __( 'These options are applied on frontend only.', 'getwid' ) }</Notice>
 					<RadioControl
 					    label={__( 'Animation Effect', 'getwid' )}
 					    selected={sliderAnimationEffect !== undefined ? sliderAnimationEffect : ''}
@@ -87,6 +89,7 @@ class Inspector extends Component {
 
 					<ToggleControl
 					    label={__( 'Enable Slideshow', 'getwid' )}
+						help={__( 'Enables automatic slide transitions.', 'getwid' )}
 					    checked={sliderAutoplay}
 					    onChange={() => setAttributes({ sliderAutoplay: !sliderAutoplay })}
 					/>
@@ -94,6 +97,7 @@ class Inspector extends Component {
 							<Fragment>
 								<ToggleControl
 								    label={__( 'Pause On Hover', 'getwid' )}
+									help={__( 'Pause slideshow when mouse is over slider.', 'getwid' )}
 								    checked={ pauseOnHover }
 								    onChange={ () => setAttributes({ pauseOnHover: !pauseOnHover }) }
 								/>

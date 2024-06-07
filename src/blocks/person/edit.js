@@ -27,10 +27,7 @@ const { withSelect } = wp.data;
 /**
 * Module Constants
 */
-const ALLOWED_BLOCKS  = [ 'getwid/social-links' ];
-const TEMPLATE_BLOCKS = [
-	[ 'getwid/social-links', { textAlignmentDesktop: 'center' } ]
-];
+const ALLOWED_BLOCKS  = [ 'getwid/social-links', 'core/paragraph' ];
 
 const baseClass = 'wp-block-getwid-person';
 
@@ -176,9 +173,6 @@ class Edit extends Component {
 								</div>
 								<div className='editor-testimonial__social-links-wrapper'>
 									<InnerBlocks
-										template={TEMPLATE_BLOCKS}
-										templateLock='all'
-										templateInsertUpdatesSelection={false}
 										allowedBlocks={ALLOWED_BLOCKS}
 									/>
 								</div>

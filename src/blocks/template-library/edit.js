@@ -131,8 +131,6 @@ class Edit extends Component {
 			} ),
 		} ).then(
 			( remoteContent ) => {
-				//console.log( remoteContent );
-				//debugger;
 
 				//Server valiable (data.status != 404)
 				if (typeof remoteContent.data == 'undefined'){
@@ -481,13 +479,6 @@ class Edit extends Component {
 
 		return (
 			<Fragment>
-				<Inspector
-					{ ...{
-						...this.props,
-						changeState,
-						getState
-					} }
-				/>
 				<div
 					className={ classnames(
 						className,

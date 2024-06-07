@@ -16,7 +16,7 @@ import { __ } from 'wp.i18n';
 * WordPress dependencies
 */
 const { Component, Fragment } = wp.element;
-const { PanelBody, SelectControl, DateTimePicker, ToggleControl } = wp.components;
+const { PanelBody, SelectControl, DateTimePicker, ToggleControl, Button, Popover, BaseControl, Dropdown } = wp.components;
 const { InspectorControls, PanelColorSettings } = wp.blockEditor || wp.editor;
 
 /**
@@ -54,6 +54,7 @@ class Inspector extends Component {
 
 		const { tabName } = this.state;
 		const { changeState } = this;
+		const visualLabel = dateTime ? new Date( dateTime ).toUTCString() : defaultDate.toUTCString();
 
 		return (
 			<InspectorControls>
@@ -65,15 +66,38 @@ class Inspector extends Component {
 				/>
 				{ tabName === 'general' && (
 					<Fragment>
-						<PanelBody initialOpen={true}>
-							<DateTimePicker
-								currentDate={dateTime ? dateTime : defaultDate}
-								onChange={value => {
-									setAttributes({ dateTime: value });
-								}}
-								__nextRemoveHelpButton={true}
-								__nextRemoveResetButton={true}
-							/>
+						<PanelBody initialOpen={ true }>
+							<BaseControl
+								label={ __( 'Time', 'getwid' ) }
+							>
+								<div>
+									<Dropdown
+										popoverProps={ {
+											placement: 'bottom-end',
+											noArrow: false
+										} }
+										renderToggle={ ( { isOpen, onToggle } ) => (
+											<Button
+												variant="primary"
+												onClick={ onToggle }
+												aria-expanded={ isOpen }
+											>
+												{ visualLabel }
+											</Button>
+										) }
+										renderContent={ () => (
+												<DateTimePicker
+													currentDate={ dateTime ? dateTime : defaultDate }
+													onChange={ value => {
+														setAttributes( { dateTime: value } );
+													} }
+													__nextRemoveHelpButton={ true }
+													__nextRemoveResetButton={ true }
+												/>
+										) }
+									/>
+								</div>
+							</BaseControl>
 							<ToggleControl
 								label={__( 'Years', 'getwid' )}
 								checked={years}

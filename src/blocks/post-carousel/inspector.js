@@ -100,6 +100,7 @@ export default class Inspector extends Component {
 				sliderSlidesToScroll,
 				sliderAutoplay,
 				sliderAutoplaySpeed,
+				sliderPauseOnHover,
 				sliderInfinite,
 				sliderAnimationSpeed,
 				sliderCenterMode,
@@ -168,16 +169,14 @@ export default class Inspector extends Component {
 						values={{
 							postTemplate,
 						}}
-						// callbackOn={['postTemplate']}
 						onChangeCallback={ (value, element) => {
-							// debugger;
 						} }
 					/>
 
 					<TextControl
 						label={__( 'Slides on Desktop', 'getwid' )}
+						help={__( 'Works with Slide effect only. Specifies the number of slides displayed at once. Applies to screens wider than 991 pixels.', 'getwid' )}
 						type='number'
-						//value={parseInt(sliderSlidesToShowDesktop, 10)}
 						value={sliderSlidesToShowDesktop}
 						onChange={ value => setAttributes( { sliderSlidesToShowDesktop: value.toString() } )}
 						min={1}
@@ -187,6 +186,7 @@ export default class Inspector extends Component {
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
 						label={__('Slides on Laptop', 'getwid')}
+						help={__( 'Applies to screens between 768 and 991 pixels wide.', 'getwid' )}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowLaptop, 10)}
 						min={1}
@@ -197,6 +197,7 @@ export default class Inspector extends Component {
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
 						label={__('Slides on Tablet', 'getwid')}
+						help={__( 'Applies to screens between 468 and 768 pixels wide.', 'getwid' )}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowTablet, 10)}
 						min={1}
@@ -207,6 +208,7 @@ export default class Inspector extends Component {
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
 						label={__('Slides on Mobile', 'getwid')}
+						help={__( 'Applies to screens up to 468 pixels wide.', 'getwid' )}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowMobile, 10)}
 						min={1}
@@ -217,6 +219,7 @@ export default class Inspector extends Component {
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
 						label={__('Slides to Scroll', 'getwid')}
+						help={__( 'Specifies the number of slides that will scroll at once. Applies to screens wider than 991 pixels.', 'getwid' )}
 						type={'number'}
 						value={parseInt(sliderSlidesToScroll, 10)}
 						min={1}
@@ -227,6 +230,7 @@ export default class Inspector extends Component {
 
 					<ToggleControl
 						label={ __( 'Enable Slideshow', 'getwid' ) }
+						help={ __( 'Enables automatic slide transitions.', 'getwid' ) }
 						checked={ sliderAutoplay }
 						onChange={ () => {
 							setAttributes( { sliderAutoplay: !sliderAutoplay } );
@@ -234,13 +238,23 @@ export default class Inspector extends Component {
 					/>
 					{!!sliderAutoplay &&
 						(
-							<TextControl
-								label={__('Slideshow Speed', 'getwid')}
-								type={'number'}
-								value={sliderAutoplaySpeed}
-								min={0}
-								onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
-							/>
+							<>
+								<TextControl
+									label={__('Slideshow Speed', 'getwid')}
+									type={'number'}
+									value={sliderAutoplaySpeed}
+									min={0}
+									onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
+								/>
+								<ToggleControl
+									label={__( 'Pause On Hover', 'getwid' )}
+									help={__( 'Pause slideshow when mouse is over slider.', 'getwid' )}
+									checked={sliderPauseOnHover}
+									onChange={() => {
+										setAttributes( { sliderPauseOnHover: ! sliderPauseOnHover } );
+									}}
+								/>
+							</>
 						)
 					}
 					<ToggleControl
@@ -259,6 +273,7 @@ export default class Inspector extends Component {
 					/>
 					<ToggleControl
 						label={ __( 'Center Mode', 'getwid' ) }
+						help={__( 'Enables centered view with partial previous/next slides. Use with odd numbered "Slides on ..." counts.', 'getwid' )}
 						checked={ sliderCenterMode }
 						onChange={ () => {
 							setAttributes( { sliderCenterMode: !sliderCenterMode } );

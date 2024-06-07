@@ -108,6 +108,10 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
                         'type' => 'boolean',
                         'default' => false
                     ),
+                    'sliderPauseOnHover' => array(
+                        'type' => 'boolean',
+                        'default' => false
+                    ),
                     'sliderAutoplaySpeed' => array(
                         'type' => 'string',
                         'default' => '6000'
@@ -348,20 +352,21 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 
         $sliderData = array(
             'sliderSlidesToShowDesktop' => $attributes[ 'sliderSlidesToShowDesktop' ],
-            'getwid_slidesToShowLaptop' => $attributes[ 'sliderSlidesToShowLaptop'  ],
-            'getwid_slidesToShowTablet' => $attributes[ 'sliderSlidesToShowTablet'  ],
-            'getwid_slidesToShowMobile' => $attributes[ 'sliderSlidesToShowMobile'  ],
+            'getwid_slidesToShowLaptop' => $attributes[ 'sliderSlidesToShowLaptop' ],
+            'getwid_slidesToShowTablet' => $attributes[ 'sliderSlidesToShowTablet' ],
+            'getwid_slidesToShowMobile' => $attributes[ 'sliderSlidesToShowMobile' ],
 
-            'getwid_autoplay_speed'  => intval( $attributes[ 'sliderAutoplaySpeed'  ] ),
+            'getwid_autoplay_speed' => intval( $attributes[ 'sliderAutoplaySpeed' ] ),
             'getwid_animation_speed' => intval( $attributes[ 'sliderAnimationSpeed' ] ),
 
-            'getwid_slidesToScroll'  => $attributes[ 'sliderSlidesToScroll'],
-            'getwid_autoplay'        => $attributes[ 'sliderAutoplay'      ],
-            'getwid_infinite'        => $attributes[ 'sliderInfinite'      ],
+            'getwid_slidesToScroll' => $attributes[ 'sliderSlidesToScroll' ],
+            'getwid_autoplay' => $attributes[ 'sliderAutoplay' ],
+            'getwid_pause_on_hover' => $attributes[ 'sliderPauseOnHover' ],
+            'getwid_infinite' => $attributes[ 'sliderInfinite' ],
 
-            'getwid_center_mode'     => $attributes[ 'sliderCenterMode' ],
-            'getwid_arrows'          => $attributes[ 'sliderArrows'     ],
-            'getwid_dots'            => $attributes[ 'sliderDots'       ]
+            'getwid_center_mode' => $attributes[ 'sliderCenterMode' ],
+            'getwid_arrows' => $attributes[ 'sliderArrows' ],
+            'getwid_dots' => $attributes[ 'sliderDots' ]
         );
 
         $slider_options = json_encode( $sliderData );

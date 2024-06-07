@@ -112,6 +112,13 @@ body.getwid-fix-scroll-while-animation{
 	}
 }
 
+.getwid-font-size-control,
+.getwid-slider-height-control {
+	.getwid-editor-tabs {
+		margin-bottom: 0;
+	}
+}
+
 .getwid-editor-url-input .components-base-control__field input {
 	width: 100%;
 }

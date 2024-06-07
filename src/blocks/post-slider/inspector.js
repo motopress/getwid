@@ -88,6 +88,7 @@ export default class Inspector extends Component {
 				//Slider
 				sliderAnimationEffect,
 				sliderAutoplay,
+				sliderPauseOnHover,
 				sliderAutoplaySpeed,
 				sliderInfinite,
 				sliderAnimationSpeed,
@@ -143,6 +144,17 @@ export default class Inspector extends Component {
 				</PanelBody>
 				<PanelBody title={ __('Display Settings', 'getwid') } initialOpen={false}>
 
+					<GetwidCustomPostTemplateControl
+						setValues={ setAttributes }
+						values={{
+							postTemplate,
+						}}
+						// callbackOn={['postTemplate']}
+						onChangeCallback={ (value, element) => {
+							// debugger;
+						} }
+					/>
+
 					<GetwidStyleLengthControl
 						label={__('Slider Minimum Height', 'getwid')}
 						value={minHeight}
@@ -153,17 +165,6 @@ export default class Inspector extends Component {
 							{label: '%', value: '%'}
 						]}
 						onChange={minHeight => setAttributes({minHeight})}
-					/>
-
-					<GetwidCustomPostTemplateControl
-						setValues={ setAttributes }
-						values={{
-							postTemplate,
-						}}
-						// callbackOn={['postTemplate']}
-						onChangeCallback={ (value, element) => {
-							// debugger;
-						} }
 					/>
 
 					<RadioControl
@@ -178,6 +179,7 @@ export default class Inspector extends Component {
 
 					<ToggleControl
 						label={ __( 'Enable Slideshow', 'getwid' ) }
+						help={ __( 'Enables automatic slide transitions.', 'getwid' ) }
 						checked={ sliderAutoplay }
 						onChange={ () => {
 							setAttributes( { sliderAutoplay: !sliderAutoplay } );
@@ -185,13 +187,23 @@ export default class Inspector extends Component {
 					/>
 					{!!sliderAutoplay &&
 						(
-							<TextControl
-								label={__('Slideshow Speed', 'getwid')}
-								type={'number'}
-								value={sliderAutoplaySpeed}
-								min={0}
-								onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
-							/>
+							<>
+								<TextControl
+									label={__('Slideshow Speed', 'getwid')}
+									type={'number'}
+									value={sliderAutoplaySpeed}
+									min={0}
+									onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
+								/>
+								<ToggleControl
+									label={__( 'Pause On Hover', 'getwid' )}
+									help={__( 'Pause slideshow when mouse is over slider.', 'getwid' )}
+									checked={sliderPauseOnHover}
+									onChange={() => {
+										setAttributes( { sliderPauseOnHover: ! sliderPauseOnHover } );
+									}}
+								/>
+							</>
 						)
 					}
 					<ToggleControl

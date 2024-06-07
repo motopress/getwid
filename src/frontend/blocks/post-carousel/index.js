@@ -36,7 +36,6 @@
 					getwid_dots,
 				} = getwid_post_carousel.data('slider-option');
 
-				getwid_pause_on_hover = false;
 				getwid_slidesToScroll = parseInt(getwid_slidesToScroll);
 				sliderSlidesToShowDesktop = parseInt(sliderSlidesToShowDesktop);
 				getwid_slidesToShowLaptop = parseInt(getwid_slidesToShowLaptop);

@@ -86,6 +86,10 @@ const attributes = {
 		type: 'boolean',
 		default: false,
 	},
+	sliderPauseOnHover: {
+		type: 'boolean',
+		default: false,
+	},
 	sliderAutoplaySpeed: {
 		type: 'string',
 		default: '6000'

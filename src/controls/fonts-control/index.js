@@ -130,7 +130,7 @@ class FontsControl extends Component {
 		const controlTitle = this.state.selectedFont && this.state.selectedFont.title ? this.state.selectedFont.title : this.props.value;
 
 		return (
-			<div className="components-getwid-fonts-control" >
+			<>
 				<BaseControl
 					label={ this.props.label }
 					id={ id }
@@ -138,6 +138,7 @@ class FontsControl extends Component {
 					{ ( null !== this.state.fonts ) ?
 						(
 							<Dropdown
+								className="components-getwid-fonts-dropdown"
 								contentClassName="components-getwid-fonts-popover"
 								popoverProps={ { placement: "bottom" } }
 								renderToggle={ ({ isOpen, onToggle }) => (
@@ -156,7 +157,7 @@ class FontsControl extends Component {
 											value={ this.state.search }
 											onChange={ e => this.setState({ search: e }) }
 										/>
-										<div className="components-popover__items">
+										<div className="components-getwid-fonts-popover__items">
 											<MenuItem
 												onClick={ () => {
 													onToggle();
@@ -226,7 +227,7 @@ class FontsControl extends Component {
 					] }
 					onChange={ this.props.onChangeFontWeight }
 				/>
-			</div>
+			</>
 		);
 	}
 }

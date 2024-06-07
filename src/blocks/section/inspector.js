@@ -28,7 +28,7 @@ const { FocalPointPicker, BaseControl, Button, PanelBody, RangeControl, SelectCo
 const GradientPicker = wp.components.__experimentalGradientPicker || wp.components.GradientPicker; // since WP 5.9 we have to use non-experimental version of GradientPicker
 const { compose } = wp.compose;
 
-import LabelWithHelp from 'GetwidControls/label-with-help';
+import Notice from 'GetwidControls/notice';
 
 /**
 * Module Constants
@@ -607,9 +607,9 @@ class Inspector extends Component {
 
 		return (
 			<Fragment>
-				<LabelWithHelp
+				<Notice><p>{__( 'Set the default width of the content area in Getwid Settings.', 'getwid' )} <ExternalLink href={Getwid.options_url.appearance}>{ __( 'Getwid Settings', 'getwid' ) }</ExternalLink></p></Notice>
+				<BaseControl
 					label={__( 'Content Area Width', 'getwid' )}
-					help={ <p>{__( 'Set the default width of the content area in Getwid Settings.', 'getwid' )} <ExternalLink href={Getwid.options_url.appearance}>{ __( 'Getwid Settings', 'getwid' ) }</ExternalLink></p> }
 				>
 					<RadioControl
 						className="getwid-content-area-width-control"
@@ -633,7 +633,7 @@ class Inspector extends Component {
 							step={1}
 						/>
 					}
-				</LabelWithHelp>
+				</BaseControl>
 
 				<BaseControl>
 					<BaseControl.VisualLabel>{__( 'Section Height', 'getwid' )}</BaseControl.VisualLabel>
