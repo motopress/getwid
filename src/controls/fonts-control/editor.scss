@@ -1,31 +1,20 @@
 .components-getwid-fonts-popover {
-	&:not(.is-mobile) {
-		&.is-bottom {
-			z-index: 9999999;
-		}
+
+	&__navigation {
+		border-top: 1px solid #eee;
+		padding-top: 8px;
+		margin-top: 8px;
 	}
 
 	.components-popover__content {
-		overflow-y: hidden;
-		padding: 10px;
+		width: 248px;
+	}
 
-		.components-popover__items {
-			max-height: 300px;
-			overflow-y: auto;
-
-			button {
-				&.is-selected {
-				    background: #0085ba;
-				    color: #fff;
-				}
-
-				i {
-					margin-right: 5px;
-				}
-			}
-		}
+	.is-selected {
+		background: #eee;
 	}
 }
+
 
 .components-getwid-fonts-dropdown {
 	width: 100%;
