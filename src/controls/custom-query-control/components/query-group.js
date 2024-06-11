@@ -32,6 +32,7 @@ class GroupComponent extends Component {
 		const nestedLevelComponent = ( query.children || [] ).map( ( childQuery, index) => {
 			if ( childQuery.children ) {
 				return <GroupComponent
+					key={ index }
 					query={ childQuery }
 					parentQuery={ query }
 					getControlState={ getControlState }
@@ -40,6 +41,7 @@ class GroupComponent extends Component {
 				/>
 			} else if ( ! childQuery.children ) {
 				return <ConditionComponent
+					key={ index }
 					query={ childQuery }
 					parentQuery={ query }
 					controlClassPrefix={ controlClassPrefix }
@@ -93,6 +95,7 @@ class GroupComponent extends Component {
 					/>
 					{ query !== parentQuery && (
 						<Button
+							label={ __( 'Remove Group', 'getwid' ) }
 							className={ [ `${controlClassPrefix}__custom-query--btn-close` ] }
 							onClick={ removeGroup }
 							icon={ 'no-alt' }

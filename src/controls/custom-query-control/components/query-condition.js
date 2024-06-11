@@ -107,6 +107,7 @@ class ConditionComponent extends Component {
 					/>
 				) }
 				<Button
+					label={ __( 'Remove Condition', 'getwid' ) }
 					className={ [ `${controlClassPrefix}__custom-query--btn-close` ] }
 					icon={ 'no-alt' }
 					iconSize={ 14 }

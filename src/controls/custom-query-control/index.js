@@ -50,7 +50,12 @@ class GetwidCustomQueryControl extends Component {
 			taxonomyList: null,
 			termsList: null,
 			modalOpen: false,
-			metaScheme: cloneDeep( this.props.values.metaQuery )
+			metaScheme: this.props.values.metaQuery.length > 0
+				? cloneDeep( this.props.values.metaQuery )
+				: [ {
+					relation: 'OR',
+					children: []
+				} ]
 		};
 
 		this.getState    = this.getState.bind( this );
@@ -354,22 +359,16 @@ class GetwidCustomQueryControl extends Component {
 			);
 		};
 
-		const defaultQuery = [
-			{
-				relation: 'OR',
-				children: []
-			}
-		];
-
 		const renderConditionsTree = () => {
 			const metaQueryArray = this.state.metaScheme;
 			let tree = [];
 
 			if ( metaQueryArray.length > 0 ) {
-				tree = metaQueryArray.map( ( query ) =>
+				tree = metaQueryArray.map( ( query, index ) =>
 					{
 						return (
 							<GroupComponent
+								key={ index }
 								query={ query }
 								parentQuery={ query }
 								getControlState={ this.getState }
@@ -379,8 +378,6 @@ class GetwidCustomQueryControl extends Component {
 						)
 					}
 				)
-			} else {
-				this.setState( { metaScheme: defaultQuery } );
 			}
 
 			return tree;
@@ -554,6 +551,7 @@ class GetwidCustomQueryControl extends Component {
 									modalOpen: false,
 								} );
 							} }
+							size="large"
 						>
 							<div className={ [ `${controlClassPrefix}__custom-conditions` ] }>
 								{ renderConditionsTree() }

@@ -4,9 +4,17 @@
 
 	&__custom-group {
 		display: flex;
+
+		&.initial {
+			flex-direction: column;
+			margin-bottom: .5em;
+		}
 	}
 
-	#{ $control }__add-btn,
+	#{ $control }__add-btn {
+		margin-top: -8px;
+	}
+
 	#{ $control }__remove-btn {
 		max-height: 30px;
 		margin-left: 3px;
