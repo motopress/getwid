@@ -1,0 +1,75 @@
+.components-getwid-templates {
+
+	&__list {
+		margin: 1em -1em 0;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&__template {
+		padding: 0 1em 2em;
+		width: 100%;
+		@media screen and(min-width: 991px) {
+			width: 50%;
+		}
+		@media screen and(min-width: 1400px) {
+			width: 33.33%;
+		}
+
+		&-wrapper {
+			height: 100%;
+			border-radius: 10px;
+			background: #ffffff;
+			box-shadow: 0 5px 10px 5px #eee;
+
+			.is-selected & {
+				outline: 2px solid currentColor;
+			}
+		}
+
+		&-preview {
+			padding: 10px 20px;
+			height: 100%;
+			width: 100%;
+			max-height: 40vh;
+			overflow: hidden;
+			position: relative;
+
+			&:before {
+				content: '';
+				position: absolute;
+				top: auto;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				height: 20%;
+				background: linear-gradient(0, #fff, rgba(#fff, 0));
+				z-index: 100;
+			}
+		}
+
+		&-footer {
+			border-top: 1px solid #eee;
+			padding: 10px 20px;
+		}
+
+		&-title {
+			font-size: 1.25em;
+		}
+
+		&-actions {
+			flex: 1 0 auto;
+		}
+
+		.wp-block-getwid-post-slider__content,
+		.wp-block-getwid-post-carousel__wrapper {
+			opacity: 1 !important;
+		}
+
+		img {
+			height: auto;
+			max-width: 100%;
+		}
+	}
+
+}

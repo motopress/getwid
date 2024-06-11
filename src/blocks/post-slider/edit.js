@@ -10,6 +10,7 @@ import { isEqual, pickBy, isUndefined } from 'lodash';
 */
 import Inspector from './inspector';
 import './editor.scss';
+import { TemplateSelectToolbarButton } from 'GetwidControls/post-template-select';
 
 /**
 * WordPress dependencies
@@ -159,12 +160,18 @@ class Edit extends Component {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
-					{ ( typeof postTemplate != 'undefined' && postTemplate != '') && (
-						<AlignmentToolbar
-							value={ textAlignment }
-							onChange={ textAlignment => setAttributes( { textAlignment } ) }
-						/>
-					)}
+					<TemplateSelectToolbarButton
+						selectedTemplate={ postTemplate }
+						onSelect={ ( templateID ) => setAttributes( { postTemplate: templateID } ) }
+						previewRender={
+							( templateID ) => (
+								<ServerSideRender
+									block='getwid/post-slider'
+									attributes={ { ...this.props.attributes, postTemplate: templateID }}
+								/>
+							)
+						}
+					/>
 				</BlockControls>
 
 				<div ref={ this.sliderRef } >

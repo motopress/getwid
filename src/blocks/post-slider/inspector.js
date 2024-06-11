@@ -4,31 +4,26 @@
 import attributes from './attributes';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidCustomQueryControl from 'GetwidControls/custom-query-control'; //Custom Post Type
-import GetwidCustomPostTemplateControl from 'GetwidControls/custom-post-template-control'; //Custom Post Template
-
+import { TemplateSelectControl } from 'GetwidControls/post-template-select';
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
 	Component,
-	Fragment
 } = wp.element;
 const {
 	InspectorControls,
-	PanelColorSettings
 } = wp.blockEditor || wp.editor;
 const {
-	SelectControl,
 	PanelBody,
-	RangeControl,
 	ToggleControl,
 	TextControl,
 	RadioControl,
 	BaseControl,
 	Button
 } = wp.components;
+const { serverSideRender: ServerSideRender } = wp;
 
 
 /**
@@ -144,15 +139,17 @@ export default class Inspector extends Component {
 				</PanelBody>
 				<PanelBody title={ __('Display Settings', 'getwid') } initialOpen={false}>
 
-					<GetwidCustomPostTemplateControl
-						setValues={ setAttributes }
-						values={{
-							postTemplate,
-						}}
-						// callbackOn={['postTemplate']}
-						onChangeCallback={ (value, element) => {
-							// debugger;
-						} }
+					<TemplateSelectControl
+						selectedTemplate={ postTemplate }
+						onSelect={ ( templateID ) => setAttributes( { postTemplate: templateID } ) }
+						previewRender={
+							( templateID ) => (
+								<ServerSideRender
+									block='getwid/post-slider'
+									attributes={ { ...this.props.attributes, postTemplate: templateID } }
+								/>
+							)
+						}
 					/>
 
 					<GetwidStyleLengthControl

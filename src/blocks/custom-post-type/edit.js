@@ -4,6 +4,7 @@
 import { isUndefined, pickBy } from 'lodash';
 import Inspector from './inspector';
 import './editor.scss';
+import { TemplateSelectToolbarButton } from 'GetwidControls/post-template-select';
 
 
 /**
@@ -21,7 +22,6 @@ const {
 	ToolbarGroup
 } = wp.components;
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
 	BlockAlignmentToolbar,
 	BlockControls,
@@ -58,11 +58,11 @@ class Edit extends Component {
 		const {
 			attributes: {
 				align,
-				postLayout
+				postLayout,
+				postTemplate
 			},
 			setAttributes,
-			recentPosts,
-			className
+			recentPosts
 		} = this.props;
 
 		const changeState = this.changeState;
@@ -126,6 +126,18 @@ class Edit extends Component {
 								isActive: postLayout === 'grid',
 							},
 						] }
+					/>
+					<TemplateSelectToolbarButton
+						selectedTemplate={ postTemplate }
+						onSelect={ ( templateID ) => setAttributes( { postTemplate: templateID } ) }
+						previewRender={
+							( templateID ) => (
+								<ServerSideRender
+									block="getwid/custom-post-type"
+									attributes={ { ...this.props.attributes, postTemplate: templateID }}
+								/>
+							)
+						}
 					/>
 				</BlockControls>
 

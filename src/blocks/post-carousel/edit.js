@@ -3,6 +3,7 @@
  */
 import Inspector from './inspector';
 import './editor.scss';
+import { TemplateSelectToolbarButton } from 'GetwidControls/post-template-select';
 
 /**
 * External dependencies
@@ -97,7 +98,7 @@ class Edit extends Component {
 	}
 
 	render() {
-		const { align } = this.props.attributes;
+		const { align, postTemplate } = this.props.attributes;
 		const { setAttributes, recentPosts } = this.props;
 
 		const changeState = this.changeState;
@@ -145,6 +146,18 @@ class Edit extends Component {
 						onChange={ nextAlign => {
 							setAttributes( { align: nextAlign } );
 						} }
+					/>
+					<TemplateSelectToolbarButton
+						selectedTemplate={ postTemplate }
+						onSelect={ ( templateID ) => setAttributes( { postTemplate: templateID } ) }
+						previewRender={
+							( templateID ) => (
+								<ServerSideRender
+									block='getwid/post-carousel'
+									attributes={ { ...this.props.attributes, postTemplate: templateID }}
+								/>
+							)
+						}
 					/>
 				</BlockControls>
 

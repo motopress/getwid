@@ -3,17 +3,15 @@
 */
 import attributes from './attributes';
 import GetwidCustomQueryControl from 'GetwidControls/custom-query-control'; //Custom Post Type
-import GetwidCustomPostTemplateControl from 'GetwidControls/custom-post-template-control'; //Custom Post Template
+import { TemplateSelectControl } from 'GetwidControls/post-template-select';
 
 
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
 	InspectorControls,
@@ -21,14 +19,13 @@ const {
 const {
 	SelectControl,
 	PanelBody,
-	RangeControl,
 	ToggleControl,
 	TextControl,
 	RadioControl,
 	BaseControl,
 	Button
 } = wp.components;
-
+const { serverSideRender: ServerSideRender } = wp;
 
 /**
 * Create an Inspector Controls
@@ -164,15 +161,18 @@ export default class Inspector extends Component {
 
 				<PanelBody title={ __( 'Display Settings', 'getwid' ) } initialOpen={false}>
 
-					<GetwidCustomPostTemplateControl
-						setValues={ setAttributes }
-						values={{
-							postTemplate,
-						}}
-						onChangeCallback={ (value, element) => {
-						} }
+					<TemplateSelectControl
+						selectedTemplate={ postTemplate }
+						onSelect={ ( templateID ) => setAttributes( { postTemplate: templateID } ) }
+						previewRender={
+							( templateID ) => (
+								<ServerSideRender
+									block='getwid/post-carousel'
+									attributes={ { ...this.props.attributes, postTemplate: templateID } }
+								/>
+							)
+						}
 					/>
-
 					<TextControl
 						label={__( 'Slides on Desktop', 'getwid' )}
 						help={__( 'Works with Slide effect only. Specifies the number of slides displayed at once. Applies to screens wider than 991 pixels.', 'getwid' )}
