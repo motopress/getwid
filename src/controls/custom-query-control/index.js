@@ -4,6 +4,7 @@
 import './editor.scss';
 import GetwidSelectControl from 'GetwidControls/select-control';
 import GroupComponent from "./components/query-group";
+import QueryModal from "./components/query-modal";
 import { isEmpty, cloneDeep } from 'lodash';
 import classnames from "classnames";
 
@@ -28,11 +29,15 @@ const {
 	ToggleControl,
 	Spinner,
 	TextControl,
-	PanelBody
+	PanelBody,
+	ToolbarGroup,
+	ToolbarButton
 } = wp.components;
 const {
 	withSelect
 } = wp.data;
+
+const controlClassPrefix = 'components-getwid-custom-query-control';
 
 /**
 * Create an Control
@@ -55,7 +60,8 @@ class GetwidCustomQueryControl extends Component {
 				: [ {
 					relation: 'OR',
 					children: []
-				} ]
+				} ],
+			possibleMetaKeys: []
 		};
 
 		this.getState    = this.getState.bind( this );
@@ -119,7 +125,6 @@ class GetwidCustomQueryControl extends Component {
 	}
 
 	render() {
-		const controlClassPrefix = 'components-getwid-custom-query-control';
 
 		const renderPagination = () => {
 
@@ -359,30 +364,6 @@ class GetwidCustomQueryControl extends Component {
 			);
 		};
 
-		const renderConditionsTree = () => {
-			const metaQueryArray = this.state.metaScheme;
-			let tree = [];
-
-			if ( metaQueryArray.length > 0 ) {
-				tree = metaQueryArray.map( ( query, index ) =>
-					{
-						return (
-							<GroupComponent
-								key={ index }
-								query={ query }
-								parentQuery={ query }
-								getControlState={ this.getState }
-								setControlState={ this.changeState }
-								controlClassPrefix={ controlClassPrefix }
-							/>
-						)
-					}
-				)
-			}
-
-			return tree;
-		}
-
 		return (
 			<div
 				className={classnames('components-base-control', controlClassPrefix)}
@@ -543,58 +524,48 @@ class GetwidCustomQueryControl extends Component {
 					>
 						{ __( 'Custom Field Filter', 'getwid' ) }
 					</Button>
-					{ this.state.modalOpen ? (
-						<Modal
-							title={ __( 'Meta Query Builder', 'getwid' ) }
-							onRequestClose={ () => {
-								this.setState( {
-									modalOpen: false,
-								} );
-							} }
-							size="large"
-						>
-							<div className={ [ `${controlClassPrefix}__custom-conditions` ] }>
-								{ renderConditionsTree() }
-								<ButtonGroup className={ [ `${controlClassPrefix}__custom-btn-group` ] }>
-									<Button
-										isSecondary
-										onClick={
-											() => {
-												this.setState( {
-													modalOpen: false
-												} );
-											}
-										}
-									>
-										{ __( 'Close', 'getwid' ) }
-									</Button>
-									<Button
-										isPrimary
-										onClick={
-											() => {
-												if ( !this.state.metaScheme[0][ 'children' ].length ) {
-													this.props.setValues( {
-														metaQuery: []
-													} );
-												} else {
-													this.props.setValues( {
-														metaQuery: cloneDeep( this.state.metaScheme )
-													} );
-												}
-											}
-										}
-									>
-										{ __( 'Update', 'getwid' ) }
-									</Button>
-								</ButtonGroup>
-							</div>
-						</Modal>
-					) : null }
+					{ this.state.modalOpen && (
+						<QueryModal
+							onRequestClose={ () => this.setState( { modalOpen: false } ) }
+							query={ this.props.values }
+							metaQuery={ this.props.values.metaQuery }
+							updateMetaQuery={ ( metaQuery ) => this.props.setValues( { metaQuery } ) }
+						/>
+					) }
 
 				</PanelBody>
 
 			</div>
 		);
+	}
+}
+
+export class CustomQueryToolbarButton extends Component {
+
+	state = {
+		modalOpen: false
+	};
+
+	render() {
+		return (
+			<ToolbarGroup>
+				<ToolbarButton
+					icon="filter"
+					label={ __( 'Custom Field Filter', 'getwid' ) }
+					isPressed={ this.props.metaQuery?.length > 0 }
+					onClick={ () => this.setState( { modalOpen: true } ) }
+				/>
+
+				{ this.state.modalOpen && (
+					<QueryModal
+						onRequestClose={ () => this.setState( { modalOpen: false } ) }
+						metaQuery={ this.props.metaQuery }
+						query={ this.props.query }
+						updateMetaQuery={ this.props.updateMetaQuery }
+					/>
+				) }
+			</ToolbarGroup>
+		)
 	}
 }
 

@@ -5,6 +5,7 @@ import { isUndefined, pickBy } from 'lodash';
 import Inspector from './inspector';
 import './editor.scss';
 import { TemplateSelectToolbarButton } from 'GetwidControls/post-template-select';
+import { CustomQueryToolbarButton } from 'GetwidControls/custom-query-control';
 
 
 /**
@@ -59,7 +60,23 @@ class Edit extends Component {
 			attributes: {
 				align,
 				postLayout,
-				postTemplate
+				postTemplate,
+				postsToShow,
+				offset,
+				pagination,
+				ignoreSticky,
+				filterById,
+				excludeById,
+				excludeCurrentPost,
+				childPagesCurrentPage,
+				parentPageId,
+				postType,
+				taxonomy,
+				terms,
+				relation,
+				order,
+				orderBy,
+				metaQuery
 			},
 			setAttributes,
 			recentPosts
@@ -138,6 +155,27 @@ class Edit extends Component {
 								/>
 							)
 						}
+					/>
+					<CustomQueryToolbarButton
+						query={ {
+							postsToShow,
+							offset,
+							pagination,
+							ignoreSticky,
+							filterById,
+							excludeById,
+							excludeCurrentPost,
+							childPagesCurrentPage,
+							parentPageId,
+							postType,
+							taxonomy,
+							terms,
+							relation,
+							order,
+							orderBy
+						} }
+						metaQuery={ metaQuery }
+						updateMetaQuery={ ( metaQuery ) => setAttributes( { metaQuery } ) }
 					/>
 				</BlockControls>
 

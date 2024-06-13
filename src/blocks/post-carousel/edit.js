@@ -4,6 +4,7 @@
 import Inspector from './inspector';
 import './editor.scss';
 import { TemplateSelectToolbarButton } from 'GetwidControls/post-template-select';
+import { CustomQueryToolbarButton } from 'GetwidControls/custom-query-control';
 
 /**
 * External dependencies
@@ -98,8 +99,30 @@ class Edit extends Component {
 	}
 
 	render() {
-		const { align, postTemplate } = this.props.attributes;
-		const { setAttributes, recentPosts } = this.props;
+		const {
+			attributes: {
+				align,
+				postTemplate,
+				postsToShow,
+				offset,
+				pagination,
+				ignoreSticky,
+				filterById,
+				excludeById,
+				excludeCurrentPost,
+				childPagesCurrentPage,
+				parentPageId,
+				postType,
+				taxonomy,
+				terms,
+				relation,
+				order,
+				orderBy,
+				metaQuery
+			},
+			setAttributes,
+			recentPosts
+		} = this.props;
 
 		const changeState = this.changeState;
 		const getState = this.getState;
@@ -158,6 +181,27 @@ class Edit extends Component {
 								/>
 							)
 						}
+					/>
+					<CustomQueryToolbarButton
+						query={ {
+							postsToShow,
+							offset,
+							pagination,
+							ignoreSticky,
+							filterById,
+							excludeById,
+							excludeCurrentPost,
+							childPagesCurrentPage,
+							parentPageId,
+							postType,
+							taxonomy,
+							terms,
+							relation,
+							order,
+							orderBy
+						} }
+						metaQuery={ metaQuery }
+						updateMetaQuery={ ( metaQuery ) => setAttributes( { metaQuery } ) }
 					/>
 				</BlockControls>
 

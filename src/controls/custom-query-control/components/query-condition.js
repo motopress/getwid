@@ -8,11 +8,13 @@ import GetwidCustomRepeater from '../../custom-repeater';
  */
 import { __ } from 'wp.i18n';
 
-const { Component } = wp.element;
+const { Component, createRef } = wp.element;
 const {
 	Button,
 	SelectControl,
 	TextControl,
+	Popover,
+	MenuItem
 } = wp.components;
 
 class ConditionComponent extends Component {
@@ -25,33 +27,75 @@ class ConditionComponent extends Component {
 			compare: this.props.query.compare || '',
 			value:   this.props.query.value   || [ '' ],
 			type:    this.props.query.type    || '',
+			metaKeySuggestionsOpened: false
 		};
+
+		this.inputRef = createRef();
+		this.popoverRef = createRef();
 	}
 
 	render() {
 
-		const { query, parentQuery, controlClassPrefix, getControlState, setControlState } = this.props;
+		const { query, parentQuery, possibleMetaKeys, updateMetaQuery } = this.props;
 		const removedSpacesTextCompare = query.compare.replace( / /g, '' );
 
 		const removeCondition = () => {
 			const index = parentQuery.children.indexOf( query );
 			parentQuery.children.splice( index, 1 );
 
-			setControlState( { metaScheme: getControlState( 'metaScheme' ) } );
+			updateMetaQuery();
 		}
 
 		return (
-			<div className={ [ `${controlClassPrefix}__custom-query` ] }>
-				<TextControl
-					placeholder={ __( 'Key', 'getwid' ) }
-					value={ query.key }
-					onChange={ value => {
-						query.key = value;
-						this.setState( { key: value } );
-					} }
-				/>
+			<div className="components-getwid-custom-query-control__custom-query">
+
+				<div>
+					<TextControl
+						ref={ this.inputRef }
+						autoComplete="off"
+						placeholder={ __( 'Key', 'getwid' ) }
+						value={ query.key }
+						onChange={ value => {
+							query.key = value;
+							this.setState( { key: value } );
+						} }
+						onClick={ () => this.setState( { metaKeySuggestionsOpened: !this.state.metaKeySuggestionsOpened } ) }
+						onBlur={ ( { relatedTarget } ) => {
+							if ( this.popoverRef.current?.contains( relatedTarget ) ) {
+								return;
+							}
+
+							this.setState( { metaKeySuggestionsOpened: false } );
+						} }
+					/>
+					{ this.state.metaKeySuggestionsOpened &&
+						<Popover
+							ref={ this.popoverRef }
+							className="components-getwid-custom-query-control__meta-keys-dropdown"
+							focusOnMount={ false }
+						>
+							{ possibleMetaKeys.map( metaKey =>
+								<MenuItem
+									key={ metaKey }
+									onClick={ (e) => {
+										query.key = metaKey;
+										this.setState( {
+											key: metaKey
+										} );
+										this.inputRef.current.focus();
+									} }
+								>
+									{ metaKey }
+								</MenuItem>
+							) }
+							{ possibleMetaKeys.length < 1 && (
+								<p>{ __( 'There are no suggestions for our query.', 'getwid' ) }</p>
+							) }
+						</Popover>
+					}
+				</div>
 				<SelectControl
-					className={ [ `${controlClassPrefix}__custom-query--compare` ] }
+					className="components-getwid-custom-query-control__custom-query--compare"
 					value={ query.compare }
 					onChange={ value => {
 						query.compare = value;
@@ -86,7 +130,7 @@ class ConditionComponent extends Component {
 				) }
 				{ removedSpacesTextCompare != 'EXISTS' && removedSpacesTextCompare != 'NOTEXISTS' && (
 					<SelectControl
-						className={ [ `${controlClassPrefix}__custom-query--type` ] }
+						className="components-getwid-custom-query-control__custom-query--type"
 						value={ query.type }
 						onChange={ value => {
 							query.type = value;
@@ -108,7 +152,7 @@ class ConditionComponent extends Component {
 				) }
 				<Button
 					label={ __( 'Remove Condition', 'getwid' ) }
-					className={ [ `${controlClassPrefix}__custom-query--btn-close` ] }
+					className="components-getwid-custom-query-control__custom-query--btn-close"
 					icon={ 'no-alt' }
 					iconSize={ 14 }
 					onClick={ removeCondition }
