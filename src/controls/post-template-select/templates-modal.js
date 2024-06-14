@@ -1,30 +1,31 @@
 import classnames from 'classnames';
 
 const { Modal, Disabled, Button, Flex } = wp.components;
-const { useMemo } = wp.element;
-const { useSelect } = wp.data;
+const { useState, useEffect, useCallback } = wp.element;
+const apiFetch = wp.apiFetch;
+const { addQueryArgs } = wp.url;
 import { __ } from 'wp.i18n';
 
 export default ( props ) => {
 
+	const [ templates, setTemplates ] = useState( [] );
+	const [ loading, setLoading ] = useState( true );
 	const { onClose, previewRender, selectedTemplate, onSelect } = props;
 
-	const rawTemplates = useSelect( ( select ) => {
-		return select( 'core' ).getEntityRecords(
-			'postType',
-			'getwid_template_part',
-			{
-				per_page: -1,
-			}
-		);
+	const loadTemplates = useCallback( () => {
+		setLoading( true );
+		apiFetch( {
+			path: addQueryArgs( `/getwid/v1/templates`, { template_name : 'getwid_template_part' } ),
+		} )
+			.then( ( templates ) => {
+				setTemplates( templates );
+				setLoading( false );
+		} );
 	}, [] );
 
-	const templates = useMemo( () => {
-		return rawTemplates?.map( template => ( {
-			id: template.id,
-			title: template.title
-		} ) );
-	}, [ rawTemplates ] );
+	useEffect( () => {
+		loadTemplates();
+	}, [] );
 
 	return (
 		<Modal
@@ -37,23 +38,29 @@ export default ( props ) => {
 					expanded={ false }
 				>
 					<Button
+						href={ Getwid.templates.new }
+						target="_blank"
+						variant="primary"
+					>{ __( 'Create Template', 'getwid' ) }</Button>
+					<Button
 						variant="secondary"
 						disabled={ !!!selectedTemplate }
 						onClick={ () => {
 							onClose();
 							onSelect( '' );
 						} }
-					>{ __( 'Use Default', 'getwid' ) }</Button>
-					<Button
-						href={ Getwid.templates.new }
-						target="_blank"
-						variant="primary"
-					>{ __( 'New', 'getwid' ) }</Button>
+					>{ __( 'Use Default Template', 'getwid' ) }</Button>
 					<Button
 						href={ Getwid.templates.view }
 						target="_blank"
 						variant="secondary"
-					>{ __( 'View All', 'getwid' ) }</Button>
+					>{ __( 'View All Templates', 'getwid' ) }</Button>
+					<Button
+						onClick={ loadTemplates }
+						isBusy={ loading }
+						disabled={ loading }
+						variant="secondary"
+					>{ __( 'Reload Templates', 'getwid' ) }</Button>
 				</Flex>
 			}
 		>
@@ -61,11 +68,11 @@ export default ( props ) => {
 				{ templates?.map( template => {
 					return (
 						<div
-							key={ template.id }
+							key={ template.value }
 							className={ classnames(
 								"components-getwid-templates__template",
 								{
-									"is-selected": template.id == parseInt( selectedTemplate )
+									"is-selected": template.value == parseInt( selectedTemplate )
 								}
 							) }
 						>
@@ -76,10 +83,10 @@ export default ( props ) => {
 								className="components-getwid-templates__template-wrapper"
 							>
 								<Disabled className="components-getwid-templates__template-preview">
-									{ previewRender( template.id ) }
+									{ previewRender( template.value ) }
 								</Disabled>
 								<Flex className="components-getwid-templates__template-footer">
-									<span className="components-getwid-templates__template-title">{ template.title.raw || `#${ template.id }` }</span>
+									<span className="components-getwid-templates__template-title">{ template.label || `#${ template.value }` }</span>
 									<Flex
 										expanded={ false }
 										justify="flex-end"
@@ -87,13 +94,14 @@ export default ( props ) => {
 									>
 										<Button
 											variant="primary"
+											disabled={ template.value == parseInt( selectedTemplate ) }
 											onClick={ () => {
 												onClose();
-												onSelect( template.id.toString() );
+												onSelect( template.value.toString() );
 											} }
 										>{ __( 'Apply', 'getwid' ) }</Button>
 										<Button
-											href={ `${ Getwid.templates.edit }${ template.id }&action=edit` }
+											href={ `${ Getwid.templates.edit }${ template.value }&action=edit` }
 											target="_blank"
 											variant="secondary"
 										>{ __( 'Edit', 'getwid' ) }</Button>
