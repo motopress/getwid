@@ -727,8 +727,7 @@ class Edit extends Component {
 					</ToolbarGroup>
 					<ToolbarGroup controls={[
 						{
-							icon: 'edit',
-							title: __('Edit Marker', 'getwid'),
+							text: __('Edit Marker', 'getwid'),
 							isDisabled: (getState('currentMarker') === null || getState('action') == 'drop'),
 							isActive: (getState('action') == 'edit' && getState('editModal') == true),
 							onClick: () => {

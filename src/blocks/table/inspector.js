@@ -85,7 +85,7 @@ class Inspector extends Component {
 
 	controlsHint() {
 		return (
-			<Notice>{ __( 'Hint: Hold Ctrl key to select multiple cells. Hold Shift key to select range.', 'getwid' ) }</Notice>
+			<Notice>{ __( 'Hint: Hold Ctrl/Cmd key to select multiple cells. Hold Shift key to select range.', 'getwid' ) }</Notice>
 		)
 	}
 

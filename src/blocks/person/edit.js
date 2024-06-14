@@ -27,7 +27,7 @@ const { withSelect } = wp.data;
 /**
 * Module Constants
 */
-const ALLOWED_BLOCKS  = [ 'getwid/social-links', 'core/paragraph' ];
+const ALLOWED_BLOCKS = [ 'getwid/social-links', 'core/paragraph' ];
 
 const baseClass = 'wp-block-getwid-person';
 

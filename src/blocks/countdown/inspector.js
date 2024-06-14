@@ -54,7 +54,7 @@ class Inspector extends Component {
 
 		const { tabName } = this.state;
 		const { changeState } = this;
-		const visualLabel = dateTime ? new Date( dateTime ).toUTCString() : defaultDate.toUTCString();
+		const visualLabel = dateTime ? new Date( dateTime ).toLocaleString() : defaultDate.toLocaleString();
 
 		return (
 			<InspectorControls>

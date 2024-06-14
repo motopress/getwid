@@ -737,7 +737,7 @@ class GetwidTable extends Component {
 			<Placeholder
 				label={ __( 'Table', 'getwid' ) }
 				icon={ <BlockIcon icon={ 'editor-table' } showColors /> }
-				instructions={ __( 'Hint: Hold Ctrl key to select multiple cells. Hold Shift key to select range.', 'getwid' ) }
+				instructions={ __( 'Hint: Hold Ctrl/Cmd key to select multiple cells. Hold Shift key to select range.', 'getwid' ) }
 			>
 				<form
 					className={ `${baseClass}__placeholder-form` }
@@ -1089,7 +1089,7 @@ class GetwidTable extends Component {
 										toMaxColIdx: maxColIdx,
 										section: section
 									});
-								} else if ( event.ctrlKey ) {
+								} else if ( event.ctrlKey || event.metaKey ) {
 									const multiCells = multiSelected ? multiSelected : [];
 
 									if ( multiCells.length && !isEqual( multiCells[0].section, section ) ) {
