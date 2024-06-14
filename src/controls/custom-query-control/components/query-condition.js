@@ -89,7 +89,7 @@ class ConditionComponent extends Component {
 								</MenuItem>
 							) }
 							{ possibleMetaKeys.length < 1 && (
-								<p>{ __( 'There are no suggestions for our query.', 'getwid' ) }</p>
+								<p>{ __( 'There are no suggestions for this query.', 'getwid' ) }</p>
 							) }
 						</Popover>
 					}

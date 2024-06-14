@@ -997,7 +997,7 @@ export const renderFontSizePanel = self => {
                     fontSize: undefined
                 } ) }
                 disabled={ ! ( fontSizeTablet != 'fs-tablet-100' || fontSizeMobile != 'fs-mobile-100' || fontSize != undefined ) }>
-                { __(' Reset', 'getwid' ) }
+                { __('Reset', 'getwid' ) }
             </Button>
         </BaseControl>
     );

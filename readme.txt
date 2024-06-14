@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 5.8
 Tested up to: 6.5
 Requires PHP: 5.6
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -224,6 +224,12 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 2.0.9, Jun 17 2024 =
+* Added ability to set recipient email address in the Contact Form block.
+* Added meta key selector helper.
+* Added preview for templates in the Custom Post Type, Post Slider, Post Carousel blocks.
+* Minor bugfixes and improvements.
 
 = 2.0.8, Apr 26 2024 =
 * Minor bugfixes and improvements.
