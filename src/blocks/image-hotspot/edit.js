@@ -148,7 +148,6 @@ class Edit extends Component {
 	onImageClick( event ) {
 		event.preventDefault();
 		event.stopPropagation();
-		event.currentTarget.removeEventListener( 'click', this.onImageClick );
 
 		this.addPoint( event.clientX, event.clientY );
 	}
@@ -323,7 +322,6 @@ class Edit extends Component {
 			`${baseClass}__wrapper`
 		);
 
-		const imageHTML = url ? ( <img className={`${baseClass}__image`} src={url} alt={alt ? alt : ''}/> ) : '';
 		const points = ( imagePoints !== '' ? JSON.parse(imagePoints) : [] );
 
 		const pointsHTML = points.map( ( point, pointID ) =>
@@ -382,7 +380,6 @@ class Edit extends Component {
 										onClick={ () => {
 											if (getState('action') != 'drop') {
 												changeState('action', 'drop');
-												image?.addEventListener('click', this.onImageClick, false);
 											}
 										} }
 									>
@@ -412,7 +409,16 @@ class Edit extends Component {
 						</Fragment>
 					)}
 					<div className={ innerWrapperProps }>
-						{ imageHTML }
+						{ url && (
+							<img
+								className={ `${baseClass}__image` }
+								src={ url }
+								alt={ alt ? alt : '' }
+								onClick={ ( e ) => {
+									this.state.action === 'drop' && this.onImageClick( e );
+								} }
+							/>
+						) }
 						{ pointsHTML }
 					</div>
 				</div>

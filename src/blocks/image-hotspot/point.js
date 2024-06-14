@@ -199,10 +199,10 @@ function Point( props ) {
 				>
 					<i className={ `wp-block-getwid-image-hotspot__dot-icon ${icon || common.icon}` }></i>
 				</div>
-			<div className={ 'wp-block-getwid-image-hotspot__dot-description' }>
-				<div className={ 'wp-block-getwid-image-hotspot__dot-title' }>${link_HTML}</div>
+				<div className={ 'wp-block-getwid-image-hotspot__dot-description' }>
+					<div className={ 'wp-block-getwid-image-hotspot__dot-title' }>${link_HTML}</div>
+				</div>
 			</div>
-		</div>
 		</div>
 	);
 }
