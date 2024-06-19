@@ -28,10 +28,10 @@
 					getwid_animation_speed,
 					getwid_arrows,
 					getwid_dots,
+					getwid_pause_on_hover
 				} = getwid_post_slider.data('slider-option');
 
 				getwid_fade_effect = getwid_fade_effect == 'fade' ? true : false;
-				getwid_pause_on_hover = false;
 				getwid_arrows = getwid_arrows != 'none' ? true : false;
 				getwid_dots = getwid_dots != 'none' ? true : false;
 
@@ -54,7 +54,7 @@
 
 						centerMode: false,
 						variableWidth: false,
-						pauseOnHover: false,
+						pauseOnHover: getwid_pause_on_hover,
 						adaptiveHeight: true,
 						rtl: !!Getwid.isRTL
 					});

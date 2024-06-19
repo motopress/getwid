@@ -117,6 +117,16 @@ export default class Inspector extends Component {
 							tab => this.renderResponsiveAlignmentTabs( tab )
 						}
 					</TabPanel>
+					<RadioControl
+						label={__( 'Layout', 'getwid' )}
+						selected={ iconsStyle !== undefined ? iconsStyle : 'default' }
+						options={[
+							{ value: 'default', label: __( 'Icon'      , 'getwid' )},
+							{ value: 'stacked', label: __( 'Background', 'getwid' )},
+							{ value: 'framed' , label: __( 'Outline'   , 'getwid' )}
+						]}
+						onChange={iconsStyle => setAttributes({ iconsStyle })}
+					/>
 					<GetwidCustomColorPalette
 						colorSettings={[{
 								title: __( 'Icon Color', 'getwid' ),
@@ -135,16 +145,6 @@ export default class Inspector extends Component {
 								changeColor: setBackgroundColor
 							}] : [])
 						]}
-					/>
-					<RadioControl
-					    label={__( 'Layout', 'getwid' )}
-					    selected={ iconsStyle !== undefined ? iconsStyle : 'default' }
-					    options={[
-							{ value: 'default', label: __( 'Icon'      , 'getwid' )},
-							{ value: 'stacked', label: __( 'Background', 'getwid' )},
-							{ value: 'framed' , label: __( 'Outline'   , 'getwid' )}
-					    ]}
-					    onChange={iconsStyle => setAttributes({ iconsStyle })}
 					/>
 					<TextControl
 						type='number'

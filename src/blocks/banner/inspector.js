@@ -86,19 +86,19 @@ export default class Inspector extends Component {
 							/>
 							<GetwidCustomColorPalette
 								colorSettings={[{
+									title: __( 'Overlay Color', 'getwid' ),
+									colors: {
+										customColor: customBackgroundColor,
+										defaultColor: backgroundColor
+									},
+									changeColor: setBackgroundColor
+								}, {
 										title: __( 'Text Color', 'getwid' ),
 										colors: {
 											customColor: customTextColor,
 											defaultColor: textColor
 										},
 										changeColor: setTextColor
-									}, {
-										title: __( 'Overlay Color', 'getwid' ),
-										colors: {
-											customColor: customBackgroundColor,
-											defaultColor: backgroundColor
-										},
-										changeColor: setBackgroundColor
 									}
 								]}
 							/>

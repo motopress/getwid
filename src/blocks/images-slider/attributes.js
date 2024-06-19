@@ -141,6 +141,10 @@ const attributes = {
 		attribute: 'data-autoplay-speed',
 		default: 6000
 	},
+	sliderPauseOnHover: {
+		type: 'boolean',
+		default: false,
+	},
 	sliderInfinite: {
 		type: 'boolean',
 		default: true

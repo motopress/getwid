@@ -148,7 +148,6 @@ class Edit extends Component {
 	onImageClick( event ) {
 		event.preventDefault();
 		event.stopPropagation();
-		event.currentTarget.removeEventListener( 'click', this.onImageClick );
 
 		this.addPoint( event.clientX, event.clientY );
 	}
@@ -212,18 +211,6 @@ class Edit extends Component {
 		const image = this.imageHotspotRef.current?.querySelector(`.${baseClass}__image`);
 
 		const toolbarControls = [
-			{
-				icon: 'location',
-				title: __('Drop Point', 'getwid'),
-				isDisabled: (getState('currentPoint') != null),
-				isActive: (getState('action') == 'drop'),
-				onClick: () => {
-					if (getState('action') != 'drop') {
-						changeState('action', 'drop');
-						image?.addEventListener('click', this.onImageClick, false);
-					}
-				},
-			},
 			{
 				icon: 'edit',
 				title: __('Edit', 'getwid'),
@@ -335,7 +322,6 @@ class Edit extends Component {
 			`${baseClass}__wrapper`
 		);
 
-		const imageHTML = url ? ( <img className={`${baseClass}__image`} src={url} alt={alt ? alt : ''}/> ) : '';
 		const points = ( imagePoints !== '' ? JSON.parse(imagePoints) : [] );
 
 		const pointsHTML = points.map( ( point, pointID ) =>
@@ -388,6 +374,18 @@ class Edit extends Component {
 					{ !! url && (
 						<Fragment>
 							<BlockControls>
+								<ToolbarGroup>
+									<ToolbarButton
+										isDisabled={ getState('currentPoint') != null }
+										onClick={ () => {
+											if (getState('action') != 'drop') {
+												changeState('action', 'drop');
+											}
+										} }
+									>
+										{ __('Drop Point', 'getwid') }
+									</ToolbarButton>
+								</ToolbarGroup>
 								<ToolbarGroup
 									controls={toolbarControls}
 								/>
@@ -411,7 +409,16 @@ class Edit extends Component {
 						</Fragment>
 					)}
 					<div className={ innerWrapperProps }>
-						{ imageHTML }
+						{ url && (
+							<img
+								className={ `${baseClass}__image` }
+								src={ url }
+								alt={ alt ? alt : '' }
+								onClick={ ( e ) => {
+									this.state.action === 'drop' && this.onImageClick( e );
+								} }
+							/>
+						) }
 						{ pointsHTML }
 					</div>
 				</div>

@@ -20,10 +20,24 @@ class SettingsPage {
     public function getSettingsGroups()
 	{
 		return [
-			'general' => __('General', 'getwid'),
-			'appearance' => __('Appearance', 'getwid'),
-			'blocks' => __('Blocks', 'getwid'),
-			'post_templates' => __('Post Templates', 'getwid'),
+			'general' => [
+				'title' => __('General', 'getwid'),
+				'sections' => [
+					'contact_from' => __('Contact Form Settings', 'getwid'),
+				]
+			],
+			'appearance' => [
+				'title' => __('Appearance', 'getwid'),
+				'sections' => [ ]
+			],
+			'blocks' => [
+				'title' => __('Blocks', 'getwid'),
+				'sections' => [ ]
+			],
+			'post_templates' => [
+				'title' => __('Post Templates', 'getwid'),
+				'sections' => [ ]
+			]
 		];
 	}
 
@@ -42,13 +56,22 @@ class SettingsPage {
 	{
 		$settings_groups = $this->getSettingsGroups();
 
-		foreach ($settings_groups as $id => $title){
+		foreach ($settings_groups as $id => $group) {
 			add_settings_section(
 				'getwid_' . $id,
 				'',
 				'',
 				'getwid_' . $id
 			);
+
+			foreach ($group['sections'] as $section_id => $section) {
+				add_settings_section(
+					'getwid_' . $section_id,
+					$section,
+					'',
+					'getwid_' . $id
+				);
+			}
 		}
 	}
 
@@ -68,11 +91,11 @@ class SettingsPage {
 
 			<h2 class="nav-tab-wrapper">
 				<?php
-				foreach ($settings_groups as $tab_id => $tab_title) :
+				foreach ($settings_groups as $tab_id => $tab) :
 					$active_tab_class = $tab_id == $active_tab_id ? 'nav-tab-active' : '';
 				?>
 					<a href="<?php echo esc_url( $this->getTabUrl($tab_id) ); ?>" class="nav-tab <?php echo esc_attr($active_tab_class); ?>">
-						<?php echo esc_html($tab_title)?>
+						<?php echo esc_html($tab['title']); ?>
 					</a>
 				<?php
 				endforeach;
@@ -198,14 +221,20 @@ class SettingsPage {
         /* #endregion */
 
         /* #region Recaptcha Site Key */
+        add_settings_field( 'getwid_contact_form_recipient_email', __( 'Recipient Email Address', 'getwid' ),
+            [ $this, 'renderContactFormRecipientEmail' ], 'getwid_general', 'getwid_contact_from' );
+        register_setting( 'getwid_general', 'getwid_contact_form_recipient_email', [ 'type' => 'text', 'default' => '' ] );
+        /* #endregion */
+
+        /* #region Recaptcha Site Key */
         add_settings_field( 'getwid_recaptcha_v2_site_key', __( 'Recaptcha Site Key', 'getwid' ),
-            [ $this, 'renderRecaptchaSiteKey' ], 'getwid_general', 'getwid_general' );
+            [ $this, 'renderRecaptchaSiteKey' ], 'getwid_general', 'getwid_contact_from' );
         register_setting( 'getwid_general', 'getwid_recaptcha_v2_site_key', [ 'type' => 'text', 'default' => '' ] );
         /* #endregion */
 
         /* #region Recaptcha Secret Key */
         add_settings_field( 'getwid_recaptcha_v2_secret_key', __( 'Recaptcha Secret Key', 'getwid' ),
-            [ $this, 'renderRecaptchaSecretKey' ], 'getwid_general', 'getwid_general' );
+            [ $this, 'renderRecaptchaSecretKey' ], 'getwid_general', 'getwid_contact_from' );
         register_setting( 'getwid_general', 'getwid_recaptcha_v2_secret_key', [ 'type' => 'text', 'default' => '' ] );
         /* #endregion */
 
@@ -289,7 +318,7 @@ class SettingsPage {
 							}
 						}
 					}
-				} catch ( Exception $profile_data_exception ) {
+				} catch ( \Exception $profile_data_exception ) {
 
 					echo esc_html( $profile_data_exception->getMessage() );
 				}
@@ -329,6 +358,16 @@ class SettingsPage {
         <input type="text" id="getwid_google_api_key" name="getwid_google_api_key" class="regular-text" value="<?php echo esc_attr( $field_val ); ?>" />
 		<?php
     }
+
+	public function renderContactFormRecipientEmail() {
+
+		$field_val = get_option( 'getwid_contact_form_recipient_email', '' );
+		$default_email = get_option( 'admin_email' );
+
+		?>
+		<input type="text" id="getwid_contact_form_recipient_email" name="getwid_contact_form_recipient_email" class="regular-text" value="<?php echo esc_attr( $field_val ); ?>"  placeholder="<?php echo esc_attr( $default_email ); ?>"/>
+		<?php
+	}
 
     public function renderRecaptchaSiteKey() {
 

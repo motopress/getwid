@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
 const {
@@ -13,27 +8,14 @@ const {
 
 import { __ } from 'wp.i18n';
 
-const {jQuery: $} = window;
-
-const { withInstanceId } = wp.compose;
-
-const {
-	Button,
-	BaseControl,
-	Dropdown,
-	MenuGroup,
-	MenuItem,
-	SelectControl,
-	TextControl
-} = wp.components;
-
-const { Component, Fragment } = wp.element;
+const {	SelectControl } = wp.components;
+const { Component } = wp.element;
 
 /**
 * Internal dependencies
 */
 import './editor.scss';
-
+import FontSelect from './font-select'
 
 class FontsControl extends Component {
 
@@ -41,13 +23,11 @@ class FontsControl extends Component {
 
 	constructor() {
 		super( ...arguments );
-		this.search = React.createRef();
 
 		this.enableGoogleFonts = wp.hooks.applyFilters('getwid.fontsControl.enableGoogleFonts', this.enableGoogleFonts);
 
 		this.state = {
-			fonts: null,
-			search: '',
+			fonts: [],
 			selectedFont: null
 		};
 	}
@@ -111,103 +91,19 @@ class FontsControl extends Component {
 		this.props.onChangeFontFamily( font.family );
 		this.props.onChangeFontWeight( 'normal' );
 
-		this.setState({
-			selectedFont: font,
-			search: ''
-		});
-	}
-
-	fontMatchesSearch(font) {
-		const search = this.state.search;
-		return ! search
-			|| font.family.toLowerCase().includes( search.toLowerCase() )
-			|| ( font.title && font.title.toLowerCase().includes( search.toLowerCase() ) );
+		this.setState( { selectedFont: font } );
 	}
 
 	render() {
-		const id = `inspector-fonts-control-${ this.props.instanceId }`;
 		const availableFontVariants = this.state.selectedFont && this.state.selectedFont.variants ? this.state.selectedFont.variants : null;
-		const controlTitle = this.state.selectedFont && this.state.selectedFont.title ? this.state.selectedFont.title : this.props.value;
 
 		return (
-			<div className="components-getwid-fonts-control" >
-				<BaseControl
-					label={ this.props.label }
-					id={ id }
-				>
-					{ ( null !== this.state.fonts ) ?
-						(
-							<Dropdown
-								contentClassName="components-getwid-fonts-popover"
-								popoverProps={ { placement: "bottom" } }
-								renderToggle={ ({ isOpen, onToggle }) => (
-									<Button
-										className="components-getwid-fonts-button"
-										id={ id }
-										onClick={ onToggle }
-										aria-expanded={ isOpen }
-									>
-										{ controlTitle || __( 'Select Font Family', 'getwid' ) }
-									</Button>
-								) }
-								renderContent={ ({ onToggle }) => (
-									<MenuGroup>
-										<TextControl
-											value={ this.state.search }
-											onChange={ e => this.setState({ search: e }) }
-										/>
-										<div className="components-popover__items">
-											<MenuItem
-												onClick={ () => {
-													onToggle();
-													this.props.onChangeFontGroupID( '' );
-													this.props.onChangeFontFamily( '' );
-													this.props.onChangeFontWeight( '' );
-													this.setState({
-														selectedFont: null,
-														search: ''
-													});
-												}}
-											>
-												{ __( 'Default', 'getwid' ) }
-											</MenuItem>
-
-											{ ( this.state.fonts ).map( fontGroup => {
-
-												return (
-													<Fragment key={ fontGroup.id }>
-														<h4 style={ { margin:0 } } >
-															{ fontGroup.title }
-														</h4>
-														{ ( fontGroup.items ).map( ( font, index ) => {
-															if ( this.fontMatchesSearch( font ) ) {
-																return (
-																	<MenuItem
-																		key={ index }
-																		className={ classnames(
-																			{ 'is-selected': ( font.family === this.props.value ) }
-																		) }
-																		onClick={ () => {
-																			onToggle();
-																			this.selectFont( fontGroup.id, font );
-																		}}
-																	>
-																		{ font.title || font.family }
-																	</MenuItem>
-																);
-															}
-														} ) }
-													</Fragment>
-												);
-											} ) }
-										</div>
-									</MenuGroup>
-								) }
-							/>
-						) : (
-						__( 'Loading…', 'getwid' )
-					) }
-				</BaseControl>
+			<>
+				<FontSelect
+					fonts={ this.state.fonts }
+					selectedFont={ this.state.selectedFont }
+					onSelect={ ( fontGroupID, font ) => this.selectFont( fontGroupID, font ) }
+				/>
 
 				<SelectControl
 					label={ __( 'Font Weight', 'getwid' ) }
@@ -226,9 +122,9 @@ class FontsControl extends Component {
 					] }
 					onChange={ this.props.onChangeFontWeight }
 				/>
-			</div>
+			</>
 		);
 	}
 }
 
-export default withInstanceId( FontsControl );
+export default FontsControl;

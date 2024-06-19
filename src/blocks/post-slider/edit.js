@@ -10,6 +10,8 @@ import { isEqual, pickBy, isUndefined } from 'lodash';
 */
 import Inspector from './inspector';
 import './editor.scss';
+import { TemplateSelectToolbarButton } from 'GetwidControls/post-template-select';
+import { CustomQueryToolbarButton } from 'GetwidControls/custom-query-control';
 
 /**
 * WordPress dependencies
@@ -107,7 +109,22 @@ class Edit extends Component {
 			attributes: {
 				align,
 				postTemplate,
-				textAlignment
+				postsToShow,
+				offset,
+				pagination,
+				ignoreSticky,
+				filterById,
+				excludeById,
+				excludeCurrentPost,
+				childPagesCurrentPage,
+				parentPageId,
+				postType,
+				taxonomy,
+				terms,
+				relation,
+				order,
+				orderBy,
+				metaQuery
 			},
 			setAttributes,
 			recentPosts
@@ -159,12 +176,39 @@ class Edit extends Component {
 							setAttributes( { align: nextAlign } );
 						} }
 					/>
-					{ ( typeof postTemplate != 'undefined' && postTemplate != '') && (
-						<AlignmentToolbar
-							value={ textAlignment }
-							onChange={ textAlignment => setAttributes( { textAlignment } ) }
-						/>
-					)}
+					<TemplateSelectToolbarButton
+						selectedTemplate={ postTemplate }
+						onSelect={ ( templateID ) => setAttributes( { postTemplate: templateID } ) }
+						previewRender={
+							( templateID ) => (
+								<ServerSideRender
+									block='getwid/post-slider'
+									attributes={ { ...this.props.attributes, postTemplate: templateID }}
+								/>
+							)
+						}
+					/>
+					<CustomQueryToolbarButton
+						query={ {
+							postsToShow,
+							offset,
+							pagination,
+							ignoreSticky,
+							filterById,
+							excludeById,
+							excludeCurrentPost,
+							childPagesCurrentPage,
+							parentPageId,
+							postType,
+							taxonomy,
+							terms,
+							relation,
+							order,
+							orderBy
+						} }
+						metaQuery={ metaQuery }
+						updateMetaQuery={ ( metaQuery ) => setAttributes( { metaQuery } ) }
+					/>
 				</BlockControls>
 
 				<div ref={ this.sliderRef } >

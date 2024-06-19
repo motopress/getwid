@@ -47,8 +47,9 @@
 		#{ $control }__custom-query {
 			position: relative;
 			display: flex;
+			align-items: flex-start;
 			/*rtl:begin:remove*/
-			margin-left: 15px;
+			margin-left: 20px;
 			/*rtl:end:remove*/
 			/*rtl:raw: margin-right: 15px; */
 
@@ -64,10 +65,10 @@
 				content: '';
 				position: absolute;
 				top: 15px;
-				left: -15px #{'/*rtl: auto */'};
+				left: -20px #{'/*rtl: auto */'};
 				/*rtl:raw: right: -15px; */
 				height: 1px;
-				width: 21px;
+				width: 20px;
 				background: #ccc;
 			}
 
@@ -179,5 +180,18 @@
 				color: #1e1e1e;
 			}
 		}
+	}
+}
+
+.components-getwid-custom-query-control__meta-keys-dropdown{
+	.components-menu-item__item {
+		text-align: left;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+	}
+
+	.components-popover__content {
+		padding: 10px;
+		width: 300px;
 	}
 }

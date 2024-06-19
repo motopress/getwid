@@ -3,17 +3,15 @@
 */
 import attributes from './attributes';
 import GetwidCustomQueryControl from 'GetwidControls/custom-query-control'; //Custom Post Type
-import GetwidCustomPostTemplateControl from 'GetwidControls/custom-post-template-control'; //Custom Post Template
+import { TemplateSelectControl } from 'GetwidControls/post-template-select';
 
 
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
 	Component,
-	Fragment,
 } = wp.element;
 const {
 	InspectorControls,
@@ -21,14 +19,13 @@ const {
 const {
 	SelectControl,
 	PanelBody,
-	RangeControl,
 	ToggleControl,
 	TextControl,
 	RadioControl,
 	BaseControl,
 	Button
 } = wp.components;
-
+const { serverSideRender: ServerSideRender } = wp;
 
 /**
 * Create an Inspector Controls
@@ -100,6 +97,7 @@ export default class Inspector extends Component {
 				sliderSlidesToScroll,
 				sliderAutoplay,
 				sliderAutoplaySpeed,
+				sliderPauseOnHover,
 				sliderInfinite,
 				sliderAnimationSpeed,
 				sliderCenterMode,
@@ -163,21 +161,22 @@ export default class Inspector extends Component {
 
 				<PanelBody title={ __( 'Display Settings', 'getwid' ) } initialOpen={false}>
 
-					<GetwidCustomPostTemplateControl
-						setValues={ setAttributes }
-						values={{
-							postTemplate,
-						}}
-						// callbackOn={['postTemplate']}
-						onChangeCallback={ (value, element) => {
-							// debugger;
-						} }
+					<TemplateSelectControl
+						selectedTemplate={ postTemplate }
+						onSelect={ ( templateID ) => setAttributes( { postTemplate: templateID } ) }
+						previewRender={
+							( templateID ) => (
+								<ServerSideRender
+									block='getwid/post-carousel'
+									attributes={ { ...this.props.attributes, postTemplate: templateID } }
+								/>
+							)
+						}
 					/>
-
 					<TextControl
 						label={__( 'Slides on Desktop', 'getwid' )}
+						help={__( 'Works with the Slide effect only. Specifies the number of slides displayed at once. Applies to screens wider than 991 pixels.', 'getwid' )}
 						type='number'
-						//value={parseInt(sliderSlidesToShowDesktop, 10)}
 						value={sliderSlidesToShowDesktop}
 						onChange={ value => setAttributes( { sliderSlidesToShowDesktop: value.toString() } )}
 						min={1}
@@ -187,6 +186,7 @@ export default class Inspector extends Component {
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
 						label={__('Slides on Laptop', 'getwid')}
+						help={__( 'Applies to screens between 768 and 991 pixels wide.', 'getwid' )}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowLaptop, 10)}
 						min={1}
@@ -197,6 +197,7 @@ export default class Inspector extends Component {
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
 						label={__('Slides on Tablet', 'getwid')}
+						help={__( 'Applies to screens between 468 and 768 pixels wide.', 'getwid' )}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowTablet, 10)}
 						min={1}
@@ -207,6 +208,7 @@ export default class Inspector extends Component {
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
 						label={__('Slides on Mobile', 'getwid')}
+						help={__( 'Applies to screens up to 468 pixels wide.', 'getwid' )}
 						type={'number'}
 						value={parseInt(sliderSlidesToShowMobile, 10)}
 						min={1}
@@ -217,6 +219,7 @@ export default class Inspector extends Component {
 					<TextControl
 						disabled={(parseInt(sliderSlidesToShowDesktop, 10) > 1 ? null : true)}
 						label={__('Slides to Scroll', 'getwid')}
+						help={__( 'Specifies the number of slides that will scroll at once. Applies to screens wider than 991 pixels.', 'getwid' )}
 						type={'number'}
 						value={parseInt(sliderSlidesToScroll, 10)}
 						min={1}
@@ -227,6 +230,7 @@ export default class Inspector extends Component {
 
 					<ToggleControl
 						label={ __( 'Enable Slideshow', 'getwid' ) }
+						help={ __( 'Slideshow plays automatically.', 'getwid' ) }
 						checked={ sliderAutoplay }
 						onChange={ () => {
 							setAttributes( { sliderAutoplay: !sliderAutoplay } );
@@ -234,13 +238,23 @@ export default class Inspector extends Component {
 					/>
 					{!!sliderAutoplay &&
 						(
-							<TextControl
-								label={__('Slideshow Speed', 'getwid')}
-								type={'number'}
-								value={sliderAutoplaySpeed}
-								min={0}
-								onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
-							/>
+							<>
+								<TextControl
+									label={__('Slideshow Speed', 'getwid')}
+									type={'number'}
+									value={sliderAutoplaySpeed}
+									min={0}
+									onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
+								/>
+								<ToggleControl
+									label={__( 'Pause On Hover', 'getwid' )}
+									help={__( 'Pause the slideshow when the mouse cursor is over a slider.', 'getwid' )}
+									checked={sliderPauseOnHover}
+									onChange={() => {
+										setAttributes( { sliderPauseOnHover: ! sliderPauseOnHover } );
+									}}
+								/>
+							</>
 						)
 					}
 					<ToggleControl
@@ -259,6 +273,7 @@ export default class Inspector extends Component {
 					/>
 					<ToggleControl
 						label={ __( 'Center Mode', 'getwid' ) }
+						help={__( 'Displays slides centered, with partial previews of the previous and next slides. Use with odd numbered "Slides on ..." slides.', 'getwid' )}
 						checked={ sliderCenterMode }
 						onChange={ () => {
 							setAttributes( { sliderCenterMode: !sliderCenterMode } );

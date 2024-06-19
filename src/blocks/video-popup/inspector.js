@@ -120,37 +120,10 @@ export default class Inspector extends Component {
 							/>
 							<TextControl
 								label={__('Video URL', 'getwid')}
-								help={__('Link to Youtube, Vimeo or self-hosted video', 'getwid')}
+								help={__('Link to Youtube, Vimeo or self-hosted video. This video will be opened in a popup.', 'getwid')}
 								value={ link || '' }
 								onChange={ link => setAttributes({link}) }
 							/>
-							<SelectControl
-								label={__('Button Animation', 'getwid')}
-								value={buttonAnimation}
-								onChange={buttonAnimation => setAttributes({buttonAnimation})}
-								options={[
-									{value: 'none', label: __('None', 'getwid')},
-									{value: 'pulse', label: __('Pulse', 'getwid')},
-								]}
-							/>
-							{url && (
-								<Fragment>
-									<SelectControl
-										label={__('Image Animation', 'getwid')}
-										value={imageAnimation}
-										onChange={imageAnimation => setAttributes({imageAnimation})}
-										options={[
-											{value: 'none', label: __('None', 'getwid')},
-											{value: 'slide-left', label: __('Slide Left', 'getwid')},
-											{value: 'slide-right', label: __('Slide Right', 'getwid')},
-											{value: 'slide-top', label: __('Slide Top', 'getwid')},
-											{value: 'slide-bottom', label: __('Slide Bottom', 'getwid')},
-											{value: 'zoom-in', label: __('Zoom In', 'getwid')},
-											{value: 'zoom-out', label: __('Zoom Out', 'getwid')},
-										]}
-									/>
-								</Fragment>
-							)}
 						</PanelBody>
 					</Fragment>
 				)}
@@ -160,6 +133,7 @@ export default class Inspector extends Component {
 						<PanelBody initialOpen={true}>
 							<SelectControl
 								label={__('Button Style', 'getwid')}
+								help={__('Button appearance depend on whether the image is selected.', 'getwid')}
 								value={buttonStyle}
 								onChange={buttonStyle => setAttributes({buttonStyle})}
 								options={[
@@ -184,7 +158,7 @@ export default class Inspector extends Component {
 
 							{!url && (
 								<GetwidStyleLengthControl
-									label={__('Button Width', 'getwid')}
+									label={__('Button Maximum Width', 'getwid')}
 									value={buttonMaxWidth}
 									units={[
 										{label: 'px', value: 'px'},
@@ -195,6 +169,16 @@ export default class Inspector extends Component {
 									onChange={buttonMaxWidth => setAttributes({buttonMaxWidth})}
 								/>
 							)}
+
+							<SelectControl
+								label={__('Button Animation', 'getwid')}
+								value={buttonAnimation}
+								onChange={buttonAnimation => setAttributes({buttonAnimation})}
+								options={[
+									{value: 'none', label: __('None', 'getwid')},
+									{value: 'pulse', label: __('Pulse', 'getwid')},
+								]}
+							/>
 
 							{url && (
 								<Fragment>
@@ -217,6 +201,20 @@ export default class Inspector extends Component {
 											{label: '%', value: '%'}
 										]}
 										onChange={minHeight => setAttributes({minHeight})}
+									/>
+									<SelectControl
+										label={__('Image Animation', 'getwid')}
+										value={imageAnimation}
+										onChange={imageAnimation => setAttributes({imageAnimation})}
+										options={[
+											{value: 'none', label: __('None', 'getwid')},
+											{value: 'slide-left', label: __('Slide Left', 'getwid')},
+											{value: 'slide-right', label: __('Slide Right', 'getwid')},
+											{value: 'slide-top', label: __('Slide Top', 'getwid')},
+											{value: 'slide-bottom', label: __('Slide Bottom', 'getwid')},
+											{value: 'zoom-in', label: __('Zoom In', 'getwid')},
+											{value: 'zoom-out', label: __('Zoom Out', 'getwid')},
+										]}
 									/>
 								</Fragment>
 							)}

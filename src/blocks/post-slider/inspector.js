@@ -4,31 +4,26 @@
 import attributes from './attributes';
 import GetwidStyleLengthControl from 'GetwidControls/style-length-control';
 import GetwidCustomQueryControl from 'GetwidControls/custom-query-control'; //Custom Post Type
-import GetwidCustomPostTemplateControl from 'GetwidControls/custom-post-template-control'; //Custom Post Template
-
+import { TemplateSelectControl } from 'GetwidControls/post-template-select';
 /**
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const {jQuery: $} = window;
 const {
 	Component,
-	Fragment
 } = wp.element;
 const {
 	InspectorControls,
-	PanelColorSettings
 } = wp.blockEditor || wp.editor;
 const {
-	SelectControl,
 	PanelBody,
-	RangeControl,
 	ToggleControl,
 	TextControl,
 	RadioControl,
 	BaseControl,
 	Button
 } = wp.components;
+const { serverSideRender: ServerSideRender } = wp;
 
 
 /**
@@ -88,6 +83,7 @@ export default class Inspector extends Component {
 				//Slider
 				sliderAnimationEffect,
 				sliderAutoplay,
+				sliderPauseOnHover,
 				sliderAutoplaySpeed,
 				sliderInfinite,
 				sliderAnimationSpeed,
@@ -143,6 +139,19 @@ export default class Inspector extends Component {
 				</PanelBody>
 				<PanelBody title={ __('Display Settings', 'getwid') } initialOpen={false}>
 
+					<TemplateSelectControl
+						selectedTemplate={ postTemplate }
+						onSelect={ ( templateID ) => setAttributes( { postTemplate: templateID } ) }
+						previewRender={
+							( templateID ) => (
+								<ServerSideRender
+									block='getwid/post-slider'
+									attributes={ { ...this.props.attributes, postTemplate: templateID } }
+								/>
+							)
+						}
+					/>
+
 					<GetwidStyleLengthControl
 						label={__('Slider Minimum Height', 'getwid')}
 						value={minHeight}
@@ -153,17 +162,6 @@ export default class Inspector extends Component {
 							{label: '%', value: '%'}
 						]}
 						onChange={minHeight => setAttributes({minHeight})}
-					/>
-
-					<GetwidCustomPostTemplateControl
-						setValues={ setAttributes }
-						values={{
-							postTemplate,
-						}}
-						// callbackOn={['postTemplate']}
-						onChangeCallback={ (value, element) => {
-							// debugger;
-						} }
 					/>
 
 					<RadioControl
@@ -178,6 +176,7 @@ export default class Inspector extends Component {
 
 					<ToggleControl
 						label={ __( 'Enable Slideshow', 'getwid' ) }
+						help={ __( 'Slideshow plays automatically.', 'getwid' ) }
 						checked={ sliderAutoplay }
 						onChange={ () => {
 							setAttributes( { sliderAutoplay: !sliderAutoplay } );
@@ -185,13 +184,23 @@ export default class Inspector extends Component {
 					/>
 					{!!sliderAutoplay &&
 						(
-							<TextControl
-								label={__('Slideshow Speed', 'getwid')}
-								type={'number'}
-								value={sliderAutoplaySpeed}
-								min={0}
-								onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
-							/>
+							<>
+								<TextControl
+									label={__('Slideshow Speed', 'getwid')}
+									type={'number'}
+									value={sliderAutoplaySpeed}
+									min={0}
+									onChange={sliderAutoplaySpeed => setAttributes({sliderAutoplaySpeed})}
+								/>
+								<ToggleControl
+									label={__( 'Pause On Hover', 'getwid' )}
+									help={__( 'Pause the slideshow when the mouse cursor is over a slider.', 'getwid' )}
+									checked={sliderPauseOnHover}
+									onChange={() => {
+										setAttributes( { sliderPauseOnHover: ! sliderPauseOnHover } );
+									}}
+								/>
+							</>
 						)
 					}
 					<ToggleControl

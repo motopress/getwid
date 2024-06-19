@@ -68,6 +68,14 @@ class RestAPI {
 			),
 			'schema' => array( $this, 'templates_schema' )
 		) );
+
+		register_rest_route( $this->_namespace, '/get_meta_keys', array(
+			array(
+				'methods' => 'POST',
+				'callback' => [ $this, 'get_meta_keys' ],
+				'permission_callback' => [ $this, 'permissions_check' ],
+			)
+		) );
 	}
 
 	public function permissions_check( $request ) {
@@ -291,6 +299,46 @@ class RestAPI {
 			}
 		}
 		return $return;
+	}
+
+	public function get_meta_keys( $request ) {
+
+		$params = $request->get_params();
+		unset( $params['metaQuery'] );
+
+		$args = getwid_build_custom_post_type_query( $params );
+		$args['fields'] = 'ids';
+
+		if ( $args['posts_per_page'] > 100 ) {
+			$args['posts_per_page'] = 100;
+		}
+
+		$posts = get_posts( $args );
+
+		$meta_keys_to_skip = [ '_oembed', '_edit_lock', '_edit_last', '_wp_old_slug', '_wxr' ];
+		$meta_keys = [];
+		foreach ( $posts as $postID ) {
+			foreach ( get_post_meta( $postID, '', true ) as $meta_key => $value ) {
+
+				if ( in_array( $meta_key, $meta_keys ) ) {
+					continue;
+				}
+
+				$should_skip =	false;
+				foreach( $meta_keys_to_skip as $skip ) {
+					if ( 0 === strpos( $meta_key, $skip ) ) {
+						$should_skip = true;
+						break;
+					}
+				}
+
+				if ( ! $should_skip ) {
+					$meta_keys[] = $meta_key;
+				}
+			}
+		}
+
+		return array_values( $meta_keys );
 	}
 
 	private function content_url_is_valid( $url ) {

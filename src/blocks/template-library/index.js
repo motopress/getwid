@@ -46,11 +46,8 @@ function addToolbarButton() {
 
 				if ( ! $('#editor').find('#getwid-layout-insert-button').length ) {
 
-					if ( $('.edit-post-header-toolbar__left').length ) {
-
-						$('.edit-post-header-toolbar__left').append(libraryButton);
-
-					}
+					$('.edit-post-header-toolbar__left')?.append(libraryButton);
+					$('.editor-document-tools__left')?.append(libraryButton);
 
 				}
 			}, 100 );

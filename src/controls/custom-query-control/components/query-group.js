@@ -27,24 +27,24 @@ class GroupComponent extends Component {
 
 	render() {
 
-		const { query, parentQuery, controlClassPrefix, getControlState, setControlState } = this.props;
+		const { query, parentQuery, possibleMetaKeys, updateMetaQuery } = this.props;
 
 		const nestedLevelComponent = ( query.children || [] ).map( ( childQuery, index) => {
 			if ( childQuery.children ) {
 				return <GroupComponent
+					key={ index }
 					query={ childQuery }
 					parentQuery={ query }
-					getControlState={ getControlState }
-					setControlState={ setControlState }
-					controlClassPrefix={ controlClassPrefix }
+					possibleMetaKeys={ possibleMetaKeys }
+					updateMetaQuery={ updateMetaQuery }
 				/>
 			} else if ( ! childQuery.children ) {
 				return <ConditionComponent
+					key={ index }
 					query={ childQuery }
 					parentQuery={ query }
-					controlClassPrefix={ controlClassPrefix }
-					getControlState={ getControlState }
-					setControlState={ setControlState }
+					possibleMetaKeys={ possibleMetaKeys }
+					updateMetaQuery={ updateMetaQuery }
 				/>
 			}
 		} );
@@ -57,7 +57,7 @@ class GroupComponent extends Component {
 				type:         '',
 			} );
 
-			setControlState( { metaScheme: getControlState( 'metaScheme' ) } );
+			updateMetaQuery();
 		}
 
 		const addGroup = () => {
@@ -66,21 +66,21 @@ class GroupComponent extends Component {
 				children: []
 			} );
 
-			setControlState( { metaScheme: getControlState( 'metaScheme' ) } );
+			updateMetaQuery();
 		}
 
 		const removeGroup = () => {
 			const index  = parentQuery.children.indexOf( query );
 			parentQuery.children.splice( index, 1 );
 
-			setControlState( { metaScheme: getControlState( 'metaScheme' ) } );
+			updateMetaQuery();
 		}
 
 		return (
-			<div className={ [ `${controlClassPrefix}__custom-condition` ] }>
-				<div className={ [ `${controlClassPrefix}__group` ] }>
+			<div className="components-getwid-custom-query-control__custom-condition">
+				<div className="components-getwid-custom-query-control__group">
 					<SelectControl
-						className={ [ `${controlClassPrefix}__custom-relation` ] }
+						className="components-getwid-custom-query-control__custom-relation"
 						value={ ( this.state.relation ) }
 						onChange={ value => {
 							query.relation = value;
@@ -93,7 +93,8 @@ class GroupComponent extends Component {
 					/>
 					{ query !== parentQuery && (
 						<Button
-							className={ [ `${controlClassPrefix}__custom-query--btn-close` ] }
+							label={ __( 'Remove Group', 'getwid' ) }
+							className="components-getwid-custom-query-control__custom-query--btn-close"
 							onClick={ removeGroup }
 							icon={ 'no-alt' }
 							iconSize={ 14 }
@@ -102,7 +103,7 @@ class GroupComponent extends Component {
 				</div>
 				{ nestedLevelComponent }
 				<ButtonGroup
-					className={ [ `${controlClassPrefix}__custom-btn-condition` ] }
+					className="components-getwid-custom-query-control__custom-btn-condition"
 				>
 					<Button
 						isSecondary

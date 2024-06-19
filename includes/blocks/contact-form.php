@@ -230,7 +230,9 @@ class ContactForm extends \Getwid\Blocks\AbstractBlock {
 
     private function send_mail( $data ) {
 
-        $to = get_option( 'admin_email' );
+        $default_recipient = get_option( 'admin_email' );
+        $recipient = get_option( 'getwid_contact_form_recipient_email', '' );
+        $to = $recipient != '' ? $recipient : $default_recipient;
 
         $subject = esc_html__( 'Contact Form', 'getwid' );
 

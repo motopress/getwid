@@ -44,7 +44,8 @@ class Inspector extends Component {
 						step={1}
 					/>
 					<CheckboxControl
-						label="Animate"
+						label={ __( 'Animate', 'getwid' ) }
+						help={ __( 'Progress bar animates when it becomes visible on screen.', 'getwid' ) }
 						checked={(isAnimated === 'true' ? true : false)}
 						onChange={value => {
 							setAttributes({ isAnimated: value ? 'true' : 'false' })

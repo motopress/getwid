@@ -17,7 +17,7 @@ import './editor.scss';
 * WordPress dependencies
 */
 const { compose } = wp.compose;
-const { Component } = wp.element;
+const { Component, createRef } = wp.element;
 const { ToolbarGroup, ToolbarDropdownMenu, TextControl, Button, Placeholder } = wp.components;
 const { RichText, BlockControls, BlockIcon, withColors } = wp.blockEditor || wp.editor;
 
@@ -737,7 +737,7 @@ class GetwidTable extends Component {
 			<Placeholder
 				label={ __( 'Table', 'getwid' ) }
 				icon={ <BlockIcon icon={ 'editor-table' } showColors /> }
-				instructions={ __( 'Hint: Hold Ctrl key to select multiple cells. Hold Shift key to select range.', 'getwid' ) }
+				instructions={ __( 'Hint: Hold Ctrl/Cmd key to select multiple cells. Hold Shift key to select range.', 'getwid' ) }
 			>
 				<form
 					className={ `${baseClass}__placeholder-form` }
@@ -1021,22 +1021,6 @@ class GetwidTable extends Component {
 		}
 	}
 
-	onCellSelect(cell) {
-		const { updated } = this.state;
-		if ( !updated ) {
-			const { minColIdx, maxColIdx } = this.table.getIndices( cell.section, cell.rowIdx, cell.columnIdx );
-
-			this.setState({
-				selectedCell: {
-					...cell,
-					minColIdx: minColIdx,
-					maxColIdx: maxColIdx
-				},
-				selectedSection: cell.section
-			});
-		}
-	}
-
 	renderSection(section) {
 		const {
 			baseClass,
@@ -1054,6 +1038,7 @@ class GetwidTable extends Component {
 				{ cells.map( (element, cIndex) => {
 					const Tag = isEqual( section, 'head' ) ? 'th' : 'td';
 					const { content, colSpan, rowSpan, styles } = element;
+					const editableContentRef = createRef();
 
 					const cell = {
 						rowIdx: rIndex,
@@ -1104,7 +1089,7 @@ class GetwidTable extends Component {
 										toMaxColIdx: maxColIdx,
 										section: section
 									});
-								} else if ( event.ctrlKey ) {
+								} else if ( event.ctrlKey || event.metaKey ) {
 									const multiCells = multiSelected ? multiSelected : [];
 
 									if ( multiCells.length && !isEqual( multiCells[0].section, section ) ) {
@@ -1125,7 +1110,15 @@ class GetwidTable extends Component {
 										selectedCell: null
 									});
 								} else {
+									editableContentRef.current?.focus();
+
 									this.setState({
+										selectedCell: {
+											...cell,
+											minColIdx: minColIdx,
+											maxColIdx: maxColIdx
+										},
+										selectedSection: cell.section,
 										rangeSelected: {
 											fromCell: {
 												fromRowIdx: rIndex,
@@ -1148,8 +1141,7 @@ class GetwidTable extends Component {
 								className={ `${baseClass}__cell` }
 								value={ content }
 								onChange={ value => this.onUpdateTableContent( value ) }
-								unstableOnFocus={ () => this.onCellSelect( cell ) }
-								onFocus={ () => this.onCellSelect( cell ) }
+								ref={ editableContentRef }
 								allowedFormats={ selectedCell
 									? allowedFormats
 									: []

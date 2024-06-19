@@ -34,10 +34,6 @@
 
 	.components-modal__content {
 		padding: 0 16px 16px;
-
-		.components-modal__header {
-			margin: 0 -24px 16px #{'/*rtl: 0 */'};
-		}
 	}
 
 	.getwid-modal-editor-tabs {
@@ -255,7 +251,7 @@
 	display: flex;
 	align-items: flex-end;
 	flex-wrap: wrap;
-	margin: -16px -16px 16px -16px;
+	margin: 0 -16px 16px -16px;
 	padding: 24px 16px 16px;
 	background: #f3f4f5;
 	border-bottom: 1px solid #e2e4e7;

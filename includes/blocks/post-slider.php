@@ -103,6 +103,10 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
                         'type' => 'boolean',
                         'default' => false
                     ),
+                    'sliderPauseOnHover' => array(
+                        'type' => 'boolean',
+                        'default' => false
+                    ),
                     'sliderAutoplaySpeed' => array(
                         'type' => 'string',
                         'default' => '6000'
@@ -335,6 +339,7 @@ class PostSlider extends \Getwid\Blocks\AbstractBlock {
         $sliderData = array(
             'getwid_fade_effect' => $attributes['sliderAnimationEffect'],
             'getwid_autoplay' => $attributes['sliderAutoplay'],
+            'getwid_pause_on_hover' => $attributes['sliderPauseOnHover'],
             'getwid_autoplay_speed' => intval($attributes['sliderAutoplaySpeed']),
             'getwid_infinite' => $attributes['sliderInfinite'],
             'getwid_animation_speed' => intval($attributes['sliderAnimationSpeed']),
