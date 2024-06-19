@@ -133,7 +133,7 @@ export default class Inspector extends Component {
 						<PanelBody initialOpen={true}>
 							<SelectControl
 								label={__('Button Style', 'getwid')}
-								help={__('Button styles depend on whether the image is selected.', 'getwid')}
+								help={__('Button appearance depend on whether the image is selected.', 'getwid')}
 								value={buttonStyle}
 								onChange={buttonStyle => setAttributes({buttonStyle})}
 								options={[

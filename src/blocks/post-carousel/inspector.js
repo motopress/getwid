@@ -175,7 +175,7 @@ export default class Inspector extends Component {
 					/>
 					<TextControl
 						label={__( 'Slides on Desktop', 'getwid' )}
-						help={__( 'Works with Slide effect only. Specifies the number of slides displayed at once. Applies to screens wider than 991 pixels.', 'getwid' )}
+						help={__( 'Works with the Slide effect only. Specifies the number of slides displayed at once. Applies to screens wider than 991 pixels.', 'getwid' )}
 						type='number'
 						value={sliderSlidesToShowDesktop}
 						onChange={ value => setAttributes( { sliderSlidesToShowDesktop: value.toString() } )}
@@ -230,7 +230,7 @@ export default class Inspector extends Component {
 
 					<ToggleControl
 						label={ __( 'Enable Slideshow', 'getwid' ) }
-						help={ __( 'Enables automatic slide transitions.', 'getwid' ) }
+						help={ __( 'Slideshow plays automatically.', 'getwid' ) }
 						checked={ sliderAutoplay }
 						onChange={ () => {
 							setAttributes( { sliderAutoplay: !sliderAutoplay } );
@@ -248,7 +248,7 @@ export default class Inspector extends Component {
 								/>
 								<ToggleControl
 									label={__( 'Pause On Hover', 'getwid' )}
-									help={__( 'Pause slideshow when mouse is over slider.', 'getwid' )}
+									help={__( 'Pause the slideshow when the mouse cursor is over a slider.', 'getwid' )}
 									checked={sliderPauseOnHover}
 									onChange={() => {
 										setAttributes( { sliderPauseOnHover: ! sliderPauseOnHover } );
@@ -273,7 +273,7 @@ export default class Inspector extends Component {
 					/>
 					<ToggleControl
 						label={ __( 'Center Mode', 'getwid' ) }
-						help={__( 'Enables centered view with partial previous/next slides. Use with odd numbered "Slides on ..." counts.', 'getwid' )}
+						help={__( 'Displays slides centered, with partial previews of the previous and next slides. Use with odd numbered "Slides on ..." slides.', 'getwid' )}
 						checked={ sliderCenterMode }
 						onChange={ () => {
 							setAttributes( { sliderCenterMode: !sliderCenterMode } );

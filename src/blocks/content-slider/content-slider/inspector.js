@@ -73,7 +73,7 @@ class Inspector extends Component {
 					<Notice>{ __( 'These options are applied on frontend only.', 'getwid' ) }</Notice>
 					<ToggleControl
 						label={ __( 'Enable Slideshow', 'getwid' ) }
-						help={ __( 'Enables automatic slide transitions.', 'getwid' ) }
+						help={ __( 'Slideshow plays automatically.', 'getwid' ) }
 						checked={ autoplay }
 						onChange={ () => {
 							setAttributes( { autoplay: !autoplay } );
@@ -81,7 +81,7 @@ class Inspector extends Component {
 					/>
 					{ autoplay && <ToggleControl
 						label={ __( 'Pause On Hover', 'getwid' ) }
-						help={__( 'Pause slideshow when mouse is over slider.', 'getwid' )}
+						help={__( 'Pause the slideshow when the mouse cursor is over a slider.', 'getwid' )}
 						checked={ pauseOnHover }
 						onChange={ () => {
 							setAttributes( { pauseOnHover: !pauseOnHover } );
@@ -89,7 +89,7 @@ class Inspector extends Component {
 					/> }
 					<ToggleControl
 						label={ __( 'Infinite', 'getwid' ) }
-						help={ __( 'Enables infinite loop sliding.', 'getwid' ) }
+						help={ __( 'Slideshow plays on repeat.', 'getwid' ) }
 						checked={ infinite }
 						onChange={ () => {
 							setAttributes( { infinite: !infinite } );
@@ -97,7 +97,7 @@ class Inspector extends Component {
 					/>
 					<ToggleControl
 						label={ __( 'Center Mode', 'getwid' ) }
-						help={ __( 'Enables centered view with partial previous/next slides. Use with odd numbered "Slides to show" counts.', 'getwid' ) }
+						help={ __( 'Displays slides centered, with partial previews of the previous and next slides. Use with odd numbered "Slides to show" slides.', 'getwid' ) }
 						checked={ centerMode }
 						onChange={ () => {
 							setAttributes( { centerMode: !centerMode } );
@@ -105,7 +105,7 @@ class Inspector extends Component {
 					/>
 					<ToggleControl
 						label={ __( 'Adaptive Height', 'getwid' ) }
-						help={ __( 'Enables adaptive height for single slide horizontal carousels.', 'getwid' ) }
+						help={ __( 'Automatically adjusts height for single-slide horizontal carousels.', 'getwid' ) }
 						checked={ adaptiveHeight }
 						onChange={ () => {
 							setAttributes( { adaptiveHeight: !adaptiveHeight } );

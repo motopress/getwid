@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Getwid 2.0.5\n"
+"Project-Id-Version: Getwid 2.0.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getwid\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-12T18:01:09+03:00\n"
+"POT-Creation-Date: 2024-06-19T11:38:05+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: getwid\n"
@@ -112,50 +112,50 @@ msgid "Circular Progress Bar"
 msgstr ""
 
 #: includes/blocks/contact-form.php:22
-#: includes/blocks/contact-form.php:235
+#: includes/blocks/contact-form.php:237
 #: assets/js/editor.blocks.js:23
 msgid "Contact Form"
 msgstr ""
 
 #. translators: %s is email subject
-#: includes/blocks/contact-form.php:240
+#: includes/blocks/contact-form.php:242
 msgid "Contact Form: %s"
 msgstr ""
 
 #. translators: %s is a blogname
-#: includes/blocks/contact-form.php:252
+#: includes/blocks/contact-form.php:254
 msgid "This e-mail was sent from a contact form on %s"
 msgstr ""
 
-#: includes/blocks/contact-form.php:266
+#: includes/blocks/contact-form.php:268
 msgid "Thank you for your message. It has been sent."
 msgstr ""
 
-#: includes/blocks/contact-form.php:273
+#: includes/blocks/contact-form.php:275
 msgid "There was an error trying to send your message. Please try again later."
 msgstr ""
 
-#: includes/blocks/contact-form.php:306
+#: includes/blocks/contact-form.php:308
 msgid "The request is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:312
+#: includes/blocks/contact-form.php:314
 msgid "The secret parameter is missing."
 msgstr ""
 
-#: includes/blocks/contact-form.php:318
+#: includes/blocks/contact-form.php:320
 msgid "Please check the captcha."
 msgstr ""
 
-#: includes/blocks/contact-form.php:324
+#: includes/blocks/contact-form.php:326
 msgid "The secret parameter is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:330
+#: includes/blocks/contact-form.php:332
 msgid "The response parameter is invalid or malformed."
 msgstr ""
 
-#: includes/blocks/contact-form.php:336
+#: includes/blocks/contact-form.php:338
 msgid "The response is no longer valid: either is too old or has been used previously."
 msgstr ""
 
@@ -192,12 +192,12 @@ msgstr ""
 msgid "Posts navigation"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:284
+#: includes/blocks/custom-post-type.php:286
 msgctxt "Previous post"
 msgid "<"
 msgstr ""
 
-#: includes/blocks/custom-post-type.php:285
+#: includes/blocks/custom-post-type.php:287
 msgctxt "Next post"
 msgid ">"
 msgstr ""
@@ -249,8 +249,8 @@ msgstr ""
 
 #: includes/blocks/instagram.php:147
 #: includes/instagram-token-manager.php:97
-#: includes/rest-api.php:201
-#: includes/rest-api.php:231
+#: includes/rest-api.php:209
+#: includes/rest-api.php:239
 msgid "Error in json_decode."
 msgstr ""
 
@@ -297,12 +297,12 @@ msgstr ""
 msgid "Person"
 msgstr ""
 
-#: includes/blocks/post-carousel.php:185
+#: includes/blocks/post-carousel.php:189
 #: assets/js/editor.blocks.js:23
 msgid "Post Carousel"
 msgstr ""
 
-#: includes/blocks/post-slider.php:173
+#: includes/blocks/post-slider.php:177
 #: assets/js/editor.blocks.js:23
 msgid "Post Slider"
 msgstr ""
@@ -399,7 +399,7 @@ msgid "An error occurred while updating Instagram access token: %s"
 msgstr ""
 
 #: includes/post-template-part.php:23
-#: includes/settings-page.php:26
+#: includes/settings-page.php:38
 msgid "Post Templates"
 msgstr ""
 
@@ -442,7 +442,7 @@ msgstr ""
 msgid "No templates found in Trash"
 msgstr ""
 
-#: includes/rest-api.php:214
+#: includes/rest-api.php:222
 msgid "Please provide a valid URL."
 msgstr ""
 
@@ -450,152 +450,166 @@ msgstr ""
 msgid "Full Size"
 msgstr ""
 
-#: includes/settings-page.php:23
+#: includes/settings-page.php:24
 #: assets/js/editor.blocks.js:6
 msgid "General"
 msgstr ""
 
-#: includes/settings-page.php:24
+#: includes/settings-page.php:26
+msgid "Contact Form Settings"
+msgstr ""
+
+#: includes/settings-page.php:30
 msgid "Appearance"
 msgstr ""
 
-#: includes/settings-page.php:25
+#: includes/settings-page.php:34
 msgid "Blocks"
 msgstr ""
 
-#: includes/settings-page.php:33
+#: includes/settings-page.php:47
 msgctxt "Settings page title"
 msgid "Getwid Settings"
 msgstr ""
 
-#: includes/settings-page.php:34
+#: includes/settings-page.php:48
 msgctxt "Settings page title(in menu)"
 msgid "Getwid"
 msgstr ""
 
-#: includes/settings-page.php:93
+#: includes/settings-page.php:116
 msgid "Save Changes"
 msgstr ""
 
-#: includes/settings-page.php:106
+#: includes/settings-page.php:129
 msgid "Instagram: access token updated."
 msgstr ""
 
-#: includes/settings-page.php:114
+#: includes/settings-page.php:137
 msgid "Instagram: access denied."
 msgstr ""
 
-#: includes/settings-page.php:163
+#: includes/settings-page.php:186
 msgid "Section Content Width"
 msgstr ""
 
-#: includes/settings-page.php:169
+#: includes/settings-page.php:192
 #: assets/js/editor.blocks.js:23
 msgid "Animation"
 msgstr ""
 
-#: includes/settings-page.php:175
+#: includes/settings-page.php:198
 msgid "Performance Optimization"
 msgstr ""
 
-#: includes/settings-page.php:183
+#: includes/settings-page.php:206
 msgid "Instagram Access Token"
 msgstr ""
 
-#: includes/settings-page.php:189
+#: includes/settings-page.php:212
 msgid "Instagram Cache Timeout"
 msgstr ""
 
-#: includes/settings-page.php:195
+#: includes/settings-page.php:218
 #: assets/js/editor.blocks.js:23
 msgid "Google Maps API Key"
 msgstr ""
 
-#: includes/settings-page.php:201
+#: includes/settings-page.php:224
+msgid "Recipient Email Address"
+msgstr ""
+
+#: includes/settings-page.php:230
 msgid "Recaptcha Site Key"
 msgstr ""
 
-#: includes/settings-page.php:207
+#: includes/settings-page.php:236
 msgid "Recaptcha Secret Key"
 msgstr ""
 
-#: includes/settings-page.php:213
+#: includes/settings-page.php:242
 #: assets/js/editor.blocks.js:23
 msgid "Mailchimp API Key"
 msgstr ""
 
-#: includes/settings-page.php:219
+#: includes/settings-page.php:248
 msgid "Disable Getwid Blocks"
 msgstr ""
 
-#: includes/settings-page.php:237
+#: includes/settings-page.php:266
 msgctxt "pixels"
 msgid "px"
 msgstr ""
 
-#: includes/settings-page.php:238
+#: includes/settings-page.php:267
 msgid "Default width of the content area in the Section block. Leave empty to use $content_width set in your theme. Set 0 to disable this option and control it via CSS."
 msgstr ""
 
-#: includes/settings-page.php:262
+#. translators: %s is username or user id
+#: includes/settings-page.php:307
+#: includes/settings-page.php:315
+msgid "Account: %s"
+msgstr ""
+
+#: includes/settings-page.php:331
 #: assets/js/editor.blocks.js:23
 msgid "Connect Instagram Account"
 msgstr ""
 
-#: includes/settings-page.php:268
+#: includes/settings-page.php:337
 msgid "Refresh Access Token"
 msgstr ""
 
-#: includes/settings-page.php:281
+#: includes/settings-page.php:350
 msgid "Time until expiration of media data in minutes. Setting to 0 means no expiration."
 msgstr ""
 
 #. translators: %1$s, %2$s is a number of total and disabled blocks
-#: includes/settings-page.php:327
+#: includes/settings-page.php:406
 msgid "Total: %1$s, Disabled: %2$s"
 msgstr ""
 
-#: includes/settings-page.php:332
+#: includes/settings-page.php:411
 msgid "Select All"
 msgstr ""
 
-#: includes/settings-page.php:334
+#: includes/settings-page.php:413
 msgid "Deselect All"
 msgstr ""
 
-#: includes/settings-page.php:365
+#: includes/settings-page.php:444
 msgid "Post Templates are used for presenting posts in a certain format and style. You can change how a post looks by choosing a post template in the Custom Post Type and related blocks."
 msgstr ""
 
-#: includes/settings-page.php:366
+#: includes/settings-page.php:445
 msgid "Manage Post Templates"
 msgstr ""
 
-#: includes/settings-page.php:377
+#: includes/settings-page.php:456
 msgid "Enable smooth animation of blocks"
 msgstr ""
 
-#: includes/settings-page.php:380
+#: includes/settings-page.php:459
 msgid "Hides block until the entrance animation starts. Prevents possible occurrence of horizontal scroll during the animation."
 msgstr ""
 
-#: includes/settings-page.php:394
+#: includes/settings-page.php:473
 msgid "Load CSS and JS of blocks on demand"
 msgstr ""
 
-#: includes/settings-page.php:397
+#: includes/settings-page.php:476
 msgid "If this option is on, all CSS and JS files of blocks will be loaded on demand in footer. This will reduce the amount of heavy assets on the page."
 msgstr ""
 
-#: includes/settings-page.php:403
+#: includes/settings-page.php:482
 msgid "Aggregate all CSS files of blocks in header"
 msgstr ""
 
-#: includes/settings-page.php:406
+#: includes/settings-page.php:485
 msgid "If this option is on, all CSS files of blocks will be moved to header for better theme compatibility. If your theme has custom styling for Getwid blocks, its styles will be applied first."
 msgstr ""
 
-#: includes/settings-page.php:410
+#: includes/settings-page.php:489
 msgid "These settings may break some blocks in posts loaded via Ajax. These settings may not work together with optimization plugins."
 msgstr ""
 
@@ -657,6 +671,7 @@ msgid "Mobile"
 msgstr ""
 
 #: assets/js/editor.blocks.js:6
+#: assets/js/editor.blocks.js:23
 msgid "Reset All"
 msgstr ""
 
@@ -754,6 +769,11 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:6
 #: assets/js/editor.blocks.js:23
+msgid "Reset"
+msgstr ""
+
+#: assets/js/editor.blocks.js:6
+#: assets/js/editor.blocks.js:23
 msgid "50%"
 msgstr ""
 
@@ -788,11 +808,6 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:6
 msgid "Slider Height"
-msgstr ""
-
-#: assets/js/editor.blocks.js:6
-#: assets/js/editor.blocks.js:23
-msgid "Reset"
 msgstr ""
 
 #: assets/js/editor.blocks.js:6
@@ -1465,33 +1480,8 @@ msgid "Custom Field Filter"
 msgstr ""
 
 #: assets/js/editor.blocks.js:6
-msgid "Meta Query Builder"
-msgstr ""
-
-#: assets/js/editor.blocks.js:6
-msgid "Close"
-msgstr ""
-
-#: assets/js/editor.blocks.js:6
 #: assets/js/editor.blocks.js:23
-msgid "Update"
-msgstr ""
-
-#: assets/js/editor.blocks.js:6
-#: assets/js/editor.blocks.js:23
-msgid "Edit"
-msgstr ""
-
-#: assets/js/editor.blocks.js:6
-msgid "New"
-msgstr ""
-
-#: assets/js/editor.blocks.js:6
-msgid "View All"
-msgstr ""
-
-#: assets/js/editor.blocks.js:6
-msgid "Reset to default"
+msgid "Select Template"
 msgstr ""
 
 #: assets/js/editor.blocks.js:6
@@ -1578,14 +1568,6 @@ msgid "Google Fonts"
 msgstr ""
 
 #: assets/js/editor.blocks.js:6
-msgid "Select Font Family"
-msgstr ""
-
-#: assets/js/editor.blocks.js:6
-msgid "Loading…"
-msgstr ""
-
-#: assets/js/editor.blocks.js:6
 msgid "Font Weight"
 msgstr ""
 
@@ -1605,6 +1587,18 @@ msgstr ""
 #: assets/js/editor.blocks.js:6
 #: assets/js/editor.blocks.js:23
 msgid "ID"
+msgstr ""
+
+#: assets/js/editor.blocks.js:6
+msgid "Remove Group"
+msgstr ""
+
+#: assets/js/editor.blocks.js:6
+msgid "Add Condition"
+msgstr ""
+
+#: assets/js/editor.blocks.js:6
+msgid "Add Group"
 msgstr ""
 
 #: assets/js/editor.blocks.js:6
@@ -2065,6 +2059,14 @@ msgid "Bottom Divider Color"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "Set the default width of the content area in Getwid Settings."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Getwid Settings"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "Content Area Width"
 msgstr ""
 
@@ -2074,22 +2076,6 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Custom Width"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Set the default width of the content area in Getwid Settings."
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Getwid Settings"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Hide Help"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Show Help"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -2110,6 +2096,18 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Huge"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Content Area Alignment"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Vertical Alignment"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Horizontal Alignment"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -2377,23 +2375,11 @@ msgid "Slider Minimum Height"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Overlay Opacity"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Text Color"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Text Animation"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Very Slow"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
 msgid "Slider Settings"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "These options are applied on frontend only."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -2401,7 +2387,15 @@ msgid "Enable Slideshow"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "Slideshow plays automatically."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "Pause On Hover"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Pause the slideshow when the mouse cursor is over a slider."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -2422,6 +2416,22 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Dots"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Text Color"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Overlay Opacity"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Text Animation"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Very Slow"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -2501,7 +2511,7 @@ msgid "Infinite"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Image Settings"
+msgid "Slideshow plays on repeat."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -2509,7 +2519,7 @@ msgid "Slides on Desktop"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Works with Slide effect only."
+msgid "Works with the Slide effect only. Specifies the number of slides displayed at once. Applies to screens wider than 991 pixels."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -2517,7 +2527,15 @@ msgid "Slides on Laptop"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "Applies to screens between 768 and 991 pixels wide."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "Slides on Tablet"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Applies to screens between 468 and 768 pixels wide."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -2525,7 +2543,15 @@ msgid "Slides on Mobile"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Slides to Scroll"
+msgid "Applies to screens up to 468 pixels wide."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Slides to Scroll on Desktop"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Specifies the number of slides that will scroll at once. Applies to screens wider than 991 pixels."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -2537,7 +2563,15 @@ msgid "Center Mode"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "Displays slides centered, with partial previews of the previous and next slides. Use with odd numbered \"Slides on ...\" slides."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "Variable Width"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Allows slides to have different widths."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -2817,15 +2851,15 @@ msgid "Longitude"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "Update"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "Delete"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Zoom & Pan Interaction"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "These options are applied on frontend only."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3073,6 +3107,18 @@ msgid "Heading 1"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "Select Font Family"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Loading…"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "%d of %d"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "Align Image Left"
 msgstr ""
 
@@ -3138,10 +3184,6 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Add Icon"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Horizontal Alignment"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3217,6 +3259,14 @@ msgid "Value"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "Animate"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Progress bar animates when it becomes visible on screen."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "Progress Color"
 msgstr ""
 
@@ -3226,10 +3276,6 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Thickness"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Animate"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3250,10 +3296,6 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "End"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Smooth Animation"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3292,6 +3334,10 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Farsi"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Smooth Animation"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3352,11 +3398,7 @@ msgid "Display Settings"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Add Condition"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Add Group"
+msgid "Slides to Scroll"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3364,7 +3406,59 @@ msgid "Key"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "There are no suggestions for this query."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "Compare"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Remove Condition"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Add Value"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Remove Value"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Meta Query Builder"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Close"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Create Template"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Use Default Template"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "View All Templates"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Reload Templates"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Apply"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Edit"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "No templates found."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3417,10 +3511,6 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Alignment"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Vertical Alignment"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3584,19 +3674,15 @@ msgid "Video URL"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Link to Youtube, Vimeo or self-hosted video"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Button Animation"
-msgstr ""
-
-#: assets/js/editor.blocks.js:23
-msgid "Image Animation"
+msgid "Link to Youtube, Vimeo or self-hosted video. This video will be opened in a popup."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Button Style"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Button appearance depend on whether the image is selected."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3605,6 +3691,18 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Button Size"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Button Maximum Width"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Button Animation"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Image Animation"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3620,11 +3718,11 @@ msgid "tooltip"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Drop Point"
+msgid "Duplicate"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Duplicate"
+msgid "Drop Point"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3728,6 +3826,10 @@ msgid "Justify"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "Time"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "Years"
 msgstr ""
 
@@ -3796,11 +3898,11 @@ msgid "Timeline Block"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Insert Template"
+msgid "Block Alignment"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "No templates found."
+msgid "Insert Template"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3816,7 +3918,7 @@ msgid "Choose a template from the library."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
-msgid "Hint: Hold Ctrl key to select multiple cells. Hold Shift key to select range."
+msgid "Hint: Hold Ctrl/Cmd key to select multiple cells. Hold Shift key to select range."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3952,11 +4054,27 @@ msgid "Add Slide"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "Displays slides centered, with partial previews of the previous and next slides. Use with odd numbered \"Slides to show\" slides."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "Adaptive Height"
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
+msgid "Automatically adjusts height for single-slide horizontal carousels."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
 msgid "Draggable"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Enable mouse dragging."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Applies to screens wider than 991 pixels."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23
@@ -3965,6 +4083,14 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Slides to Show"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Specifies the number of slides displayed at once."
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Specifies the number of slides that will scroll at once."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23

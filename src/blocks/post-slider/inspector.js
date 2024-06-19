@@ -176,7 +176,7 @@ export default class Inspector extends Component {
 
 					<ToggleControl
 						label={ __( 'Enable Slideshow', 'getwid' ) }
-						help={ __( 'Enables automatic slide transitions.', 'getwid' ) }
+						help={ __( 'Slideshow plays automatically.', 'getwid' ) }
 						checked={ sliderAutoplay }
 						onChange={ () => {
 							setAttributes( { sliderAutoplay: !sliderAutoplay } );
@@ -194,7 +194,7 @@ export default class Inspector extends Component {
 								/>
 								<ToggleControl
 									label={__( 'Pause On Hover', 'getwid' )}
-									help={__( 'Pause slideshow when mouse is over slider.', 'getwid' )}
+									help={__( 'Pause the slideshow when the mouse cursor is over a slider.', 'getwid' )}
 									checked={sliderPauseOnHover}
 									onChange={() => {
 										setAttributes( { sliderPauseOnHover: ! sliderPauseOnHover } );

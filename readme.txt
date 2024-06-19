@@ -225,10 +225,10 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 2.0.9, Jun 17 2024 =
-* Added ability to set recipient email address in the Contact Form block.
-* Added meta key selector helper.
-* Added preview for templates in the Custom Post Type, Post Slider, Post Carousel blocks.
+= 2.0.9, Jun 19 2024 =
+* Added the ability to set the recipient email address in the Contact Form block.
+* Added the meta key selector helper.
+* Added preview for templates in the Custom Post Type, Post Slider, and Post Carousel blocks.
 * Minor bugfixes and improvements.
 
 = 2.0.8, Apr 26 2024 =
