@@ -3,7 +3,6 @@
 */
 import classnames from 'classnames';
 import './editor.scss';
-import Inspector from './inspector';
 
 /**
 * WordPress dependencies
