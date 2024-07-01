@@ -44,7 +44,7 @@ function addToolbarButton() {
 				let libraryButton = `<button id="getwid-layout-insert-button" type="button" data-toolbar-item="true" aria-expanded="false"
 					class="components-button">${ __( 'Template Library', 'getwid' ) }</button>`;
 
-				if ( ! $('#editor').find('#getwid-layout-insert-button').length ) {
+				if ( $('#getwid-layout-insert-button').length <= 0 ) {
 
 					$('.edit-post-header-toolbar__left')?.append(libraryButton);
 					$('.editor-document-tools__left')?.append(libraryButton);
