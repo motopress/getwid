@@ -40,9 +40,7 @@ class Inspector extends Component {
 					<TextControl
 						label={__( 'Mailchimp API Key', 'getwid' )}
 						value={getData( 'checkApiKey' )}
-						onChange={value => {
-							changeData({ checkApiKey: value });
-						}}
+						onChange={ () => false }
 					/>
 					{ requestError && (
 						<p><span className={`${baseClass}__message`}>{`Error for site owner: ${requestError}`}</span></p>
@@ -62,7 +60,6 @@ class Inspector extends Component {
 								isSecondary
 								onClick={
 									event => {
-										changeData( { checkApiKey: '' } );
 										manageMailchimpApiKey( event, 'delete' );
 									}
 								}
