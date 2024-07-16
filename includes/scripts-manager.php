@@ -30,8 +30,6 @@ class ScriptsManager {
 		// section_content_width inline styles
 		add_action( 'after_theme_setup', [ $this, 'enqueue_editor_section_css' ] );
 
-		add_action( 'wp_footer', [ $this, 'localizeFrontend' ] );
-
 		// Register frontend styles
 		add_action( 'wp_footer', [ $this, 'wp_late_enqueue_scripts' ] );
 	}
@@ -270,9 +268,7 @@ class ScriptsManager {
 			$this->version,
 			true
 		);
-	}
 
-	public function localizeFrontend() {
 		wp_localize_script(
 			"{$this->prefix}-blocks-frontend-js",
 			'Getwid',
