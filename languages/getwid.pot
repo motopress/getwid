@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Getwid 2.0.9\n"
+"Project-Id-Version: Getwid 2.0.11\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getwid\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-19T11:38:05+03:00\n"
+"POT-Creation-Date: 2024-07-16T14:52:03+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: getwid\n"
@@ -207,6 +207,11 @@ msgstr ""
 msgid "Google Maps"
 msgstr ""
 
+#: includes/blocks/google-map.php:71
+#: includes/blocks/mailchimp.php:200
+msgid "You are not allowed to perform this action. Please contact the administrator."
+msgstr ""
+
 #: includes/blocks/icon-box.php:34
 #: assets/js/editor.blocks.js:23
 msgid "Icon Box"
@@ -275,15 +280,15 @@ msgstr ""
 msgid "Last name"
 msgstr ""
 
-#: includes/blocks/mailchimp.php:318
+#: includes/blocks/mailchimp.php:324
 msgid "Email is required."
 msgstr ""
 
-#: includes/blocks/mailchimp.php:322
+#: includes/blocks/mailchimp.php:328
 msgid "An invalid Mailchimp list was provided."
 msgstr ""
 
-#: includes/blocks/mailchimp.php:378
+#: includes/blocks/mailchimp.php:384
 msgid "Thank you for joining our mailing list."
 msgstr ""
 
