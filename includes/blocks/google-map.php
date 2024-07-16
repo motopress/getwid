@@ -67,6 +67,10 @@ class GoogleMap extends \Getwid\Blocks\AbstractBlock {
             wp_send_json_error();
         }
 
+        if ( ! current_user_can( 'manage_options' ) && in_array( $action, [ 'set', 'delete' ] ) ) {
+            wp_send_json_error( esc_html__( 'You are not allowed to perform this action. Please contact the administrator.', 'getwid' ) );
+        }
+
         $response = false;
         if ($action == 'get') {
             $response = get_option( 'getwid_google_api_key', '');
