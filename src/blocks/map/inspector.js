@@ -404,7 +404,6 @@ class Inspector extends Component {
 										disabled={((getState('checkApiKey') != '') ? null : true)}
 										onClick={
 											(event) => {
-												removeGoogleAPIScript();
 												manageGoogleAPIKey(event, 'set');
 											}
 										}
@@ -416,10 +415,7 @@ class Inspector extends Component {
 										isSecondary
 										onClick={
 											(event) => {
-												changeState('checkApiKey', '');
-												changeState('googleApiKey', '');
 												manageGoogleAPIKey(event, 'delete');
-												removeGoogleAPIScript();
 											}
 										}
 									>
@@ -430,6 +426,7 @@ class Inspector extends Component {
 							<BaseControl>
 								<ExternalLink href="https://developers.google.com/maps/documentation/embed/get-api-key">{__('Get your key.', 'getwid')}</ExternalLink>
 							</BaseControl>
+							{ getState( 'error' ) && ( <p>{ getState( 'error' ) }</p> ) }
 						</PanelBody>
 
 					</Fragment>

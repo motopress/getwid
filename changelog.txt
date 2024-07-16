@@ -1,3 +1,9 @@
+= 2.0.4, Jan 08 2024 =
+* Fixed an issue with the Accordion, Toggle, Tabs, Icon, Section blocks that may cause errors in the widgets editor.
+
+= 2.0.3, Nov 17 2023 =
+* Improved email formatting for contact form submissions.
+
 = 2.0.2, Oct 27 2023 =
 * Added Instagram Access Token encryption.
 

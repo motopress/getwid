@@ -182,14 +182,27 @@ class Edit extends Component {
 			'nonce': Getwid.nonces.google_api_key
 		};
 
-		if (option == 'set'){
-			Getwid.settings.google_api_key = this.getState('checkApiKey');
-			this.addGoogleAPIScript();
-		} else if (option == 'delete'){
-			Getwid.settings.google_api_key = '';
-		}
-
-		jQuery.post(Getwid.ajax_url, data, function(response) {});
+		jQuery.post(Getwid.ajax_url, data, ( response ) => {
+			if ( ! response.success ) {
+				this.changeState( 'error', response.data );
+			} else {
+				switch ( option ) {
+					case 'set':
+						Getwid.settings.google_api_key = this.getState('checkApiKey');
+						this.removeGoogleAPIScript();
+						this.addGoogleAPIScript();
+						break;
+					case 'delete':
+						Getwid.settings.google_api_key = '';
+						this.removeGoogleAPIScript();
+						this.setState( {
+							checkApiKey: '',
+							googleApiKey: '',
+						} );
+						break;
+				}
+			}
+		} );
 	}
 
 	enterGoogleAPIKeyForm() {
@@ -211,6 +224,7 @@ class Edit extends Component {
 						{__('Save API Key', 'getwid')}
 					</Button>
 				</div>
+				{ this.state.error && ( <span className="form-description">{ this.state.error }</span> ) }
 				<div ref={ this.mapRef }></div>
 			</form>
 		);

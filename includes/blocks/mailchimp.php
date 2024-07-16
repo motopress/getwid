@@ -196,32 +196,38 @@ class MailChimp extends \Getwid\Blocks\AbstractBlock {
 
         $option = sanitize_text_field( wp_unslash( $_POST[ 'option' ] ) );
 
-        $api_key = sanitize_text_field( wp_unslash( $_POST[ 'data' ][ 'api_key' ] ) );
+        if ( ! current_user_can( 'manage_options' ) && ! in_array( $option, [ 'sync', 'load' ] ) ) {
+            wp_send_json_error( esc_html__( 'You are not allowed to perform this action. Please contact the administrator.', 'getwid' ) );
+        }
 
-        if ( $option == 'save' || $option == 'sync' ) {
-            if ( ! empty( $api_key ) ) {
+        switch ( $option ) {
+            case 'save':
+                $api_key = sanitize_text_field( wp_unslash( $_POST[ 'data' ][ 'api_key' ] ) );
                 update_option( 'getwid_mailchimp_api_key', $api_key );
+                break;
+            case 'delete':
+                delete_option( 'getwid_mailchimp_api_key' );
+                delete_option( 'audiences_list_chash' );
+                wp_send_json_success();
+                die();
+                break;
+        }
 
-                try {
-                    $this->mailchimp = new MC( $api_key );
-                } catch ( \Exception $exception ) {
-                    wp_send_json_error( $exception->getMessage() );
-                }
+        if ( ! isset( $api_key ) ) {
+            $api_key = get_option( 'getwid_mailchimp_api_key', '' );
+        }
 
-                $sync = false;
-                if ( $option == 'sync' ) {
-                    $sync = true;
+        if ( ! empty( $api_key ) ) {
 
-                    $this->get_lists();
-                }
-
-                $chash = $this->get_account_subscribe_lists( $sync );
-
-                wp_send_json_success( $chash );
+            try {
+                $this->mailchimp = new MC( $api_key );
+            } catch ( \Exception $exception ) {
+                wp_send_json_error( $exception->getMessage() );
             }
-        } elseif ( $option == 'delete' ) {
-            delete_option( 'getwid_mailchimp_api_key' );
-            delete_option( 'audiences_list_chash'     );
+
+            $maybe_cached = $this->get_account_subscribe_lists( $option === 'sync' );
+
+            wp_send_json_success( $maybe_cached );
         }
     }
 

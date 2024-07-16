@@ -59,7 +59,6 @@ class GetwidSubscribeForm extends Component {
 			mailchimpApiKey: Getwid.settings.mailchimp_api_key != '' ? Getwid.settings.mailchimp_api_key   : '',
 			checkApiKey    : Getwid.settings.mailchimp_api_key != '' ? Getwid.settings.mailchimp_api_key   : '',
 
-			firstInit: false,
 			waitLoadList: true,
 			error: '',
 			list: []
@@ -77,7 +76,7 @@ class GetwidSubscribeForm extends Component {
 	renderMailchimpApiKeyForm() {
 		const { baseClass } = this.props;
 		return (
-			<form className={`${baseClass}__key-form`} onSubmit={ event => this.manageMailchimpApiKey( event, 'sync')}>
+			<form className={`${baseClass}__key-form`} onSubmit={ event => this.manageMailchimpApiKey( event, 'save' ) }>
 				<span className={'form-title'}>{__( 'Mailchimp API key.', 'getwid' )} <a href='https://mailchimp.com/help/about-api-keys/#Find_or_Generate_Your_API_Key' target='_blank'>{__( 'Get your key.', 'getwid' )}</a></span>
 
 				<div className={'form-wrapper'}>
@@ -94,6 +93,7 @@ class GetwidSubscribeForm extends Component {
 						{__( 'Save API Key', 'getwid' )}
 					</Button>
 				</div>
+				{ this.state.error && ( <span className="form-description">{ this.state.error }</span> ) }
 			</form>
 		);
 	}
@@ -115,31 +115,37 @@ class GetwidSubscribeForm extends Component {
 			'nonce' : Getwid.nonces.mailchimp_api_key
 		};
 
-		if ( option == 'sync' || option == 'save' ) {
-			Getwid.settings.mailchimp_api_key = getData( 'checkApiKey' );
+		changeData( { waitLoadList: true } );
 
-			const { waitLoadList } = this.state;
-			if ( ! waitLoadList ) {
-				changeData( { waitLoadList: true } );
-			}
+		$.post( Getwid.ajax_url, data, response => {
+			changeData( { waitLoadList: false } );
 
-			$.post( Getwid.ajax_url, data, response => {
-				changeData( { waitLoadList: false } );
-
-				( ! response.success ) ? changeData( {
+			if ( ! response.success ) {
+				changeData( {
 					error: response.data,
-					list: []
-				} ) : changeData( {
-					error: '',
-					list: response.data,
-				} );
-			} );
-			changeData( { firstInit: true } );
-
-		} else if ( option == 'delete' ) {
-			Getwid.settings.mailchimp_api_key = '';
-			$.post( Getwid.ajax_url, data );
-		}
+				} )
+			} else {
+				switch ( option ) {
+					case 'save':
+						Getwid.settings.mailchimp_api_key = getData( 'checkApiKey' );
+					case 'sync':
+					case 'save':
+					case 'load':
+						changeData( {
+							error: '',
+							list: response.data,
+						} );
+						break;
+					case 'delete':
+						Getwid.settings.mailchimp_api_key = '';
+						changeData( {
+							error: '',
+							checkApiKey: '',
+						} );
+						break;
+				}
+			}
+		} );
 	}
 
 	setGroupsName() {
@@ -168,7 +174,7 @@ class GetwidSubscribeForm extends Component {
 
 	componentDidMount() {
 		if ( Getwid.settings.mailchimp_api_key != '' ) {
-			this.manageMailchimpApiKey( null, 'save' );
+			this.manageMailchimpApiKey( null, 'load' );
 		}
 	}
 
