@@ -1,5 +1,7 @@
 .wp-block-getwid-table {
-	td, th {
+
+	td,
+	th {
 		border: 1px solid #eee;
 
 		&.selected {
@@ -33,7 +35,7 @@
 	}
 }
 
-.edit-post-sidebar .components-getwid-border-control {
+.components-getwid-border-control {
 	.components-getwid-border-group {
 		display: flex;
 		flex-wrap: wrap;

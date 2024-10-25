@@ -23,18 +23,18 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 
 			//Register JS/CSS assets
 			wp_register_script(
-				'fancybox',
-				getwid_get_plugin_url( 'vendors/fancybox/jquery.fancybox.min.js' ),
+				'mp-fancybox',
+				getwid_get_plugin_url( 'vendors/mp-fancybox/jquery.fancybox.min.js' ),
 				[ 'jquery' ],
-				'3.5.7',
+				'3.5.7-mp.1',
 				true
 			);
 
 			wp_register_style(
-				'fancybox',
-				getwid_get_plugin_url( 'vendors/fancybox/jquery.fancybox.min.css' ),
+				'mp-fancybox',
+				getwid_get_plugin_url( 'vendors/mp-fancybox/jquery.fancybox.min.css' ),
 				[],
-				'3.5.7'
+				'3.5.7-mp.1'
 			);
 		}
     }
@@ -49,8 +49,8 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
         //jquery.fancybox.min.css
-		if ( ! is_admin() && ! in_array( 'fancybox', $styles ) ) {
-            array_push( $styles, 'fancybox' );
+		if ( ! is_admin() && ! in_array( 'mp-fancybox', $styles ) ) {
+            array_push( $styles, 'mp-fancybox' );
         }
 
         return $styles;
@@ -62,9 +62,9 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
             return;
         }
 
-        //jquery.fancybox.min.js
-		if ( ! wp_script_is( 'fancybox', 'enqueued' ) ) {
-            wp_enqueue_script('fancybox');
+		//jquery.fancybox.min.js
+		if ( ! wp_script_is( 'mp-fancybox', 'enqueued' ) ) {
+            wp_enqueue_script('mp-fancybox');
         }
 
 		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
@@ -72,12 +72,12 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 		}
 
 		$deps = [
-			'fancybox'
+			'mp-fancybox',
 		];
 
 		add_filter( 'getwid/optimize/assets',
 			function ( $assets ) {
-				$assets[] = 'fancybox';
+				$assets[] = 'mp-fancybox';
 				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
 
 				return $assets;
@@ -101,7 +101,10 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 		wp_enqueue_script(
             self::$blockName,
             getwid_get_plugin_url( 'assets/blocks/video-popup/frontend.js' ),
-            [ 'jquery', 'fancybox' ],
+            [
+				'jquery',
+				'mp-fancybox'
+			],
             getwid()->settings()->getVersion(),
             true
         );
