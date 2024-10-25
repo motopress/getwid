@@ -18,7 +18,7 @@
 				//Add init class
 				$(this).addClass('getwid-init');
 
-				$(this).find('.wp-block-getwid-video-popup__link').fancybox({
+				$(this).find('.wp-block-getwid-video-popup__link').mpFancybox({
 					baseClass: 'getwid-video-popup'
 				});
 			});
