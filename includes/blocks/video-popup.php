@@ -26,7 +26,7 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 				'mp-fancybox',
 				getwid_get_plugin_url( 'vendors/mp-fancybox/jquery.fancybox.min.js' ),
 				[ 'jquery' ],
-				'3.5.7',
+				'3.5.7-mp.1',
 				true
 			);
 
@@ -34,7 +34,7 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 				'mp-fancybox',
 				getwid_get_plugin_url( 'vendors/mp-fancybox/jquery.fancybox.min.css' ),
 				[],
-				'3.5.7'
+				'3.5.7-mp.1'
 			);
 		}
     }
