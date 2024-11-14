@@ -3,9 +3,9 @@ Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf, ai, openai, chatgpt
 Requires at least: 5.8
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 2.0.12
+Stable tag: 2.0.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -225,6 +225,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 2.0.13, Nov 14 2024 =
+* Minor bugfixes and improvements.
+
 = 2.0.12, Oct 25 2024 =
 * Minor bugfixes and improvements.
 
@@ -239,17 +242,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Added the meta key selector helper.
 * Added preview for templates in the Custom Post Type, Post Slider, and Post Carousel blocks.
 * Minor bugfixes and improvements.
-
-= 2.0.8, Apr 26 2024 =
-* Minor bugfixes and improvements.
-
-= 2.0.7, Mar 29 2024 =
-* Fixed an issue where pagination in post-based blocks didn't work correctly on the static front page.
-
-= 2.0.6, Mar 20 2024 =
-* Improved Contact Form block - added Group and Columns to allowed child blocks list.
-* Minor bugfixes and improvements.
-
 
 --------
 
