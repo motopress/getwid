@@ -38,7 +38,9 @@ class Edit extends Component {
 
 		this.state = {
 			tokenIsset: Getwid.settings.instagram_token_isset,
-			getTokenURL: 'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state='+Getwid.get_instagram_token_url
+			getTokenURL: 'https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=0&client_id=1815611002603068&redirect_uri=' +
+				'https://api.getmotopress.com/get_instagram_token2.php&scope=instagram_business_basic&response_type=code&state=' + 
+				Getwid.get_instagram_token_url
 		};
 	}
 

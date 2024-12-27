@@ -326,14 +326,14 @@ class SettingsPage {
 
 		?>
         <p><a href="<?php echo esc_url(
-			'https://api.instagram.com/oauth/authorize?client_id=910186402812397&redirect_uri=' .
-			'https://api.getmotopress.com/get_instagram_token.php&scope=user_profile,user_media&response_type=code&state=' .
+			'https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=0&client_id=1815611002603068&redirect_uri=' .
+			'https://api.getmotopress.com/get_instagram_token2.php&scope=instagram_business_basic&response_type=code&state=' .
 			$connectURL ); ?>" class="button button-default"><?php echo esc_html__( 'Connect Instagram Account', 'getwid' );?></a>
 		<?php
 		if ( ! empty( $field_val) ) {
 			?>
 			<a href="<?php echo esc_url(
-				'https://api.getmotopress.com/refresh_instagram_token.php?access_token=' . $field_val . '&state=' .
+				'https://api.getmotopress.com/refresh_instagram_token2.php?access_token=' . $field_val . '&state=' .
 				$refreshURL ); ?>" class="button button-default"><?php echo esc_html__( 'Refresh Access Token', 'getwid' );?></a>
 			<?php
 		}

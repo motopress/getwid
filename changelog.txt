@@ -1,3 +1,21 @@
+= 2.0.13, Nov 14 2024 =
+* Minor bugfixes and improvements.
+
+= 2.0.12, Oct 25 2024 =
+* Minor bugfixes and improvements.
+
+= 2.0.11, Jul 16 2024 =
+* Minor bugfixes and improvements.
+
+= 2.0.10, Jul 01 2024 =
+* Minor bugfixes and improvements.
+
+= 2.0.9, Jun 19 2024 =
+* Added the ability to set the recipient email address in the Contact Form block.
+* Added the meta key selector helper.
+* Added preview for templates in the Custom Post Type, Post Slider, and Post Carousel blocks.
+* Minor bugfixes and improvements.
+
 = 2.0.5, Jan 12 2024 =
 * Improved the way to modify reCAPTCHA Site Key and Secret Key.
 * Improved Contact Form block - Google reCAPTCHA applied to all Contact Forms if Site Key and Secret Key are set.

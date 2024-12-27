@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 2.0.13
+Stable tag: 2.0.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -225,23 +225,8 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 2.0.13, Nov 14 2024 =
-* Minor bugfixes and improvements.
-
-= 2.0.12, Oct 25 2024 =
-* Minor bugfixes and improvements.
-
-= 2.0.11, Jul 16 2024 =
-* Minor bugfixes and improvements.
-
-= 2.0.10, Jul 01 2024 =
-* Minor bugfixes and improvements.
-
-= 2.0.9, Jun 19 2024 =
-* Added the ability to set the recipient email address in the Contact Form block.
-* Added the meta key selector helper.
-* Added preview for templates in the Custom Post Type, Post Slider, and Post Carousel blocks.
-* Minor bugfixes and improvements.
+= 2.0.14, Dec 27 2024 =
+* Resolved an issue with the Instagram widget. An Instagram Business account is required, and the app must be reauthorized to function properly.
 
 --------
 
