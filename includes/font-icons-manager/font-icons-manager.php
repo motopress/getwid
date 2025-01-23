@@ -71,7 +71,7 @@ class FontIconsManager {
 				'handle' => $this->getDefaultFontHandle(),
 				'src' => getwid_get_plugin_url( 'vendors/fontawesome-free/css/all.min.css' ),
 				'deps' => null,
-				'ver' => '5.5.0',
+				'ver' => '6.7.2',
 			]
 		);
 	}
