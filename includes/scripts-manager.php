@@ -73,35 +73,6 @@ class ScriptsManager {
 		return $sizes_arr;
 	}
 
-	public function load_locale_data() {
-		$locale_data = $this->get_locale_data( 'getwid' );
-		wp_add_inline_script(
-			'wp-i18n',
-			'wp.i18n.setLocaleData( ' . json_encode( $locale_data ) . ', "'. $this->prefix .'"  );'
-		);
-	}
-
-	public function get_locale_data( $domain ) {
-		$translations = get_translations_for_domain( $domain );
-
-		$locale = array(
-			'' => array(
-				'domain' => $domain,
-				'lang'   => is_admin() ? get_user_locale() : get_locale(),
-			),
-		);
-
-		if ( ! empty( $translations->headers[ 'Plural-Forms' ] ) ) {
-			$locale[ '' ][ 'plural_forms' ] = $translations->headers[ 'Plural-Forms' ];
-		}
-
-		foreach ( $translations->entries as $msgid => $entry ) {
-			$locale[ $msgid ] = $entry->translations;
-		}
-
-		return $locale;
-	}
-
 	/**
 	 * Enqueue editor-only js and css (Enqueue scripts (only on Edit Post Page))
 	 */
@@ -139,15 +110,12 @@ class ScriptsManager {
 			}
 		}
 
-		$this->load_locale_data();
-
 		wp_localize_script(
 			"{$this->prefix}-blocks-editor-js",
 			'Getwid',
 			apply_filters(
 				'getwid/editor_blocks_js/localize_data',
 				[
-					'localeData' => $this->get_locale_data( 'getwid' ),
 					'disabled_blocks' => $disabledBlocksData,
 					'settings' => [
 						'wide_support' => get_theme_support( 'align-wide' ),
@@ -193,6 +161,8 @@ class ScriptsManager {
 				]
 			)
 		);
+
+		wp_set_script_translations( "{$this->prefix}-blocks-editor-js", "getwid" );
 
 		$rtl = is_rtl() ? '.rtl' : '';
 		// Enqueue optional editor only styles
