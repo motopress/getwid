@@ -114,7 +114,7 @@ The Custom post type, Post slider, and Post carousel blocks can be extended with
 
 Our collection of extra WordPress blocks for Gutenberg page builder ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, services pages, portfolios, and make your overall transition to Gutenberg less stressful!
 
-It’s brought to you by MotoPress – a trusted WordPress developer with more than 10 years of experience in creating WordPress tools for content building, including our popular [WordPress Booking Plugins](https://motopress.com/products/category/wordpress-booking-plugins/).
+It's brought to you by MotoPress – a trusted WordPress developer with more than 10 years of experience in creating WordPress tools for content building, including our popular [WordPress Booking Plugins](https://motopress.com/products/category/wordpress-booking-plugins/).
 
 ### Optimized for WordPress Full Site Editing
 
