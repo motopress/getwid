@@ -50,15 +50,18 @@ function Edit( props ) {
 
         }, 150 );
 
-        document.getElementsByClassName( getScrollableClassName() )[0].addEventListener('scroll', () => {
+        if ( getScrollableClassName() ) {
 
-            if ( shouldIgnoreScroll ) {
-                shouldIgnoreScroll = false;
-            } else {
-                clearInterval( focus );
-            }
+            document.getElementsByClassName( getScrollableClassName() )[0].addEventListener('scroll', () => {
 
-        });
+                if ( shouldIgnoreScroll ) {
+                    shouldIgnoreScroll = false;
+                } else {
+                    clearInterval( focus );
+                }
+
+            });
+        }
 
         const fullContent = await makeStreamRequest( attributes.prompt );
         const blocks = parseBlocks( fullContent );

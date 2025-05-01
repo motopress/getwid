@@ -7,7 +7,6 @@ if ( !defined( 'ABSPATH' ) ) {
 require_once GETWID_PLUGIN_DIR . 'includes/assets-optimization.php';
 require_once GETWID_PLUGIN_DIR . 'includes/functions.php';
 require_once GETWID_PLUGIN_DIR . 'includes/block-actions.php';
-require_once GETWID_PLUGIN_DIR . 'includes/translation.php';
 require_once GETWID_PLUGIN_DIR . 'includes/settings.php';
 require_once GETWID_PLUGIN_DIR . 'includes/scripts-manager.php';
 require_once GETWID_PLUGIN_DIR . 'includes/font-icons-manager/font-icons-manager.php';

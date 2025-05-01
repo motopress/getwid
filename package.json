@@ -11,11 +11,6 @@
     "build:splitted": "cross-env BABEL_ENV=default NODE_ENV=production webpack -p --env.splitted=true & gulp build-splitted --minified",
     "dev:splitted": "gulp watch-splitted"
   },
-  "browserslist": [
-    "last 2 versions",
-    "IE 11",
-    "> 1%"
-  ],
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/runtime-corejs2": "^7.5.5",
