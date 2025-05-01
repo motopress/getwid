@@ -863,6 +863,10 @@ class Edit extends Component {
 				live: false,
 				mobile: false
 			}).init();
+
+		} else {
+
+			$(`${baseClass}-${clientId}`).show();
 		}
 	}
 

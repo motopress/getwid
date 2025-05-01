@@ -3,9 +3,9 @@ Contributors: MotoPress
 Donate link: https://motopress.com/
 Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gutenberg library, templates, page builder, section, google maps, mailchimp, acf, ai, openai, chatgpt
 Requires at least: 5.8
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 5.6
-Stable tag: 2.0.14
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -114,7 +114,7 @@ The Custom post type, Post slider, and Post carousel blocks can be extended with
 
 Our collection of extra WordPress blocks for Gutenberg page builder ships with a broad blocks bundle for the needs of business websites, startups, creative projects and a diversity of other niches. It enables you to create efficient landing pages, services pages, portfolios, and make your overall transition to Gutenberg less stressful!
 
-It's brought to you by MotoPress - a trusted WordPress developer with more than 7 years of experience in creating WordPress tools for content building.
+It's brought to you by MotoPress – a trusted WordPress developer with more than 10 years of experience in creating WordPress tools for content building, including our popular [WordPress Booking Plugins](https://motopress.com/products/category/wordpress-booking-plugins/).
 
 ### Optimized for WordPress Full Site Editing
 
@@ -224,6 +224,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 2.1.0, May 1 2025 =
+* Improved compatibility with WordPress 6.8.
 
 = 2.0.14, Dec 27 2024 =
 * Resolved an issue with the Instagram widget. An Instagram Business account is required, and the app must be reauthorized to function properly.

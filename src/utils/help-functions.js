@@ -77,51 +77,12 @@ export function scrollHandler(selector, element, execute) {
 
 export function getScrollableClassName() {
 
-	/*
-	 * 5.1
-	 * edit-post-layout__content
-	 *
-	 * 5.3
-	 * edit-post-layout__content
-	 *
-	 * 5.4
-	 * block-editor-editor-skeleton__content
-	 *
-	 * 5.5
-	 * interface-interface-skeleton__content
-	 */
+    if ( Getwid.editor_scrollable_element_class && $(`.${Getwid.editor_scrollable_element_class}`).length ) {
 
-	let editor;
+        return Getwid.editor_scrollable_element_class;
+    }
 
-	// wp5.1 - wp5.3
-	editor = $( '.edit-post-layout__content' );
-	if ( editor.length ) {
-		return 'edit-post-layout__content';
-	}
-
-	// wp5.4
-	editor = $( '.block-editor-editor-skeleton__content' );
-	if ( editor.length ) {
-		return 'block-editor-editor-skeleton__content';
-	}
-
-	// wp5.5+
-	editor = $( '.interface-interface-skeleton__content' );
-	if ( editor.length ) {
-        // in wp6.2 'editor' variable classList contains 2 classes
-		return 'interface-interface-skeleton__content';
-
-        // wp5.0 <> wp6.1 - 'editor' variable classList contains only 1 class
-        // return editor[0].className;
-	}
-
-	return false;
-
-	/*const $layoutContent = $( '.edit-post-layout__content' ).length ? $( '.edit-post-layout__content' ) : $( '.block-editor-editor-skeleton__content' );
-    const $editorRegionsContent = $( '.edit-post-editor-regions__content' );
-    return $layoutContent.length ? $layoutContent[ 0 ].className : $editorRegionsContent[ 0 ].className;
-	*/
-
+    return false;
 }
 
 export function createResizeObserver($parent, baseClass, callback) {
