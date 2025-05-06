@@ -5,12 +5,30 @@
 (function ($) {
 	$(document).ready(function (e) {
 
+		var getwid_window_hook = false;
+
 		//Init block loaded via AJAX
 		$(document.body).on('post-load', function (e) {
 			getwid_init_toggles();
 		});
 
 		var getwid_init_toggles = () => {
+			if( getwid_window_hook === false && $('.wp-block-getwid-toggle').length > 0 ) {
+				getwid_window_hook = true;
+
+				$(window).on('hashchange', function (e) {
+					if (window.location.hash) {
+						$('.wp-block-getwid-toggle.getwid-init .wp-block-getwid-toggle__row' + window.location.hash).each(function (index, row) {
+							var $row = $(row);
+
+							if ( ! $row.hasClass('is-active') ) {
+								$row.find('.wp-block-getwid-toggle__header-wrapper').trigger('click');
+							}
+						});
+					}
+				});
+			}
+
 			var getwid_toggles = $('.wp-block-getwid-toggle:not(.getwid-init)');
 
 			getwid_toggles.each(function (index, toggle) {
@@ -55,6 +73,10 @@
 						row.addClass('is-active');
 					}
 				});
+
+				if (window.location.hash) {
+					$(window).trigger('hashchange');
+				}
 			});
 		};
 

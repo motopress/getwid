@@ -5,12 +5,30 @@
 (function ($) {
 	$(document).ready(function (e) {
 
+		var getwid_window_hook = false;
+
 		//Init block loaded via AJAX
 		$(document.body).on('post-load', function (e) {
 			getwid_init_accordions();
 		});
 
 		var getwid_init_accordions = () => {
+			if( getwid_window_hook === false && $('.wp-block-getwid-accordion').length > 0 ) {
+				getwid_window_hook = true;
+
+				$(window).on('hashchange', function (e) {
+					if (window.location.hash) {
+						$('.wp-block-getwid-accordion.getwid-init .wp-block-getwid-accordion__header-wrapper' + window.location.hash).each(function (index, row) {
+							var $row = $(row);
+
+							if ( ! $row.hasClass('ui-accordion-header-active') ) {
+								$row.trigger('click');
+							}
+						});
+					}
+				});
+			}
+
 			var getwid_accordions = $('.wp-block-getwid-accordion:not(.getwid-init)'),
 				getwid_accordion_active = 0;
 
