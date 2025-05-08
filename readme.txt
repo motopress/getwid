@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 5.8
 Tested up to: 6.8
 Requires PHP: 5.6
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -224,6 +224,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 2.1.1, May 8 2025 =
+* Resolved an issue preventing points from being dropped on the image in the Image Hotspot block.
 
 = 2.1.0, May 1 2025 =
 * Improved compatibility with WordPress 6.8.
