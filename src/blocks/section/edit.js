@@ -15,7 +15,7 @@ import GetwidCustomDropdown from 'GetwidControls/custom-dropdown-control';
 
 import BackgroundSlider from './sub-components/slider';
 import { renderMediaControl as GetwidMediaControl } from 'GetwidUtils/render-inspector';
-import { getScrollableClassName, getYouTubeID } from 'GetwidUtils/help-functions';
+import { getYouTubeID } from 'GetwidUtils/help-functions';
 
 import Inspector from './inspector';
 
@@ -135,7 +135,9 @@ class Edit extends Component {
 
 		const sectionStyle = {
 			...(marginTop === 'custom' ? { marginTop: marginTopValue } : []),
-			...(marginBottom === 'custom' ? { marginBottom: marginBottomValue } : [])
+			...(marginBottom === 'custom' ? { marginBottom: marginBottomValue } : []),
+			'animation-duration': entranceAnimationDuration !== undefined ? entranceAnimationDuration : '2000ms',
+			'animation-delay': entranceAnimationDelay !== undefined ? entranceAnimationDelay : '500ms'
 		};
 
         const wrapperStyle = {
@@ -224,7 +226,6 @@ class Edit extends Component {
 			{
 				[ `has-inner-blocks-gap-${gapSize}` ]: gapSize   !== undefined && gapSize   !== '',
 				[ `getwid-margin-top-${marginTop}`  ]: marginTop !== 'custom'  && marginTop !== '',
-				[ `getwid-anim ${entranceAnimation}`]: !!entranceAnimation,
 
 				[ `getwid-margin-bottom-${marginBottom}`       ]: marginBottom    !== 'custom' && marginBottom    !== '',
 				[ `getwid-margin-tablet-top-${marginTopTablet}`]: marginTopTablet !== 'custom' && marginTopTablet !== '',
@@ -689,23 +690,21 @@ class Edit extends Component {
 	}
 
 	componentDidMount() {
-		const { entranceAnimation, youTubeVideoUrl } = this.props.attributes;
-
-		if ( !! entranceAnimation ) {
-			this.animate();
-		}
+		const { youTubeVideoUrl } = this.props.attributes;
 
 		if (youTubeVideoUrl && youTubeVideoUrl != ''){
 			this.initYouTubeVideo();
 		}
+
+		this.runEntranceAnimation();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const { entranceAnimation, entranceAnimationDuration, youTubeVideoUrl, backgroundVideoType, youTubeVideoMute, youTubeVideoLoop, youTubeVideoAutoplay } = this.props.attributes;
-		const { baseClass, clientId, isSelected } = this.props;
+		const { entranceAnimation, entranceAnimationDuration, entranceAnimationDelay, youTubeVideoUrl, backgroundVideoType } = this.props.attributes;
 
 		const prevEntranceAnimation = prevProps.attributes.entranceAnimation;
 		const prevEntranceAnimationDuration = prevProps.attributes.entranceAnimationDuration;
+		const prevEntranceAnimationDelay = prevProps.attributes.entranceAnimationDelay;
 		const prevYouTubeVideoUrl = prevProps.attributes.youTubeVideoUrl;
 		const prevBackgroundVideoType = prevProps.attributes.backgroundVideoType;
 
@@ -719,12 +718,17 @@ class Edit extends Component {
 		if ( !! entranceAnimation && (
 				prevEntranceAnimation !== entranceAnimation
 				|| prevEntranceAnimationDuration !== entranceAnimationDuration
+				|| prevEntranceAnimationDelay !== entranceAnimationDelay
 			)
 		) {
-			//WOW.js don't update animation-name style so reset it manually
-			$( `.${baseClass}-${clientId}` ).css( 'animation-name', '' );
+			if ( !! prevEntranceAnimation ) {
+				this.sectionRef.current.classList.remove( 'animated' );
+				this.sectionRef.current.classList.remove( prevEntranceAnimation );
+			}
 
-			this.animate();
+			setTimeout( () => {
+				this.runEntranceAnimation();
+			}, 100);
 		}
 
 		//Change YouTube URL
@@ -849,24 +853,18 @@ class Edit extends Component {
 		checkYouTubeScript();
 	}
 
-	animate() {
-		const {baseClass, clientId} = this.props;
+	runEntranceAnimation() {
+		const { entranceAnimation, entranceAnimationDuration, entranceAnimationDelay } = this.props.attributes;
 
-		const root = getScrollableClassName();
+		if ( !! entranceAnimation ) {
+			const timeout = parseInt( entranceAnimationDuration.slice(0, -2) ) + parseInt( entranceAnimationDelay.slice(0, -2) );
+			this.sectionRef.current.classList.add( 'animated' );
+			this.sectionRef.current.classList.add( entranceAnimation );
 
-		if ( root ) {
-
-			// Reinit wow only for current block
-			new WOW({
-				boxClass: `${baseClass}-${clientId}`,
-				scrollContainer: '.' + root,
-				live: false,
-				mobile: false
-			}).init();
-
-		} else {
-
-			$(`${baseClass}-${clientId}`).show();
+			setTimeout( () => {
+				this.sectionRef.current.classList.remove( 'animated' );
+				this.sectionRef.current.classList.remove( entranceAnimation );
+			}, timeout );
 		}
 	}
 

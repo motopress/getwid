@@ -2,8 +2,6 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import { isEqual } from 'lodash';
-import { isInViewport, scrollHandler, getScrollableClassName } from 'GetwidUtils/help-functions';
 import './editor.scss';
 
 /**
@@ -45,7 +43,7 @@ class Edit extends Component {
 
 		this.progressBarRef = createRef();
 
-		this.drawFrame  = this.drawFrame.bind( this );
+		this.animateProgress  = this.animateProgress.bind( this );
 		this.drawLinearBar  = this.drawLinearBar.bind( this );
 
 		this.state = {
@@ -54,13 +52,14 @@ class Edit extends Component {
 		}
 	}
 
-	drawFrame( $progressBar ) {
-		const { clientId } = this.props;
+	animateProgress( $progressBar ) {
 
 		const { baseClass } = this.props;
 		const { fillAmount } = this.props.attributes;
 
 		const percent = () => { return Math.round(( $progressBar.width()/$progressBar.parent().width() ) * 100); }
+
+		$progressBar.width( 0 );
 
 		$progressBar.animate({ width: `${fillAmount}%` }, {
 			duration: 2000,
@@ -81,20 +80,11 @@ class Edit extends Component {
 		const { baseClass } = this.props;
 		const { isAnimated, fillAmount } = this.props.attributes;
 
-		const currentDocument = this.progressBarRef.current.ownerDocument;
 		const thisBlock = $( this.progressBarRef.current );
 		const $bar = $( `.${baseClass}__progress`, thisBlock );
 
-		const root = getScrollableClassName();
-
 		if ( JSON.parse( isAnimated ) ) {
-			if ( isInViewport( $bar ) || root === false ) {
-				this.drawFrame( $bar );
-			} else {
-				scrollHandler( currentDocument.querySelector(`.${root}`) || currentDocument, $bar, () => {
-					this.drawFrame( $bar );
-				});
-			}
+			this.animateProgress( $bar );
 		} else {
 			$( `.${baseClass}__progress`, thisBlock ).css( 'width', `${fillAmount}%` );
 			$( `.${baseClass}__percent` , thisBlock ).text( `${fillAmount}%` );
@@ -106,13 +96,18 @@ class Edit extends Component {
 		if (prevProps.isSelected === this.props.isSelected) {
 
 			const { baseClass } = this.props;
-			const { fillAmount } = this.props.attributes;
+			const { fillAmount, isAnimated } = this.props.attributes;
 
 			const value = fillAmount ? fillAmount : '0';
 
-			if ( !isEqual( prevProps.attributes, this.props.attributes ) ) {
+			if ( prevProps.attributes.fillAmount !== fillAmount ) {
 				$( this.progressBarRef.current ).find(`.${baseClass}__progress`).css('width', `${value}%`);
 				$( this.progressBarRef.current ).find(`.${baseClass}__percent`).text(`${value}%`);
+			}
+
+			if ( prevProps.attributes.isAnimated !== isAnimated && isAnimated === 'true' ) {
+				const $bar = $( `.${baseClass}__progress`, this.progressBarRef.current );
+				this.animateProgress( $bar );
 			}
 		}
 	}

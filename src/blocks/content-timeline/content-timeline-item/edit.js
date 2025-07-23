@@ -4,13 +4,12 @@
 import { __ } from 'wp.i18n';
 
 import classnames from 'classnames';
-import { isEqual, get, pick } from 'lodash';
+import { get, pick } from 'lodash';
 
 /**
  * Internal dependencies
  */
 import Inspector from './inspector';
-import { createResizeObserver, getScrollableClassName } from 'GetwidUtils/help-functions';
 
 /**
 * WordPress dependencies
@@ -20,8 +19,6 @@ const { withSelect } = wp.data;
 const { Component, Fragment, createRef } = wp.element;
 const { ToolbarGroup, ToolbarButton } = wp.components;
 const { MediaUploadCheck, MediaUpload, BlockControls, InnerBlocks, RichText, getColorObjectByAttributeValues } = wp.blockEditor || wp.editor;
-
-const { jQuery: $ } = window;
 
 /**
 * Module Constants
@@ -105,24 +102,6 @@ class GetwidTimelineItem extends Component {
 		}
 	}
 
-	updateTimeLineView() {
-		const { updateLineHeight, updateBarHeight, setColorByScroll } = this.props;
-
-		updateLineHeight();
-
-		const { getBlock } = this.props;
-		const { rootClientId } = this.state;
-
-		const { filling } = getBlock( rootClientId ).attributes;
-
-		if ( JSON.parse( filling ) ) {
-			const $block = $( this.timelineItemRef.current.parentNode );
-
-			updateBarHeight( $block );
-			setColorByScroll( $block );
-		}
-	}
-
 	getColors() {
 		const { getSettings } = this.props;
 		const { outerParent } = this.props.attributes;
@@ -150,7 +129,10 @@ class GetwidTimelineItem extends Component {
 		const { outerParent } = this.props.attributes;
 
 		const itemClass = {
-			className: classnames( className, {
+			className: classnames(
+				className,
+				outerParent?.attributes?.animation,
+				{
 					'has-card-left' : cardPosition == 'left',
 					'has-card-right': cardPosition == 'right'
 				}
@@ -245,8 +227,8 @@ class GetwidTimelineItem extends Component {
 										templateLock={false}
 										templateInsertUpdatesSelection={false}
 										template={[
-											[ 'core/heading'  , { level: 3, placeholder: __( 'Write heading…', 'getwid' ) } ],
-											[ 'core/paragraph', { placeholder: __( 'Write text…'   , 'getwid' ) } ]
+											[ 'core/heading' , { level: 3, placeholder: __( 'Write heading…', 'getwid' ) } ],
+											[ 'core/paragraph', { placeholder: __( 'Write text…' , 'getwid' ) } ]
 										]}
 									/>
 								</div>
@@ -275,84 +257,12 @@ class GetwidTimelineItem extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		const { outerParent } = this.props.attributes;
+		const { marginBottom } = this.props.attributes.outerParent || {};
+		const { marginBottom: oldMarginBottom } = prevProps.attributes.outerParent || {};
 
-		if ( outerParent && prevProps.attributes.outerParent ) {
-			if ( ! isEqual( prevProps.attributes.outerParent.marginBottom, outerParent.attributes.marginBottom ) ) {
-
-				this.updateTimeLineView();
-			}
+		if ( marginBottom !== oldMarginBottom ) {
+			this.props.setScrollProgressPreview();
 		}
-	}
-
-	componentWillUnmount() {
-		const { baseClass, clientId } = this.props;
-
-		const $block = $( `#block-${clientId}` );
-		const $heightObserver = $block.find( `.${baseClass}__height-observer` );
-
-		$heightObserver.off();
-	}
-
-	componentDidMount() {
-
-		let scrolling = false;
-
-		const { baseClass } = this.props;
-
-		const $block = $( this.timelineItemRef.current );
-		const currentDocument = this.timelineItemRef.current.ownerDocument;
-		const currentWindow = currentDocument.defaultView;
-		const root = getScrollableClassName();
-
-		const $card  = $block.find( `.${baseClass}__card` );
-		const $point = $block.find( `.${baseClass}__point-content` );
-		const $meta  = $block.find( `.${baseClass}__meta` );
-
-		const { outerParent } = this.props.attributes;
-		const animation = outerParent ? outerParent.attributes.animation : 'none';
-
-		if ( $card[ 0 ].getBoundingClientRect().top > currentWindow.innerHeight * 0.8 && animation != 'none' ) {
-			$card .addClass( 'is-hidden' );
-			$meta .addClass( 'is-hidden' );
-			$point.addClass( 'is-hidden' );
-		}
-
-		const checkScroll = () => {
-			if ( $card.hasClass( 'is-hidden' ) && $card[ 0 ].getBoundingClientRect().top <= currentWindow.innerHeight * 0.8 ) {
-
-				$card .addClass( animation );
-				$meta .addClass( animation );
-				$point.addClass( 'bounce-in' );
-
-				$card .removeClass( 'is-hidden' );
-				$meta .removeClass( 'is-hidden' );
-				$point.removeClass( 'is-hidden' );
-			}
-			scrolling = false;
-		}
-
-		const $root = $( currentDocument.querySelector(`.${root}`) || currentDocument );
-
-		if ( animation != 'none' ) {
-			$root.on( 'scroll', () => {
-				if ( ! scrolling ) {
-					scrolling = true;
-
-					( ! currentWindow.requestAnimationFrame ) ? setTimeout(
-						() => checkScroll(), 250
-					) : currentWindow.requestAnimationFrame(
-						() => checkScroll()
-					);
-				}
-			} );
-		}
-
-		const $cardInner = $block.find( `.${baseClass}__card-wrapper` );
-
-		createResizeObserver( $cardInner, baseClass, () => {
-			this.updateTimeLineView();
-		} )
 	}
 }
 

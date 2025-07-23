@@ -2,10 +2,8 @@
 * External dependencies
 */
 import { __ } from 'wp.i18n';
-import classnames from 'classnames';
 
 import { isEqual } from 'lodash';
-import { isInViewport, scrollHandler, getScrollableClassName } from 'GetwidUtils/help-functions';
 
 /**
  * Internal dependencies
@@ -53,23 +51,10 @@ class Edit extends Component {
 	}
 
 	draw() {
-		const { baseClass } = this.props;
 		const { isAnimated, fillAmount } = this.props.attributes;
 
-
-		const root = getScrollableClassName();
-		const currentDocument = this.progressBarRef.current.ownerDocument;
-
 		if ( JSON.parse( isAnimated ) ) {
-			const $bar = $( this.progressBarRef.current ).find( `.${baseClass}__wrapper` );
-
-			if ( isInViewport( $bar ) || root === false ) {
-				this.drawAnimatedArcs();
-			} else {
-				scrollHandler(currentDocument.querySelector(`.${root}`) || currentDocument, $bar, () => {
-					this.drawAnimatedArcs();
-				});
-			}
+			this.drawAnimatedArcs();
 		} else {
 			this.drawArcs( fillAmount );
 		}
@@ -114,6 +99,7 @@ class Edit extends Component {
 	drawAnimatedArcs() {
 		const { fillAmount } = this.props.attributes;
 		let progress = 0;
+		clearInterval( this.fill );
 		this.fill = setInterval(() => {
 			this.drawArcs( progress );
 
@@ -141,10 +127,8 @@ class Edit extends Component {
 	componentDidUpdate(prevProps, prevState) {
 
 		if ( prevProps.isSelected === this.props.isSelected ) {
-			const { fillAmount } = this.props.attributes;
-
 			if ( !isEqual( prevProps, this.props ) ) {
-				this.drawArcs( fillAmount );
+				this.draw();
 			}
 		}
 	}
