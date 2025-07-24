@@ -4,7 +4,6 @@
 import { __ } from 'wp.i18n';
 
 import { isEqual, get } from 'lodash';
-import { getScrollableClassName } from 'GetwidUtils/help-functions';
 /**
  * Internal dependencies
  */
@@ -24,8 +23,6 @@ const { Component, Fragment, createContext, createRef } = wp.element;
 const { Button } = wp.components;
 const { createBlock } = wp.blocks;
 
-const { jQuery: $ } = window;
-
 /**
 * Module Constants
 */
@@ -41,13 +38,12 @@ class GetwidTimeline extends Component {
 	constructor() {
 		super(...arguments);
 
-		this.updateLineHeight = this.updateLineHeight.bind( this );
-		this.updateBarHeight = this.updateBarHeight.bind( this );
-		this.setColorByScroll = this.setColorByScroll.bind( this );
+		this.setScrollProgressPreview = this.setScrollProgressPreview.bind( this );
 		this.changeState = this.changeState.bind( this );
 		this.addItem = this.addItem.bind( this );
 
 		this.timelineRef = createRef();
+		this.resizeObserver = null;
 
 		this.state = {
 			isLockedPaddings: false
@@ -83,7 +79,8 @@ class GetwidTimeline extends Component {
 		const color = this.getColor();
 		const lineStyle = {
 			style: {
-				backgroundColor: color ? color : undefined
+				backgroundColor: color ? color : undefined,
+				height: this.props.attributes.filling === 'true' ? '50%' : undefined
 			}
 		}
 
@@ -152,9 +149,6 @@ class GetwidTimeline extends Component {
 			innerBlocks = block.innerBlocks;
 		}
 
-		const $block = $( this.timelineRef.current );
-		const currentWindow = this.timelineRef.current.ownerDocument.defaultView;
-
 		/* #region update inner blocks attributes */
 		const { backgroundColor, customBackgroundColor } = this.props.attributes;
 		const { paddingTop, paddingBottom, paddingLeft, paddingRight, animation } = this.props.attributes;
@@ -165,7 +159,7 @@ class GetwidTimeline extends Component {
 		if ( ! isEqual( prevProps.attributes, this.props.attributes ) ) {
 			if ( innerBlocks ) {
 				if ( innerBlocks.length ) {
-					$.each( innerBlocks, (index, item) => {
+					innerBlocks.forEach( (item) => {
 						updateBlockAttributes( item.clientId, {
 							outerParent: {
 								attributes: {
@@ -191,240 +185,97 @@ class GetwidTimeline extends Component {
 		}
 		/* #endregion */
 
-		/* #region update filling attribute */
 		const { filling } = this.props.attributes;
-		if ( ! isEqual( prevProps.attributes.filling, filling ) ) {
-
-			const $root = $( '.edit-post-layout' ).find( 'div[class$=__content]' );
-
-			if ( JSON.parse( filling ) ) {
-				const updateFilling = () => {
-					this.setColorByScroll( $block );
-					this.updateBarHeight ( $block );
-				}
-
-				updateFilling();
-
-				$root.on( 'scroll', () => {
-					updateFilling();
-				} );
+		if ( prevProps.attributes.filling !== filling ) {
+			if ( filling === 'true' ) {
+				this.setScrollProgressPreview();
 			} else {
-				$root.off();
-				this.disableFilling( $block );
+				this.resetActivePoints();
 			}
 		}
-		/* #endregion */
 
-		/* #region update points color attribute */
 		const { fillColor, customFillColor } = this.props.attributes;
-		if ( !isEqual( prevProps.attributes.fillColor, fillColor ) || !isEqual( prevProps.attributes.customFillColor, customFillColor ) ) {
-			const $points = $block.find( 'div[class$=__point]' );
-			const borderColor = this.getColor();
-
-			$.each($points, (index, point) => {
-				if ( $( point ).offset().top <= $( currentWindow ).height() / 2 ) {
-					$( point ).find( ':first-child' ).css({
-						borderColor: borderColor ? borderColor : ''
-					});
-				}
-			});
-		}
-		/* #endregion */
-	}
-
-	updateLineHeight() {
-
-		const $block = $( this.timelineRef.current );
-		const $points = $block.find( 'div[class$=__point]' );
-
-		let lineHeight = 0;
-		$.each($points, (index, point) => {
-			if ( $points[ index + 1 ] ) {
-				lineHeight += $( $points[ index + 1 ] ).offset().top - $( point ).offset().top;
-			}
-		});
-
-		const $line = $block.find( 'div[class$=__line]' );
-
-		const wrapper = $block.find( 'div[class*=__wrapper]' )[ 0 ];
-		const topOffset = parseFloat( $( wrapper ).css( 'height' ) ) / 2;
-
-		$line.css({
-			height: lineHeight,
-			top: topOffset
-		});
-	}
-
-	updateBarHeight($block) {
-
-		const $points = $block.find( 'div[class$=__point]' );
-		const $bar = $block.find( 'div[class$=__line]').find( 'div[class$=__bar]');
-		const currentWindow = this.timelineRef.current?.ownerDocument.defaultView;
-
-		if( $bar.length === 0 || ! currentWindow ) return;
-
-		const barOffsetTop = $bar.offset().top;
-		const viewportHeightHalf = $( currentWindow ).height() / 2;
-
-		const [ first, ...rest ] = $points.toArray();
-
-		if ( !first ) return;
-
-		const barHeight = viewportHeightHalf - first.getBoundingClientRect().top;
-
-		if ( rest.length ) {
-			const last = rest.slice( -1 ).pop();
-			const lastOffsetTop = $( last ).offset().top;
-
-			if ( barOffsetTop <= viewportHeightHalf && lastOffsetTop >= viewportHeightHalf ) {
-				$bar.css({ height: barHeight });
-			}
-
-			if ( barOffsetTop >= viewportHeightHalf  ) {
-				$bar.css({ height: 0 });
-			}
-
-			if ( lastOffsetTop <= viewportHeightHalf ) {
-				this.updateLineHeight();
-				$bar.css({ height: '100%' });
-			}
+		if ( prevProps.attributes.fillColor !== fillColor || prevProps.attributes.customFillColor !== customFillColor ) {
+			const pointColor = this.getColor();
+			this.setPointsColor( pointColor );
 		}
 	}
 
-	setColorByScroll($block) {
-		const { baseClass } = this.props;
-		const $points = $block.find( 'div[class$=__point]' );
-		const currentWindow = this.timelineRef.current?.ownerDocument.defaultView;
-
-		if ( ! currentWindow ) return;
-
-		const [ first, ...rest ] = $points.get();
-		if ( rest.length ) {
-			$.each( $points, (index, point) => {
-
-				const pointOffsetTop = point.getBoundingClientRect().top;
-				const item = $( point ).parents( `.${baseClass}-item` )[ 0 ];
-
-				const color = this.getColor();
-				const pointHeightHalf = $( point ).height() / 2;
-
-				if ( pointOffsetTop <= $( currentWindow ).height() / 2 + pointHeightHalf ) {
-					if ( !$( item ).hasClass( 'is-active' ) ) {
-						$( item ).addClass( 'is-active' );
-					}
-
-					$( point ).find( ':first-child' ).css( {
-						borderColor: color ? color : ''
-					} );
-				} else {
-					if ( $( item ).hasClass( 'is-active' ) ) {
-						$( item ).removeClass( 'is-active' );
-					}
-
-					$( point ).find( ':first-child' ).css( {
-						borderColor: ''
-					} );
-				}
-			} );
-		}
-
-		if ( !rest.length ) {
-			this.disableFilling( $block );
-		}
+	setPointsColor( color ) {
+		const block = this.timelineRef.current;
+		const points = block.querySelectorAll( '.wp-block-getwid-content-timeline-item__point.is-active' );
+		points.forEach( point => {
+			point.querySelector('.wp-block-getwid-content-timeline-item__point-content').style.borderColor = color;
+		} );
 	}
 
-	disableFilling($block) {
-		const $bar = $block.find( 'div[class$=__bar]' );
-		$bar.css({ height: 0 });
+	resetActivePoints() {
+		const block = this.timelineRef.current;
+		const points = block.querySelectorAll( '.wp-block-getwid-content-timeline-item__point.is-active' );
+		points.forEach( point => {
+			point.classList.remove( 'is-active' );
+			point.querySelector('.wp-block-getwid-content-timeline-item__point-content').style.borderColor = '';
+		} );
+	}
+
+	setScrollProgressPreview() {
+		const block = this.timelineRef.current;
+
+		if ( !block ) {
+			return;
+		}
+
+		const items = block.querySelectorAll( '.wp-block-getwid-content-timeline-item__wrapper' );
+		const points = block.querySelectorAll( '.wp-block-getwid-content-timeline-item__point' );
+		const line = block.querySelector( '.wp-block-getwid-content-timeline__line');
+
+		if ( points.length === 0 ) {
+			return;
+		}
+
+		const lineTopPosition = items[0].offsetHeight / 2;
+		const lineBottomPosition = items[items.length - 1].offsetHeight / 2;
+
+		line.style.top = `${lineTopPosition}px`;
+		line.style.bottom = `${lineBottomPosition}px`;
+
+		if ( this.props.attributes.filling === 'false' ) {
+			return;
+		}
+
+		const bar = line.querySelector( '.wp-block-getwid-content-timeline__bar');
+		const { height, top } = bar.getBoundingClientRect();
+		const maxDotOffset = top + height;
+		const borderColor = this.getColor();
+
+		points.forEach( point => {
+			const pointRect = point.getBoundingClientRect();
+			const pointContent = point.querySelector( '.wp-block-getwid-content-timeline-item__point-content' );
+
+			point.classList.remove( 'is-active' );
+			pointContent.style.borderColor = '';
+
+			if ( pointRect.top <= maxDotOffset ) {
+				point.classList.add( 'is-active' );
+				pointContent.style.borderColor = borderColor ?? 'currentColor';
+			}
+		} );
 	}
 
 	componentDidMount() {
-		const { clientId } = this.props;
-		const $timeline = $( this.timelineRef.current );
-		const root = getScrollableClassName();
-		const currentDocument = this.timelineRef.current.ownerDocument;
+		this.setScrollProgressPreview();
 
-		const { filling } = this.props.attributes;
+		this.resizeObserver = new ResizeObserver( () => {
+			setTimeout( () => this.setScrollProgressPreview(), 500 );
+		} );
 
-		if ( JSON.parse( filling ) ) {
-			this.waitLoadMarkup = setInterval( () => {
-				const $wrappers = $timeline.find( 'div[class*=__wrapper]' );
-
-				if ( $wrappers.length ) {
-					const $root = $( currentDocument.querySelector(`.${root}`) || currentDocument );
-					$root.on( 'scroll', () => {
-						this.setColorByScroll( $timeline );
-						this.updateBarHeight( $timeline );
-					} );
-
-					clearInterval( this.waitLoadMarkup );
-				}
-			}, 1 );
-		}
-
-		this.waitLoadContent = setInterval( () => {
-			if ( currentDocument.readyState == 'complete' ) {
-				this.updateLineHeight();
-
-				const { filling } = this.props.attributes;
-				if (JSON.parse( filling ) ) {
-
-					this.setColorByScroll( $timeline );
-					this.updateBarHeight ( $timeline );
-				}
-
-				/* #region mutation observer */
-				this.mutationObserver = new MutationObserver( mutations => {
-					$.each( mutations, (index, mutation) => {
-						if ( mutation.type == 'childList' ) {
-
-							if ( mutation.addedNodes.length || mutation.removedNodes.length ) {
-								const item = mutation.addedNodes.length ? mutation.addedNodes[ 0 ] : mutation.removedNodes[ 0 ];
-
-								const { getBlock, clientId } = this.props;
-
-								let innerBlocks;
-								const block = getBlock( clientId );
-
-								if ( block ) {
-									innerBlocks = block.innerBlocks;
-								}
-
-								if ( innerBlocks ) {
-									if ( innerBlocks.length ) {
-										if ( $( item ).is( 'div[class*=__block]' ) || $( item ).is( 'div[class*=__image-wrapper]' ) ) {
-											this.updateLineHeight();
-
-											const { filling } = this.props.attributes;
-											if ( JSON.parse( filling ) ) {
-
-												this.setColorByScroll( $timeline );
-												this.updateBarHeight ( $timeline );
-											}
-										}
-									}
-								}
-							}
-						}
-				} ) } );
-
-				const timeline = $timeline.get( 0 );
-
-				if ( timeline ) {
-					this.mutationObserver.observe( timeline, {
-						childList: true,
-						subtree: true
-					} );
-				}
-				/* #endregion */
-
-				clearInterval( this.waitLoadContent );
-			}
-		}, 1 );
+		this.resizeObserver.observe( this.timelineRef.current );
 	}
 
 	componentWillUnmount() {
-		this.mutationObserver.disconnect();
+		if ( this.resizeObserver ) {
+			this.resizeObserver.disconnect();
+		}
 	}
 }
 

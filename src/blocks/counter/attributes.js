@@ -16,7 +16,7 @@ const attributes = {
 	start: {
 		type: 'string',
 		default: '0'
-	},	
+	},
 	duration: {
 		type: 'string',
 		default: '3'
@@ -41,11 +41,6 @@ const attributes = {
 		type: 'string',
 		source: 'html',
 		selector: '.wp-block-getwid-counter__prefix'
-	},
-	title: {
-		type: 'string',
-		source: 'html',
-		selector: '.wp-block-getwid-counter__title'
 	},
 	suffix: {
 		type: 'string',
@@ -79,7 +74,7 @@ const attributes = {
 		selector: '.wp-block-getwid-counter__wrapper',
 		attribute: 'data-numerals',
 		default: 'default'
-	}	
+	}
 };
 
 export default attributes;

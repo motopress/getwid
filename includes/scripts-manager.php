@@ -157,7 +157,6 @@ class ScriptsManager {
 						'check_instagram_token' => wp_create_nonce( 'getwid_nonce_check_instagram_token' )
 					),
 					'acf_exist' => getwid_acf_is_active(),
-					'editor_scrollable_element_class' => $this->getWPEditorScrollableElementClassName()
 				]
 			)
 		);
@@ -280,33 +279,6 @@ class ScriptsManager {
 
 	public function enqueue_editor_section_css() {
 		add_editor_style( getwid_generate_section_content_width_css() );
-	}
-
-	private function getWPEditorScrollableElementClassName() {
-
-		global $wp_version;
-
-		if ( version_compare( $wp_version, '6.8', '>=' ) ) {
-
-			return 'block-editor-block-canvas';
-		}
-
-		if ( version_compare( $wp_version, '5.5', '>=' ) ) {
-
-			return 'interface-interface-skeleton__content';
-		}
-
-		if ( version_compare( $wp_version, '5.4', '>=' ) ) {
-
-			return 'block-editor-editor-skeleton__content';
-		}
-
-		if ( version_compare( $wp_version, '5.1', '>=' ) ) {
-
-			return 'edit-post-layout__content';
-		}
-
-		return '';
 	}
 
 }

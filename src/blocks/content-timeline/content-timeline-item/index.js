@@ -42,12 +42,10 @@ export default registerBlockType(
         attributes,
         edit: props => (
             <Consumer>
-                {({ updateLineHeight, updateBarHeight, setColorByScroll }) => (
+                {({ setScrollProgressPreview }) => (
                     <GetwidTimelineItem {...{
                         ...props,
-                        ...{updateLineHeight},
-                        ...{updateBarHeight},
-                        ...{setColorByScroll},
+                        ...{setScrollProgressPreview},
                         baseClass
                     }} />
                 )}

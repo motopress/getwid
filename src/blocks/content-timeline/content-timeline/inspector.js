@@ -35,7 +35,6 @@ class Inspector extends Component {
 
 		const { horizontalSpace, marginBottom } = this.props.attributes;
 
-		let enableFilling;
 		const currentBlock = getBlock( clientId );
 
 		if ( ! currentBlock ) {
@@ -43,8 +42,6 @@ class Inspector extends Component {
 				<InspectorControls></InspectorControls>
 			);
 		}
-
-		enableFilling = currentBlock.innerBlocks.length > 1 ? true : false;
 
 		return (
 			<InspectorControls>
@@ -62,17 +59,15 @@ class Inspector extends Component {
 							{ value: 'fadeIn'       , label: __( 'Fade In'    , 'getwid' ) }
 						]}
 					/>
-					{enableFilling && (
-						<ToggleControl
-							label={__( 'Display scroll progress', 'getwid' )}
-							checked={filling == 'true' ? true : false}
-							onChange={value => {
-								setAttributes({
-									filling: value ? 'true' : 'false'
-								});
-							}}
-						/>
-					)}
+					<ToggleControl
+						label={__( 'Display scroll progress', 'getwid' )}
+						checked={filling == 'true' ? true : false}
+						onChange={value => {
+							setAttributes({
+								filling: value ? 'true' : 'false'
+							});
+						}}
+					/>
 					<GetwidCustomColorPalette
 						colorSettings={[{
 								title: __( 'Background Color', 'getwid' ),

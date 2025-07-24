@@ -92,12 +92,7 @@ class Section extends \Getwid\Blocks\AbstractBlock {
 
     public function block_editor_scripts($scripts) {
 
-        //wow.min.js
-		if ( ! in_array( 'wow', $scripts ) ) {
-            array_push( $scripts, 'wow' );
-        }
-
-        //wow.min.js
+        //slick.min.js
 		if ( ! in_array( 'slick', $scripts ) ) {
             array_push( $scripts, 'slick' );
         }
