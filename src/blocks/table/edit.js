@@ -1071,6 +1071,10 @@ class GetwidTable extends Component {
 							rowSpan={ rowSpan }
 							style={ $.isPlainObject( styles ) ? styles : this.getParsedStyles( styles ) }
 							onClick={ event => {
+								if ( event.target.closest('.components-popover') ) {
+									return;
+								}
+
 								const { minColIdx, maxColIdx } = this.table.getIndices( section, rIndex, cIndex );
 
 								if ( event.shiftKey ) {
