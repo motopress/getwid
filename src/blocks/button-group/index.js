@@ -21,6 +21,23 @@ const { select } = wp.data;
 */
 const blockName = 'getwid/button-group';
 
+function allowButtonAsChild( settings, name ) {
+	if ( name !== 'core/button' ) {
+		return settings;
+	}
+
+	return {
+		...settings,
+		parent: [ ...settings.parent, blockName ]
+	};
+}
+
+wp.hooks.addFilter(
+	'blocks.registerBlockType',
+	'getwid/button-group/core-button-settings',
+	allowButtonAsChild
+);
+
 /**
 * Register the block
 */
