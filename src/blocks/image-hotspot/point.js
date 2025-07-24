@@ -89,6 +89,9 @@ function Point( props ) {
 	}, [ ] );
 
 	const onPointMoveStart = useCallback( ( event ) => {
+		event.preventDefault();
+		event.stopPropagation();
+
 		const document = pointElement.current.ownerDocument;
 
 		document.addEventListener('mousemove', onPointMove);
