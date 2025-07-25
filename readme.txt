@@ -227,8 +227,8 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 = 2.1.2, Jul 24 2025 =
 * Fixed an issue where text highlight colors or inline images in the Table block were not editable.
-* Fixed an issue where Section blocks with entrance animations might not be visible in the editor.
-* Fixed an issue where the "Add" button in the Button Group block might not be visible.
+* Fixed an issue where Section blocks with entrance animations might not be visible in the block editor.
+* Fixed an issue where the "Add" button in the Button Group block might not be visible in the block editor.
 * Resolved an issue that prevented points from being properly dragged in the Image Hotspot block.
 
 = 2.1.1, May 8 2025 =
