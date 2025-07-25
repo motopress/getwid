@@ -7,12 +7,11 @@ import classnames from 'classnames';
 * WordPress dependencies
 */
 import { __ } from 'wp.i18n';
-const { useState, useRef, RawHTML } = wp.element;
+const { useState, RawHTML } = wp.element;
 const { TextControl, Button, Spinner, Icon } = wp.components;
 const { InnerBlocks } = wp.blockEditor;
 const { useDispatch, useSelect } = wp.data;
 
-import { getScrollableClassName } from 'GetwidUtils/help-functions';
 import { AI, Plane, Check, Cross } from './icons';
 import useGetwidAI from '../../utils/ai';
 import TermsAndConditions from './terms';
@@ -26,7 +25,6 @@ function Edit( props ) {
     const [ termsAccepted, setTermsAccepted ] = useState( false );
     const { replaceBlocks, insertBlocks } = useDispatch( 'core/block-editor' );
     const { loading, content, makeStreamRequest, errors, parseBlocks, stopLoading } = useGetwidAI();
-    const formRef = useRef( null );
 
     const { getBlock, getClientIdsOfDescendants, currentUser } = useSelect( ( select ) => {
         return {
@@ -41,35 +39,10 @@ function Edit( props ) {
 
         setShowPlainContent( true );
 
-        let shouldIgnoreScroll = false;
-
-        const focus = setInterval( () => {
-
-            shouldIgnoreScroll = true;
-            formRef?.current?.scrollIntoView( false );
-
-        }, 150 );
-
-        if ( getScrollableClassName() ) {
-
-            document.getElementsByClassName( getScrollableClassName() )[0].addEventListener('scroll', () => {
-
-                if ( shouldIgnoreScroll ) {
-                    shouldIgnoreScroll = false;
-                } else {
-                    clearInterval( focus );
-                }
-
-            });
-        }
-
         const fullContent = await makeStreamRequest( attributes.prompt );
         const blocks = parseBlocks( fullContent );
 
         insertParsedBlocks( blocks );
-
-        clearInterval( focus );
-
     }
 
     const insertParsedBlocks = ( blocks ) => {
@@ -119,7 +92,7 @@ function Edit( props ) {
                 />
             </div>
 
-            <div className='wp-block-getwid-ai__prompt-wrapper' ref={ formRef }>
+            <div className='wp-block-getwid-ai__prompt-wrapper'>
                 { ( termsAlreadyAccepted || termsAccepted ) ? (
                     <form
                         className= { classnames( 'wp-block-getwid-ai__prompt-form', {

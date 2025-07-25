@@ -3,14 +3,12 @@
 */
 import { __ } from 'wp.i18n';
 import classnames from 'classnames';
-import { isEqual } from 'lodash';
 import './editor.scss';
 
 /**
  * Internal dependencies
  */
 import Inspector from './inspector';
-import { getScrollableClassName } from 'GetwidUtils/help-functions';
 
 /**
 * WordPress dependencies
@@ -18,7 +16,6 @@ import { getScrollableClassName } from 'GetwidUtils/help-functions';
 const { compose } = wp.compose;
 const { Component, Fragment, createRef } = wp.element;
 const { RichText, withColors, BlockControls, AlignmentToolbar } = wp.blockEditor || wp.editor;
-const { jQuery: $ } = window;
 
 const { safeHTML } = wp.dom;
 const { decodeEntities } = wp.htmlEntities;
@@ -157,7 +154,7 @@ class Edit extends Component {
 		const { useEasing, useGrouping, separator } = this.props.attributes;
 		const { start, end, decimalPlaces, duration, decimal } = this.props.attributes;
 
-		const $counter = $( this.counterRef.current ).find( `.${baseClass}__number` );
+		const counter = this.counterRef.current.querySelector( `.${baseClass}__number` );
 
 		const options = {
 			startVal	  : parseFloat( start 		  ),
@@ -175,52 +172,40 @@ class Edit extends Component {
 		}
 
 		if ( typeof CountUp === "function") {
-			new CountUp($counter.get(0), parseFloat(end), options).start();
+			new CountUp(counter, parseFloat(end), options).start();
 		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (prevProps.isSelected === this.props.isSelected) {
+		if ( ! this.props.isSelected ) {
+			return;
+		}
 
-			const { className, textColor } = this.props;
-			const { align, title, prefix, suffix, wrapperAlign } = this.props.attributes;
+		const { attributes } = this.props;
 
-			if (!isEqual( prevProps.attributes.title, title )
-				|| !isEqual( prevProps.attributes.prefix, prefix )
-				|| !isEqual( prevProps.attributes.suffix, suffix ) ) {
-				return;
-			}
+		const {
+			attributes: prevAttributes,
+		} = prevProps;
 
-			if (!isEqual( prevProps.textColor, textColor )
-				|| !isEqual( prevProps.textColor.color, textColor.color ) ) {
-				return;
-			}
+		const attributesChanged =
+			prevAttributes.start !== attributes.start ||
+			prevAttributes.end !== attributes.end ||
+			prevAttributes.duration !== attributes.duration ||
+			prevAttributes.useEasing !== attributes.useEasing ||
+			prevAttributes.useGrouping !== attributes.useGrouping ||
+			prevAttributes.separator !== attributes.separator ||
+			prevAttributes.decimal !== attributes.decimal ||
+			prevAttributes.decimalPlaces !== attributes.decimalPlaces ||
+			prevAttributes.easing !== attributes.easing ||
+			prevAttributes.numerals !== attributes.numerals;
 
-			if (!isEqual( prevProps.className, className )
-				|| !isEqual( prevProps.attributes.wrapperAlign, wrapperAlign )
-				|| !isEqual( prevProps.attributes.align, align ) ) {
-				return;
-			}
-
+		if ( attributesChanged ) {
 			this.startCounter();
 		}
 	}
 
 	componentDidMount() {
-		const { baseClass } = this.props;
-		const { isInViewport, scrollHandler } = this.props;
-
-		const root = getScrollableClassName();
-
-		const $counter = $( this.counterRef.current ).find(`.${baseClass}__number` );
-
-		if ( isInViewport( $counter ) || root === false ) {
-			this.startCounter();
-		} else {
-			scrollHandler(`.${root}`, $counter, () => {
-				this.startCounter();
-			});
-		}
+		this.startCounter();
 	}
 }
 

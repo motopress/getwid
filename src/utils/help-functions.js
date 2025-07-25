@@ -57,61 +57,6 @@ export function addScript(src, callback) {
     };
 }
 
-export function isInViewport($element) {
-    const itemTop = $element.offset().top;
-	const currentWindow = $element.get(0).ownerDocument.defaultView;
-    const viewportTop  = $( currentWindow ).scrollTop();
-    const windowHeight = $( currentWindow ).height();
-
-    return (itemTop - viewportTop - windowHeight) < 0;
-}
-
-export function scrollHandler(selector, element, execute) {
-    $( selector ).on( 'scroll', { element: element }, event => {
-        if ( isInViewport( event.data.element ) ) {
-            execute();
-            $( this ).off( event );
-        }
-    });
-}
-
-export function getScrollableClassName() {
-
-    if ( Getwid.editor_scrollable_element_class && $(`.${Getwid.editor_scrollable_element_class}`).length ) {
-
-        return Getwid.editor_scrollable_element_class;
-    }
-
-    return false;
-}
-
-export function createResizeObserver($parent, baseClass, callback) {
-
-    const iframe = document.createElement( 'iframe' );
-
-    iframe.style.pointerEvents = 'none';
-    iframe.style.position      = 'absolute';
-    iframe.style.display       = 'block';
-
-    iframe.style.height = '100%';
-    iframe.style.width  = '100%';
-
-    iframe.style.top    = '0';
-    iframe.style.bottom = '0';
-    iframe.style.left   = '0';
-
-    iframe.style.backgroundColor = 'transparent';
-    iframe.className = `${baseClass}__resize-observer`;
-
-    $( iframe ).on( 'load', () => {
-        $( iframe.contentWindow ).on( 'resize', () => {
-            callback();
-        } );
-    } );
-
-    $parent.append( iframe );
-}
-
 export function filtering(titles) {
 
     const stripHtmlTags = str => {

@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 5.8
 Tested up to: 6.8
 Requires PHP: 5.6
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -224,6 +224,12 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 2.1.2, Jul 24 2025 =
+* Fixed an issue where text highlight colors or inline images in the Table block were not editable.
+* Fixed an issue where Section blocks with entrance animations might not be visible in the block editor.
+* Fixed an issue where the "Add" button in the Button Group block might not be visible in the block editor.
+* Resolved an issue that prevented points from being properly dragged in the Image Hotspot block.
 
 = 2.1.1, May 8 2025 =
 * Resolved an issue preventing points from being dropped on the image in the Image Hotspot block.
