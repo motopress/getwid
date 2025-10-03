@@ -206,6 +206,11 @@ class Edit extends Component {
 	}
 
 	enterGoogleAPIKeyForm() {
+
+		if ( !Getwid?.current_user?.can_manage_options ) {
+			return <div><p>{__('Contact the site administrator to set up the required keys.', 'getwid')}</p></div>
+		}
+
 		return (
 			<form className={`${baseClass}__key-form`} onSubmit={ event => this.manageGoogleAPIKey(event, 'set')}>
 				<span className={'form-title'}>{__('Google Maps API key.', 'getwid')} <a href="https://developers.google.com/maps/documentation/embed/get-api-key" target="_blank">{__('Get your key.', 'getwid')}</a></span>

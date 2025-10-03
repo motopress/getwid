@@ -110,6 +110,17 @@ class ScriptsManager {
 			}
 		}
 
+		$current_user_can_manage_options = current_user_can( 'manage_options' );
+
+		$mailchimp_api_key = get_option( 'getwid_mailchimp_api_key', '' );
+
+		if ( !$current_user_can_manage_options ) {
+			$mailchimp_api_key = $mailchimp_api_key ? '1' : '';
+		}
+
+		$recaptcha_site_key = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_site_key'  , '' ) : '1';
+		$recaptcha_secret_key = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_secret_key', '' ) : '1';
+
 		wp_localize_script(
 			"{$this->prefix}-blocks-editor-js",
 			'Getwid',
@@ -128,9 +139,9 @@ class ScriptsManager {
 						'image_sizes' => $this->get_image_sizes(),
 
 						'excerpt_length'       => apply_filters( 'excerpt_length', 55 ),
-						'recaptcha_site_key'   => get_option( 'getwid_recaptcha_v2_site_key'  , '' ),
-						'recaptcha_secret_key' => get_option( 'getwid_recaptcha_v2_secret_key', '' ),
-						'mailchimp_api_key'    => get_option( 'getwid_mailchimp_api_key'      , '' ),
+						'recaptcha_site_key'   => $recaptcha_site_key,
+						'recaptcha_secret_key' => $recaptcha_secret_key,
+						'mailchimp_api_key'    => $mailchimp_api_key,
 						'debug' => ( defined( 'WP_DEBUG' ) ? WP_DEBUG : false )
 					],
 					'templates' => [
@@ -157,6 +168,9 @@ class ScriptsManager {
 						'check_instagram_token' => wp_create_nonce( 'getwid_nonce_check_instagram_token' )
 					),
 					'acf_exist' => getwid_acf_is_active(),
+					'current_user' => [
+						'can_manage_options' => $current_user_can_manage_options,
+					]
 				]
 			)
 		);

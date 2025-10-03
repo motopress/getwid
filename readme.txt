@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 5.8
 Tested up to: 6.8
 Requires PHP: 5.6
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -225,6 +225,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
+= 2.1.3, Oct 3 2025 =
+* Improved management of Google Maps, Mailchimp, and reCAPTCHA API keys.
+
 = 2.1.2, Jul 24 2025 =
 * Fixed an issue where text highlight colors or inline images in the Table block were not editable.
 * Fixed an issue where Section blocks with entrance animations might not be visible in the block editor.
@@ -236,9 +239,6 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 = 2.1.0, May 1 2025 =
 * Improved compatibility with WordPress 6.8.
-
-= 2.0.14, Dec 27 2024 =
-* Resolved an issue with the Instagram widget. An Instagram Business account is required, and the app must be reauthorized to function properly.
 
 --------
 

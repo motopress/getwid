@@ -1,36 +1,41 @@
-# Copyright (C) 2024 MotoPress
+# Copyright (C) 2025 MotoPress
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Getwid 2.0.11\n"
+"Project-Id-Version: Getwid 2.1.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getwid\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-07-16T14:52:03+03:00\n"
+"POT-Creation-Date: 2025-10-03T11:57:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: getwid\n"
 
 #. Plugin Name of the plugin
+#: getwid.php
 msgid "Getwid"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: getwid.php
 msgid "https://motopress.com/products/getwid/"
 msgstr ""
 
 #. Description of the plugin
+#: getwid.php
 msgid "Extra Gutenberg blocks for building seamless and aesthetic websites in the WordPress block editor."
 msgstr ""
 
 #. Author of the plugin
+#: getwid.php
 msgid "MotoPress"
 msgstr ""
 
 #. Author URI of the plugin
+#: getwid.php
 msgid "https://motopress.com/"
 msgstr ""
 
@@ -2825,6 +2830,10 @@ msgstr ""
 
 #: assets/js/editor.blocks.js:23
 msgid "Save API Key"
+msgstr ""
+
+#: assets/js/editor.blocks.js:23
+msgid "Contact the site administrator to set up the required keys."
 msgstr ""
 
 #: assets/js/editor.blocks.js:23

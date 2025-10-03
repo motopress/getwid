@@ -391,43 +391,45 @@ class Inspector extends Component {
 							/>
 						</PanelBody>
 
-						<PanelBody title={ __( 'Google Maps API Key', 'getwid' ) } initialOpen={false}>
-							<TextControl
-								label={__('Google Maps API Key', 'getwid')}
-								value={ getState('checkApiKey') }
-								onChange={ value => changeState('checkApiKey', value) }
-							/>
-							<BaseControl>
-								<ButtonGroup>
-									<Button
-										isPrimary
-										disabled={((getState('checkApiKey') != '') ? null : true)}
-										onClick={
-											(event) => {
-												manageGoogleAPIKey(event, 'set');
+						{ Getwid?.current_user?.can_manage_options && (
+							<PanelBody title={ __( 'Google Maps API Key', 'getwid' ) } initialOpen={false}>
+								<TextControl
+									label={__('Google Maps API Key', 'getwid')}
+									value={ getState('checkApiKey') }
+									onChange={ value => changeState('checkApiKey', value) }
+								/>
+								<BaseControl>
+									<ButtonGroup>
+										<Button
+											isPrimary
+											disabled={((getState('checkApiKey') != '') ? null : true)}
+											onClick={
+												(event) => {
+													manageGoogleAPIKey(event, 'set');
+												}
 											}
-										}
-									>
-										{ __( 'Update', 'getwid' ) }
-									</Button>
+										>
+											{ __( 'Update', 'getwid' ) }
+										</Button>
 
-									<Button
-										isSecondary
-										onClick={
-											(event) => {
-												manageGoogleAPIKey(event, 'delete');
+										<Button
+											isSecondary
+											onClick={
+												(event) => {
+													manageGoogleAPIKey(event, 'delete');
+												}
 											}
-										}
-									>
-										{ __( 'Delete', 'getwid' ) }
-									</Button>
-								</ButtonGroup>
-							</BaseControl>
-							<BaseControl>
-								<ExternalLink href="https://developers.google.com/maps/documentation/embed/get-api-key">{__('Get your key.', 'getwid')}</ExternalLink>
-							</BaseControl>
-							{ getState( 'error' ) && ( <p>{ getState( 'error' ) }</p> ) }
-						</PanelBody>
+										>
+											{ __( 'Delete', 'getwid' ) }
+										</Button>
+									</ButtonGroup>
+								</BaseControl>
+								<BaseControl>
+									<ExternalLink href="https://developers.google.com/maps/documentation/embed/get-api-key">{__('Get your key.', 'getwid')}</ExternalLink>
+								</BaseControl>
+								{ getState( 'error' ) && ( <p>{ getState( 'error' ) }</p> ) }
+							</PanelBody>
+						) }
 
 					</Fragment>
 				)}
