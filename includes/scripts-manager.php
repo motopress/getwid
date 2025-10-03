@@ -115,11 +115,11 @@ class ScriptsManager {
 		$mailchimp_api_key = get_option( 'getwid_mailchimp_api_key', '' );
 
 		if ( !$current_user_can_manage_options ) {
-			$mailchimp_api_key = $mailchimp_api_key ? '***' : '';
+			$mailchimp_api_key = $mailchimp_api_key ? '1' : '';
 		}
 
-		$recaptcha_site_key = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_site_key'  , '' ) : '***';
-		$recaptcha_secret_key = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_secret_key', '' ) : '***';
+		$recaptcha_site_key = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_site_key'  , '' ) : '1';
+		$recaptcha_secret_key = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_secret_key', '' ) : '1';
 
 		wp_localize_script(
 			"{$this->prefix}-blocks-editor-js",

@@ -208,7 +208,7 @@ class Edit extends Component {
 	enterGoogleAPIKeyForm() {
 
 		if ( !Getwid?.current_user?.can_manage_options ) {
-			return <div><p>{__('Contact the site administrator to set up the Google Maps API key.', 'getwid')}</p></div>
+			return <div><p>{__('Contact the site administrator to set up the required keys.', 'getwid')}</p></div>
 		}
 
 		return (

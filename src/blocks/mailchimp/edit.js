@@ -76,7 +76,7 @@ class GetwidSubscribeForm extends Component {
 		const { baseClass } = this.props;
 
 		if ( !Getwid?.current_user?.can_manage_options ) {
-			return <div><p>{__('Contact the site administrator to set up the Mailchimp API key.', 'getwid')}</p></div>
+			return <div><p>{__('Contact the site administrator to set up the required keys.', 'getwid')}</p></div>
 		}
 
 		return (
@@ -92,6 +92,7 @@ class GetwidSubscribeForm extends Component {
 					<Button
 						isPrimary
 						type='submit'
+						isBusy={this.state.waitLoadList}
 						disabled={this.getData( 'apiKey' ) != '' ? null : true}
 					>
 						{__( 'Save API Key', 'getwid' )}
@@ -184,7 +185,7 @@ class GetwidSubscribeForm extends Component {
 
 	render() {
 
-		if ( this.state.apiKey == '' ) {
+		if ( Getwid?.settings?.mailchimp_api_key == '' ) {
 			return this.renderMailchimpApiKeyForm();
 		}
 
