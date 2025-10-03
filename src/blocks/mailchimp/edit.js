@@ -56,8 +56,7 @@ class GetwidSubscribeForm extends Component {
 		this.setGroupsName = this.setGroupsName.bind( this );
 
 		this.state = {
-			mailchimpApiKey: Getwid.settings.mailchimp_api_key != '' ? Getwid.settings.mailchimp_api_key   : '',
-			checkApiKey    : Getwid.settings.mailchimp_api_key != '' ? Getwid.settings.mailchimp_api_key   : '',
+			apiKey: Getwid?.settings?.mailchimp_api_key || '',
 
 			waitLoadList: true,
 			error: '',
@@ -75,6 +74,11 @@ class GetwidSubscribeForm extends Component {
 
 	renderMailchimpApiKeyForm() {
 		const { baseClass } = this.props;
+
+		if ( !Getwid?.current_user?.can_manage_options ) {
+			return <div><p>{__('Contact the site administrator to set up the Mailchimp API key.', 'getwid')}</p></div>
+		}
+
 		return (
 			<form className={`${baseClass}__key-form`} onSubmit={ event => this.manageMailchimpApiKey( event, 'save' ) }>
 				<span className={'form-title'}>{__( 'Mailchimp API key.', 'getwid' )} <a href='https://mailchimp.com/help/about-api-keys/#Find_or_Generate_Your_API_Key' target='_blank'>{__( 'Get your key.', 'getwid' )}</a></span>
@@ -82,13 +86,13 @@ class GetwidSubscribeForm extends Component {
 				<div className={'form-wrapper'}>
 					<TextControl
 						placeholder={__( 'Mailchimp API Key', 'getwid' )}
-						onChange={ value => this.changeData( { checkApiKey: value } ) }
+						onChange={ value => this.changeData( { apiKey: value } ) }
 					/>
 
 					<Button
 						isPrimary
 						type='submit'
-						disabled={this.getData( 'checkApiKey' ) != '' ? null : true}
+						disabled={this.getData( 'apiKey' ) != '' ? null : true}
 					>
 						{__( 'Save API Key', 'getwid' )}
 					</Button>
@@ -109,7 +113,7 @@ class GetwidSubscribeForm extends Component {
 		const data = {
 			'action': 'getwid_mailchimp_api_key_manage',
 			'data': {
-				'api_key': getData( 'checkApiKey' )
+				'api_key': getData( 'apiKey' )
 			},
 			'option': option,
 			'nonce' : Getwid.nonces.mailchimp_api_key
@@ -127,7 +131,7 @@ class GetwidSubscribeForm extends Component {
 			} else {
 				switch ( option ) {
 					case 'save':
-						Getwid.settings.mailchimp_api_key = getData( 'checkApiKey' );
+						Getwid.settings.mailchimp_api_key = getData( 'apiKey' );
 					case 'sync':
 					case 'save':
 					case 'load':
@@ -140,7 +144,7 @@ class GetwidSubscribeForm extends Component {
 						Getwid.settings.mailchimp_api_key = '';
 						changeData( {
 							error: '',
-							checkApiKey: '',
+							apiKey: '',
 						} );
 						break;
 				}
@@ -173,14 +177,14 @@ class GetwidSubscribeForm extends Component {
 	}
 
 	componentDidMount() {
-		if ( Getwid.settings.mailchimp_api_key != '' ) {
+		if ( this.state.apiKey != '' ) {
 			this.manageMailchimpApiKey( null, 'load' );
 		}
 	}
 
 	render() {
 
-		if ( Getwid.settings.mailchimp_api_key == '' ) {
+		if ( this.state.apiKey == '' ) {
 			return this.renderMailchimpApiKeyForm();
 		}
 

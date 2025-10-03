@@ -6,6 +6,7 @@ const { Button, TextControl, PanelBody, ButtonGroup, BaseControl, ExternalLink, 
 
 export default function Recaptcha( props ) {
 
+	const currentUserCanManageOptions = Getwid?.current_user?.can_manage_options;
 	const [ siteKey, setSiteKey ] = useState( Getwid.settings.recaptcha_site_key );
 	const [ secretKey, setSecretKey ] = useState( Getwid.settings.recaptcha_secret_key );
 
@@ -51,49 +52,52 @@ export default function Recaptcha( props ) {
 						{ value: 'light', label: __( 'Light', 'getwid' ) }
 					]}
 				/>
-				<TextControl
-					label={ __( 'reCAPTCHA v2 Site Key', 'getwid' ) }
-					value={ siteKey }
-					onChange={ value => {
-						setSiteKey( value );
-					}}
-				/>
-				<TextControl
-					label={ __( 'reCAPTCHA v2 Secret Key', 'getwid' ) }
-					value={ secretKey }
-					onChange={ value => {
-						setSecretKey( value )
-					}}
-				/>
+				{ currentUserCanManageOptions && (
+					<>
+						<TextControl
+							label={ __( 'reCAPTCHA v2 Site Key', 'getwid' ) }
+							value={ siteKey }
+							onChange={ value => {
+								setSiteKey( value );
+							}}
+						/>
+						<TextControl
+							label={ __( 'reCAPTCHA v2 Secret Key', 'getwid' ) }
+							value={ secretKey }
+							onChange={ value => {
+								setSecretKey( value )
+							}}
+						/>
+						<BaseControl>
+							<ButtonGroup>
+								<Button
+									isPrimary
+									disabled={ siteKey == '' && secretKey == ''  }
+									onClick={ () => { updateCaptchaCredentials( siteKey, secretKey ) } }
+									isBusy={ isLoading }
+								>
+									{ __( 'Update', 'getwid' ) }
+								</Button>
 
-				<BaseControl>
-					<ButtonGroup>
-						<Button
-							isPrimary
-							disabled={ siteKey == '' && secretKey == ''  }
-							onClick={ () => { updateCaptchaCredentials( siteKey, secretKey ) } }
-							isBusy={ isLoading }
-						>
-							{ __( 'Update', 'getwid' ) }
-						</Button>
+								<Button
+									isSecondary
+									onClick={ () => {
+											setSiteKey('');
+											setSecretKey('');
+											updateCaptchaCredentials( '', '' );
+									} }
+									isBusy={ isLoading }
+								>
+									{ __( 'Delete', 'getwid' ) }
+								</Button>
+							</ButtonGroup>
+						</BaseControl>
 
-						<Button
-							isSecondary
-							onClick={ () => {
-									setSiteKey('');
-									setSecretKey('');
-									updateCaptchaCredentials( '', '' );
-							} }
-							isBusy={ isLoading }
-						>
-							{ __( 'Delete', 'getwid' ) }
-						</Button>
-					</ButtonGroup>
-				</BaseControl>
-
-				<BaseControl>
-					<ExternalLink href={ 'https://www.google.com/recaptcha/admin/create' }> { __( 'Get your key.', 'getwid' ) } </ExternalLink>
-				</BaseControl>
+						<BaseControl>
+							<ExternalLink href={ 'https://www.google.com/recaptcha/admin/create' }> { __( 'Get your key.', 'getwid' ) } </ExternalLink>
+						</BaseControl>
+					</>
+				)}
 			</PanelBody>
 		</InspectorControls>
 	)

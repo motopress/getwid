@@ -1,3 +1,7 @@
+
+= 2.0.14, Dec 27 2024 =
+* Resolved an issue with the Instagram widget. An Instagram Business account is required, and the app must be reauthorized to function properly.
+
 = 2.0.13, Nov 14 2024 =
 * Minor bugfixes and improvements.
 

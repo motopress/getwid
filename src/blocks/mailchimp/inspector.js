@@ -37,11 +37,13 @@ class Inspector extends Component {
 						title={__( 'Settings', 'getwid' )}
 						initialOpen={true}
 				>
-					<TextControl
-						label={__( 'Mailchimp API Key', 'getwid' )}
-						value={getData( 'checkApiKey' )}
-						onChange={ () => false }
-					/>
+					{ Getwid?.current_user?.can_manage_options && (
+						<TextControl
+							label={__( 'Mailchimp API Key', 'getwid' )}
+							value={getData( 'apiKey' )}
+							onChange={ () => false }
+						/>
+					) }
 					{ requestError && (
 						<p><span className={`${baseClass}__message`}>{`Error for site owner: ${requestError}`}</span></p>
 					) }
@@ -56,22 +58,25 @@ class Inspector extends Component {
 								}>
 								{__( 'Sync', 'getwid' )}
 							</Button>
-							<Button
-								isSecondary
-								onClick={
-									event => {
-										manageMailchimpApiKey( event, 'delete' );
+							{ Getwid?.current_user?.can_manage_options && (
+								<Button
+									isSecondary
+									onClick={
+										event => {
+											manageMailchimpApiKey( event, 'delete' );
+										}
 									}
-								}
-							>
-								{__( 'Delete', 'getwid' )}
-							</Button>
+								>
+									{__( 'Delete', 'getwid' )}
+								</Button>
+							) }
 						</ButtonGroup>
 					</BaseControl>
-
-					<BaseControl>
-						<ExternalLink href={'https://mailchimp.com/help/about-api-keys/#Find_or_Generate_Your_API_Key'}> {__( 'Get your key.', 'getwid' )} </ExternalLink>
-					</BaseControl>
+					{ Getwid?.current_user?.can_manage_options && (
+						<BaseControl>
+							<ExternalLink href={'https://mailchimp.com/help/about-api-keys/#Find_or_Generate_Your_API_Key'}> {__( 'Get your key.', 'getwid' )} </ExternalLink>
+						</BaseControl>
+					) }
 
 					<Fragment>
 						{ waitLoadList ? <Spinner/> : undefined }
