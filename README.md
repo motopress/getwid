@@ -33,6 +33,7 @@ The plugin has two build scripts. The first one is responsible for building bloc
 Before running any of the scripts, you must complete several steps:
 1. Clone the GitHub repository into your plugins directory.
 1. In the plugin directory run `npm i`.
+1. `nvm use 14.21.3`
 
 For the first option (build blocks into one file):
 * Run `npm run dev` to compile your files automatically whenever you've made changes to the associated files.
@@ -45,8 +46,8 @@ For the second option (generating separate files for each block):
 ### Update/generate POT(languages) file
 1. Install WP-CLI and add it to PATH (check out [official guide](https://wp-cli.org/#installing))
 1. Navigate to ./languages
-1. Run `wp i18n make-pot ./.. getwid.pot --exclude="src/"`
-1. To subtract new strings run `wp i18n make-pot ./.. getwid-new.pot --subtract="getwid.pot" --exclude="src/"`
+1. Run `wp i18n make-pot ./.. getwid.pot --exclude="src/,vendors/"`
+1. To subtract new strings run `wp i18n make-pot ./.. getwid-new.pot --subtract="getwid.pot" --exclude="src/,vendors/"`
 
 ## Support
 This is a developer's portal for the Getwid plugin and should not be used for support. Please visit the support page if you need to submit a support request.
