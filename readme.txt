@@ -225,7 +225,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 2.2.0, Apr 9 2026 =
+= 2.2.0, Apr 24 2026 =
 * Fixed potential security vulnerability in Google Maps block.
 
 = 2.1.3, Oct 3 2025 =
