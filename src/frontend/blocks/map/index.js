@@ -2,6 +2,8 @@
  * getwid-map
  */
 
+import { parseCustomMapStyle } from '../../../blocks/map/custom-style';
+
 ( function($) {
 	$(document).ready( event => {
 
@@ -106,15 +108,7 @@
 			if ( typeof mapStyle != 'object' ) {
 				if ( mapStyle != 'default'){
 					if ( mapStyle == 'custom' ) {
-						try {
-							return eval( customStyle )
-						} catch ( event ) {
-							if ( event instanceof SyntaxError ) {
-								console.error( event.message );
-							} else {
-								throw( event );
-							}
-						}
+						return parseCustomMapStyle( customStyle );
 					} else {
 						return stylesArr[ mapStyle ];
 					}

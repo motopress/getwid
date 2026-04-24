@@ -4,6 +4,7 @@
 import { merge, isEqual } from "lodash";
 import classnames from 'classnames';
 import Inspector from './inspector';
+import { parseCustomMapStyle } from './custom-style';
 import './editor.scss';
 
 
@@ -245,15 +246,7 @@ class Edit extends Component {
 
 		if (typeof mapStyle != 'object'){
 			if (mapStyle == 'custom'){
-				try {
-				    return eval(customStyle)
-				} catch (e) {
-				    if (e instanceof SyntaxError) {
-				        console.error(e.message);
-				    } else {
-				        throw( e );
-				    }
-				}
+				return parseCustomMapStyle( customStyle );
 			} else {
 				return stylesArr[mapStyle];
 			}
