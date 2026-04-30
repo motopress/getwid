@@ -40,7 +40,7 @@ class FontIconsManager {
             'fontawesome-free',
             getwid_get_plugin_url( 'vendors/fontawesome-free/css/all.min.css' ),
             null,
-            '5.5.0'
+            '6.7.2'
         );
     }
 
