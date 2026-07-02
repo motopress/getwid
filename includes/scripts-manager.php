@@ -22,18 +22,71 @@ class ScriptsManager {
 		$this->prefix  = $settings->getPrefix();
 
 		// Fires after block assets have been enqueued for the editing interface.
-		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets'] );
+		// add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets'] );
+
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 
 		// Fires after enqueuing block assets for both editor and front-end.
-		add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
+		// add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
 
 		// section_content_width inline styles
-		add_action( 'after_theme_setup', [ $this, 'enqueue_editor_section_css' ] );
+		add_action( 'after_theme_setup', array( $this, 'enqueue_editor_section_css' ) );
 
-		add_action( 'wp_footer', [ $this, 'localizeFrontend' ] );
+		add_action( 'wp_footer', array( $this, 'localizeFrontend' ) );
 
 		// Register frontend styles
-		add_action( 'wp_footer', [ $this, 'wp_late_enqueue_scripts' ] );
+		add_action( 'wp_footer', array( $this, 'wp_late_enqueue_scripts' ) );
+	}
+
+	public function enqueue_block_editor_assets() {
+		$style_url  = getwid_get_plugin_url( '/assets/components/index.css' );
+		$script_url = getwid_get_plugin_url( '/assets/components/index.js' );
+		$asset_path = getwid_get_plugin_path( '/assets/components/index.asset.php' );
+
+		if ( ! file_exists( $asset_path ) ) {
+			return;
+		}
+
+		$asset = include $asset_path;
+
+		wp_enqueue_script(
+			'getwid-components',
+			$script_url,
+			$asset['dependencies'],
+			$asset['version'],
+		);
+
+		$disabled_blocks      = array();
+		$disabled_blocks_data = array();
+		if ( getwid()->blocksManager()->hasDisabledBlocks() ) {
+			$disabled_blocks = getwid()->blocksManager()->getDisabledBlocks();
+			foreach ( $disabled_blocks as $block ) {
+				$disabled_blocks_data[] = $block->get_block_name();
+			}
+		}
+
+		$data = apply_filters(
+			'getwid/editor_blocks_js/localize_data',
+			array(
+				'disabledBlocks' => $disabled_blocks_data,
+				'optionsUrl'     => array(
+					'general'    => getwid()->settingsPage()->getTabUrl( 'general' ),
+					'appearance' => getwid()->settingsPage()->getTabUrl( 'appearance' ),
+					'blocks'     => getwid()->settingsPage()->getTabUrl( 'blocks' ),
+				),
+			)
+		);
+		wp_add_inline_script( 'getwid-components', 'const GetwidComponentsData = ' . json_encode( $data ), 'before' );
+
+		wp_enqueue_style(
+			'getwid-components',
+			$style_url,
+			apply_filters(
+				'getwid/editor_blocks_css/dependencies',
+				array( 'wp-components' )
+			),
+			$asset['version']
+		);
 	}
 
 	public function get_image_sizes() {
@@ -46,28 +99,28 @@ class ScriptsManager {
 		foreach ( $intermediate_image_sizes as $size ) {
 			if ( isset( $_wp_additional_image_sizes[ $size ] ) ) {
 				$image_sizes[ $size ] = array(
-					'width'  => $_wp_additional_image_sizes[ $size ][ 'width' ],
-					'height' => $_wp_additional_image_sizes[ $size ][ 'height' ]
+					'width'  => $_wp_additional_image_sizes[ $size ]['width'],
+					'height' => $_wp_additional_image_sizes[ $size ]['height'],
 				);
 			} else {
 				$image_sizes[ $size ] = array(
 					'width'  => intval( get_option( "{$size}_size_w" ) ),
-					'height' => intval( get_option( "{$size}_size_h" ) )
+					'height' => intval( get_option( "{$size}_size_h" ) ),
 				);
 			}
 		}
 
-		$sizes_arr = [];
+		$sizes_arr = array();
 		foreach ( $image_sizes as $key => $value ) {
-			$temp_arr = [];
-			$temp_arr[ 'value' ] = $key;
-			$temp_arr[ 'label' ] = ucwords( strtolower( preg_replace( '/[-_]/', ' ', $key ) ) ) . " - {$value['width']} x {$value['height']}";
-			$sizes_arr[] = $temp_arr;
+			$temp_arr          = array();
+			$temp_arr['value'] = $key;
+			$temp_arr['label'] = ucwords( strtolower( preg_replace( '/[-_]/', ' ', $key ) ) ) . " - {$value['width']} x {$value['height']}";
+			$sizes_arr[]       = $temp_arr;
 		}
 
 		$sizes_arr[] = array(
 			'value' => 'full',
-			'label' => __( 'Full Size', 'getwid' )
+			'label' => __( 'Full Size', 'getwid' ),
 		);
 
 		return $sizes_arr;
@@ -101,8 +154,8 @@ class ScriptsManager {
 		);
 
 		//disabled blocks
-		$disabledBlocks = [];
-		$disabledBlocksData = [];
+		$disabledBlocks     = array();
+		$disabledBlocksData = array();
 		if ( getwid()->blocksManager()->hasDisabledBlocks() ) {
 			$disabledBlocks = getwid()->blocksManager()->getDisabledBlocks();
 			foreach ( $disabledBlocks as $block ) {
@@ -114,11 +167,11 @@ class ScriptsManager {
 
 		$mailchimp_api_key = get_option( 'getwid_mailchimp_api_key', '' );
 
-		if ( !$current_user_can_manage_options ) {
+		if ( ! $current_user_can_manage_options ) {
 			$mailchimp_api_key = $mailchimp_api_key ? '1' : '';
 		}
 
-		$recaptcha_site_key = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_site_key'  , '' ) : '1';
+		$recaptcha_site_key   = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_site_key', '' ) : '1';
 		$recaptcha_secret_key = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_secret_key', '' ) : '1';
 
 		wp_localize_script(
@@ -126,56 +179,56 @@ class ScriptsManager {
 			'Getwid',
 			apply_filters(
 				'getwid/editor_blocks_js/localize_data',
-				[
-					'disabled_blocks' => $disabledBlocksData,
-					'settings' => [
-						'wide_support' => get_theme_support( 'align-wide' ),
-						'date_time_utc' => current_time('Y-m-d H:i:s'),
-						'post_type' => get_post_type(),
-						'google_api_key'  => get_option( 'getwid_google_api_key', '' ),
+				array(
+					'disabled_blocks'         => $disabledBlocksData,
+					'settings'                => array(
+						'wide_support'          => get_theme_support( 'align-wide' ),
+						'date_time_utc'         => current_time( 'Y-m-d H:i:s' ),
+						'post_type'             => get_post_type(),
+						'google_api_key'        => get_option( 'getwid_google_api_key', '' ),
 						'instagram_token_isset' => (bool) get_option( 'getwid_instagram_token', '' ),
 
-						'assets_path' => getwid_get_plugin_url( '/assets' ),
-						'image_sizes' => $this->get_image_sizes(),
+						'assets_path'           => getwid_get_plugin_url( '/assets' ),
+						'image_sizes'           => $this->get_image_sizes(),
 
-						'excerpt_length'       => apply_filters( 'excerpt_length', 55 ),
-						'recaptcha_site_key'   => $recaptcha_site_key,
-						'recaptcha_secret_key' => $recaptcha_secret_key,
-						'mailchimp_api_key'    => $mailchimp_api_key,
-						'debug' => ( defined( 'WP_DEBUG' ) ? WP_DEBUG : false )
-					],
-					'templates' => [
+						'excerpt_length'        => apply_filters( 'excerpt_length', 55 ),
+						'recaptcha_site_key'    => $recaptcha_site_key,
+						'recaptcha_secret_key'  => $recaptcha_secret_key,
+						'mailchimp_api_key'     => $mailchimp_api_key,
+						'debug'                 => ( defined( 'WP_DEBUG' ) ? WP_DEBUG : false ),
+					),
+					'templates'               => array(
 						'name' => getwid()->postTemplatePart()->postType,
-						'new' => admin_url( 'post-new.php?post_type=' . getwid()->postTemplatePart()->postType ),
+						'new'  => admin_url( 'post-new.php?post_type=' . getwid()->postTemplatePart()->postType ),
 						'view' => admin_url( 'edit.php?post_type=' . getwid()->postTemplatePart()->postType ),
-						'edit' => admin_url( 'post.php?post=' )
-					],
-					'ajax_url' => admin_url( 'admin-ajax.php' ),
-					'options_general_url' => admin_url( 'options-general.php' ),
+						'edit' => admin_url( 'post.php?post=' ),
+					),
+					'ajax_url'                => admin_url( 'admin-ajax.php' ),
+					'options_general_url'     => admin_url( 'options-general.php' ),
 					'get_instagram_token_url' => add_query_arg(
-						['nonce' => wp_create_nonce('getwid_nonce_save_instagram_token') ],
+						array( 'nonce' => wp_create_nonce( 'getwid_nonce_save_instagram_token' ) ),
 						admin_url( 'options-general.php' )
 					),
-					'options_url' => [
-						'general' => getwid()->settingsPage()->getTabUrl('general'),
-						'appearance' => getwid()->settingsPage()->getTabUrl('appearance'),
-						'blocks' => getwid()->settingsPage()->getTabUrl('blocks'),
-					],
-					'nonces' => array(
-						'google_api_key' => wp_create_nonce( 'getwid_nonce_google_api_key' ),
-						'recaptcha_v2' => wp_create_nonce( 'getwid_nonce_recaptcha_v2' ),
-						'mailchimp_api_key' => wp_create_nonce( 'getwid_nonce_mailchimp_api_key' ),
-						'check_instagram_token' => wp_create_nonce( 'getwid_nonce_check_instagram_token' )
+					'options_url'             => array(
+						'general'    => getwid()->settingsPage()->getTabUrl( 'general' ),
+						'appearance' => getwid()->settingsPage()->getTabUrl( 'appearance' ),
+						'blocks'     => getwid()->settingsPage()->getTabUrl( 'blocks' ),
 					),
-					'acf_exist' => getwid_acf_is_active(),
-					'current_user' => [
+					'nonces'                  => array(
+						'google_api_key'        => wp_create_nonce( 'getwid_nonce_google_api_key' ),
+						'recaptcha_v2'          => wp_create_nonce( 'getwid_nonce_recaptcha_v2' ),
+						'mailchimp_api_key'     => wp_create_nonce( 'getwid_nonce_mailchimp_api_key' ),
+						'check_instagram_token' => wp_create_nonce( 'getwid_nonce_check_instagram_token' ),
+					),
+					'acf_exist'               => getwid_acf_is_active(),
+					'current_user'            => array(
 						'can_manage_options' => $current_user_can_manage_options,
-					]
-				]
+					),
+				)
 			)
 		);
 
-		wp_set_script_translations( "{$this->prefix}-blocks-editor-js", "getwid" );
+		wp_set_script_translations( "{$this->prefix}-blocks-editor-js", 'getwid' );
 
 		$rtl = is_rtl() ? '.rtl' : '';
 		// Enqueue optional editor only styles
@@ -184,7 +237,7 @@ class ScriptsManager {
 			getwid_get_plugin_url( 'assets/css/blocks.editor' . $rtl . '.css' ),
 			apply_filters(
 				'getwid/editor_blocks_css/dependencies',
-				[]
+				array()
 			),
 			$this->version
 		);
@@ -206,21 +259,20 @@ class ScriptsManager {
 
 		if ( $_has_enabled_blocks ) {
 
-			if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() || is_admin() ) {
+			if ( false == getwid()->assetsOptimization()->load_assets_on_demand() || is_admin() ) {
 
 				$rtl = is_rtl() ? '.rtl' : '';
 
 				wp_enqueue_style(
 					"{$this->prefix}-blocks",
 					getwid_get_plugin_url( 'assets/css/blocks.style' . $rtl . '.css' ),
-
 					// section, banner, icon-box, icon, image-box, image-hotspot, media-text-slider, video-popup, post-carousel, post-slider, images-slider
 					/**
 					 * Filters frontend style dependencies.
 					 */
 					apply_filters(
 						'getwid/blocks_style_css/dependencies',
-						[]
+						array()
 					),
 					$this->version
 				);
@@ -228,7 +280,6 @@ class ScriptsManager {
 				wp_add_inline_style( "{$this->prefix}-blocks", getwid_generate_section_content_width_css() );
 				wp_add_inline_style( "{$this->prefix}-blocks", getwid_generate_smooth_animation_css() );
 			}
-
 		}
 
 		// *** End of Backend & Frontend ***
@@ -237,7 +288,7 @@ class ScriptsManager {
 		 * Assets optimization. Currently in Beta.
 		 * @since 1.5.3
 		 */
-		if ( is_admin() || ! $_has_enabled_blocks || ( TRUE == getwid()->assetsOptimization()->load_assets_on_demand() ) ) {
+		if ( is_admin() || ! $_has_enabled_blocks || ( true == getwid()->assetsOptimization()->load_assets_on_demand() ) ) {
 			return;
 		}
 
@@ -249,7 +300,7 @@ class ScriptsManager {
 			getwid_get_plugin_url( 'assets/js/frontend.blocks.js' ),
 			apply_filters(
 				'getwid/frontend_blocks_js/dependencies',
-				[ 'jquery' ]
+				array( 'jquery' )
 			),
 			$this->version,
 			true
@@ -262,30 +313,30 @@ class ScriptsManager {
 			'Getwid',
 			apply_filters(
 				'getwid/frontend_blocks_js/localize_data',
-				[
-					'settings' => [],
+				array(
+					'settings' => array(),
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
-					'isRTL' => is_rtl(),
-					'nonces' => array(
-						'contact_form' => wp_create_nonce( 'getwid_nonce_send_contact_form' )
+					'isRTL'    => is_rtl(),
+					'nonces'   => array(
+						'contact_form' => wp_create_nonce( 'getwid_nonce_send_contact_form' ),
 					),
-				]
+				)
 			)
 		);
 	}
 
 	public function wp_late_enqueue_scripts() {
 
-		$should_enqueue_common_style = apply_filters('getwid/optimize/should_load_common_css', false);
+		$should_enqueue_common_style = apply_filters( 'getwid/optimize/should_load_common_css', false );
 
-		if ( TRUE == getwid()->assetsOptimization()->load_assets_on_demand() && $should_enqueue_common_style ) {
+		if ( true == getwid()->assetsOptimization()->load_assets_on_demand() && $should_enqueue_common_style ) {
 
 			$rtl = is_rtl() ? '.rtl' : '';
 
 			wp_enqueue_style(
 				"{$this->prefix}-blocks-common",
 				getwid_get_plugin_url( 'assets/blocks/common.style' . $rtl . '.css' ),
-				[],
+				array(),
 				$this->version
 			);
 		}
@@ -294,5 +345,4 @@ class ScriptsManager {
 	public function enqueue_editor_section_css() {
 		add_editor_style( getwid_generate_section_content_width_css() );
 	}
-
 }

@@ -1,0 +1,44 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/testimonial",
+	"category": "getwid-blocks",
+	"title": "Testimonial",
+	"keywords": [ "review", "feedback" ],
+	"attributes": {
+		"title": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-testimonial__title"
+		},
+		"subtitle": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-testimonial__subtitle"
+		},
+		"content": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-testimonial__content"
+		},
+		"imgId": {
+			"type": "number"
+		},
+		"imgUrl": {
+			"type": "string",
+			"source": "attribute",
+			"attribute": "src",
+			"selector": ".wp-block-getwid-testimonial__image img"
+		},
+		"imgAlt": {
+			"type": "string",
+			"source": "attribute",
+			"attribute": "alt",
+			"selector": ".wp-block-getwid-testimonial__image img"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

@@ -1,0 +1,37 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getwid/template-post-link",
+	"title": "Link",
+	"category": "getwid-post-blocks",
+	"icon": "admin-links",
+	"description": "Post link template part.",
+	"textdomain": "getwid",
+	"supports": {
+		"inserter": true
+	},
+	"attributes": {
+		"textColor": {
+			"type": "string"
+		},
+		"customTextColor": {
+			"type": "string"
+		},
+		"buttonText": {
+			"type": "string",
+			"default": "Read More"
+		},
+		"align": {
+			"type": "string"
+		},
+		"textAlignment": {
+			"type": "string"
+		},
+		"className": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css"
+}

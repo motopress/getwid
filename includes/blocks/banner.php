@@ -1,56 +1,31 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class Banner extends \Getwid\Blocks\AbstractBlock {
+class Banner extends AbstractBlock {
 
-	protected static $blockName = 'getwid/banner';
+	public function __construct() {
 
-    public function __construct() {
+		parent::__construct( 'getwid/banner' );
 
-		parent::__construct( self::$blockName );
-
-        register_block_type(
-            'getwid/banner',
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/banner' ),
 			array(
-				'render_callback' => [ $this, 'render_callback' ]
+				'render_callback' => array( $this, 'render_callback' ),
 			)
-        );
-    }
-
-	public function getLabel() {
-		return __('Banner', 'getwid');
+		);
 	}
 
-    public function block_frontend_assets( $attributes = null ) {
+	public function get_label() {
+		return __( 'Banner', 'getwid' );
+	}
 
-        if ( is_admin() ) {
-            return;
-        }
+	public function render_callback( $attributes, $content ) {
 
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/banner/style' . $rtl . '.css' ),
-			[],
-			getwid()->settings()->getVersion()
-		);
-    }
-
-    public function render_callback( $attributes, $content ) {
-
-        $this->block_frontend_assets( $attributes );
-
-        return $content;
-    }
-
+		return $content;
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\Banner()
+	new Banner()
 );

@@ -1,257 +1,104 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class PostCarousel extends \Getwid\Blocks\AbstractBlock {
+class PostCarousel extends AbstractBlock {
 
-	protected static $blockName = 'getwid/post-carousel';
-	private $assetsAlreadyEnqueued = false;
+	private $assets_already_enqueued = false;
 
-    public function __construct() {
+	public function __construct() {
 
-		parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/post-carousel' );
 
-        /* #region Register block */
-        register_block_type(
-            'getwid/post-carousel',
-            array(
-                'attributes' => array(
-                    'postTemplate' => array(
-                        'type' => 'string'
-                    ),
+		wp_register_script(
+			'slick',
+			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
+			array( 'jquery' ),
+			'1.9.0',
+			true
+		);
 
-                    //Custom Post Type
-                    'postsToShow' => array(
-                        'type' => 'number',
-                        'default' => 5
-					),
-                    'offset' => array(
-                        'type' => 'number',
-                        'default' => 0
-                    ),
-                    'ignoreSticky' => array(
-                        'type' => 'boolean',
-                        'default' => true
-                    ),
-                    'filterById' => array(
-                        'type' => 'string'
-					),
-                    'excludeById' => array(
-                        'type' => 'string'
-					),
-                    'excludeCurrentPost' => array(
-                        'type' => 'boolean',
-                        'default' => false
-					),
-					'childPagesCurrentPage' => array(
-                        'type' => 'boolean',
-                        'default' => false
-                    ),
-                    'parentPageId' => array(
-                        'type' => 'string'
-                    ),
-                    'postType' => array(
-                        'type' => 'string',
-                        'default' => 'post'
-                    ),
-                    'taxonomy' => array(
-                        'type' => 'array',
-                        'items'   => [
-                            'type' => 'string'
-                        ],
-                    ),
-                    'terms' => array(
-                        'type' => 'array',
-                        'items'   => [
-                            'type' => 'string'
-                        ],
-                    ),
-                    'relation' => array(
-                        'type' => 'string',
-                        'default' => 'AND'
-                    ),
-                    'order' => array(
-                        'type' => 'string',
-                        'default' => 'desc'
-                    ),
-                    'orderBy' => array(
-                        'type' => 'string',
-                        'default' => 'date'
-                    ),
-                    //Custom Post Type
-                    'align' => array(
-                        'type' => 'string'
-                    ),
+		wp_register_style(
+			'slick',
+			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
+			array(),
+			'1.9.0'
+		);
 
-                    //Slider
-                    'sliderSlidesToShowDesktop' => array(
-                        'type' => 'string',
-                        'default' => '2'
-                    ),
-                    'sliderSlidesToShowLaptop' => array(
-                        'type' => 'string',
-                        'default' => '1'
-                    ),
-                    'sliderSlidesToShowTablet' => array(
-                        'type' => 'string',
-                        'default' => '1'
-                    ),
-                    'sliderSlidesToShowMobile' => array(
-                        'type' => 'string',
-                        'default' => '1'
-                    ),
-                    'sliderSlidesToScroll' => array(
-                        'type' => 'string',
-                        'default' => '1'
-                    ),
-                    'sliderAutoplay' => array(
-                        'type' => 'boolean',
-                        'default' => false
-                    ),
-                    'sliderPauseOnHover' => array(
-                        'type' => 'boolean',
-                        'default' => false
-                    ),
-                    'sliderAutoplaySpeed' => array(
-                        'type' => 'string',
-                        'default' => '6000'
-                    ),
-                    'sliderInfinite' => array(
-                        'type' => 'boolean',
-                        'default' => true
-                    ),
-                    'sliderAnimationSpeed' => array(
-                        'type' => 'string',
-                        'default' => '800'
-                    ),
-                    'sliderCenterMode' => array(
-                        'type' => 'boolean',
-                        'default' => false
-                    ),
-                    'sliderSpacing' => array(
-                        'type' => 'string',
-                        'default' => 'small'
-                    ),
-                    'sliderArrows' => array(
-                        'type' => 'string',
-                        'default' => 'inside'
-                    ),
-                    'sliderDots' => array(
-                        'type' => 'string',
-                        'default' => 'outside'
-                    ),
-                    'className' => array(
-                        'type' => 'string'
-                    ),
+		wp_register_style(
+			'slick-theme',
+			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
+			array(),
+			'1.9.0'
+		);
 
-                    //Modal
-					'metaQuery' => array(
-						'type' => 'array',
-						'default' => []
-					),
-                ),
-                'render_callback' => [ $this, 'render_callback' ]
-            )
-        );
-        /* #endregion */
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/post-carousel' ),
+			array(
+				'render_callback' => array( $this, 'render_callback' ),
+			)
+		);
 
-		if ( $this->isEnabled() ) {
-
-			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts' ] );
-			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
-
-			//Register JS/CSS assets
-			wp_register_script(
-				'slick',
-				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
-				[ 'jquery' ],
-				'1.9.0',
-				true
-			);
-
-			wp_register_style(
-				'slick',
-				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
-				[],
-				'1.9.0'
-			);
-
-			wp_register_style(
-				'slick-theme',
-				getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
-				[],
-				'1.9.0'
-			);
+		if ( $this->is_enabled() ) {
+			add_filter( 'getwid/editor_blocks_js/dependencies', array( $this, 'block_editor_scripts' ) );
+			add_filter( 'getwid/blocks_style_css/dependencies', array( $this, 'block_frontend_styles' ) );
 		}
-    }
-
-	public function getLabel() {
-		return __('Post Carousel', 'getwid');
 	}
 
-    public function block_editor_scripts($scripts) {
+	public function get_label() {
+		return __( 'Post Carousel', 'getwid' );
+	}
 
-		//imagesloaded.min.js
-        if ( ! in_array( 'imagesloaded', $scripts ) ) {
-            array_push( $scripts, 'imagesloaded' );
+	public function block_editor_scripts( $scripts ) {
+
+		if ( ! in_array( 'imagesloaded', $scripts, true ) ) {
+			$scripts[] = 'imagesloaded';
 		}
 
-		//slick.min.js
-        if ( ! in_array( 'slick', $scripts ) ) {
-            array_push( $scripts, 'slick' );
-        }
+		if ( ! in_array( 'slick', $scripts, true ) ) {
+			$scripts[] = 'slick';
+		}
 
-        return $scripts;
-    }
+		return $scripts;
+	}
 
-    public function block_frontend_styles($styles) {
+	public function block_frontend_styles( $styles ) {
 
-		//fontawesome
-		// for /template-parts/*
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
-		//slick.min.css
-        if ( ! in_array( 'slick', $styles ) ) {
-            array_push( $styles, 'slick' );
-        }
-
-		//slick-theme.min.css
-        if ( ! in_array( 'slick-theme', $styles ) ) {
-            array_push( $styles, 'slick-theme' );
-        }
-
-        return $styles;
-    }
-
-    public function block_frontend_assets() {
-
-		if ( is_admin() ) {
-            return;
-        }
-
-		//slick.min.js
-        if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
-            wp_enqueue_script('slick');
-        }
-
-        //imagesloaded.min.js
-		if ( ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
-			wp_enqueue_script('imagesloaded');
+		if ( ! in_array( 'slick', $styles, true ) ) {
+			$styles[] = 'slick';
 		}
 
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+		if ( ! in_array( 'slick-theme', $styles, true ) ) {
+			$styles[] = 'slick-theme';
+		}
+
+		return $styles;
+	}
+
+	public function block_frontend_assets() {
+
+		if ( is_admin() ) {
 			return;
 		}
 
-		$deps = [
-			'slick', 'slick-theme'
-		];
+		wp_enqueue_script( 'slick' );
+		wp_enqueue_script( 'imagesloaded' );
 
-		//fontawesome
-		// for /template-parts/*
+		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		$deps = array(
+			'slick',
+			'slick-theme',
+		);
+
 		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
 
-		add_filter( 'getwid/optimize/assets',
+		add_filter(
+			'getwid/optimize/assets',
 			function ( $assets ) {
 				$assets[] = 'slick';
 				$assets[] = 'slick-theme';
@@ -261,168 +108,136 @@ class PostCarousel extends \Getwid\Blocks\AbstractBlock {
 			}
 		);
 
+		wp_enqueue_style( 'slick' );
+		wp_enqueue_style( 'slick-theme' );
+
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/post-carousel/style' . $rtl . '.css' ),
-			$deps,
-			getwid()->settings()->getVersion()
-		);
-
-		wp_enqueue_script(
-            self::$blockName,
-            getwid_get_plugin_url( 'assets/blocks/post-carousel/frontend.js' ),
-            [ 'jquery', 'imagesloaded', 'slick' ],
-            getwid()->settings()->getVersion(),
-            true
-        );
-
-		if ( !$this->assetsAlreadyEnqueued ) {
-			$inline_script =
-				'var Getwid = Getwid || {};' .
-				'Getwid["isRTL"] = ' . json_encode( is_rtl() ) . ';';
+		if ( ! $this->assets_already_enqueued ) {
+			$inline_script  = 'var Getwid = Getwid || {};';
+			$inline_script .= 'Getwid["isRTL"] = ' . wp_json_encode( is_rtl() ) . ';';
 
 			wp_add_inline_script(
-				self::$blockName,
+				'getwid-post-carousel-view-script',
 				$inline_script,
 				'before'
 			);
 		}
 
-		$this->assetsAlreadyEnqueued = true;
+		$this->assets_already_enqueued = true;
 	}
 
-    public function render_callback( $attributes, $content ) {
+	public function render_callback( $attributes, $content ) {
 
-        //Custom Post Type
-        $query_args = getwid_build_custom_post_type_query( $attributes );
+		$query_args = getwid_build_custom_post_type_query( $attributes );
+		$q          = new \WP_Query( $query_args );
 
-        $q = new \WP_Query( $query_args );
-        //Custom Post Type
+		$use_template          = false;
+		$template_part_content = '';
 
-        //Custom Template
-        $use_template = false;
-        $template_part_content = '';
+		if ( isset( $attributes['postTemplate'] ) && '' !== $attributes['postTemplate'] ) {
+			$template_post = get_post( $attributes['postTemplate'], ARRAY_A );
 
-        if ( isset( $attributes[ 'postTemplate' ] ) && $attributes[ 'postTemplate' ] != '' ) {
+			if ( ! is_null( $template_post ) && '' !== $template_post['post_content'] ) {
+				$use_template          = true;
+				$template_part_content = $template_post['post_content'];
+			}
+		}
 
-            $template_post = get_post( $attributes[ 'postTemplate' ], ARRAY_A );
+		$block_name = 'wp-block-getwid-post-carousel';
+		$post_type  = isset( $attributes['postType'] ) ? $attributes['postType'] : 'post';
 
-            //If post exist and content not empty
-            if ( ! is_null( $template_post ) && $template_post[ 'post_content' ] != '' ) {
-                $use_template = true;
-                $template_part_content = $template_post[ 'post_content' ];
-            }
-        }
+		$extra_attr = array(
+			'block_name' => $block_name,
+		);
 
-        $block_name = 'wp-block-getwid-post-carousel';
+		$class  = $block_name;
+		$class .= ' custom-post-type-' . $post_type;
 
-        $post_type =  isset( $attributes[ 'postType' ] ) ? $attributes[ 'postType' ] : 'post';
+		if ( isset( $attributes['align'] ) ) {
+			$class .= ' align' . $attributes['align'];
+		}
+		if ( isset( $attributes['showPostDate'] ) && $attributes['showPostDate'] ) {
+			$class .= ' has-dates';
+		}
+		if ( isset( $attributes['className'] ) ) {
+			$class .= ' ' . $attributes['className'];
+		}
 
-        $extra_attr = array(
-            'block_name' => $block_name
-        );
+		$wrapper_class = $block_name . '__wrapper';
 
-        $class = $block_name;
-        $class .= ' custom-post-type-' . $post_type;
+		if ( isset( $attributes['sliderSlidesToShowDesktop'] ) && $attributes['sliderSlidesToShowDesktop'] > 1 ) {
+			$class .= ' has-slides-gap-' . $attributes['sliderSpacing'];
+			$class .= ' is-carousel';
+		}
 
-        if ( isset( $attributes[ 'align' ] ) ) {
-            $class .= ' align' . $attributes[ 'align' ];
-        }
+		$class .= ' has-arrows-' . $attributes['sliderArrows'];
+		$class .= ' has-dots-' . $attributes['sliderDots'];
 
-        if ( isset( $attributes[ 'showPostDate' ] ) && $attributes[ 'showPostDate' ] ) {
-            $class .= ' has-dates';
-        }
-        if ( isset( $attributes[ 'className' ] ) ) {
-            $class .= ' ' . $attributes[ 'className' ];
-        }
+		$slider_data = array(
+			'sliderSlidesToShowDesktop' => $attributes['sliderSlidesToShowDesktop'],
+			'getwid_slidesToShowLaptop' => $attributes['sliderSlidesToShowLaptop'],
+			'getwid_slidesToShowTablet' => $attributes['sliderSlidesToShowTablet'],
+			'getwid_slidesToShowMobile' => $attributes['sliderSlidesToShowMobile'],
+			'getwid_autoplay_speed'     => intval( $attributes['sliderAutoplaySpeed'] ),
+			'getwid_animation_speed'    => intval( $attributes['sliderAnimationSpeed'] ),
+			'getwid_slidesToScroll'     => $attributes['sliderSlidesToScroll'],
+			'getwid_autoplay'           => $attributes['sliderAutoplay'],
+			'getwid_pause_on_hover'     => $attributes['sliderPauseOnHover'],
+			'getwid_infinite'           => $attributes['sliderInfinite'],
+			'getwid_center_mode'        => $attributes['sliderCenterMode'],
+			'getwid_arrows'             => $attributes['sliderArrows'],
+			'getwid_dots'               => $attributes['sliderDots'],
+		);
 
-        $wrapper_class = $block_name . '__wrapper';
+		$slider_options = wp_json_encode( $slider_data );
 
-        if ( isset( $attributes[ 'sliderSlidesToShowDesktop' ] ) && $attributes[ 'sliderSlidesToShowDesktop' ] > 1 ) {
-            $class .= ' has-slides-gap-' . $attributes[ 'sliderSpacing' ];
-            $class .= ' is-carousel';
-        }
+		ob_start();
+		?>
+		<div class="<?php echo esc_attr( $class ); ?>">
+			<div data-slider-option="<?php echo esc_attr( $slider_options ); ?>" class="<?php echo esc_attr( $wrapper_class ); ?>">
+				<?php
+				if ( ! $use_template ) {
+					$template = $post_type;
+					$located  = getwid_locate_template( 'post-carousel/' . $post_type );
+					if ( ! $located ) {
+						$template = 'post';
+					}
+				}
 
-        $class .= ' has-arrows-' . $attributes[ 'sliderArrows' ];
-        $class .= ' has-dots-'   . $attributes[ 'sliderDots'   ];
-
-        $sliderData = array(
-            'sliderSlidesToShowDesktop' => $attributes[ 'sliderSlidesToShowDesktop' ],
-            'getwid_slidesToShowLaptop' => $attributes[ 'sliderSlidesToShowLaptop' ],
-            'getwid_slidesToShowTablet' => $attributes[ 'sliderSlidesToShowTablet' ],
-            'getwid_slidesToShowMobile' => $attributes[ 'sliderSlidesToShowMobile' ],
-
-            'getwid_autoplay_speed' => intval( $attributes[ 'sliderAutoplaySpeed' ] ),
-            'getwid_animation_speed' => intval( $attributes[ 'sliderAnimationSpeed' ] ),
-
-            'getwid_slidesToScroll' => $attributes[ 'sliderSlidesToScroll' ],
-            'getwid_autoplay' => $attributes[ 'sliderAutoplay' ],
-            'getwid_pause_on_hover' => $attributes[ 'sliderPauseOnHover' ],
-            'getwid_infinite' => $attributes[ 'sliderInfinite' ],
-
-            'getwid_center_mode' => $attributes[ 'sliderCenterMode' ],
-            'getwid_arrows' => $attributes[ 'sliderArrows' ],
-            'getwid_dots' => $attributes[ 'sliderDots' ]
-        );
-
-        $slider_options = json_encode( $sliderData );
-        ob_start();
-        ?>
-
-        <div class="<?php echo esc_attr( $class ); ?>">
-            <div data-slider-option="<?php echo esc_attr( $slider_options ); ?>" class="<?php echo esc_attr( $wrapper_class );?>">
-                <?php
-
-                if ( ! $use_template ) {
-                    $template = $post_type;
-                    $located = getwid_locate_template( 'post-carousel/' . $post_type );
-                    if ( ! $located ) {
-                        $template = 'post';
-                    }
-                }
-
-                if ( $q->have_posts() ):
-                    ob_start();
-
-                    while( $q->have_posts() ):
-                        $q->the_post();
-
+				if ( $q->have_posts() ) {
+					while ( $q->have_posts() ) :
+						$q->the_post();
 						?>
-							<div class="<?php echo esc_attr( $block_name );?>__slide">
-								<?php
-									if ($use_template){
-										echo do_blocks( $template_part_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-									} else {
-										getwid_get_template_part( 'post-carousel/' . $template, $attributes, false, $extra_attr );
-									}
-								?>
-							</div>
+						<div class="<?php echo esc_attr( $block_name ); ?>__slide">
+							<?php
+							if ( $use_template ) {
+								echo do_blocks( $template_part_content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							} else {
+								getwid_get_template_part( 'post-carousel/' . $template, $attributes, false, $extra_attr );
+							}
+							?>
+						</div>
 						<?php
+					endwhile;
 
-                    endwhile;
-
-                    wp_reset_postdata();
-                    ob_end_flush();
-                else:
+					wp_reset_postdata();
+				} else {
 					do_action( 'getwid/blocks/post-carousel/no-items', $attributes, $content );
-                endif;
-                ?>
-            </div>
-        </div>
-        <?php
+				}
+				?>
+			</div>
+		</div>
+		<?php
 
-        $result = ob_get_clean();
+		$result = ob_get_clean();
 
-        $this->block_frontend_assets();
+		$this->block_frontend_assets();
 
-        return $result;
-    }
+		return $result;
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\PostCarousel()
+	new PostCarousel()
 );

@@ -1,114 +1,79 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
+class MediaTextSlider extends AbstractBlock {
 
-	protected static $blockName = 'getwid/media-text-slider';
-	private $assetsAlreadyEnqueued = false;
+	private $assets_already_enqueued = false;
 
-    public function __construct() {
+	public function __construct() {
 
-		parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/media-text-slider' );
 
-        register_block_type(
-            'getwid/media-text-slider',
-            array(
-                'render_callback' => [ $this, 'render_callback' ]
-            )
-        );
+		wp_register_script(
+			'slick',
+			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
+			array( 'jquery' ),
+			'1.9.0',
+			true
+		);
 
-		if ( $this->isEnabled() ) {
+		wp_register_style(
+			'animate',
+			getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
+			array(),
+			'3.7.0'
+		);
 
-			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		wp_register_style(
+			'slick',
+			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
+			array(),
+			'1.9.0'
+		);
 
-			//Register JS/CSS assets
-			wp_register_script(
-				'slick',
-				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
-				[ 'jquery' ],
-				'1.9.0',
-				true
-			);
+		wp_register_style(
+			'slick-theme',
+			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
+			array(),
+			'1.9.0'
+		);
 
-			wp_register_style(
-				'animate',
-				getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
-				[],
-				'3.7.0'
-			);
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/media-text-slider' ),
+			array(
+				'render_callback' => array( $this, 'render_callback' ),
+			)
+		);
 
-			wp_register_style(
-				'slick',
-				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
-				[],
-				'1.9.0'
-			);
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/media-text-slider-slide' )
+		);
 
-			wp_register_style(
-				'slick-theme',
-				getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
-				[],
-				'1.9.0'
-			);
-		}
-    }
-
-	public function getLabel() {
-		return __('Media & Text Slider', 'getwid');
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/media-text-slider-slide-content' )
+		);
 	}
 
-    public function block_frontend_styles($styles) {
+	public function get_label() {
+		return __( 'Media & Text Slider', 'getwid' );
+	}
 
-		//slick.min.css
-        if ( ! in_array( 'slick', $styles ) ) {
-            array_push( $styles, 'slick' );
-        }
+	public function block_frontend_assets() {
 
-		//slick-theme.min.css
-        if ( ! in_array( 'slick-theme', $styles ) ) {
-            array_push( $styles, 'slick-theme' );
-        }
-
-        return $styles;
-    }
-
-    public function block_editor_scripts($scripts) {
-
-		//slick.min.js
-        if ( ! in_array( 'slick', $scripts ) ) {
-            array_push( $scripts, 'slick' );
-        }
-
-        return $scripts;
-    }
-
-    public function block_frontend_assets() {
-
-        if ( is_admin() ) {
-            return;
-        }
-
-		//slick.min.js
-        if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
-            wp_enqueue_script('slick');
-        }
-
-		//animate.min.css
-		if ( ! wp_style_is( 'animate', 'enqueued' ) ) {
-			wp_enqueue_style( 'animate' );
-		}
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+		if ( is_admin() ) {
 			return;
 		}
 
-		$deps = [
-			'slick', 'slick-theme', 'animate'
-		];
+		wp_enqueue_script( 'slick' );
+		wp_enqueue_style( 'animate' );
 
-		add_filter( 'getwid/optimize/assets',
+		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter(
+			'getwid/optimize/assets',
 			function ( $assets ) {
 				$assets[] = 'slick';
 				$assets[] = 'slick-theme';
@@ -118,48 +83,33 @@ class MediaTextSlider extends \Getwid\Blocks\AbstractBlock {
 			}
 		);
 
+		wp_enqueue_style( 'slick' );
+		wp_enqueue_style( 'slick-theme' );
+
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/media-text-slider/style' . $rtl . '.css' ),
-			$deps,
-			getwid()->settings()->getVersion()
-		);
-
-		wp_enqueue_script(
-            self::$blockName,
-            getwid_get_plugin_url( 'assets/blocks/media-text-slider/frontend.js' ),
-            [ 'jquery', 'slick' ],
-            getwid()->settings()->getVersion(),
-            true
-        );
-
-		if ( !$this->assetsAlreadyEnqueued ) {
-			$inline_script =
-				'var Getwid = Getwid || {};' .
-				'Getwid["isRTL"] = ' . json_encode( is_rtl() ) . ';';
+		if ( ! $this->assets_already_enqueued ) {
+			$inline_script  = 'var Getwid = Getwid || {};';
+			$inline_script .= 'Getwid["isRTL"] = ' . wp_json_encode( is_rtl() ) . ';';
 
 			wp_add_inline_script(
-				self::$blockName,
+				'getwid-media-text-slider-view-script',
 				$inline_script,
 				'before'
 			);
 		}
 
-		$this->assetsAlreadyEnqueued = true;
-    }
+		$this->assets_already_enqueued = true;
+	}
 
-    public function render_callback( $attributes, $content ) {
+	public function render_callback( $attributes, $content ) {
 
-        $this->block_frontend_assets();
+		$this->block_frontend_assets();
 
-        return $content;
-    }
+		return $content;
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\MediaTextSlider()
+	new MediaTextSlider()
 );

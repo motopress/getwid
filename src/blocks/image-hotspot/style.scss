@@ -8,7 +8,7 @@
 
 	&__wrapper {
 		position: relative;
-		// Fix image width in IE 11
+
 		@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
 			max-width: inherit;
 		}
@@ -16,7 +16,7 @@
 
 	&__image {
 		display: block;
-		// Fix image width in IE 11
+
 		@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
 			max-width: inherit;
 		}
@@ -30,7 +30,7 @@
 		padding: 6px;
 		background-color: #404040;
 		border-radius: 50%;
-		transition: opacity .3s ease;
+		transition: opacity 0.3s ease;
 		cursor: pointer;
 		outline: none;
 
@@ -44,7 +44,7 @@
 			left: 0;
 			background-color: inherit;
 			border-radius: 50%;
-			transition: all .3s ease-in;
+			transition: all 0.3s ease-in;
 			animation: getwidPulseAnimation 1.5s ease infinite;
 		}
 
@@ -88,27 +88,23 @@
 
 	&-content {
 		font-size: 12px;
-		margin-top: .75em;
+		margin-top: 0.75em;
 
 		&:empty {
 			display: none;
 		}
 
-		img {
-			max-width: 100%;
-		}
-
+		img,
 		iframe {
 			max-width: 100%;
 		}
 	}
-
 }
 
 .has-animated-dots {
 	.wp-block-getwid-image-hotspot__dot {
 		transform: scale(0);
-		transition: all .5s ease-out 0.8s;
+		transition: all 0.5s ease-out 0.8s;
 
 		&.is-visible {
 			transform: none;

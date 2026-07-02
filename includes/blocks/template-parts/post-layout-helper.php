@@ -1,26 +1,27 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New\TemplateParts;
 
-class TemplatePostLayoutHelper extends \Getwid\Blocks\AbstractBlock {
-
-	protected static $blockName = 'getwid/template-post-layout-helper';
+class TemplatePostLayoutHelper extends \Getwid\Blocks\New\AbstractBlock {
 
 	public function __construct() {
 
-		parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/template-post-layout-helper' );
 
 		register_block_type(
-			self::$blockName
+			getwid_get_plugin_path( 'assets/blocks/template-parts/post-layout-helper' )
 		);
+	}
 
+	public function get_label() {
+		return __( 'Layout', 'getwid' );
 	}
 
 	public function isDisabled() {
-
-		return apply_filters( 'getwid/blocks/is_disabled', false, self::$blockName );
+		return apply_filters( 'getwid/blocks/is_disabled', false, 'getwid/template-post-layout-helper' );
 	}
-
 }
 
-new \Getwid\Blocks\TemplatePostLayoutHelper();
+getwid()->blocksManager()->addBlock(
+	new TemplatePostLayoutHelper()
+);

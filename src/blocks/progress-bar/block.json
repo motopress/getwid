@@ -1,0 +1,52 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/progress-bar",
+	"category": "getwid-blocks",
+	"title": "Progress Bar",
+	"supports": {
+		"align": [ "wide", "full" ],
+		"html": false
+	},
+	"attributes": {
+		"align": {
+			"type": "string"
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string"
+		},
+		"customBackgroundColor": {
+			"type": "string"
+		},
+		"customTextColor": {
+			"type": "string"
+		},
+		"fillAmount": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-progress-bar__wrapper",
+			"attribute": "data-fill-amount",
+			"default": "75"
+		},
+		"title": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-progress-bar__title"
+		},
+		"isAnimated": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-progress-bar__wrapper",
+			"attribute": "data-is-animated",
+			"default": "true"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": [ "waypoints", "file:./view.js" ]
+}

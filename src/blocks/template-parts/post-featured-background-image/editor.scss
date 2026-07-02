@@ -1,13 +1,13 @@
-.wp-block-getwid-template-post-featured-background-image{
-	$base-class: '.wp-block-getwid-template-post-featured-background-image';
+.wp-block-getwid-template-post-featured-background-image {
+	$base-class: ".wp-block-getwid-template-post-featured-background-image";
 
 	min-height: 200px;
 
-	&__wrapper{
+	&__wrapper {
 		padding: 25px 14px;
 	}
 
-	&__content{
+	&__content {
 		padding: 14px;
 	}
 }

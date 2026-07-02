@@ -1,76 +1,50 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class ProgressBar extends \Getwid\Blocks\AbstractBlock {
+class ProgressBar extends AbstractBlock {
 
-	protected static $blockName = 'getwid/progress-bar';
+	public function __construct() {
 
-    public function __construct() {
+		parent::__construct( 'getwid/progress-bar' );
 
-		parent::__construct( self::$blockName );
-
-        register_block_type(
-            'getwid/progress-bar',
-            array(
-                'render_callback' => [ $this, 'render_callback' ]
-            )
-        );
-
-        //Register JS/CSS assets
 		wp_register_script(
 			'waypoints',
 			getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
-			[ 'jquery' ],
+			array( 'jquery' ),
 			'4.0.1',
 			true
 		);
-    }
 
-	public function getLabel() {
-		return __('Progress Bar', 'getwid');
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/progress-bar' ),
+			array(
+				'render_callback' => array( $this, 'render_callback' ),
+			)
+		);
 	}
 
-    public function block_frontend_assets() {
+	public function get_label() {
+		return __( 'Progress Bar', 'getwid' );
+	}
 
-        if ( is_admin() ) {
-            return;
-        }
+	public function block_frontend_assets() {
 
-        if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
-            wp_enqueue_script('waypoints');
-        }
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+		if ( is_admin() ) {
 			return;
 		}
 
-		$rtl = is_rtl() ? '.rtl' : '';
+		wp_enqueue_script( 'waypoints' );
+	}
 
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/progress-bar/style' . $rtl . '.css' ),
-			[],
-			getwid()->settings()->getVersion()
-		);
+	public function render_callback( $attributes, $content ) {
 
-		wp_enqueue_script(
-            self::$blockName,
-            getwid_get_plugin_url( 'assets/blocks/progress-bar/frontend.js' ),
-            [ 'jquery', 'waypoints' ],
-            getwid()->settings()->getVersion(),
-            true
-        );
-    }
+		$this->block_frontend_assets();
 
-    public function render_callback( $attributes, $content ) {
-
-        $this->block_frontend_assets();
-
-        return $content;
-    }
+		return $content;
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\ProgressBar()
+	new ProgressBar()
 );

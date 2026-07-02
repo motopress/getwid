@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/tabs-item",
+	"category": "getwid-blocks",
+	"title": "Tabs Item",
+	"parent": [ "getwid/tabs" ],
+	"supports": {
+		"multiple": true,
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"outerParent": {
+			"type": "object"
+		},
+		"title": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-tabs__title"
+		}
+	},
+	"editorScript": "file:./index.js"
+}

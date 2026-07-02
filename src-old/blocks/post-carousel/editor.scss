@@ -1,0 +1,25 @@
+.wp-block-getwid-post-carousel {
+
+	& &__post {
+		a {
+			pointer-events: none;
+		}
+
+		.wp-block-getwid-post-carousel__post-title {
+			margin: 0;
+		}
+	}
+
+	&__wrapper {
+		&:not(.slick-initialized) {
+			opacity: 0;
+			overflow: hidden;
+			height: 400px;
+		}
+	}
+
+	.slick-dots {
+		padding: 0;
+	}
+
+}

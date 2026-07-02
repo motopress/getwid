@@ -1,31 +1,20 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class VideoPopup extends \Getwid\Blocks\AbstractBlock {
+class VideoPopup extends AbstractBlock {
 
-	protected static $blockName = 'getwid/video-popup';
+	public function __construct() {
 
-    public function __construct() {
+		parent::__construct( 'getwid/video-popup' );
 
-		parent::__construct( self::$blockName );
+		if ( $this->is_enabled() ) {
+			add_filter( 'getwid/blocks_style_css/dependencies', array( $this, 'block_frontend_styles' ) );
 
-        register_block_type(
-            'getwid/video-popup',
-            array(
-                'render_callback' => [ $this, 'render_callback' ]
-            )
-        );
-
-		if ( $this->isEnabled() ) {
-
-			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
-
-			//Register JS/CSS assets
 			wp_register_script(
 				'mp-fancybox',
 				getwid_get_plugin_url( 'vendors/mp-fancybox/jquery.fancybox.min.js' ),
-				[ 'jquery' ],
+				array( 'jquery' ),
 				'3.5.7-mp.1',
 				true
 			);
@@ -33,49 +22,50 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 			wp_register_style(
 				'mp-fancybox',
 				getwid_get_plugin_url( 'vendors/mp-fancybox/jquery.fancybox.min.css' ),
-				[],
+				array(),
 				'3.5.7-mp.1'
 			);
 		}
-    }
 
-	public function getLabel() {
-		return __('Video Popup', 'getwid');
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/video-popup' ),
+			array(
+				'render_callback' => array( $this, 'render_callback' ),
+			)
+		);
 	}
 
-    public function block_frontend_styles($styles) {
+	public function get_label() {
+		return __( 'Video Popup', 'getwid' );
+	}
 
-		//fontawesome
+	public function block_frontend_styles( $styles ) {
+
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
-        //jquery.fancybox.min.css
-		if ( ! is_admin() && ! in_array( 'mp-fancybox', $styles ) ) {
-            array_push( $styles, 'mp-fancybox' );
-        }
+		if ( ! is_admin() && ! in_array( 'mp-fancybox', $styles, true ) ) {
+			$styles[] = 'mp-fancybox';
+		}
 
-        return $styles;
-    }
+		return $styles;
+	}
 
-    public function block_frontend_assets() {
+	public function block_frontend_assets() {
 
-        if ( is_admin() ) {
-            return;
-        }
-
-		//jquery.fancybox.min.js
-		if ( ! wp_script_is( 'mp-fancybox', 'enqueued' ) ) {
-            wp_enqueue_script('mp-fancybox');
-        }
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+		if ( is_admin() ) {
 			return;
 		}
 
-		$deps = [
-			'mp-fancybox',
-		];
+		if ( ! wp_script_is( 'mp-fancybox', 'enqueued' ) ) {
+			wp_enqueue_script( 'mp-fancybox' );
+		}
 
-		add_filter( 'getwid/optimize/assets',
+		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter(
+			'getwid/optimize/assets',
 			function ( $assets ) {
 				$assets[] = 'mp-fancybox';
 				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
@@ -85,39 +75,16 @@ class VideoPopup extends \Getwid\Blocks\AbstractBlock {
 		);
 
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+	}
 
-		//fontawesome
-		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
-
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/video-popup/style' . $rtl . '.css' ),
-			$deps,
-			getwid()->settings()->getVersion()
-		);
-
-		wp_enqueue_script(
-            self::$blockName,
-            getwid_get_plugin_url( 'assets/blocks/video-popup/frontend.js' ),
-            [
-				'jquery',
-				'mp-fancybox'
-			],
-            getwid()->settings()->getVersion(),
-            true
-        );
-    }
-
-    public function render_callback( $attributes, $content ) {
+	public function render_callback( $attributes, $content ) {
 
 		$this->block_frontend_assets();
 
-        return $content;
-    }
+		return $content;
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\VideoPopup()
+	new VideoPopup()
 );

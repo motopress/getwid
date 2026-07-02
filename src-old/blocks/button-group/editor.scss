@@ -1,0 +1,285 @@
+.wp-block-getwid-button-group {
+	overflow: initial !important;
+
+	.wp-block-button {
+		width: auto;
+		max-width: none;
+
+		&__link {
+			display: block;
+			width: 100%;
+		}
+	}
+
+	.wp-block-getwid-button-group__wrapper {
+		display: block !important;
+
+		.wp-block[data-type="core/button"] {
+			max-width: none;
+
+			.wp-block-button {
+				width: 100%;
+			}
+		}
+
+		&.has-spacing-small {
+			margin-bottom: 0 !important;
+
+			.block-list-appender {
+				padding: 0 10px 10px 10px;
+			}
+		}
+
+		&.has-spacing-medium {
+			margin-bottom: 0 !important;
+
+			.block-list-appender {
+				padding: 0 15px 15px 15px;
+			}
+		}
+
+		&.has-spacing-normal {
+			margin-bottom: 0 !important;
+
+			.block-list-appender {
+				padding: 0 20px 20px 20px;
+			}
+		}
+
+		&.has-spacing-large {
+			margin-bottom: 0 !important;
+
+			.block-list-appender {
+				padding: 0 25px 25px 25px;
+			}
+		}
+
+		&.has-alignment-center .block-editor-block-list__layout {
+			justify-content: center;
+		}
+
+		&.has-alignment-right .block-editor-block-list__layout {
+			justify-content: flex-end;
+		}
+
+		&.has-alignment-tablet-center .block-editor-block-list__layout {
+			@media screen and (min-width: 768px) and(max-width: 991px) {
+				justify-content: center;
+			}
+		}
+
+		&.has-alignment-tablet-right .block-editor-block-list__layout {
+			@media screen and (min-width: 768px) and(max-width: 991px) {
+				justify-content: flex-end;
+			}
+		}
+
+		&.has-alignment-tablet-left .block-editor-block-list__layout {
+			@media screen and (min-width: 768px) and(max-width: 991px) {
+				justify-content: flex-start;
+			}
+		}
+
+		&.has-alignment-mobile-center .block-editor-block-list__layout {
+			@media screen and (max-width: 767px) {
+				justify-content: center;
+			}
+		}
+
+		&.has-alignment-mobile-right .block-editor-block-list__layout {
+			@media screen and (max-width: 767px) {
+				justify-content: flex-end;
+			}
+		}
+
+		&.has-alignment-mobile-left .block-editor-block-list__layout {
+			@media screen and (max-width: 767px) {
+				justify-content: flex-start;
+			}
+		}
+
+		&.has-direction-column {
+			.block-editor-block-list__layout {
+				flex-direction: column;
+				align-items: flex-start;
+			}
+
+			&.has-alignment-center .block-editor-block-list__layout {
+				align-items: center;
+			}
+
+			&.has-alignment-right .block-editor-block-list__layout {
+				align-items: flex-end;
+			}
+
+			&.has-alignment-tablet-center .block-editor-block-list__layout {
+				@media screen and (min-width: 768px) and(max-width: 991px) {
+					align-items: center;
+				}
+			}
+
+			&.has-alignment-tablet-right .block-editor-block-list__layout {
+				@media screen and (min-width: 768px) and(max-width: 991px) {
+					align-items: flex-end;
+				}
+			}
+
+			&.has-alignment-tablet-left .block-editor-block-list__layout {
+				@media screen and (min-width: 768px) and(max-width: 991px) {
+					align-items: flex-start;
+				}
+			}
+
+			&.has-alignment-mobile-center .block-editor-block-list__layout {
+				@media screen and (max-width: 767px) {
+					align-items: center;
+				}
+			}
+
+			&.has-alignment-mobile-right .block-editor-block-list__layout {
+				@media screen and (max-width: 767px) {
+					align-items: flex-end;
+				}
+			}
+
+			&.has-alignment-mobile-left .block-editor-block-list__layout {
+				@media screen and (max-width: 767px) {
+					align-items: flex-start;
+				}
+			}
+		}
+
+		&.has-direction-tablet-column {
+			.block-editor-block-list__layout {
+				@media screen and (min-width: 768px) and(max-width: 991px) {
+					flex-direction: column;
+				}
+			}
+
+			&.has-alignment-tablet-center .block-editor-block-list__layout {
+				@media screen and (min-width: 768px) and(max-width: 991px) {
+					align-items: center;
+				}
+			}
+
+			&.has-alignment-tablet-right .block-editor-block-list__layout {
+				@media screen and (min-width: 768px) and(max-width: 991px) {
+					align-items: flex-end;
+				}
+			}
+
+			&.has-alignment-tablet-left .block-editor-block-list__layout {
+				@media screen and (min-width: 768px) and(max-width: 991px) {
+					align-items: flex-start;
+				}
+			}
+		}
+
+		&.has-direction-mobile-column {
+			.block-editor-block-list__layout {
+				@media screen and (max-width: 767px) {
+					flex-direction: column;
+				}
+			}
+
+			&.has-alignment-mobile-center .block-editor-block-list__layout {
+				@media screen and (max-width: 767px) {
+					align-items: center;
+				}
+			}
+
+			&.has-alignment-mobile-right .block-editor-block-list__layout {
+				@media screen and (max-width: 767px) {
+					align-items: flex-end;
+				}
+			}
+
+			&.has-alignment-mobile-left .block-editor-block-list__layout {
+				@media screen and (max-width: 767px) {
+					align-items: flex-start;
+				}
+			}
+		}
+
+		&.has-width-100 {
+			// @todo delete the code below after the minimum WP version is raised to 5.5
+			.wp-block[data-type="core/button"]:not(.wp-block-button) {
+				width: 100%;
+
+				.wp-block-button__link,
+				.wp-block-button,
+				.wp-block-button > .block-editor-rich-text {
+					display: block;
+				}
+			}
+
+			.block-list-appender {
+				width: 100%;
+			}
+		}
+
+		&.has-width-50 {
+			// @todo delete the code below after the minimum WP version is raised to 5.5
+			.wp-block[data-type="core/button"]:not(.wp-block-button) {
+				width: 50%;
+
+				.wp-block-button__link,
+				.wp-block-button,
+				.wp-block-button > .block-editor-rich-text {
+					display: block;
+				}
+			}
+		}
+
+		&.has-width-33 {
+			// @todo delete the code below after the minimum WP version is raised to 5.5
+			.wp-block[data-type="core/button"]:not(.wp-block-button) {
+				width: 33.3333%;
+
+				.wp-block-button__link,
+				.wp-block-button,
+				.wp-block-button > .block-editor-rich-text {
+					display: block;
+				}
+			}
+		}
+
+		&.has-width-25 {
+			// @todo delete the code below after the minimum WP version is raised to 5.5
+			.wp-block[data-type="core/button"]:not(.wp-block-button) {
+				width: 25%;
+
+				.wp-block-button__link,
+				.wp-block-button,
+				.wp-block-button > .block-editor-rich-text {
+					display: block;
+				}
+			}
+		}
+
+		&.has-width-20 {
+			// @todo delete the code below after the minimum WP version is raised to 5.5
+			.wp-block[data-type="core/button"]:not(.wp-block-button) {
+				width: 20%;
+
+				.wp-block-button__link,
+				.wp-block-button,
+				.wp-block-button > .block-editor-rich-text {
+					display: block;
+				}
+			}
+		}
+
+	}
+
+	.block-editor-block-list__layout {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: flex-start;
+
+		> .wp-block {
+			margin: 0;
+		}
+	}
+}

@@ -1,51 +1,46 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class SocialLinks extends \Getwid\Blocks\AbstractBlock {
+class SocialLinks extends AbstractBlock {
 
-	protected static $blockName = 'getwid/social-links';
+	public function __construct() {
 
-    public function __construct() {
+		parent::__construct( 'getwid/social-links' );
 
-		parent::__construct( self::$blockName );
-
-        register_block_type(
-            'getwid/social-links',
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/social-links' ),
 			array(
-				'render_callback' => [ $this, 'render_callback' ]
+				'render_callback' => array( $this, 'render_callback' ),
 			)
-        );
+		);
 
-		if ( $this->isEnabled() ) {
-
-			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		if ( $this->is_enabled() ) {
+			add_filter( 'getwid/blocks_style_css/dependencies', array( $this, 'block_frontend_styles' ) );
 		}
-    }
-
-	public function getLabel() {
-		return __('Social Links', 'getwid');
 	}
 
-	public function block_frontend_styles($styles) {
+	public function get_label() {
+		return __( 'Social Links', 'getwid' );
+	}
 
-		//fontawesome
-		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
+	public function block_frontend_styles( $styles ) {
 
-        return $styles;
-    }
+		return getwid()->fontIconsManager()->enqueueFonts( $styles );
+	}
 
-    public function block_frontend_assets() {
+	public function block_frontend_assets() {
 
-        if ( is_admin() ) {
-            return;
-        }
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+		if ( is_admin() ) {
 			return;
 		}
 
-		add_filter( 'getwid/optimize/assets',
+		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter(
+			'getwid/optimize/assets',
 			function ( $assets ) {
 				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
 
@@ -55,28 +50,17 @@ class SocialLinks extends \Getwid\Blocks\AbstractBlock {
 
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
-		//fontawesome
-		$deps = getwid()->fontIconsManager()->enqueueFonts( [] );
-
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/social-links/style' . $rtl . '.css' ),
-			$deps,
-			getwid()->settings()->getVersion()
-		);
-    }
+		getwid()->fontIconsManager()->enqueueFonts( array() );
+	}
 
 	public function render_callback( $attributes, $content ) {
 
-        $this->block_frontend_assets();
+		$this->block_frontend_assets();
 
-        return $content;
-    }
-
+		return $content;
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\SocialLinks()
+	new SocialLinks()
 );

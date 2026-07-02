@@ -1,57 +1,55 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class ImagesStack extends \Getwid\Blocks\AbstractBlock {
-
-	protected static $blockName = 'getwid/images-stack';
+class ImagesStack extends AbstractBlock {
 
 	public function __construct() {
 
-		parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/images-stack' );
 
 		register_block_type(
-			'getwid/images-stack',
+			getwid_get_plugin_path( 'assets/blocks/images-stack' ),
 			array(
-                'render_callback' => [ $this, 'render_callback' ]
-            )
+				'render_callback' => array( $this, 'render_callback' ),
+			)
 		);
-
 	}
 
-	public function getLabel() {
-		return __('Image Stack Gallery', 'getwid');
+	public function get_label() {
+		return __( 'Image Stack Gallery', 'getwid' );
 	}
 
-    public function block_frontend_assets() {
+	public function block_frontend_assets() {
 
-        if ( is_admin() ) {
-            return;
-        }
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+		if ( is_admin() ) {
 			return;
 		}
 
-		$rtl = is_rtl() ? '.rtl' : '';
+		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
 
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/images-stack/style' . $rtl . '.css' ),
-			[],
-			getwid()->settings()->getVersion()
+		add_filter(
+			'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
 		);
-    }
 
-    public function render_callback( $attributes, $content ) {
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+	}
 
-        $this->block_frontend_assets();
+	public function render_callback( $attributes, $content ) {
 
-        return $content;
-    }
+		$this->block_frontend_assets();
 
+		return $content;
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\ImagesStack()
+	new ImagesStack()
 );

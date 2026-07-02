@@ -3,11 +3,10 @@
  */
 
 .wp-block-getwid-image-box {
-
 	&__image-container {
-		margin: 0 0 20px 0;
-		line-height: 0;
 		flex: 1 0 auto;
+		line-height: 0;
+		margin: 0 0 20px 0;
 
 		&.is-position-top {
 			align-self: flex-start;
@@ -32,7 +31,7 @@
 
 		a.wp-block-getwid-image-box__image-wrapper {
 			text-decoration: none;
-			transition: all .3s ease;
+			transition: all 0.3s ease;
 
 			&:hover {
 				cursor: pointer;
@@ -41,9 +40,9 @@
 	}
 
 	&__content {
-		order: 0;
-		flex: 0 1 100%;
 		align-self: center;
+		flex: 0 1 100%;
+		order: 0;
 	}
 
 	&.has-text-left {
@@ -60,39 +59,39 @@
 
 	&.has-image-left,
 	&.has-image-right {
-		display: flex;
-		justify-content: flex-start #{'/*rtl: flex-end*/'};
 		align-items: stretch;
+		display: flex;
 		flex-direction: row;
 		flex-wrap: nowrap;
+		justify-content: flex-start #{"/*rtl: flex-end*/"};
 	}
 
 	&.has-mobile-layout-column {
-		@media screen and(max-width: 767px) {
+		@media screen and (max-width: 767px) {
 			flex-direction: column;
 		}
 	}
 
 	&.has-mobile-layout-column-reverse {
-		@media screen and(max-width: 767px) {
+		@media screen and (max-width: 767px) {
 			flex-direction: column;
 		}
 	}
 
 	&.has-mobile-alignment-center {
-		@media screen and(max-width: 767px) {
+		@media screen and (max-width: 767px) {
 			text-align: center;
 		}
 	}
 
 	&.has-mobile-alignment-left {
-		@media screen and(max-width: 767px) {
+		@media screen and (max-width: 767px) {
 			text-align: left;
 		}
 	}
 
 	&.has-mobile-alignment-right {
-		@media screen and(max-width: 767px) {
+		@media screen and (max-width: 767px) {
 			text-align: right;
 		}
 	}
@@ -108,32 +107,32 @@
 
 .has-image-right {
 	.wp-block-getwid-image-box__image-container {
-		order: 1 #{'/*rtl:0*/'};
 		margin: 0 0 0 20px;
 		max-width: 50%;
+		order: 1 #{"/*rtl:0*/"};
 	}
 }
 
 .has-mobile-layout-column {
 	.wp-block-getwid-image-box__image-container {
 		@media screen and (max-width: 767px) {
-			max-width: 100%;
-			order: 0;
 			margin-bottom: 20px;
 			margin-left: 0 !important;
 			margin-right: 0 !important;
+			max-width: 100%;
+			order: 0;
 		}
 	}
 }
 
 .has-mobile-layout-column-reverse {
 	.wp-block-getwid-image-box__image-container {
-		@media screen and(max-width: 767px) {
+		@media screen and (max-width: 767px) {
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			margin-top: 20px;
 			max-width: 100%;
 			order: 1;
-			margin-top: 20px;
-			margin-right: 0 !important;
-			margin-left: 0 !important;
 		}
 	}
 }

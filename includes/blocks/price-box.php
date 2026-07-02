@@ -1,57 +1,55 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class PriceBox extends \Getwid\Blocks\AbstractBlock {
-
-	protected static $blockName = 'getwid/price-box';
+class PriceBox extends AbstractBlock {
 
 	public function __construct() {
 
-		parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/price-box' );
 
 		register_block_type(
-			'getwid/price-box',
+			getwid_get_plugin_path( 'assets/blocks/price-box' ),
 			array(
-				'render_callback' => [ $this, 'render_callback' ]
+				'render_callback' => array( $this, 'render_callback' ),
 			)
 		);
-
 	}
 
-	public function getLabel() {
-		return __('Price Box', 'getwid');
+	public function get_label() {
+		return __( 'Price Box', 'getwid' );
 	}
 
-    public function block_frontend_assets() {
+	public function block_frontend_assets() {
 
-        if ( is_admin() ) {
-            return;
-        }
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+		if ( is_admin() ) {
 			return;
 		}
 
-		$rtl = is_rtl() ? '.rtl' : '';
+		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
 
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/price-box/style' . $rtl . '.css' ),
-			[],
-			getwid()->settings()->getVersion()
+		add_filter(
+			'getwid/optimize/assets',
+			function ( $assets ) {
+				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+
+				return $assets;
+			}
 		);
-    }
+
+		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+	}
 
 	public function render_callback( $attributes, $content ) {
 
-        $this->block_frontend_assets();
+		$this->block_frontend_assets();
 
-        return $content;
-    }
-
+		return $content;
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\PriceBox()
+	new PriceBox()
 );

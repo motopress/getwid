@@ -3,7 +3,7 @@
  */
 
 .wp-block-getwid-template-post-meta {
-	margin-bottom: .5em;
+	margin-bottom: 0.5em;
 
 	&:last-child {
 		margin-bottom: 0;
@@ -64,7 +64,7 @@
 	&.has-direction-column {
 		&:after {
 			display: table;
-			content: '';
+			content: "";
 			clear: both;
 		}
 
@@ -77,5 +77,4 @@
 			margin-right: 5px;
 		}
 	}
-
 }

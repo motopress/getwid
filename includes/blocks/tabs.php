@@ -1,84 +1,34 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class Tabs extends \Getwid\Blocks\AbstractBlock {
+class Tabs extends AbstractBlock {
 
-	protected static $blockName = 'getwid/tabs';
+	public function __construct() {
 
-    public function __construct() {
+		parent::__construct( 'getwid/tabs' );
 
-		parent::__construct( self::$blockName );
-
-        register_block_type(
-            'getwid/tabs',
-            array(
-                'render_callback' => [ $this, 'render_callback' ]
-            )
-        );
-
-		if ( $this->isEnabled() ) {
-
-			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-		}
-    }
-
-	public function getLabel() {
-		return __('Tabs', 'getwid');
-	}
-
-    public function block_editor_scripts($scripts) {
-
-        //jquery-ui-tabs.min.js
-		if ( ! in_array( 'jquery-ui-tabs', $scripts ) ) {
-            array_push( $scripts, 'jquery-ui-tabs' );
-        }
-
-        return $scripts;
-    }
-
-    public function block_frontend_assets() {
-
-        if ( is_admin() ) {
-            return;
-        }
-
-		//jquery-ui-tabs.min.js
-        if ( ! wp_script_is( 'jquery-ui-tabs', 'enqueued' ) ) {
-            wp_enqueue_script('jquery-ui-tabs');
-        }
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/tabs/style' . $rtl . '.css' ),
-			[],
-			getwid()->settings()->getVersion()
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/tabs' ),
+			array(
+				'render_callback' => array( $this, 'render_callback' ),
+			)
 		);
 
-		wp_enqueue_script(
-            self::$blockName,
-            getwid_get_plugin_url( 'assets/blocks/tabs/frontend.js' ),
-            [ 'jquery', 'jquery-ui-tabs' ],
-            getwid()->settings()->getVersion(),
-            true
-        );
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/tabs-item' )
+		);
+	}
 
-    }
+	public function get_label() {
+		return __( 'Tabs', 'getwid' );
+	}
 
-    public function render_callback( $attributes, $content ) {
-
-        $this->block_frontend_assets();
-
-        return $content;
-    }
+	public function render_callback( $attributes, $content ) {
+		return $content;
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\Tabs()
+	new Tabs()
 );

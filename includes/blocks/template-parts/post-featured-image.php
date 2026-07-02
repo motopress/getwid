@@ -1,54 +1,41 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New\TemplateParts;
 
-class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
+class PostFeaturedImage extends \Getwid\Blocks\New\AbstractBlock {
 
-	protected static $blockName = 'getwid/template-post-featured-image';
-	protected static $assetsHandle = 'getwid/template-parts';
+	protected static $assets_handle = 'getwid/template-parts';
 
-    public function __construct() {
+	public function __construct() {
 
-		parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/template-post-featured-image' );
 
-        register_block_type(
-            self::$blockName,
-            array(
-                'attributes' => array(
-                    'linkTo' => array(
-                        'type' => 'string',
-                        'default' => 'none'
-                    ),
-                    'align' => array(
-                        'type' => 'string'
-                    ),
-                    'imageSize' => array(
-                        'type' => 'string',
-                        'default' => 'large'
-                    ),
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/template-parts/post-featured-image' ),
+			array(
+				'render_callback' => array( $this, 'render_callback' ),
+			)
+		);
+	}
 
-                    'className' => array(
-                        'type' => 'string'
-                    ),
-                ),
-                'render_callback' => [ $this, 'render_callback' ]
-            )
-        );
-    }
+	public function get_label() {
+		return __( 'Featured Image', 'getwid' );
+	}
 
-    public function block_frontend_assets() {
+	public function block_frontend_assets() {
 
-        if ( is_admin() ) {
-            return;
-        }
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+		if ( is_admin() ) {
 			return;
 		}
 
-		add_filter( 'getwid/optimize/assets',
+		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter(
+			'getwid/optimize/assets',
 			function ( $assets ) {
-				$assets[] = self::$assetsHandle;
+				$assets[] = self::$assets_handle;
 
 				return $assets;
 			}
@@ -57,55 +44,54 @@ class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
 		$rtl = is_rtl() ? '.rtl' : '';
 
 		wp_enqueue_style(
-			self::$assetsHandle,
+			self::$assets_handle,
 			getwid_get_plugin_url( 'assets/blocks/template-parts/style' . $rtl . '.css' ),
-			[],
+			array(),
 			getwid()->settings()->getVersion()
 		);
-    }
+	}
 
-    public function render_callback( $attributes, $content ) {
+	public function render_callback( $attributes, $content ) {
 
-        //Not BackEnd render if we view from template page
-        if ( ( get_post_type() == getwid()->postTemplatePart()->postType ) || ( get_post_type() == 'revision' ) ) {
-            return $content;
-        }
+		if ( ( get_post_type() === getwid()->postTemplatePart()->postType ) || ( get_post_type() === 'revision' ) ) {
+			return $content;
+		}
 
-        $block_name = 'wp-block-getwid-template-post-featured-image';
-        $wrapper_class = $block_name;
+		$block_name    = 'wp-block-getwid-template-post-featured-image';
+		$wrapper_class = $block_name;
 
-        if ( isset( $attributes[ 'className' ] ) ) {
-            $wrapper_class .= ' ' . esc_attr( $attributes[ 'className' ] );
-        }
+		if ( isset( $attributes['className'] ) ) {
+			$wrapper_class .= ' ' . esc_attr( $attributes['className'] );
+		}
 
-        $wrapper_style = '';
-        //Classes
-        if ( isset( $attributes[ 'align' ] ) ) {
-            $wrapper_class .= ' align' . esc_attr( $attributes[ 'align' ] );
-        }
+		$wrapper_style = '';
 
-        $imageSize = ( ( isset( $attributes[ 'imageSize' ] ) && $attributes[ 'imageSize' ] ) ? $attributes[ 'imageSize' ] : 'post-thumbnail' );
+		if ( isset( $attributes['align'] ) ) {
+			$wrapper_class .= ' align' . esc_attr( $attributes['align'] );
+		}
 
-        $result = '';
+		$image_size = ( isset( $attributes['imageSize'] ) && $attributes['imageSize'] ) ? $attributes['imageSize'] : 'post-thumbnail';
+		$result     = '';
+		$extra_attr = array(
+			'wrapper_class' => $wrapper_class,
+			'wrapper_style' => $wrapper_style,
+			'imageSize'     => $image_size,
+		);
 
-        $extra_attr = array(
-            'wrapper_class' => $wrapper_class,
-            'wrapper_style' => $wrapper_style,
-            'imageSize' => $imageSize
-        );
+		if ( has_post_thumbnail() ) {
+			ob_start();
 
-        if ( has_post_thumbnail() ) {
-            ob_start();
+			getwid_get_template_part( 'template-parts/post-featured-image', $attributes, false, $extra_attr );
 
-            getwid_get_template_part( 'template-parts/post-featured-image', $attributes, false, $extra_attr );
-
-            $result = ob_get_clean();
-        }
+			$result = ob_get_clean();
+		}
 
 		$this->block_frontend_assets();
 
-        return $result;
-    }
+		return $result;
+	}
 }
 
-new \Getwid\Blocks\PostFeaturedImage();
+getwid()->blocksManager()->addBlock(
+	new PostFeaturedImage()
+);

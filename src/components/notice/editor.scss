@@ -1,0 +1,28 @@
+.components-getwid-notice {
+	padding: 12px;
+	background: #f0f0f0;
+	margin: 10px 0;
+
+	&:first-child {
+		margin-top: 0;
+	}
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	> * {
+		&:first-child {
+			margin-top: 0;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.components-external-link {
+		display: block;
+		margin-top: 8px;
+	}
+}

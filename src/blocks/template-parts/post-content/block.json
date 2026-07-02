@@ -1,0 +1,44 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getwid/template-post-content",
+	"title": "Content",
+	"category": "getwid-post-blocks",
+	"icon": "text",
+	"description": "Post content template part.",
+	"textdomain": "getwid",
+	"supports": {
+		"inserter": true
+	},
+	"attributes": {
+		"textColor": {
+			"type": "string"
+		},
+		"customTextColor": {
+			"type": "string"
+		},
+		"fontSize": {
+			"type": "string"
+		},
+		"customFontSize": {
+			"type": "string"
+		},
+		"textAlignment": {
+			"type": "string"
+		},
+		"showContent": {
+			"type": "string",
+			"default": "excerpt"
+		},
+		"contentLength": {
+			"type": "number",
+			"default": 55
+		},
+		"className": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css"
+}

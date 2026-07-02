@@ -1,0 +1,17 @@
+.wp-block-getwid-instagram {
+	&__key-form {
+
+		a.getwid-instagram-auth-button {
+			margin-right: 1rem;
+			text-decoration: none;
+			color: #ffffff;
+			box-shadow: none;
+
+			&:hover {
+				text-decoration: none;
+				color: #ffffff;
+				box-shadow: none;
+			}
+		}
+	}
+}

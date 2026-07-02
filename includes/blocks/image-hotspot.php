@@ -1,163 +1,140 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
+class ImageHotspot extends AbstractBlock {
 
-	protected static $blockName = 'getwid/image-hotspot';
+	public function __construct() {
 
-    public function __construct() {
+		parent::__construct( 'getwid/image-hotspot' );
 
-		parent::__construct( self::$blockName );
-
-        register_block_type(
-            'getwid/image-hotspot',
-            array(
-                'render_callback' => [ $this, 'render_callback' ]
-            )
+		wp_register_script(
+			'popper',
+			getwid_get_plugin_url( 'vendors/tippy.js/popper.min.js' ),
+			array( 'jquery' ),
+			'2.4.0',
+			true
 		);
 
-		if ( $this->isEnabled() ) {
+		wp_register_script(
+			'tippy',
+			getwid_get_plugin_url( 'vendors/tippy.js/tippy-bundle.umd.min.js' ),
+			array( 'jquery', 'popper' ),
+			'6.2.3',
+			true
+		);
 
-			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		wp_register_script(
+			'waypoints',
+			getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
+			array( 'jquery' ),
+			'4.0.1',
+			true
+		);
 
-			//Register JS/CSS assets
-			wp_register_script(
-				'popper',
-				getwid_get_plugin_url( 'vendors/tippy.js/popper.min.js' ),
-				[ 'jquery' ],
-				'2.4.0',
-				true
-			);
+		wp_register_script(
+			'unescape',
+			getwid_get_plugin_url( 'vendors/lodash.unescape/unescape.min.js' ),
+			array(),
+			'4.0.1',
+			true
+		);
 
-			wp_register_script(
-				'tippy',
-				getwid_get_plugin_url( 'vendors/tippy.js/tippy-bundle.umd.min.js' ),
-				[ 'jquery', 'popper' ],
-				'6.2.3',
-				true
-			);
+		wp_register_style(
+			'tippy-themes',
+			getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
+			array(),
+			'6.2.3'
+		);
 
-			wp_register_script(
-				'waypoints',
-				getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
-				[ 'jquery' ],
-				'4.0.1',
-				true
-			);
+		wp_register_style(
+			'tippy-animation',
+			getwid_get_plugin_url( 'vendors/tippy.js/animations.css' ),
+			array(),
+			'6.2.3'
+		);
 
-			wp_register_script(
-				'unescape',
-				getwid_get_plugin_url( 'vendors/lodash.unescape/unescape.min.js' ),
-				[],
-				'4.0.1',
-				true
-			);
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/image-hotspot' ),
+			array(
+				'render_callback' => array( $this, 'render_callback' ),
+			)
+		);
 
-			wp_register_style(
-				'tippy-themes',
-				getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
-				[],
-				'6.2.3'
-			);
-
-			wp_register_style(
-				'tippy-animation',
-				getwid_get_plugin_url( 'vendors/tippy.js/animations.css' ),
-				[],
-				'6.2.3'
-			);
+		if ( $this->is_enabled() ) {
+			add_filter( 'getwid/editor_blocks_js/dependencies', array( $this, 'block_editor_scripts' ) );
+			add_filter( 'getwid/blocks_style_css/dependencies', array( $this, 'block_frontend_styles' ) );
 		}
-    }
-
-	public function getLabel() {
-		return __('Image Hotspot', 'getwid');
 	}
 
-    public function block_frontend_styles($styles) {
+	public function get_label() {
+		return __( 'Image Hotspot', 'getwid' );
+	}
 
-		//fontawesome
+	public function block_frontend_styles( $styles ) {
+
 		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
 
-		//themes.css
-        if ( is_admin() && ! in_array( 'tippy-themes', $styles ) ) {
-            array_push( $styles, 'tippy-themes' );
+		if ( is_admin() && ! in_array( 'tippy-themes', $styles, true ) ) {
+			$styles[] = 'tippy-themes';
 		}
 
-		//animation.css
-		if ( is_admin() && ! in_array( 'tippy-animation', $styles ) ) {
-			array_push( $styles, 'tippy-animation' );
+		if ( is_admin() && ! in_array( 'tippy-animation', $styles, true ) ) {
+			$styles[] = 'tippy-animation';
 		}
 
-        return $styles;
-    }
+		return $styles;
+	}
 
-    public function block_editor_scripts($scripts) {
+	public function block_editor_scripts( $scripts ) {
 
-		//popper.min.js
-        if ( ! in_array( 'popper', $scripts ) ) {
-            array_push( $scripts, 'popper' );
+		if ( ! in_array( 'popper', $scripts, true ) ) {
+			$scripts[] = 'popper';
 		}
 
-		//tippy-bundle.umd.min.js
-        if ( ! in_array( 'tippy', $scripts ) ) {
-            array_push( $scripts, 'tippy' );
+		if ( ! in_array( 'tippy', $scripts, true ) ) {
+			$scripts[] = 'tippy';
 		}
 
-        return $scripts;
-    }
+		return $scripts;
+	}
 
-    public function block_frontend_assets() {
+	public function block_frontend_assets() {
 
 		if ( is_admin() ) {
 			return;
 		}
 
-		//popper.min.js
 		if ( ! wp_script_is( 'popper', 'enqueued' ) ) {
-			wp_enqueue_script('popper');
+			wp_enqueue_script( 'popper' );
 		}
 
-		//tippy-bundle.umd.min.js
 		if ( ! wp_script_is( 'tippy', 'enqueued' ) ) {
-			wp_enqueue_script('tippy');
+			wp_enqueue_script( 'tippy' );
 		}
 
-		//jquery.waypoints.min.js
 		if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
-			wp_enqueue_script('waypoints');
+			wp_enqueue_script( 'waypoints' );
 		}
 
-		//unescape.min.js
 		if ( ! wp_script_is( 'unescape', 'enqueued' ) ) {
 			wp_enqueue_script( 'unescape' );
 		}
 
-		//themes.css
 		if ( ! wp_style_is( 'tippy-themes', 'enqueued' ) ) {
 			wp_enqueue_style( 'tippy-themes' );
 		}
 
-		//animation.css
 		if ( ! wp_style_is( 'tippy-animation', 'enqueued' ) ) {
 			wp_enqueue_style( 'tippy-animation' );
 		}
 
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
 			return;
 		}
 
-		$deps_css = [
-			'tippy-themes', 'tippy-animation'
-		];
-
-		$deps_js = [ 'jquery', 'popper', 'tippy', 'waypoints', 'unescape' ];
-
-		//fontawesome
-		$deps_css = getwid()->fontIconsManager()->enqueueFonts( $deps_css );
-
-		add_filter( 'getwid/optimize/assets',
+		add_filter(
+			'getwid/optimize/assets',
 			function ( $assets ) {
 				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
 
@@ -166,34 +143,16 @@ class ImageHotspot extends \Getwid\Blocks\AbstractBlock {
 		);
 
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
+	}
 
-		$rtl = is_rtl() ? '.rtl' : '';
+	public function render_callback( $attributes, $content ) {
 
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/image-hotspot/style' . $rtl . '.css' ),
-			$deps_css,
-			getwid()->settings()->getVersion()
-		);
+		$this->block_frontend_assets();
 
-		wp_enqueue_script(
-            self::$blockName,
-            getwid_get_plugin_url( 'assets/blocks/image-hotspot/frontend.js' ),
-            $deps_js,
-            getwid()->settings()->getVersion(),
-            true
-        );
-
-    }
-
-    public function render_callback( $attributes, $content ) {
-
-        $this->block_frontend_assets();
-
-        return $content;
-    }
+		return $content;
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\ImageHotspot()
+	new ImageHotspot()
 );

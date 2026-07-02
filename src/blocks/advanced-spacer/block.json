@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/advanced-spacer",
+	"category": "getwid-blocks",
+	"title": "Advanced Spacer",
+	"attributes": {
+		"height": {
+			"type": "string",
+			"default": "100px"
+		},
+		"isHideDesktop": {
+			"type": "boolean",
+			"default": false
+		},
+		"isHideTablet": {
+			"type": "boolean",
+			"default": false
+		},
+		"isHideMobile": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

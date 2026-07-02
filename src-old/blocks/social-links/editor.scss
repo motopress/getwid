@@ -1,0 +1,36 @@
+.wp-block-getwid-social-links{
+	overflow: initial !important;
+	& &__list{
+		margin: 0 !important;
+		padding: 0;
+	}
+    & &__item {
+        display: inline-block;
+        &.icon-selected{
+            outline: 2px solid #0085ba;
+        }
+    }
+
+    & &__link{
+		&:focus{
+			outline: none;
+		}
+        &:hover{
+		}
+		i{
+			font-style: normal;
+		}
+	}
+}
+.wp-block-getwid-social-links__popover {
+	.components-popover__content {
+		min-width: 250px;
+		padding: 1em;
+		overflow: initial !important;
+		.wp-block-getwid-social-links__popover-close {
+			position: absolute;
+			top: 5px;
+			right: 5px;
+		}
+	}
+}

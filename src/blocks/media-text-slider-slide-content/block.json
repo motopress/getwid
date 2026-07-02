@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/media-text-slider-slide-content",
+	"category": "getwid-blocks",
+	"title": "Image",
+	"parent": [ "getwid/media-text-slider-slide" ],
+	"icon": "format-image",
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"mediaAlt": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "figure img",
+			"attribute": "alt",
+			"default": ""
+		},
+		"mediaId": {
+			"type": "number"
+		},
+		"mediaUrl": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "figure video,figure img",
+			"attribute": "src"
+		},
+		"mediaType": {
+			"type": "string"
+		},
+		"innerParent": {
+			"type": "object"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

@@ -1,57 +1,31 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class ButtonGroup extends \Getwid\Blocks\AbstractBlock {
-
-	protected static $blockName = 'getwid/button-group';
+class ButtonGroup extends AbstractBlock {
 
 	public function __construct() {
 
-		parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/button-group' );
 
 		register_block_type(
-			'getwid/button-group',
+			getwid_get_plugin_path( 'assets/blocks/button-group' ),
 			array(
-				'render_callback' => [ $this, 'render_callback' ]
+				'render_callback' => array( $this, 'render_callback' ),
 			)
 		);
-
 	}
 
-	public function getLabel() {
-		return __('Button Group', 'getwid');
+	public function get_label() {
+		return __( 'Button Group', 'getwid' );
 	}
 
-    public function block_frontend_assets() {
-
-    	if ( is_admin() ) {
-			return;
-		}
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/button-group/style' . $rtl . '.css' ),
-			[],
-			getwid()->settings()->getVersion()
-		);
-	}
-
-    public function render_callback( $attributes, $content ) {
-
-    	$this->block_frontend_assets();
+	public function render_callback( $attributes, $content ) {
 
 		return $content;
 	}
-
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\ButtonGroup()
+	new ButtonGroup()
 );

@@ -1,65 +1,25 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New\TemplateParts\Acf;
 
-class AcfSelect extends \Getwid\Blocks\AbstractBlock {
+class AcfSelect extends \Getwid\Blocks\New\AbstractBlock {
 
-	protected static $blockName = 'getwid/template-acf-select';
-	protected static $assetsHandle = 'getwid/template-parts/acf';
+	protected static $assets_handle = 'getwid/template-parts/acf';
 
 	public function __construct() {
 
-		parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/template-acf-select' );
 
 		register_block_type(
-			self::$blockName,
+			getwid_get_plugin_path( 'assets/blocks/template-parts/acf/select' ),
 			array(
-				'attributes' => array(
-					'customField' => array(
-						'type' => 'string'
-					),
-					'labelName' => array(
-						'type' => 'string'
-					),
-					'separator' => array(
-						'type' => 'string',
-						'default' => ','
-					),
-
-					// Colors
-					'textColor' => array(
-						'type' => 'string'
-					),
-					'customTextColor' => array(
-						'type' => 'string'
-					),
-
-					// Font
-					'fontSize' => array(
-						'type' => 'string'
-					),
-					'customFontSize' => array(
-						'type' => 'string'
-					),
-					'bold' => array(
-						'type' => 'boolean',
-						'default' => false
-					),
-					'italic' => array(
-						'type' => 'boolean',
-						'default' => false
-					),
-					'textAlignment' => array(
-						'type' => 'string'
-					),
-
-					'className' => array(
-						'type' => 'string'
-					),
-				),
-				'render_callback' => [$this, 'render_callback']
+				'render_callback' => array( $this, 'render_callback' ),
 			)
 		);
+	}
+
+	public function get_label() {
+		return __( 'ACF Select', 'getwid' );
 	}
 
 	public function block_frontend_assets() {
@@ -68,13 +28,14 @@ class AcfSelect extends \Getwid\Blocks\AbstractBlock {
 			return;
 		}
 
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
 			return;
 		}
 
-		add_filter( 'getwid/optimize/assets',
+		add_filter(
+			'getwid/optimize/assets',
 			function ( $assets ) {
-				$assets[] = self::$assetsHandle;
+				$assets[] = self::$assets_handle;
 
 				return $assets;
 			}
@@ -83,34 +44,31 @@ class AcfSelect extends \Getwid\Blocks\AbstractBlock {
 		$rtl = is_rtl() ? '.rtl' : '';
 
 		wp_enqueue_style(
-			self::$assetsHandle,
+			self::$assets_handle,
 			getwid_get_plugin_url( 'assets/blocks/template-parts/acf/style' . $rtl . '.css' ),
-			[],
+			array(),
 			getwid()->settings()->getVersion()
 		);
 	}
 
 	public function render_callback( $attributes, $content ) {
 
-		//Not BackEnd render if we view from template page
-		if ( (get_post_type() == getwid()->postTemplatePart()->postType) || (get_post_type() == 'revision') ) {
+		if ( ( get_post_type() === getwid()->postTemplatePart()->postType ) || ( get_post_type() === 'revision' ) ) {
 			return $content;
 		}
 
-		$block_name = 'wp-block-getwid-template-acf-select';
+		$block_name    = 'wp-block-getwid-template-acf-select';
 		$wrapper_class = $block_name;
+		$wrapper_style = '';
 
 		if ( isset( $attributes['className'] ) ) {
 			$wrapper_class .= ' ' . esc_attr( $attributes['className'] );
 		}
 
 		if ( isset( $attributes['customField'] ) ) {
-			$wrapper_class .= ' ' . 'custom-field-' . esc_attr( $attributes['customField'] );
+			$wrapper_class .= ' custom-field-' . esc_attr( $attributes['customField'] );
 		}
 
-		$wrapper_style = '';
-
-		// Font
 		if ( isset( $attributes['textAlignment'] ) ) {
 			$wrapper_style .= 'text-align: ' . esc_attr( $attributes['textAlignment'] ) . ';';
 		}
@@ -123,9 +81,8 @@ class AcfSelect extends \Getwid\Blocks\AbstractBlock {
 			$wrapper_style .= 'font-style: italic;';
 		}
 
-		// Link style & class
 		if ( isset( $attributes['customFontSize'] ) ) {
-			$font_size = is_numeric( $attributes['customFontSize'] ) ? $attributes['customFontSize'] . 'px' : $attributes['customFontSize'];
+			$font_size      = is_numeric( $attributes['customFontSize'] ) ? $attributes['customFontSize'] . 'px' : $attributes['customFontSize'];
 			$wrapper_style .= 'font-size: ' . esc_attr( $font_size ) . ';';
 		}
 
@@ -137,8 +94,7 @@ class AcfSelect extends \Getwid\Blocks\AbstractBlock {
 
 		getwid_custom_color_style_and_class( $wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end );
 
-		$result = '';
-
+		$result     = '';
 		$extra_attr = array(
 			'wrapper_class' => $wrapper_class,
 			'wrapper_style' => $wrapper_style,
@@ -158,4 +114,6 @@ class AcfSelect extends \Getwid\Blocks\AbstractBlock {
 	}
 }
 
-new \Getwid\Blocks\AcfSelect();
+getwid()->blocksManager()->addBlock(
+	new AcfSelect()
+);

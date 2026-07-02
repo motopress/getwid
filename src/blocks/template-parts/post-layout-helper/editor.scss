@@ -1,7 +1,8 @@
 .wp-block-getwid-template-post-layout-helper {
-	.components-placeholder__fieldset{
+	.components-placeholder__fieldset {
 		max-width: 80%;
 	}
+
 	.block-editor-inner-blocks__template-picker-options {
 		display: flex;
 		flex-direction: row;
@@ -17,7 +18,8 @@
 			padding: 0 25px;
 			width: 100%;
 			max-width: 100%;
-			@media screen and(min-width: 768px) {
+
+			@media screen and (min-width: 768px) {
 				max-width: 50%;
 			}
 		}

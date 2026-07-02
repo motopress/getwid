@@ -1,0 +1,30 @@
+$scheme: Grey !default;
+$bg: White !default;
+
+$text: palette(Grey, 800) !default;
+$icon-text: palette($scheme, 800) !default;
+
+$color-background: palette($bg, 500) !default;
+
+$elem-border-color: palette($scheme, 400) !default;
+$elem-border-focus-color: palette($scheme, 500) !default;
+
+$pager-bg-color: palette($scheme, 200) !default;
+$pager-bg-hover-color: palette($scheme, 400) !default;
+
+$ibox-bg-color: palette($scheme, 100) !default;
+$ibox-bg-selected-color: palette($scheme, 200) !default;
+$ibox-bg-hover-color: palette($scheme, 400) !default;
+
+$btn-bg-color: palette($bg, 500) !default;
+$btn-bg-dd-color: palette($scheme, 100) !default;
+$btn-border-color: palette($scheme, 300) !default;
+$btn-bg-hover-color: palette($scheme, 400) !default;
+$btn-bg-active-color: palette($scheme, 300) !default;
+
+$icon-border-color: palette($scheme, 200) !default;
+$empty-icon-color: palette($scheme, 300) !default;
+$error-icon-color: palette(Red, 200) !default;
+
+$del-bg-color: palette($scheme, 200) !default;
+$del-bg-hover-color: palette($scheme, 300) !default;

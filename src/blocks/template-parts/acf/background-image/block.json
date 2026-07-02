@@ -1,0 +1,149 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getwid/template-acf-background-image",
+	"title": "ACF Background Image",
+	"category": "getwid-acf-blocks",
+	"icon": "images-alt2",
+	"description": "ACF background image template part.",
+	"textdomain": "getwid",
+	"supports": {
+		"inserter": true
+	},
+	"attributes": {
+		"customField": {
+			"type": "string"
+		},
+		"imageSize": {
+			"type": "string",
+			"default": "large"
+		},
+		"minHeight": {
+			"type": "string"
+		},
+		"contentMaxWidth": {
+			"type": "number"
+		},
+		"paddingTopValue": {
+			"type": "string"
+		},
+		"paddingBottomValue": {
+			"type": "string"
+		},
+		"paddingLeftValue": {
+			"type": "string"
+		},
+		"paddingRightValue": {
+			"type": "string"
+		},
+		"paddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingLeft": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingRight": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingTopTablet": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingBottomTablet": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingLeftTablet": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingRightTablet": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingTopMobile": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingBottomMobile": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingLeftMobile": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingRightMobile": {
+			"type": "string",
+			"default": ""
+		},
+		"verticalAlign": {
+			"type": "string",
+			"default": "center"
+		},
+		"verticalAlignTablet": {
+			"type": "string",
+			"default": ""
+		},
+		"verticalAlignMobile": {
+			"type": "string",
+			"default": ""
+		},
+		"horizontalAlign": {
+			"type": "string",
+			"default": "center"
+		},
+		"horizontalAlignTablet": {
+			"type": "string",
+			"default": ""
+		},
+		"horizontalAlignMobile": {
+			"type": "string",
+			"default": ""
+		},
+		"foregroundOpacity": {
+			"type": "number",
+			"default": 35
+		},
+		"foregroundColor": {
+			"type": "string"
+		},
+		"foregroundFilter": {
+			"type": "string"
+		},
+		"foregroundGradientType": {
+			"type": "string"
+		},
+		"foregroundGradientFirstColor": {
+			"type": "string"
+		},
+		"foregroundGradientFirstColorLocation": {
+			"type": "number",
+			"default": 0
+		},
+		"foregroundGradientSecondColor": {
+			"type": "string"
+		},
+		"foregroundGradientSecondColorLocation": {
+			"type": "number",
+			"default": 100
+		},
+		"foregroundGradientAngle": {
+			"type": "number",
+			"default": 180
+		},
+		"className": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css"
+}

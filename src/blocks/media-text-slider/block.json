@@ -1,0 +1,126 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/media-text-slider",
+	"category": "getwid-blocks",
+	"title": "Media & Text Slider",
+	"keywords": [ "gallery", "carousel", "image" ],
+	"supports": {
+		"alignWide": true,
+		"align": [ "wide", "full" ]
+	},
+	"attributes": {
+		"slideCount": {
+			"type": "number",
+			"default": 3
+		},
+		"imageSize": {
+			"type": "string",
+			"default": "full"
+		},
+		"align": {
+			"type": "string"
+		},
+		"contentMaxWidth": {
+			"type": "number"
+		},
+		"minHeight": {
+			"type": "string"
+		},
+		"verticalAlign": {
+			"type": "string"
+		},
+		"horizontalAlign": {
+			"type": "string"
+		},
+		"paddingTop": {
+			"type": "string"
+		},
+		"paddingBottom": {
+			"type": "string"
+		},
+		"paddingLeft": {
+			"type": "string"
+		},
+		"paddingRight": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string"
+		},
+		"overlayColor": {
+			"type": "string"
+		},
+		"overlayOpacity": {
+			"type": "number",
+			"default": 30
+		},
+		"contentAnimation": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-media-text-slider",
+			"attribute": "data-animation",
+			"default": "fadeIn"
+		},
+		"contentAnimationDuration": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-media-text-slider",
+			"attribute": "data-duration",
+			"default": "1500ms"
+		},
+		"contentAnimationDelay": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-media-text-slider",
+			"attribute": "data-delay",
+			"default": "0ms"
+		},
+		"sliderAnimationEffect": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-media-text-slider__content",
+			"attribute": "data-slide-effect"
+		},
+		"sliderAutoplay": {
+			"type": "boolean",
+			"default": false
+		},
+		"pauseOnHover": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderAutoplaySpeed": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-media-text-slider__content",
+			"attribute": "data-slide-autoplay-speed",
+			"default": 5000
+		},
+		"sliderAnimationSpeed": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-media-text-slider__content",
+			"attribute": "data-slide-speed",
+			"default": 1000
+		},
+		"sliderArrays": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-media-text-slider",
+			"attribute": "data-labels",
+			"default": "[\"Slide 1\",\"Slide 2\",\"Slide 3\"]"
+		},
+		"sliderArrows": {
+			"type": "string"
+		},
+		"sliderDots": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": [ "jquery", "slick", "file:./view.js" ]
+}

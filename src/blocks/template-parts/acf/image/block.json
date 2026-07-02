@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getwid/template-acf-image",
+	"title": "ACF Image",
+	"category": "getwid-acf-blocks",
+	"icon": "format-image",
+	"description": "ACF image template part.",
+	"textdomain": "getwid",
+	"supports": {
+		"inserter": true,
+		"align": [ "left", "center", "right" ]
+	},
+	"attributes": {
+		"align": {
+			"type": "string"
+		},
+		"linkTo": {
+			"type": "string",
+			"default": "none"
+		},
+		"customField": {
+			"type": "string"
+		},
+		"imageSize": {
+			"type": "string",
+			"default": "large"
+		},
+		"className": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css"
+}

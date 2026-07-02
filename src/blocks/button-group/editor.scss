@@ -63,19 +63,19 @@
 		}
 
 		&.has-alignment-tablet-center .block-editor-block-list__layout {
-			@media screen and (min-width: 768px) and(max-width: 991px) {
+			@media screen and (min-width: 768px) and (max-width: 991px) {
 				justify-content: center;
 			}
 		}
 
 		&.has-alignment-tablet-right .block-editor-block-list__layout {
-			@media screen and (min-width: 768px) and(max-width: 991px) {
+			@media screen and (min-width: 768px) and (max-width: 991px) {
 				justify-content: flex-end;
 			}
 		}
 
 		&.has-alignment-tablet-left .block-editor-block-list__layout {
-			@media screen and (min-width: 768px) and(max-width: 991px) {
+			@media screen and (min-width: 768px) and (max-width: 991px) {
 				justify-content: flex-start;
 			}
 		}
@@ -113,19 +113,19 @@
 			}
 
 			&.has-alignment-tablet-center .block-editor-block-list__layout {
-				@media screen and (min-width: 768px) and(max-width: 991px) {
+				@media screen and (min-width: 768px) and (max-width: 991px) {
 					align-items: center;
 				}
 			}
 
 			&.has-alignment-tablet-right .block-editor-block-list__layout {
-				@media screen and (min-width: 768px) and(max-width: 991px) {
+				@media screen and (min-width: 768px) and (max-width: 991px) {
 					align-items: flex-end;
 				}
 			}
 
 			&.has-alignment-tablet-left .block-editor-block-list__layout {
-				@media screen and (min-width: 768px) and(max-width: 991px) {
+				@media screen and (min-width: 768px) and (max-width: 991px) {
 					align-items: flex-start;
 				}
 			}
@@ -151,25 +151,25 @@
 
 		&.has-direction-tablet-column {
 			.block-editor-block-list__layout {
-				@media screen and (min-width: 768px) and(max-width: 991px) {
+				@media screen and (min-width: 768px) and (max-width: 991px) {
 					flex-direction: column;
 				}
 			}
 
 			&.has-alignment-tablet-center .block-editor-block-list__layout {
-				@media screen and (min-width: 768px) and(max-width: 991px) {
+				@media screen and (min-width: 768px) and (max-width: 991px) {
 					align-items: center;
 				}
 			}
 
 			&.has-alignment-tablet-right .block-editor-block-list__layout {
-				@media screen and (min-width: 768px) and(max-width: 991px) {
+				@media screen and (min-width: 768px) and (max-width: 991px) {
 					align-items: flex-end;
 				}
 			}
 
 			&.has-alignment-tablet-left .block-editor-block-list__layout {
-				@media screen and (min-width: 768px) and(max-width: 991px) {
+				@media screen and (min-width: 768px) and (max-width: 991px) {
 					align-items: flex-start;
 				}
 			}
@@ -269,7 +269,6 @@
 				}
 			}
 		}
-
 	}
 
 	.block-editor-block-list__layout {

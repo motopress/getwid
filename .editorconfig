@@ -14,5 +14,5 @@ trim_trailing_whitespace = true
 indent_style = tab
 
 [*.scss]
-tab_width = 2
-indent_size = 2
+tab_width = 4
+indent_size = 4

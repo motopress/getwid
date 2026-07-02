@@ -251,7 +251,7 @@ class SettingsPage {
 		$blocks = getwid()->blocksManager()->getBlocks();
 
 		foreach ($blocks as $name => $block) {
-			$option_name = $block->getDisabledOptionKey();
+			$option_name = $block->get_disabled_option_key();
 			register_setting( 'getwid_blocks', $option_name, [ 'type' => 'boolean', 'default' => false, 'sanitize_callback' => 'rest_sanitize_boolean' ] );
 		}
         /* #endregion */
@@ -415,12 +415,12 @@ class SettingsPage {
 		<fieldset id="getwid-disabled-blocks">
 		<?php
 		foreach ($blocks as $name => $block) {
-			$option_name = $block->getDisabledOptionKey();
+			$option_name = $block->get_disabled_option_key();
 			?>
 			<label for="<?php echo esc_attr( $option_name ); ?>">
 				<input type="checkbox" id="<?php echo esc_attr( $option_name ); ?>" name="<?php echo esc_attr( $option_name ); ?>" value="1" <?php
-					checked( '1', $block->isDisabled() ); ?> />
-				<?php echo esc_html( $block->getLabel() ); ?>
+					checked( '1', $block->is_disabled() ); ?> />
+				<?php echo esc_html( $block->get_label() ); ?>
 			</label><br/>
 			<?php
 		}

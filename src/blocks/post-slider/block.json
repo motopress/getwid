@@ -1,0 +1,126 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/post-slider",
+	"category": "getwid-blocks",
+	"title": "Post Slider",
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"postTemplate": {
+			"type": "string"
+		},
+		"postsToShow": {
+			"type": "number",
+			"default": 5
+		},
+		"offset": {
+			"type": "number",
+			"default": 0
+		},
+		"ignoreSticky": {
+			"type": "boolean",
+			"default": true
+		},
+		"filterById": {
+			"type": "string"
+		},
+		"excludeById": {
+			"type": "string"
+		},
+		"excludeCurrentPost": {
+			"type": "boolean",
+			"default": false
+		},
+		"childPagesCurrentPage": {
+			"type": "boolean",
+			"default": false
+		},
+		"parentPageId": {
+			"type": "string"
+		},
+		"postType": {
+			"type": "string",
+			"default": "post"
+		},
+		"taxonomy": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"terms": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"relation": {
+			"type": "string",
+			"default": "AND"
+		},
+		"order": {
+			"type": "string",
+			"default": "desc"
+		},
+		"orderBy": {
+			"type": "string",
+			"default": "date"
+		},
+		"minHeight": {
+			"type": "string"
+		},
+		"align": {
+			"type": "string"
+		},
+		"textAlignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"sliderAnimationEffect": {
+			"type": "string",
+			"default": "slide"
+		},
+		"sliderAutoplay": {
+			"type": "boolean",
+			"default": false
+		},
+		"sliderPauseOnHover": {
+			"type": "boolean",
+			"default": false
+		},
+		"sliderAutoplaySpeed": {
+			"type": "string",
+			"default": "6000"
+		},
+		"sliderInfinite": {
+			"type": "boolean",
+			"default": true
+		},
+		"sliderAnimationSpeed": {
+			"type": "string",
+			"default": "800"
+		},
+		"sliderArrows": {
+			"type": "string",
+			"default": "inside"
+		},
+		"sliderDots": {
+			"type": "string",
+			"default": "inside"
+		},
+		"className": {
+			"type": "string"
+		},
+		"metaQuery": {
+			"type": "array",
+			"default": []
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": [ "jquery", "imagesloaded", "slick", "file:./view.js" ]
+}

@@ -1,0 +1,67 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/content-timeline",
+	"category": "getwid-blocks",
+	"title": "Content Timeline",
+	"supports": {
+		"align": [ "wide", "full" ]
+	},
+	"attributes": {
+		"align": {
+			"type": "string"
+		},
+		"wrapperAlign": {
+			"type": "string"
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"customBackgroundColor": {
+			"type": "string"
+		},
+		"fillColor": {
+			"type": "string"
+		},
+		"customFillColor": {
+			"type": "string"
+		},
+		"paddingTop": {
+			"type": "string"
+		},
+		"paddingBottom": {
+			"type": "string"
+		},
+		"paddingLeft": {
+			"type": "string"
+		},
+		"paddingRight": {
+			"type": "string"
+		},
+		"horizontalSpace": {
+			"type": "string"
+		},
+		"marginBottom": {
+			"type": "string"
+		},
+		"animation": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-content-timeline",
+			"attribute": "data-animation",
+			"default": "none"
+		},
+		"filling": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-content-timeline",
+			"attribute": "data-filling",
+			"default": "true"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

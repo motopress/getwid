@@ -1,25 +1,23 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class TemplateLibrary extends \Getwid\Blocks\AbstractBlock {
+class TemplateLibrary extends AbstractBlock {
 
-	protected static $blockName = 'getwid/template-library';
+	public function __construct() {
 
-    public function __construct() {
-
-        parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/template-library' );
 
 		register_block_type(
-			'getwid/template-library'
+			getwid_get_plugin_path( 'assets/blocks/template-library' )
 		);
 	}
 
-	public function getLabel() {
-		return __('Template Library', 'getwid');
+	public function get_label() {
+		return __( 'Template Library', 'getwid' );
 	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\TemplateLibrary()
+	new TemplateLibrary()
 );

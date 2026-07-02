@@ -2,13 +2,14 @@
  * getwid-template-post-button
  */
 
-.wp-block-getwid-template-post-button{
+.wp-block-getwid-template-post-button {
 	margin: 1.25em 0 1.25em;
-	&:first-child{
+
+	&:first-child {
 		margin-top: 0;
 	}
-	&:last-child{
+
+	&:last-child {
 		margin-bottom: 0;
 	}
-
 }

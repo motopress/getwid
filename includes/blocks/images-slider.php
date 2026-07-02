@@ -1,112 +1,100 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New;
 
-class ImageSlider extends \Getwid\Blocks\AbstractBlock {
+class ImageSlider extends AbstractBlock {
 
-	protected static $blockName = 'getwid/images-slider';
-	private $assetsAlreadyEnqueued = false;
+	private $assets_already_enqueued = false;
 
-    public function __construct() {
+	public function __construct() {
 
-		parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/images-slider' );
 
-        register_block_type(
-            'getwid/images-slider',
-            array(
-                'render_callback' => [ $this, 'render_callback' ]
-            )
-        );
+		wp_register_script(
+			'slick',
+			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
+			array( 'jquery' ),
+			'1.9.0',
+			true
+		);
 
-		if ( $this->isEnabled() ) {
+		wp_register_style(
+			'slick',
+			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
+			array(),
+			'1.9.0'
+		);
 
-			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
+		wp_register_style(
+			'slick-theme',
+			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
+			array(),
+			'1.9.0'
+		);
 
-			//Register JS/CSS assets
-			wp_register_script(
-				'slick',
-				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
-				[ 'jquery' ],
-				'1.9.0',
-				true
-			);
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/images-slider' ),
+			array(
+				'render_callback' => array( $this, 'render_callback' ),
+			)
+		);
 
-			wp_register_style(
-				'slick',
-				getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
-				[],
-				'1.9.0'
-			);
-
-			wp_register_style(
-				'slick-theme',
-				getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
-				[],
-				'1.9.0'
-			);
+		if ( $this->is_enabled() ) {
+			add_filter( 'getwid/editor_blocks_js/dependencies', array( $this, 'block_editor_scripts' ) );
+			add_filter( 'getwid/blocks_style_css/dependencies', array( $this, 'block_frontend_styles' ) );
 		}
-    }
-
-	public function getLabel() {
-		return __('Image Slider', 'getwid');
 	}
 
-    public function block_frontend_styles($styles) {
+	public function get_label() {
+		return __( 'Image Slider', 'getwid' );
+	}
 
-        //slick.min.css
-		if ( ! in_array( 'slick', $styles ) ) {
-            array_push( $styles, 'slick' );
-        }
+	public function block_frontend_styles( $styles ) {
 
-		//slick-theme.min.css
-        if ( ! in_array( 'slick-theme', $styles ) ) {
-            array_push( $styles, 'slick-theme' );
-        }
-
-        return $styles;
-    }
-
-    public function block_editor_scripts($scripts) {
-
-        //imagesloaded.min.js
-		if ( ! in_array( 'imagesloaded', $scripts ) ) {
-            array_push( $scripts, 'imagesloaded' );
+		if ( ! in_array( 'slick', $styles, true ) ) {
+			$styles[] = 'slick';
 		}
 
-		//slick.min.js
-        if ( ! in_array( 'slick', $scripts ) ) {
-            array_push( $scripts, 'slick' );
-        }
+		if ( ! in_array( 'slick-theme', $styles, true ) ) {
+			$styles[] = 'slick-theme';
+		}
 
-        return $scripts;
-    }
+		return $styles;
+	}
 
-    public function block_frontend_assets() {
+	public function block_editor_scripts( $scripts ) {
 
-        if ( is_admin() ) {
-            return;
-        }
+		if ( ! in_array( 'imagesloaded', $scripts, true ) ) {
+			$scripts[] = 'imagesloaded';
+		}
 
-		//slick.min.js
-        if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
-            wp_enqueue_script('slick');
-        }
+		if ( ! in_array( 'slick', $scripts, true ) ) {
+			$scripts[] = 'slick';
+		}
 
-		//imagesloaded.min.js
-        if ( ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
-            wp_enqueue_script('imagesloaded');
-        }
+		return $scripts;
+	}
 
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+	public function block_frontend_assets() {
+
+		if ( is_admin() ) {
 			return;
 		}
 
-		$deps = [
-			'slick', 'slick-theme'
-		];
+		if ( ! wp_script_is( 'slick', 'enqueued' ) ) {
+			wp_enqueue_script( 'slick' );
+		}
 
-		add_filter( 'getwid/optimize/assets',
+		if ( ! wp_script_is( 'imagesloaded', 'enqueued' ) ) {
+			wp_enqueue_script( 'imagesloaded' );
+		}
+
+		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter(
+			'getwid/optimize/assets',
 			function ( $assets ) {
 				$assets[] = 'slick';
 				$assets[] = 'slick-theme';
@@ -118,46 +106,29 @@ class ImageSlider extends \Getwid\Blocks\AbstractBlock {
 
 		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/images-slider/style' . $rtl . '.css' ),
-			$deps,
-			getwid()->settings()->getVersion()
-		);
-
-		wp_enqueue_script(
-            self::$blockName,
-            getwid_get_plugin_url( 'assets/blocks/images-slider/frontend.js' ),
-            [ 'jquery', 'imagesloaded', 'slick' ],
-            getwid()->settings()->getVersion(),
-            true
-        );
-
-		if ( !$this->assetsAlreadyEnqueued ) {
+		if ( ! $this->assets_already_enqueued ) {
 			$inline_script =
 				'var Getwid = Getwid || {};' .
-				'Getwid["isRTL"] = ' . json_encode( is_rtl() ) . ';';
+				'Getwid["isRTL"] = ' . wp_json_encode( is_rtl() ) . ';';
 
 			wp_add_inline_script(
-				self::$blockName,
+				'getwid-images-slider-view-script',
 				$inline_script,
 				'before'
 			);
 		}
 
-		$this->assetsAlreadyEnqueued = true;
-    }
+		$this->assets_already_enqueued = true;
+	}
 
-    public function render_callback( $attributes, $content ) {
+	public function render_callback( $attributes, $content ) {
 
-        $this->block_frontend_assets();
+		$this->block_frontend_assets();
 
-        return $content;
-    }
+		return $content;
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\ImageSlider()
+	new ImageSlider()
 );

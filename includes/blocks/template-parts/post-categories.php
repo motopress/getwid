@@ -1,85 +1,41 @@
 <?php
 
-namespace Getwid\Blocks;
+namespace Getwid\Blocks\New\TemplateParts;
 
-class PostCategories extends \Getwid\Blocks\AbstractBlock {
+class PostCategories extends \Getwid\Blocks\New\AbstractBlock {
 
-	protected static $blockName = 'getwid/template-post-categories';
-	protected static $assetsHandle = 'getwid/template-parts';
+	protected static $assets_handle = 'getwid/template-parts';
 
-    public function __construct() {
+	public function __construct() {
 
-		parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/template-post-categories' );
 
-        register_block_type(
-            self::$blockName,
-            array(
-                'attributes' => array(
-                    'blockDivider' => array(
-                        'type' => 'string'
-                    ),
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/template-parts/post-categories' ),
+			array(
+				'render_callback' => array( $this, 'render_callback' ),
+			)
+		);
+	}
 
-                    //Colors
-                    'textColor' => array(
-                        'type' => 'string'
-                    ),
-                    'customTextColor' => array(
-                        'type' => 'string'
-                    ),
-                    'backgroundColor' => array(
-                        'type' => 'string'
-                    ),
-                    'customBackgroundColor' => array(
-                        'type' => 'string'
-                    ),
+	public function get_label() {
+		return __( 'Categories', 'getwid' );
+	}
 
-                    //Colors
-                    'icon' => array(
-                        'type' => 'string',
-                        'default' => 'fas fa-folder-open'
-                    ),
-                    'iconColor' => array(
-                        'type' => 'string'
-                    ),
-                    'customIconColor' => array(
-                        'type' => 'string'
-                    ),
-                    'fontSize' => array(
-                        'type' => 'string'
-                    ),
-                    'customFontSize' => array(
-                        'type' => 'string'
-                    ),
-                    'divider' => array(
-                        'type' => 'string',
-                        'default' => ','
-                    ),
-                    'textAlignment' => array(
-                        'type' => 'string'
-                    ),
+	public function block_frontend_assets() {
 
-                    'className' => array(
-                        'type' => 'string'
-                    )
-                ),
-                'render_callback' => [ $this, 'render_callback' ]
-            )
-        );
-    }
-
-    public function block_frontend_assets() {
-
-        if ( is_admin() ) {
-            return;
-        }
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
+		if ( is_admin() ) {
 			return;
 		}
 
-		add_filter( 'getwid/optimize/assets',
+		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
+			return;
+		}
+
+		add_filter(
+			'getwid/optimize/assets',
 			function ( $assets ) {
-				$assets[] = self::$assetsHandle;
+				$assets[] = self::$assets_handle;
 
 				return $assets;
 			}
@@ -88,81 +44,89 @@ class PostCategories extends \Getwid\Blocks\AbstractBlock {
 		$rtl = is_rtl() ? '.rtl' : '';
 
 		wp_enqueue_style(
-			self::$assetsHandle,
+			self::$assets_handle,
 			getwid_get_plugin_url( 'assets/blocks/template-parts/style' . $rtl . '.css' ),
-			[],
+			array(),
 			getwid()->settings()->getVersion()
 		);
-    }
+	}
 
-    public function render_callback( $attributes, $content ) {
+	public function render_callback( $attributes, $content ) {
 
-        //Not BackEnd render if we view from template page
-        if ( ( get_post_type() == getwid()->postTemplatePart()->postType ) || ( get_post_type() == 'revision' ) ) {
-            return $content;
-        }
+		if ( ( get_post_type() === getwid()->postTemplatePart()->postType ) || ( get_post_type() === 'revision' ) ) {
+			return $content;
+		}
 
-        $block_name = 'wp-block-getwid-template-post-categories';
-        $wrapper_class = $block_name;
+		$block_name    = 'wp-block-getwid-template-post-categories';
+		$wrapper_class = $block_name;
+		$wrapper_style = '';
 
-        if ( isset( $attributes[ 'className' ] ) ) {
-            $wrapper_class .= ' '.esc_attr( $attributes[ 'className' ] );
-        }
+		if ( isset( $attributes['className'] ) ) {
+			$wrapper_class .= ' ' . esc_attr( $attributes['className'] );
+		}
 
-        if ( isset( $attributes[ 'divider' ] ) && $attributes[ 'divider' ] != '' ) {
-            $wrapper_class .= ' has-divider';
-        }
+		if ( isset( $attributes['divider'] ) && '' !== $attributes['divider'] ) {
+			$wrapper_class .= ' has-divider';
+		}
 
-        $wrapper_style = '';
-        //Classes
-        if ( isset( $attributes[ 'textAlignment' ] ) ) {
-            $wrapper_style .= 'text-align: ' . esc_attr( $attributes[ 'textAlignment' ] ) . ';';
-        }
+		if ( isset( $attributes['textAlignment'] ) ) {
+			$wrapper_style .= 'text-align: ' . esc_attr( $attributes['textAlignment'] ) . ';';
+		}
 
-        if ( isset( $attributes[ 'customFontSize' ] ) ) {
-			$font_size = is_numeric( $attributes['customFontSize'] ) ? $attributes['customFontSize'] . 'px' : $attributes['customFontSize'];
-            $wrapper_style .= 'font-size: ' . esc_attr( $font_size ) . ';';
-        }
+		if ( isset( $attributes['customFontSize'] ) ) {
+			$font_size      = is_numeric( $attributes['customFontSize'] ) ? $attributes['customFontSize'] . 'px' : $attributes['customFontSize'];
+			$wrapper_style .= 'font-size: ' . esc_attr( $font_size ) . ';';
+		}
 
-        if ( isset( $attributes[ 'fontSize' ] ) ) {
-            $wrapper_class .= ' has-' . esc_attr( $attributes[ 'fontSize' ] ) . '-font-size';
-        }
+		if ( isset( $attributes['fontSize'] ) ) {
+			$wrapper_class .= ' has-' . esc_attr( $attributes['fontSize'] ) . '-font-size';
+		}
 
-        $divider = isset( $attributes[ 'divider' ] ) && $attributes[ 'divider' ] != '' ? $attributes[ 'divider' ] : '';
+		$divider = isset( $attributes['divider'] ) && '' !== $attributes['divider'] ? $attributes['divider'] : '';
 
-        $is_back_end = getwid_is_block_editor();
+		$is_back_end = getwid_is_block_editor();
 
-        getwid_custom_color_style_and_class( $wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end );
+		getwid_custom_color_style_and_class( $wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end );
 
-        $categories_list = get_the_category_list( $divider . ' ' );
+		$categories_list = get_the_category_list( $divider . ' ' );
+		$icon_class      = '';
+		$icon_style      = '';
 
-        $icon_class = '';
-        $icon_style = '';
-        getwid_custom_color_style_and_class( $icon_style, $icon_class, $attributes, 'color', $is_back_end, [ 'color' => 'iconColor', 'custom' => 'customIconColor' ] );
+		getwid_custom_color_style_and_class(
+			$icon_style,
+			$icon_class,
+			$attributes,
+			'color',
+			$is_back_end,
+			array(
+				'color'  => 'iconColor',
+				'custom' => 'customIconColor',
+			)
+		);
 
-        $result = '';
+		$result     = '';
+		$extra_attr = array(
+			'wrapper_class'   => $wrapper_class,
+			'wrapper_style'   => $wrapper_style,
+			'categories_list' => $categories_list,
+			'icon_class'      => $icon_class,
+			'icon_style'      => $icon_style,
+		);
 
-        $extra_attr = array(
-            'wrapper_class'   => $wrapper_class,
-            'wrapper_style'   => $wrapper_style,
-            'categories_list' => $categories_list,
+		if ( $categories_list ) {
+			ob_start();
 
-            'icon_class' => $icon_class,
-            'icon_style' => $icon_style
-        );
+			getwid_get_template_part( 'template-parts/post-categories', $attributes, false, $extra_attr );
 
-        if ( $categories_list ) {
-            ob_start();
-
-            getwid_get_template_part( 'template-parts/post-categories', $attributes, false, $extra_attr );
-
-            $result = ob_get_clean();
-        }
+			$result = ob_get_clean();
+		}
 
 		$this->block_frontend_assets();
 
-        return $result;
-    }
+		return $result;
+	}
 }
 
-new \Getwid\Blocks\PostCategories();
+getwid()->blocksManager()->addBlock(
+	new PostCategories()
+);

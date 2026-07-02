@@ -6,13 +6,13 @@
 	display: flex;
 	margin: 0 0 30px 0;
 	flex-direction: column;
-	@media screen and(min-width: 768px) {
+	@media screen and (min-width: 768px) {
 		flex-direction: row;
 	}
 
 	&__image-wrapper {
 		margin-bottom: 20px;
-		@media screen and(min-width: 768px) {
+		@media screen and (min-width: 768px) {
 			/*rtl:begin:remove*/
 			margin-right: 20px;
 			/*rtl:end:remove*/
@@ -61,13 +61,13 @@
 
 		&.has-currency-after-space {
 			.wp-block-getwid-price-list__currency {
-				margin-left: .5em;
+				margin-left: 0.5em;
 			}
 		}
 
 		&.has-currency-before-space {
 			.wp-block-getwid-price-list__currency {
-				margin-right: .5em;
+				margin-right: 0.5em;
 			}
 		}
 	}

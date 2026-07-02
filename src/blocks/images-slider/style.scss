@@ -3,7 +3,6 @@
  */
 
 .wp-block-getwid-images-slider {
-
 	.slick-initialized {
 		.wp-block-getwid-images-slider__item {
 			display: flex;
@@ -11,10 +10,10 @@
 	}
 
 	& &__item {
+		align-items: center;
 		display: none;
 		height: auto;
 		justify-content: center;
-		align-items: center;
 		position: relative;
 
 		a {
@@ -33,18 +32,23 @@
 		}
 
 		figcaption {
-			display: none;
-			position: absolute;
-			margin: 0;
+			background: linear-gradient(
+				0deg,
+				rgba(0, 0, 0, 0.7),
+				rgba(0, 0, 0, 0.3) 70%,
+				transparent
+			);
 			bottom: 0;
+			color: #fff;
+			display: none;
+			font-style: normal;
 			left: 0;
+			margin: 0;
+			padding: 40px 20px 10px;
+			position: absolute;
 			right: 0;
 			text-align: center;
-			font-style: normal;
-			padding: 40px 20px 10px;
 			width: 100%;
-			color: #fff;
-			background: linear-gradient(0deg, rgba(0, 0, 0, .7), rgba(0, 0, 0, .3) 70%, transparent);
 		}
 	}
 
@@ -59,8 +63,13 @@
 	&.captions-style-light {
 		.wp-block-getwid-images-slider__item {
 			figcaption {
+				background: linear-gradient(
+					0deg,
+					rgba(255, 255, 255, 0.7),
+					rgba(255, 255, 255, 0.3) 70%,
+					transparent
+				);
 				color: #000;
-				background: linear-gradient(0deg, rgba(255, 255, 255, .7), rgba(255, 255, 255, .3) 70%, transparent);
 			}
 		}
 	}
@@ -70,17 +79,27 @@
 	&.captions-top-right {
 		.wp-block-getwid-images-slider__item {
 			figcaption {
+				background: linear-gradient(
+					180deg,
+					rgba(0, 0, 0, 0.7),
+					rgba(0, 0, 0, 0.3) 70%,
+					transparent
+				);
 				bottom: auto;
-				top: 0;
 				padding: 10px 20px 40px;
-				background: linear-gradient(180deg, rgba(0, 0, 0, .7), rgba(0, 0, 0, .3) 70%, transparent);
+				top: 0;
 			}
 		}
 
 		&.captions-style-light {
 			.wp-block-getwid-images-slider__item {
 				figcaption {
-					background: linear-gradient(180deg, rgba(255, 255, 255, .7), rgba(255, 255, 255, .3) 70%, transparent);
+					background: linear-gradient(
+						180deg,
+						rgba(255, 255, 255, 0.7),
+						rgba(255, 255, 255, 0.3) 70%,
+						transparent
+					);
 				}
 			}
 		}
@@ -107,10 +126,10 @@
 	&.captions-underneath {
 		.wp-block-getwid-images-slider__item {
 			figcaption {
-				position: static;
 				background: transparent;
 				color: inherit;
 				padding: 5px;
+				position: static;
 			}
 		}
 	}
@@ -129,9 +148,9 @@
 			}
 
 			img {
-				width: 100%;
 				height: 100%;
 				object-fit: cover;
+				width: 100%;
 			}
 		}
 	}
@@ -142,7 +161,6 @@
 		}
 
 		.wp-block-getwid-images-slider__item {
-
 			> figure,
 			> a {
 				display: flex;
@@ -150,9 +168,9 @@
 			}
 
 			img {
-				object-fit: contain;
-				max-width: 100%;
 				max-height: 100%;
+				max-width: 100%;
+				object-fit: contain;
 			}
 		}
 	}

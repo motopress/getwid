@@ -1,0 +1,106 @@
+.components-panel__body {
+	.components-base-control-with-lock {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-end;
+
+		.components-base-control,
+		.components-base-control__field {
+			margin-bottom: 0;
+		}
+
+		.components-icon-button:not(:disabled):not(.is-default):hover {
+			background-color: transparent;
+			box-shadow: none;
+		}
+
+		.components-icon-button:not(:disabled):not(.is-default):active {
+			background-color: transparent;
+			box-shadow: none;
+		}
+
+		.components-icon-button:focus:enabled {
+			background-color: transparent;
+			box-shadow: none;
+			outline: none;
+		}
+
+		.components-base-control:not(
+				.components-getwid-style-length-control__unit_select
+			) {
+			width: 100%;
+		}
+
+		.components-button {
+			margin-left: 2px #{"/*rtl: 0 */"};
+			/*rtl:raw: margin-right: 2px; */
+			box-shadow: none !important;
+		}
+	}
+
+	.components-getwid-style-length-control {
+		.components-text-control__input:disabled {
+			border-color: rgba(222, 222, 222, 0.75);
+		}
+	}
+}
+
+.getwid-editor-tabs {
+	margin-bottom: 1.5em;
+
+	&:not(.left) {
+		.components-tab-panel__tabs {
+			text-align: right;
+		}
+	}
+
+	&.left {
+		.components-tab-panel__tabs {
+			text-align: left;
+		}
+	}
+
+	.components-tab-panel__tabs {
+		margin-bottom: -1px;
+
+		.components-button {
+			text-decoration: none;
+			padding: 2px 8px 4px;
+			height: auto;
+			border-top: 1px solid #ffffff;
+			border-left: 1px solid #ffffff;
+			border-right: 1px solid #ffffff;
+			border-bottom: 1px solid #e2e4e7;
+
+			&.is-active {
+				color: inherit;
+				border-top: 1px solid #e2e4e7;
+				border-left: 1px solid #e2e4e7;
+				border-right: 1px solid #e2e4e7;
+				border-bottom: 1px solid #ffffff;
+			}
+		}
+	}
+
+	.components-tab-panel__tab-content {
+		padding: 1em;
+		border: 1px solid #e2e4e7;
+
+		> * {
+			&:last-child {
+				margin-bottom: 0;
+
+				> .components-base-control__field {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+}
+
+.getwid-font-size-control,
+.getwid-slider-height-control {
+	.getwid-editor-tabs {
+		margin-bottom: 0;
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/content-slider-slide",
+	"category": "getwid-blocks",
+	"title": "Slide",
+	"parent": [ "getwid/content-slider" ],
+	"supports": {
+		"multiple": true,
+		"reusable": false,
+		"html": false
+	},
+	"editorScript": "file:./index.js"
+}

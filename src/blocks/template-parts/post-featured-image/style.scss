@@ -3,16 +3,16 @@
  */
 
 .wp-block-getwid-template-post-featured-image {
-	margin-bottom: .5em;
-	&:last-child{
+	margin-bottom: 0.5em;
+	&:last-child {
 		margin-bottom: 0;
 	}
 
-	&.aligncenter{
-		a{
+	&.aligncenter {
+		a {
 			display: block;
 		}
-		img{
+		img {
 			margin: 0 auto;
 		}
 	}
@@ -22,11 +22,11 @@
 	}
 }
 
-.wp-block-column{
+.wp-block-column {
 	> .wp-block-getwid-template-post-featured-image {
-		&:only-child{
+		&:only-child {
 			height: 100%;
-			img{
+			img {
 				height: 100%;
 				width: 100%;
 				object-fit: cover;
