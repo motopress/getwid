@@ -1,5 +1,9 @@
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-import type { BlockInstance } from '@wordpress/blocks';
+import {
+	InnerBlocks,
+	useBlockProps,
+	store as blockEditorStore,
+} from '@wordpress/block-editor';
+import type { Block } from '@wordpress/blocks';
 import { Button, Icon, Spinner, TextControl } from '@wordpress/components';
 import { RawHTML, useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -13,23 +17,6 @@ import type { AiTextEditProps, CurrentUser } from './types';
 
 import './editor.scss';
 
-type BlockEditorDispatch = {
-	insertBlocks: (
-		blocks: BlockInstance[],
-		index?: number,
-		rootClientId?: string
-	) => void;
-	replaceBlocks: (
-		clientIds: string | string[],
-		blocks: BlockInstance[]
-	) => void;
-};
-
-type BlockEditorSelect = {
-	getBlock: ( clientId: string ) => BlockInstance;
-	getClientIdsOfDescendants: ( clientIds: string[] ) => string[];
-};
-
 type CoreSelect = {
 	getCurrentUser: () => CurrentUser;
 };
@@ -41,9 +28,7 @@ export default function Edit( props: AiTextEditProps ) {
 	} );
 	const [ showPlainContent, setShowPlainContent ] = useState( true );
 	const [ termsAccepted, setTermsAccepted ] = useState( false );
-	const { replaceBlocks, insertBlocks } = useDispatch(
-		'core/block-editor'
-	) as BlockEditorDispatch;
+	const { replaceBlocks, insertBlocks } = useDispatch( blockEditorStore );
 	const {
 		loading,
 		content,
@@ -54,9 +39,7 @@ export default function Edit( props: AiTextEditProps ) {
 	} = useGetwidAI();
 	const { getBlock, getClientIdsOfDescendants, currentUser } = useSelect(
 		( select ) => {
-			const blockEditorSelect = select(
-				'core/block-editor'
-			) as BlockEditorSelect;
+			const blockEditorSelect = select( blockEditorStore );
 			const coreSelect = select( 'core' ) as CoreSelect;
 
 			return {
@@ -84,7 +67,7 @@ export default function Edit( props: AiTextEditProps ) {
 		insertParsedBlocks( blocks );
 	}
 
-	function insertParsedBlocks( blocks: BlockInstance[] ) {
+	function insertParsedBlocks( blocks: Block[] ) {
 		const descendants = getClientIdsOfDescendants( [ clientId ] );
 
 		if ( descendants.length > 0 ) {
@@ -97,9 +80,11 @@ export default function Edit( props: AiTextEditProps ) {
 	}
 
 	function replaceAIBlockWithGeneratedContent() {
-		const innerBlocks = getBlock( clientId ).innerBlocks;
+		const innerBlocks = getBlock( clientId )?.innerBlocks;
 
-		replaceBlocks( clientId, innerBlocks );
+		if ( innerBlocks ) {
+			replaceBlocks( clientId, innerBlocks );
+		}
 	}
 
 	return (
@@ -131,7 +116,7 @@ export default function Edit( props: AiTextEditProps ) {
 							{ loading ? (
 								<Spinner />
 							) : (
-								<Icon size="16" icon={ AI } />
+								<Icon size={ 16 } icon={ AI } />
 							) }
 						</div>
 
@@ -158,7 +143,7 @@ export default function Edit( props: AiTextEditProps ) {
 									type="submit"
 									variant="tertiary"
 									icon={ Plane }
-									iconSize="16"
+									iconSize={ 16 }
 								/>
 							) }
 
@@ -171,7 +156,7 @@ export default function Edit( props: AiTextEditProps ) {
 										replaceAIBlockWithGeneratedContent
 									}
 									icon={ Check }
-									iconSize="16"
+									iconSize={ 16 }
 								>
 									{ __( 'Accept', 'getwid' ) }
 								</Button>
@@ -183,7 +168,7 @@ export default function Edit( props: AiTextEditProps ) {
 									variant="tertiary"
 									onClick={ stopLoading }
 									icon={ Cross }
-									iconSize="15"
+									iconSize={ 15 }
 								>
 									{ __( 'Stop', 'getwid' ) }
 								</Button>

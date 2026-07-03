@@ -1,0 +1,49 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/accordion",
+	"category": "getwid-blocks",
+	"title": "Accordion",
+	"supports": {
+		"align": [
+			"wide",
+			"full"
+		]
+	},
+	"attributes": {
+		"active": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-accordion",
+			"attribute": "data-active-element",
+			"default": "none"
+		},
+		"iconPosition": {
+			"type": "string",
+			"default": "left"
+		},
+		"iconOpen": {
+			"type": "string",
+			"default": "fas fa-minus"
+		},
+		"iconClose": {
+			"type": "string",
+			"default": "fas fa-plus"
+		},
+		"headerTag": {
+			"type": "string",
+			"default": "span"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": [
+		"dashicons",
+		"file:./index.css"
+	],
+	"style": "file:./style-index.css",
+	"viewScript": [
+		"jquery-ui-accordion",
+		"file:./view.js"
+	]
+}

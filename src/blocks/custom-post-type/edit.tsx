@@ -1,4 +1,8 @@
-import { BlockAlignmentToolbar, BlockControls } from '@wordpress/block-editor';
+import {
+	BlockAlignmentToolbar,
+	BlockControls,
+	useBlockProps,
+} from '@wordpress/block-editor';
 import {
 	Disabled,
 	Placeholder,
@@ -15,25 +19,14 @@ import {
 } from 'getwid-components';
 
 import Inspector from './inspector';
-import type {
-	CustomPostTypeAttributes,
-	CustomPostTypeEditProps,
-	ServerSideRenderProps,
-} from './types';
+import type { CustomPostTypeEditProps } from './types';
 
 import './editor.scss';
 import './style.scss';
+import { ServerSideRender } from '@wordpress/server-side-render';
 
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
-
-function Edit( props: CustomPostTypeEditProps ) {
-	const { attributes, setAttributes, recentPosts } = props;
+export default function Edit( props: CustomPostTypeEditProps ) {
+	const { attributes, setAttributes } = props;
 	const {
 		align,
 		postLayout,
@@ -55,28 +48,11 @@ function Edit( props: CustomPostTypeEditProps ) {
 		orderBy,
 		metaQuery,
 	} = attributes;
-	const hasPosts = Array.isArray( recentPosts ) && recentPosts.length > 0;
 
-	if ( ! hasPosts ) {
-		return (
-			<Fragment>
-				<Inspector { ...props } />
-				<Placeholder
-					icon="admin-post"
-					label={ __( 'Custom Post Type', 'getwid' ) }
-				>
-					{ ! Array.isArray( recentPosts ) ? (
-						<Spinner />
-					) : (
-						__( 'No posts found.', 'getwid' )
-					) }
-				</Placeholder>
-			</Fragment>
-		);
-	}
+	const blockProps = useBlockProps();
 
 	return (
-		<Fragment>
+		<>
 			<Inspector { ...props } />
 			<BlockControls>
 				<BlockAlignmentToolbar
@@ -148,44 +124,14 @@ function Edit( props: CustomPostTypeEditProps ) {
 					}
 				/>
 			</BlockControls>
-			<Disabled>
-				{ ServerSideRender && (
+			<div { ...blockProps }>
+				<Disabled>
 					<ServerSideRender
 						block="getwid/custom-post-type"
 						attributes={ attributes }
 					/>
-				) }
-			</Disabled>
-		</Fragment>
-	);
-}
-
-export default function ConnectedEdit(
-	props: Omit< CustomPostTypeEditProps, 'recentPosts' >
-) {
-	const recentPosts = useSelect(
-		( select ) => {
-			const core = select( 'core' ) as {
-				getEntityRecords: (
-					kind: string,
-					name: string,
-					query: Record< string, number | string | undefined >
-				) => unknown[] | undefined;
-			};
-			const postsQuery = {
-				order: props.attributes.order,
-				per_page: props.attributes.postsToShow,
-			};
-
-			return core.getEntityRecords( 'postType', 'post', postsQuery );
-		},
-		[ props.attributes.order, props.attributes.postsToShow ]
-	);
-
-	return (
-		<Edit
-			{ ...( props as CustomPostTypeEditProps ) }
-			recentPosts={ recentPosts }
-		/>
+				</Disabled>
+			</div>
+		</>
 	);
 }

@@ -1,14 +1,11 @@
 .wp-block-getwid-banner {
-	&.components-placeholder {
-		color: inherit;
+
+	&__wrapper {
+		overflow: hidden;
 	}
 
-	& &__title {
-		font-size: 2em;
-		line-height: 1.4;
-	}
-
-	& + &__url-field {
+	& &__url-field {
+		color: #1a1a1a;
 		display: flex;
 		align-items: center;
 		margin-top: 0.5em;
@@ -21,6 +18,7 @@
 		.block-editor-url-input {
 			margin-left: 10px;
 			margin-right: 10px;
+			flex-grow: 1;
 
 			input {
 				border: 1px solid #8f98a1;

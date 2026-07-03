@@ -1,6 +1,6 @@
 <?php
 
-namespace Getwid\Blocks\New;
+namespace Getwid\Blocks;
 
 class Banner extends AbstractBlock {
 
@@ -9,20 +9,12 @@ class Banner extends AbstractBlock {
 		parent::__construct( 'getwid/banner' );
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/banner' ),
-			array(
-				'render_callback' => array( $this, 'render_callback' ),
-			)
+			getwid_get_plugin_path( 'assets/blocks/banner' )
 		);
 	}
 
 	public function get_label() {
 		return __( 'Banner', 'getwid' );
-	}
-
-	public function render_callback( $attributes, $content ) {
-
-		return $content;
 	}
 }
 

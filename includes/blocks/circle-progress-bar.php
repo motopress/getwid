@@ -1,6 +1,6 @@
 <?php
 
-namespace Getwid\Blocks\New;
+namespace Getwid\Blocks;
 
 class CircleProgressBar extends AbstractBlock {
 
@@ -17,20 +17,12 @@ class CircleProgressBar extends AbstractBlock {
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/circle-progress-bar' ),
-			array(
-				'render_callback' => array( $this, 'render_callback' ),
-			)
+			getwid_get_plugin_path( 'assets/blocks/circle-progress-bar' )
 		);
 	}
 
 	public function get_label() {
 		return __( 'Circular Progress Bar', 'getwid' );
-	}
-
-	public function render_callback( $attributes, $content ) {
-
-		return $content;
 	}
 }
 

@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from '@wordpress/element';
+import { useRefEffect } from '@wordpress/compose';
+import { useMemo } from '@wordpress/element';
 
 type FontRequest = {
 	font: string;
@@ -6,54 +7,47 @@ type FontRequest = {
 };
 
 type GoogleFontLoaderProps = {
-	blockRef: React.RefObject< HTMLElement >;
 	fonts: FontRequest[];
 };
 
-function createLink( fonts: FontRequest[] ) {
+function createGoogleFontsUrl( fonts: FontRequest[] ) {
 	const families = fonts
 		.map( ( font ) => {
-			const family = font.font.replace( / +/g, '+' );
+			const family = font.font.trim().replace( / +/g, '+' );
 			const weights = font.weights.filter( Boolean ).join( ',' );
 
 			return family + ( weights ? `:${ weights }` : '' );
 		} )
 		.join( '|' );
 
-	const link = document.createElement( 'link' );
-	link.rel = 'stylesheet';
-	link.href = `https://fonts.googleapis.com/css?family=${ families }`;
-
-	return link;
+	return `https://fonts.googleapis.com/css?family=${ families }`;
 }
 
-export default function GoogleFontLoader( {
-	blockRef,
-	fonts,
-}: GoogleFontLoaderProps ) {
-	const [ link, setLink ] = useState( () => createLink( fonts ) );
-	const fontsRef = useRef( fonts );
+export default function GoogleFontLoader( { fonts }: GoogleFontLoaderProps ) {
+	const href = useMemo( () => {
+		return createGoogleFontsUrl( fonts );
+	}, [ JSON.stringify( fonts ) ] );
 
-	useEffect( () => {
-		const head = blockRef.current?.ownerDocument.head;
+	const ref = useRefEffect(
+		( element ) => {
+			const head = element.ownerDocument?.head;
 
-		if ( ! head ) {
-			return;
-		}
+			if ( ! head || ! href ) {
+				return;
+			}
 
-		const currentLink = head.appendChild( link );
+			const currentLink = element.ownerDocument.createElement( 'link' );
+			currentLink.rel = 'stylesheet';
+			currentLink.href = href;
 
-		return () => {
-			currentLink.remove();
-		};
-	}, [ blockRef, link ] );
+			head.appendChild( currentLink );
 
-	useEffect( () => {
-		if ( JSON.stringify( fontsRef.current ) !== JSON.stringify( fonts ) ) {
-			setLink( createLink( fonts ) );
-			fontsRef.current = fonts;
-		}
-	}, [ fonts ] );
+			return () => {
+				currentLink.remove();
+			};
+		},
+		[ href ]
+	);
 
-	return null;
+	return <div ref={ ref } />;
 }

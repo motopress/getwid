@@ -6,7 +6,10 @@
 	"category": "getwid-blocks",
 	"title": "Circular Progress Bar",
 	"supports": {
-		"align": [ "wide", "full" ]
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"align": {
@@ -65,5 +68,9 @@
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"viewScript": [ "waypoints", "file:./view.js" ]
+	"viewScript": [
+		"jquery",
+		"waypoints",
+		"file:./view.js"
+	]
 }

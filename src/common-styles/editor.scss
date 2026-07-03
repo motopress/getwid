@@ -1,0 +1,119 @@
+@forward "common-editor-blocks-styles";
+
+//section
+.getwid-custom-pallete{
+    .components-panel__body-title{
+		display: none;
+	}
+}
+
+//section
+.getwid-slider-image-wrapper {
+	margin-bottom: 0.5em;
+	line-height: 0;
+	img {
+		max-width: 33%;
+		object-fit: cover;
+		height: 75px;
+		border: 1px solid #f7f7f7;
+	}
+}
+
+.getwid-background-image-wrapper {
+	cursor: pointer;
+	padding: 5px;
+	border: 1px solid #e2e4e7;
+	margin-bottom: 0.5em;
+	line-height: 0;
+	position: relative;
+	text-align: center;
+
+	img {
+		max-height: 150px;
+		position: relative;
+	}
+
+	&:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-image:
+			linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)),
+			linear-gradient(to right, black 50%, white 50%),
+			linear-gradient(to bottom, black 50%, white 50%);
+		background-blend-mode: normal, difference, normal;
+		background-size: 20px 20px;
+	}
+}
+
+.getwid-editor-tabs {
+	margin-bottom: 1.5em;
+
+	&:not(.left) {
+		.components-tab-panel__tabs {
+			text-align: right;
+		}
+	}
+
+	&.left {
+		.components-tab-panel__tabs {
+			text-align: left;
+		}
+	}
+
+	.components-tab-panel__tabs {
+		margin-bottom: -1px;
+
+		.components-button {
+			text-decoration: none;
+			padding: 2px 8px 4px;
+			height: auto !important;
+			border-top: 1px solid #ffffff;
+			border-left: 1px solid #ffffff;
+			border-right: 1px solid #ffffff;
+			border-bottom: 1px solid #e2e4e7;
+
+			&.is-active {
+				color: inherit;
+				border-top: 1px solid #e2e4e7;
+				border-left: 1px solid #e2e4e7;
+				border-right: 1px solid #e2e4e7;
+				border-bottom: 1px solid #ffffff;
+			}
+		}
+	}
+
+	.components-tab-panel__tab-content {
+		padding: 1em;
+		border: 1px solid #e2e4e7;
+
+		> * {
+			&:last-child {
+				margin-bottom: 0;
+				> .components-base-control__field {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+}
+
+.getwid-font-size-control,
+.getwid-slider-height-control {
+	.getwid-editor-tabs {
+		margin-bottom: 0;
+	}
+}
+
+.getwid-editor-url-input .components-base-control__field input {
+	width: 100%;
+}
+
+.wp-block-getwid-custom-post-type__template {
+	.wp-block-columns{
+		display: flex;
+	}
+}

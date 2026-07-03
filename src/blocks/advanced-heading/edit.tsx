@@ -5,7 +5,7 @@ import {
 	useBlockProps,
 	withColors,
 } from '@wordpress/block-editor';
-import { useRef, useState } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { GoogleFontLoader } from 'getwid-components';
 import clsx from 'clsx';
@@ -30,7 +30,6 @@ function Edit( props: AdvancedHeadingEditProps ) {
 		isLockedMargins: false,
 		isLockedPaddings: false,
 	} );
-	const advancedHeadingRef = useRef< HTMLDivElement >( null );
 	const {
 		content,
 		titleTag,
@@ -87,7 +86,6 @@ function Edit( props: AdvancedHeadingEditProps ) {
 		<>
 			{ shouldLoadGoogleFonts && (
 				<GoogleFontLoader
-					blockRef={ advancedHeadingRef }
 					fonts={ [
 						{
 							font: fontFamily,
@@ -116,7 +114,7 @@ function Edit( props: AdvancedHeadingEditProps ) {
 					} ) )
 				}
 			/>
-			<div ref={ advancedHeadingRef } { ...blockProps }>
+			<div { ...blockProps }>
 				<RichText
 					className={ wrapperContentClass }
 					tagName={ Tag }

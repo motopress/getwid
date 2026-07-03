@@ -7,12 +7,7 @@ import type { AnchorEditProps } from './types';
 import './editor.scss';
 
 export default function Edit( props: AnchorEditProps ) {
-	const {
-		attributes: { anchor },
-	} = props;
-	const blockProps = useBlockProps( {
-		id: anchor || undefined,
-	} );
+	const blockProps = useBlockProps();
 
 	return (
 		<>

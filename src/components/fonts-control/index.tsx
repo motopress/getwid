@@ -161,6 +161,7 @@ function FontSelect( {
 			),
 		[ flatFonts, search ]
 	);
+
 	const fontGroups = useMemo( () => {
 		const groups: Record< string, FontGroup > = {};
 
@@ -190,12 +191,6 @@ function FontSelect( {
 		Math.ceil( filteredFonts.length / fontsPerPage )
 	);
 
-	useEffect( () => {
-		if ( currentPage !== 1 ) {
-			setCurrentPage( 1 );
-		}
-	}, [ currentPage, search ] );
-
 	return (
 		<BaseControl
 			id="getwid-advanced-heading-font-family"
@@ -220,9 +215,10 @@ function FontSelect( {
 						<MenuGroup>
 							<TextControl
 								value={ search }
-								onChange={ ( nextSearch ) =>
-									setSearch( nextSearch )
-								}
+								onChange={ ( nextSearch ) => {
+									setSearch( nextSearch );
+									setCurrentPage( 1 );
+								} }
 							/>
 							<div className="components-getwid-fonts-popover__items">
 								{ currentPage === 1 && (

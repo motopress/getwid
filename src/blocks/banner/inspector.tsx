@@ -16,15 +16,12 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import {
 	CustomColorPalette,
+	ImageSizeSelect,
 	StyleLengthControl,
 	TabsControl,
 } from 'getwid-components';
 
-import {
-	allowedMediaTypes,
-	imageSizeOptions,
-	videoBackgroundType,
-} from './constants';
+import { allowedMediaTypes, videoBackgroundType } from './constants';
 import type { BannerEditProps } from './types';
 
 type TabName = 'general' | 'style' | 'advanced';
@@ -308,7 +305,7 @@ function GeneralSettings( props: InspectorProps ) {
 			) }
 
 			{ imgObj && type === 'image' && (
-				<SelectControl
+				<ImageSizeSelect
 					label={ __( 'Image Size', 'getwid' ) }
 					help={ __(
 						'For images from Media Library only.',
@@ -316,7 +313,6 @@ function GeneralSettings( props: InspectorProps ) {
 					) }
 					value={ imageSize }
 					onChange={ onChangeImageSize }
-					options={ imageSizeOptions() }
 				/>
 			) }
 

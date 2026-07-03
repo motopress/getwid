@@ -1,0 +1,103 @@
+//------ sliders -------
+.wp-block-getwid-images-slider,
+.wp-block-getwid-media-text-slider,
+.wp-block-getwid-post-slider,
+.wp-block-getwid-post-carousel {
+
+	.slick-prev,
+	.slick-next {
+		font-size: 0;
+	}
+
+	.slick-dots {
+		margin: 0 auto !important;
+	}
+
+}
+
+//------ ApiKey forms -------
+.wp-block-getwid-map__key-form,
+.wp-block-getwid-instagram__key-form,
+.wp-block-getwid-mailchimp__key-form {
+	padding: 1em;
+
+	.form-title {
+		margin-bottom: .5em;
+		display: block;
+	}
+
+	.form-description {
+		font-size: 0.875em;
+		margin-top: 1em;
+		display: block;
+	}
+}
+
+//------ getwid editor forms --------
+.wp-block-getwid-mailchimp,
+.wp-block-getwid-contact-form {
+	.getwid-field-label {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		.required {
+			margin-left: 10px;
+			color: inherit;
+		}
+	}
+
+	.components-base-control__label {
+		width: 100%;
+	}
+
+	.getwid-field-label__input {
+		border: 0;
+		box-shadow: none;
+		outline: none;
+		background: transparent;
+
+		&:focus {
+			padding: 2px 10px;
+			background: #fff;
+		}
+	}
+
+	.getwid-field-label__required {
+		margin-left: 10px;
+
+		.components-base-control__field {
+			margin: 0;
+		}
+	}
+}
+
+/*
+ * TODO: WordPress 5.6 - 5.X Fix
+ * Select Multiple
+ * https://github.com/WordPress/gutenberg/issues/27166
+ */
+.components-select-control.getwid-wp56-fix,
+.components-getwid-custom-query-control__terms,
+.components-getwid-custom-query-control__taxonomy {
+	.components-select-control__input {
+		height: auto !important;
+	}
+	.components-input-control__suffix {
+		display: none !important;
+	}
+	.components-input-control__label {
+	  font-size: inherit;
+	}
+}
+
+/*
+ * TODO: WordPress 5.6 - 5.X Fix
+ * Limit the editor width to prevent some blocks to grow infinitely wide
+ * https://github.com/WordPress/gutenberg/pull/27695
+ * https://github.com/WordPress/gutenberg/issues/27622
+ *
+ */
+.interface-interface-skeleton__editor {
+	overflow: hidden;
+}

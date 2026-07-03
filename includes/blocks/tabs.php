@@ -1,6 +1,6 @@
 <?php
 
-namespace Getwid\Blocks\New;
+namespace Getwid\Blocks;
 
 class Tabs extends AbstractBlock {
 
@@ -9,14 +9,14 @@ class Tabs extends AbstractBlock {
 		parent::__construct( 'getwid/tabs' );
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/tabs' ),
+			getwid_get_plugin_path( 'assets/blocks/tabs/tabs' ),
 			array(
 				'render_callback' => array( $this, 'render_callback' ),
 			)
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/tabs-item' )
+			getwid_get_plugin_path( 'assets/blocks/tabs/tabs-item' )
 		);
 	}
 

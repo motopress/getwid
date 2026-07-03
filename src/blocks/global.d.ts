@@ -1,18 +1,18 @@
 // import type { ComponentType } from '@wordpress/element';
 
-declare const Getwid: {
-	disabled_blocks: string[];
-	options_url: {
-		blocks: string;
-	};
-	settings?: {
-		iconList?: string[];
-		image_sizes?: Array< {
-			label: string;
-			value: string;
-		} >;
-	};
-};
+// declare const Getwid: {
+// 	disabled_blocks: string[];
+// 	options_url: {
+// 		blocks: string;
+// 	};
+// 	settings?: {
+// 		iconList?: string[];
+// 		image_sizes?: Array< {
+// 			label: string;
+// 			value: string;
+// 		} >;
+// 	};
+// };
 
 declare module '*.css';
 declare module '*.scss';

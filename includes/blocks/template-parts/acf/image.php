@@ -1,8 +1,8 @@
 <?php
 
-namespace Getwid\Blocks\New\TemplateParts\Acf;
+namespace Getwid\Blocks\TemplateParts\Acf;
 
-class AcfImage extends \Getwid\Blocks\New\AbstractBlock {
+class AcfImage extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $assets_handle = 'getwid/template-parts/acf';
 

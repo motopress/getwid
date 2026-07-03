@@ -1,6 +1,6 @@
 <?php
 
-namespace Getwid\Blocks\New;
+namespace Getwid\Blocks;
 
 class Counter extends AbstractBlock {
 
@@ -13,10 +13,7 @@ class Counter extends AbstractBlock {
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_editor_assets' ) );
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/counter' ),
-			array(
-				'render_callback' => array( $this, 'render_callback' ),
-			)
+			getwid_get_plugin_path( 'assets/blocks/counter' )
 		);
 	}
 
@@ -46,38 +43,6 @@ class Counter extends AbstractBlock {
 	public function enqueue_editor_assets() {
 
 		wp_enqueue_script( 'countup' );
-	}
-
-	public function block_frontend_assets() {
-
-		if ( is_admin() ) {
-			return;
-		}
-
-		wp_enqueue_script( 'waypoints' );
-		wp_enqueue_script( 'countup' );
-
-		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		add_filter(
-			'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
-
-				return $assets;
-			}
-		);
-
-		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
-	}
-
-	public function render_callback( $attributes, $content ) {
-
-		$this->block_frontend_assets();
-
-		return $content;
 	}
 }
 

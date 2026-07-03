@@ -1,204 +1,45 @@
-const gulp = require('gulp'),
-	plumber = require('gulp-plumber'),
-	rename = require('gulp-rename'),
-	sass = require('gulp-sass'),
-	autoprefixer = require('gulp-autoprefixer'),
-	rtlcss = require('gulp-rtlcss'),
-	concat = require('gulp-concat'),
-	cleanCSS = require('gulp-clean-css'),
-	clone = require('gulp-clone'),
-	merge = require('merge-stream'),
-	webpack = require('webpack'),
-	webpackConfig = require('./webpack.splitted.js');
+const { src, dest, series, watch } = require( 'gulp' );
+const sass = require( 'gulp-sass' )( require( 'sass' ) );
+const postcss = require( 'gulp-postcss' );
+const autoprefixer = require( 'autoprefixer' );
+const rtlcss = require( 'gulp-rtlcss' );
+const rename = require( 'gulp-rename' );
 
-const config = {
-	destPath: 'assets/blocks/',
-	cssOutputStyle: 'expanded', // compressed, expanded,
-	cssFormatStyle: 0 <= process.argv.indexOf('--minified') ? undefined : 'beautify'
+function buildStyles() {
+	return src( [
+		'src/common-styles/style.scss',
+		'src/common-styles/editor.scss',
+	] )
+		.pipe(
+			sass( {
+				outputStyle: 'expanded',
+			} ).on( 'error', sass.logError )
+		)
+		.pipe( postcss( [ autoprefixer() ] ) )
+		.pipe( dest( 'assets/common-styles' ) );
 }
 
-const complexBlocks = {
-	'accordion': 'accordion',
-	'content-timeline': 'content-timeline',
-	'media-text-slider': 'media-text-slider',
-	'tabs': 'tabs',
-	'toggle': 'toggle',
-	'template-parts': {
-		'template-parts/acf': 'acf'
-	},
-};
-
-const rtlConfig = {
-	plugins: [
-		{
-			'name': 'disable processors',
-			'priority': 50,
-			'directives': {
-				'control': {},
-				'value': []
-			},
-			'processors': [
-				{
-					'name': 'ignore all',
-					'expr': /./im,
-					'action': function (prop, value) {
-						return { 'prop': prop, 'value': value }
-					}
-				}
-			]
-		}
-	],
+function buildRtlStyles() {
+	return src( [
+		'assets/common-styles/style.css',
+		'assets/common-styles/editor.css',
+	] )
+		.pipe( rtlcss() )
+		.pipe(
+			rename( {
+				suffix: '-rtl',
+			} )
+		)
+		.pipe( dest( 'assets/common-styles' ) );
 }
 
-/**
- * Create and run task per each file defined inside function
- */
-const buildIndependentCSS = (done) => {
-	const styles = {
-		'common.style': 'src/style.scss'
-	};
-
-	let tasks = [];
-	for (const [name, path] of Object.entries(styles)) {
-		tasks.push(taskDone => {
-
-			const baseSource = gulp.src(path)
-				.pipe(plumber())
-				.pipe(sass({outputStyle: config.cssOutputStyle}))
-				.pipe(autoprefixer())
-				.pipe(rename({
-					basename: name
-				}));
-
-			const rtl = baseSource
-				.pipe(clone())
-				.pipe(rtlcss(rtlConfig))
-				.pipe(rename({ suffix: '.rtl' }))
-
-			merge(baseSource, rtl)
-				.pipe(cleanCSS({format: config.cssFormatStyle}))
-				.pipe(gulp.dest(config.destPath));
-
-			taskDone();
-		});
-	}
-
-	return gulp.parallel(...tasks, parallelDone => {
-		parallelDone();
-		done();
-	})();
+function watchStyles() {
+	watch(
+		'src/common-styles/**/*.scss',
+		series( buildStyles, buildRtlStyles )
+	);
 }
 
-/**
- * Compile CSS for all blocks except blocks from complexBlocks var
- */
-const buildSimpleBlocksCSS = () => {
-	const excludeBlocks = Object.keys(complexBlocks).map(path => '!src/blocks/' + path + '/**');
-
-	const baseSource = gulp.src(['src/blocks/**/style.scss', ...excludeBlocks])
-		.pipe(plumber())
-		.pipe(sass({outputStyle: config.cssOutputStyle}))
-		.pipe(autoprefixer());
-
-	const rtl = baseSource
-		.pipe(clone())
-		.pipe(rtlcss(rtlConfig))
-		.pipe(rename({ suffix: '.rtl' }))
-
-	return merge(baseSource, rtl)
-		.pipe(cleanCSS({format: config.cssFormatStyle}))
-		.pipe(gulp.dest(config.destPath));
-}
-
-/**
- * Compile CSS only for blocks defined in complexBlocks var
- */
-const buildComplexBlocksCSS = (done) => {
-	let tasks = [];
-
-	buildComplexBlockCSS(tasks, '', complexBlocks);
-
-	return gulp.parallel(...tasks, parallelDone => {
-		parallelDone();
-		done();
-	})();
-}
-
-/**
- * Helper function; runs task for each block in complexBlocks var
- */
-const buildComplexBlockCSS = (tasks, block, subBlocks) => {
-	let excludedBlocks = [];
-	if (typeof subBlocks === 'object') {
-		excludedBlocks = Object.keys(subBlocks).map(path => '!src/blocks/' + path + '/**');
-
-		for (const [subBlock, value] of Object.entries(subBlocks)) {
-			buildComplexBlockCSS(tasks, subBlock, value);
-		}
-	}
-
-	block !== '' && tasks.push(taskDone => {
-		buildComplexBlockPartCSS(block, excludedBlocks);
-		taskDone();
-	})
-}
-
-/**
- * Helper function; compile single block CSS
- */
-const buildComplexBlockPartCSS = (block, excludeBlocks) => {
-
-	const baseSource = gulp.src(['src/blocks/' + block + '/**/style.scss', ...excludeBlocks])
-		.pipe(plumber())
-		.pipe(sass({outputStyle: config.cssOutputStyle}))
-		.pipe(autoprefixer())
-		.pipe(concat('style.css'));
-
-	const rtl = baseSource
-		.pipe(clone())
-		.pipe(rtlcss(rtlConfig))
-		.pipe(rename({ suffix: '.rtl' }));
-
-	return merge(baseSource, rtl)
-		.pipe(cleanCSS({ format: config.cssFormatStyle }))
-		.pipe(gulp.dest(config.destPath + block + '/'));
-}
-
-/**
- * Runs tasks for compiling all blocks CSS parallel
- */
-const buildFrontendCSS = (done) => {
-	return gulp.parallel(buildSimpleBlocksCSS, buildComplexBlocksCSS, buildIndependentCSS, parallelDone => {
-		parallelDone();
-		done();
-	})();
-}
-
-/**
- * Runs parallel tasks for .js compiling with webpack and .scss compiling
- */
-const watchFrontendAssets = (done) => {
-	return gulp.parallel(
-		() => {
-			return new Promise(resolve => webpack(webpackConfig, (err, stats) => {
-				if (err) console.log('Webpack', err)
-
-				console.log(stats.toString())
-
-				resolve()
-			}))
-		},
-		() => {
-			return gulp.watch('src/**/*.scss', gulp.series(buildFrontendCSS))
-		},
-		(parallelDone) => {
-			parallelDone();
-			done();
-		}
-	)();
-
-}
-
-gulp.task('build-splitted', gulp.parallel(buildFrontendCSS));
-gulp.task('watch-splitted', gulp.series(buildFrontendCSS, watchFrontendAssets));
-
+exports.build = series( buildStyles, buildRtlStyles );
+exports.start = watchStyles;
+exports.default = exports.styles;

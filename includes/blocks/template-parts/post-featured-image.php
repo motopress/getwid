@@ -1,8 +1,8 @@
 <?php
 
-namespace Getwid\Blocks\New\TemplateParts;
+namespace Getwid\Blocks\TemplateParts;
 
-class PostFeaturedImage extends \Getwid\Blocks\New\AbstractBlock {
+class PostFeaturedImage extends \Getwid\Blocks\AbstractBlock {
 
 	protected static $assets_handle = 'getwid/template-parts';
 

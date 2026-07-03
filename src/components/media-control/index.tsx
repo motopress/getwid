@@ -1,5 +1,5 @@
 import { MediaPlaceholder, MediaUpload } from '@wordpress/block-editor';
-import { BaseControl, Button } from '@wordpress/components';
+import { BaseControl, Button, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 import './editor.scss';
@@ -83,5 +83,24 @@ export default function MediaControl< T >( {
 				/>
 			) }
 		</BaseControl>
+	);
+}
+
+type ImageSizeSelectProps = {
+	label: string;
+	help: string;
+	value: string;
+	onChange: ( value: string ) => void;
+};
+
+export function ImageSizeSelect( props: ImageSizeSelectProps ) {
+	return (
+		<SelectControl
+			label={ props.label }
+			help={ props.help }
+			value={ props.value }
+			onChange={ props.onChange }
+			options={ GetwidComponentsData.settings.image_sizes }
+		/>
 	);
 }

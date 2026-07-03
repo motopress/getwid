@@ -1,25 +1,16 @@
 import { Button, Disabled, Flex, Modal, Spinner } from '@wordpress/components';
 import { useCallback, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 import clsx from 'clsx';
 
 import './editor.scss';
+import apiFetch from '@wordpress/api-fetch';
 
 type TemplateOption = {
 	value: number;
 	label?: string;
 };
-
-type GetwidTemplatesGlobal = {
-	templates: {
-		new: string;
-		view: string;
-		edit: string;
-	};
-};
-
-type ApiFetch = < T = unknown >( options: { path: string } ) => Promise< T >;
-type AddQueryArgs = ( path: string, args: Record< string, string > ) => string;
 
 type TemplatesModalProps = {
 	onClose: () => void;
@@ -27,21 +18,6 @@ type TemplatesModalProps = {
 	selectedTemplate?: string;
 	onSelect: ( templateID: string ) => void;
 };
-
-const globalWindow = window as unknown as {
-	wp?: {
-		apiFetch?: unknown;
-		url?: {
-			addQueryArgs?: unknown;
-		};
-	};
-	Getwid?: GetwidTemplatesGlobal;
-};
-const apiFetch = globalWindow.wp?.apiFetch as ApiFetch | undefined;
-const addQueryArgs = globalWindow.wp?.url?.addQueryArgs as
-	| AddQueryArgs
-	| undefined;
-const getwid = globalWindow.Getwid;
 
 export default function TemplatesModal( {
 	onClose,
@@ -53,11 +29,6 @@ export default function TemplatesModal( {
 	const [ loading, setLoading ] = useState( true );
 
 	const loadTemplates = useCallback( () => {
-		if ( ! apiFetch || ! addQueryArgs ) {
-			setLoading( false );
-			return;
-		}
-
 		setLoading( true );
 		apiFetch< TemplateOption[] >( {
 			path: addQueryArgs( '/getwid/v1/templates', {
@@ -81,7 +52,7 @@ export default function TemplatesModal( {
 			headerActions={
 				<Flex expanded={ false }>
 					<Button
-						href={ getwid?.templates.new }
+						href={ GetwidComponentsData.templates.new }
 						target="_blank"
 						variant="primary"
 					>
@@ -98,7 +69,7 @@ export default function TemplatesModal( {
 						{ __( 'Use Default Template', 'getwid' ) }
 					</Button>
 					<Button
-						href={ getwid?.templates.view }
+						href={ GetwidComponentsData.templates.view }
 						target="_blank"
 						variant="secondary"
 					>
@@ -169,7 +140,7 @@ export default function TemplatesModal( {
 										{ __( 'Apply', 'getwid' ) }
 									</Button>
 									<Button
-										href={ `${ getwid?.templates.edit }${ template.value }&action=edit` }
+										href={ `${ GetwidComponentsData.templates.edit }${ template.value }&action=edit` }
 										target="_blank"
 										variant="secondary"
 									>

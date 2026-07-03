@@ -30,10 +30,9 @@ export default function Edit( props: AdvancedSpacerEditProps ) {
 	} );
 
 	return (
-		<>
+		<div { ...blockProps }>
 			<Inspector { ...props } />
 			<ResizableBox
-				{ ...blockProps }
 				size={ {
 					height,
 				} }
@@ -60,6 +59,6 @@ export default function Edit( props: AdvancedSpacerEditProps ) {
 					toggleSelection( false );
 				} }
 			/>
-		</>
+		</div>
 	);
 }

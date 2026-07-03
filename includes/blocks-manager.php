@@ -220,7 +220,7 @@ class BlocksManager {
 
 	public function addBlock( $block ) {
 
-		if ( $block instanceof \Getwid\Blocks\New\AbstractBlock ) {
+		if ( $block instanceof \Getwid\Blocks\AbstractBlock ) {
 			$this->blocks[ $block->get_block_name() ] = $block;
 		}
 	}

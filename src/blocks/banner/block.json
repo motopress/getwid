@@ -6,9 +6,15 @@
 	"category": "getwid-blocks",
 	"title": "Banner",
 	"description": "Link an image or video with a text overlay.",
-	"keywords": [ "image", "cover" ],
+	"keywords": [
+		"image",
+		"cover"
+	],
 	"supports": {
-		"align": [ "wide", "full" ]
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"backgroundColor": {
@@ -99,6 +105,9 @@
 		}
 	},
 	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
+	"editorStyle": [
+		"getwid-blocks-editor-common",
+		"file:./index.css"
+	],
 	"style": "file:./style-index.css"
 }

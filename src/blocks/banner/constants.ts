@@ -12,11 +12,3 @@ export const allowedFormats = [
 	'core/strikethrough',
 	'core/text-color',
 ];
-
-export const imageSizeOptions = () =>
-	Getwid.settings?.image_sizes || [
-		{ label: 'Full Size', value: 'full' },
-		{ label: 'Large', value: 'large' },
-		{ label: 'Medium', value: 'medium' },
-		{ label: 'Thumbnail', value: 'thumbnail' },
-	];

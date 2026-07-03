@@ -12,9 +12,7 @@ export type CustomPostTypeAttributes = QueryValues & {
 };
 
 export type CustomPostTypeEditProps =
-	BlockEditProps< CustomPostTypeAttributes > & {
-		recentPosts?: unknown[];
-	};
+	BlockEditProps< CustomPostTypeAttributes >;
 
 export type ServerSideRenderProps = {
 	block: string;

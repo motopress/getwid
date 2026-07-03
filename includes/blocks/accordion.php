@@ -1,6 +1,6 @@
 <?php
 
-namespace Getwid\Blocks\New;
+namespace Getwid\Blocks;
 
 class Accordion extends AbstractBlock {
 
@@ -9,14 +9,14 @@ class Accordion extends AbstractBlock {
 		parent::__construct( 'getwid/accordion' );
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/accordion' ),
+			getwid_get_plugin_path( 'assets/blocks/accordion/accordion' ),
 			array(
 				'viewStyle' => getwid()->fontIconsManager()->enqueueFonts( array() ),
 			)
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/accordion-item' )
+			getwid_get_plugin_path( 'assets/blocks/accordion/accordion-item' )
 		);
 	}
 

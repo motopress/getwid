@@ -170,42 +170,21 @@ function Edit( props: BannerEditProps ) {
 	);
 
 	if ( ! url ) {
-		const hasTitle = ! RichText.isEmpty( title );
-		const icon = hasTitle ? undefined : 'format-image';
-		const label = hasTitle ? (
-			<>
-				<RichText
-					tagName="p"
-					value={ title }
-					onChange={ ( nextTitle ) =>
-						setAttributes( { title: nextTitle } )
-					}
-				/>
-				<RichText
-					tagName="p"
-					value={ text }
-					onChange={ ( nextText ) =>
-						setAttributes( { text: nextText } )
-					}
-				/>
-			</>
-		) : (
-			__( 'Banner', 'getwid' )
-		);
-
 		return (
 			<>
 				{ controls }
-				<MediaPlaceholder
-					icon={ icon }
-					className={ baseClass }
-					labels={ {
-						title: label,
-					} }
-					onSelect={ onSelectMedia }
-					accept="image/*"
-					allowedTypes={ allowedMediaTypes }
-				/>
+				<div { ...blockProps }>
+					<MediaPlaceholder
+						icon="format-image"
+						className={ baseClass }
+						labels={ {
+							title: __( 'Banner', 'getwid' ),
+						} }
+						onSelect={ onSelectMedia }
+						accept="image/*"
+						allowedTypes={ allowedMediaTypes }
+					/>
+				</div>
 			</>
 		);
 	}
@@ -262,25 +241,25 @@ function Edit( props: BannerEditProps ) {
 						</div>
 					</div>
 				</div>
+				{ isSelected && (
+					<div className={ `${ baseClass }__url-field` }>
+						<Dashicon icon="admin-links" />
+						<URLInput
+							className="has-border"
+							value={ link }
+							onChange={ ( nextLink ) =>
+								setAttributes( { link: nextLink } )
+							}
+							__nextHasNoMarginBottom
+						/>
+						<ToggleControl
+							label={ __( 'Open in New Tab', 'getwid' ) }
+							onChange={ onSetNewTab }
+							checked={ linkTarget === '_blank' }
+						/>
+					</div>
+				) }
 			</div>
-			{ isSelected && (
-				<div className={ `${ baseClass }__url-field` }>
-					<Dashicon icon="admin-links" />
-					<URLInput
-						className="has-border"
-						value={ link }
-						onChange={ ( nextLink ) =>
-							setAttributes( { link: nextLink } )
-						}
-						__nextHasNoMarginBottom
-					/>
-					<ToggleControl
-						label={ __( 'Open in New Tab', 'getwid' ) }
-						onChange={ onSetNewTab }
-						checked={ linkTarget === '_blank' }
-					/>
-				</div>
-			) }
 		</>
 	);
 }

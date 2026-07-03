@@ -5,9 +5,16 @@
 	"name": "getwid/custom-post-type",
 	"category": "getwid-blocks",
 	"title": "Custom Post Type",
-	"keywords": [ "query", "loop", "posts" ],
+	"keywords": [
+		"query",
+		"loop",
+		"posts"
+	],
 	"supports": {
-		"align": [ "wide", "full" ]
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"postTemplate": {
@@ -99,5 +106,8 @@
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css"
+	"style": [
+		"getwid-blocks-common",
+		"file:./style-index.css"
+	]
 }

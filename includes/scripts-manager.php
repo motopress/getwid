@@ -32,10 +32,12 @@ class ScriptsManager {
 		// section_content_width inline styles
 		add_action( 'after_theme_setup', array( $this, 'enqueue_editor_section_css' ) );
 
-		add_action( 'wp_footer', array( $this, 'localizeFrontend' ) );
+		// add_action( 'wp_footer', array( $this, 'localizeFrontend' ) );
 
 		// Register frontend styles
-		add_action( 'wp_footer', array( $this, 'wp_late_enqueue_scripts' ) );
+		// add_action( 'wp_footer', array( $this, 'wp_late_enqueue_scripts' ) );
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_frontend_common_assets' ) );
 	}
 
 	public function enqueue_block_editor_assets() {
@@ -74,6 +76,15 @@ class ScriptsManager {
 					'appearance' => getwid()->settingsPage()->getTabUrl( 'appearance' ),
 					'blocks'     => getwid()->settingsPage()->getTabUrl( 'blocks' ),
 				),
+				'templates'      => array(
+					'name' => getwid()->postTemplatePart()->postType,
+					'new'  => admin_url( 'post-new.php?post_type=' . getwid()->postTemplatePart()->postType ),
+					'view' => admin_url( 'edit.php?post_type=' . getwid()->postTemplatePart()->postType ),
+					'edit' => admin_url( 'post.php?post=' ),
+				),
+				'settings'       => array(
+					'image_sizes' => $this->get_image_sizes(),
+				),
 			)
 		);
 		wp_add_inline_script( 'getwid-components', 'const GetwidComponentsData = ' . json_encode( $data ), 'before' );
@@ -87,6 +98,28 @@ class ScriptsManager {
 			),
 			$asset['version']
 		);
+
+		wp_register_style(
+			"{$this->prefix}-blocks-editor-common",
+			getwid_get_plugin_url( 'assets/common-styles/editor.css' ),
+			array(),
+			$this->version
+		);
+
+		wp_style_add_data( "{$this->prefix}-blocks-editor-common", 'rtl', 'replace' );
+
+		$this->register_frontend_common_assets();
+	}
+
+	public function register_frontend_common_assets() {
+		wp_register_style(
+			"{$this->prefix}-blocks-common",
+			getwid_get_plugin_url( 'assets/common-styles/style.css' ),
+			array(),
+			$this->version
+		);
+
+		wp_style_add_data( "{$this->prefix}-blocks-common", 'rtl', 'replace' );
 	}
 
 	public function get_image_sizes() {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Getwid\Blocks\New;
+namespace Getwid\Blocks;
 
 class CustomPostType extends AbstractBlock {
 
@@ -12,45 +12,13 @@ class CustomPostType extends AbstractBlock {
 			getwid_get_plugin_path( 'assets/blocks/custom-post-type' ),
 			array(
 				'render_callback' => array( $this, 'render_callback' ),
+				'viewStyle'       => getwid()->fontIconsManager()->enqueueFonts( array() ),
 			)
 		);
-
-		if ( $this->is_enabled() ) {
-			add_filter( 'getwid/blocks_style_css/dependencies', array( $this, 'block_frontend_styles' ) );
-		}
 	}
 
 	public function get_label() {
 		return __( 'Custom Post Type', 'getwid' );
-	}
-
-	public function block_frontend_styles( $styles ) {
-
-		return getwid()->fontIconsManager()->enqueueFonts( $styles );
-	}
-
-	public function block_frontend_assets() {
-
-		if ( is_admin() ) {
-			return;
-		}
-
-		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		getwid()->fontIconsManager()->enqueueFonts( array() );
-
-		add_filter(
-			'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
-
-				return $assets;
-			}
-		);
-
-		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 	}
 
 	public function render_callback( $attributes, $content ) {
@@ -174,8 +142,6 @@ class CustomPostType extends AbstractBlock {
 		<?php
 
 		$result = ob_get_clean();
-
-		$this->block_frontend_assets();
 
 		return $result;
 	}

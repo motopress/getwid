@@ -1,6 +1,6 @@
 <?php
 
-namespace Getwid\Blocks\New;
+namespace Getwid\Blocks;
 
 class Mailchimp extends AbstractBlock {
 
@@ -24,28 +24,28 @@ class Mailchimp extends AbstractBlock {
 	private function register_mailchimp_blocks() {
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/mailchimp' ),
+			getwid_get_plugin_path( 'assets/blocks/mailchimp/mailchimp' ),
 			array(
 				'render_callback' => array( $this, 'render_callback' ),
 			)
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/mailchimp-field-email' ),
+			getwid_get_plugin_path( 'assets/blocks/mailchimp/mailchimp-field-email' ),
 			array(
 				'render_callback' => array( $this, 'render_mailchimp_field_email' ),
 			)
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/mailchimp-field-first-name' ),
+			getwid_get_plugin_path( 'assets/blocks/mailchimp/mailchimp-field-first-name' ),
 			array(
 				'render_callback' => array( $this, 'render_mailchimp_field_first_name' ),
 			)
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/mailchimp-field-last-name' ),
+			getwid_get_plugin_path( 'assets/blocks/mailchimp/mailchimp-field-last-name' ),
 			array(
 				'render_callback' => array( $this, 'render_mailchimp_field_last_name' ),
 			)

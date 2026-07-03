@@ -1,6 +1,6 @@
 <?php
 
-namespace Getwid\Blocks\New;
+namespace Getwid\Blocks;
 
 class AdvancedHeading extends AbstractBlock {
 
@@ -50,31 +50,7 @@ class AdvancedHeading extends AbstractBlock {
 			);
 		}
 
-		// $this->block_frontend_assets();
-
 		return $content;
-	}
-
-	private function block_frontend_assets() {
-
-		if ( is_admin() ) {
-			return;
-		}
-
-		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		add_filter(
-			'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
-
-				return $assets;
-			}
-		);
-
-		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 	}
 
 	private function should_load_google_font( $attributes ) {

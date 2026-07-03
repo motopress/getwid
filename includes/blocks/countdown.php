@@ -1,6 +1,6 @@
 <?php
 
-namespace Getwid\Blocks\New;
+namespace Getwid\Blocks;
 
 class Countdown extends AbstractBlock {
 
@@ -15,7 +15,6 @@ class Countdown extends AbstractBlock {
 		register_block_type(
 			getwid_get_plugin_path( 'assets/blocks/countdown' ),
 			array(
-				'attributes'      => $this->get_block_attributes(),
 				'render_callback' => array( $this, 'render_callback' ),
 			)
 		);
@@ -33,103 +32,6 @@ class Countdown extends AbstractBlock {
 		return $current_date->format( 'Y-m-d H:i:s' );
 	}
 
-	private function get_block_attributes() {
-
-		return array(
-			'dateTime'        => array(
-				'type'    => 'string',
-				'default' => $this->get_default_date(),
-			),
-			'years'           => array(
-				'type'    => 'boolean',
-				'default' => false,
-			),
-			'months'          => array(
-				'type'    => 'boolean',
-				'default' => false,
-			),
-			'weeks'           => array(
-				'type'    => 'boolean',
-				'default' => false,
-			),
-			'days'            => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			'hours'           => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			'minutes'         => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			'seconds'         => array(
-				'type'    => 'boolean',
-				'default' => true,
-			),
-			'backgroundColor' => array(
-				'type' => 'string',
-			),
-			'textColor'       => array(
-				'type' => 'string',
-			),
-			'customTextColor' => array(
-				'type' => 'string',
-			),
-			'fontGroupID'     => array(
-				'type'    => 'string',
-				'default' => '',
-			),
-			'fontFamily'      => array(
-				'type'    => 'string',
-				'default' => '',
-			),
-			'fontSize'        => array(
-				'type' => 'string',
-			),
-			'fontSizeTablet'  => array(
-				'type'    => 'string',
-				'default' => 'fs-tablet-100',
-			),
-			'fontSizeMobile'  => array(
-				'type'    => 'string',
-				'default' => 'fs-mobile-100',
-			),
-			'fontWeight'      => array(
-				'type' => 'string',
-			),
-			'fontStyle'       => array(
-				'type' => 'string',
-			),
-			'textTransform'   => array(
-				'type' => 'string',
-			),
-			'lineHeight'      => array(
-				'type' => 'string',
-			),
-			'letterSpacing'   => array(
-				'type' => 'string',
-			),
-			'align'           => array(
-				'type' => 'string',
-			),
-			'textAlignment'   => array(
-				'type' => 'string',
-			),
-			'innerPadding'    => array(
-				'type'    => 'string',
-				'default' => 'default',
-			),
-			'innerSpacings'   => array(
-				'type'    => 'string',
-				'default' => 'none',
-			),
-			'className'       => array(
-				'type' => 'string',
-			),
-		);
-	}
 
 	private function get_locale_prefix() {
 
@@ -205,21 +107,6 @@ class Countdown extends AbstractBlock {
 				wp_enqueue_script( 'jquery-countdown-' . $locale_prefix );
 			}
 		}
-
-		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		add_filter(
-			'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
-
-				return $assets;
-			}
-		);
-
-		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
 	}
 
 	public function render_callback( $attributes, $content ) {
@@ -366,7 +253,7 @@ class Countdown extends AbstractBlock {
 		ob_start();
 		?>
 		<div class="<?php echo esc_attr( $class ); ?>">
-			<div class="<?php echo esc_attr( $content_class ); ?>" 
+			<div class="<?php echo esc_attr( $content_class ); ?>"
 			<?php
 			if ( ! empty( $content_style ) ) {
 				?>

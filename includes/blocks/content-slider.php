@@ -1,6 +1,6 @@
 <?php
 
-namespace Getwid\Blocks\New;
+namespace Getwid\Blocks;
 
 class ContentSlider extends AbstractBlock {
 
@@ -33,14 +33,14 @@ class ContentSlider extends AbstractBlock {
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/content-slider' ),
+			getwid_get_plugin_path( 'assets/blocks/content-slider/content-slider' ),
 			array(
 				'render_callback' => array( $this, 'render_callback' ),
 			)
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/content-slider-slide' )
+			getwid_get_plugin_path( 'assets/blocks/content-slider/content-slider-slide' )
 		);
 	}
 

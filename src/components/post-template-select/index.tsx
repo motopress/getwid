@@ -19,7 +19,7 @@ export function TemplateSelectControl( props: TemplateSelectProps ) {
 	const [ modalIsOpen, setModalIsOpen ] = useState( false );
 
 	return (
-		<BaseControl label={ __( 'Post Template', 'getwid' ) }>
+		<BaseControl id="" label={ __( 'Post Template', 'getwid' ) }>
 			<div>
 				<Button
 					variant="primary"

@@ -20,7 +20,7 @@ export {
 	PaddingsControl,
 } from './inspector-controls';
 export { IconPicker, MaybeBlockIsDisabled };
-export { default as MediaControl } from './media-control';
+export { default as MediaControl, ImageSizeSelect } from './media-control';
 export { default as Notice } from './notice';
 export {
 	TemplateSelectControl,
@@ -31,3 +31,6 @@ export { default as StyleLengthControl } from './style-length-control';
 export { default as TableBorderControl } from './table-border-control';
 export { default as TabsControl } from './tabs-control';
 export * from './utils';
+export { FieldTextarea } from './form-fields/field-textarea';
+export { Field } from './form-fields/field';
+export type { FieldAttributes, FieldEditProps } from './form-fields/types';

@@ -76,8 +76,9 @@ function CounterEdit( props: CounterEditProps ) {
 
 			<Inspector { ...props } />
 
-			<div { ...blockProps } ref={ blockRef }>
+			<div { ...blockProps }>
 				<div
+					ref={ blockRef }
 					className={ `${ baseClass }__wrapper` }
 					style={ { textAlign: wrapperAlign || undefined } }
 				>

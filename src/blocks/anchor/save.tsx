@@ -1,14 +1,7 @@
 import { useBlockProps } from '@wordpress/block-editor';
-import type { BlockSaveProps } from '@wordpress/blocks';
 
-import type { AnchorAttributes } from './types';
-
-export default function Save( {
-	attributes,
-}: BlockSaveProps< AnchorAttributes > ) {
-	const blockProps = useBlockProps.save( {
-		id: attributes.anchor || undefined,
-	} );
+export default function Save() {
+	const blockProps = useBlockProps.save();
 
 	return <div { ...blockProps } />;
 }

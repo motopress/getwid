@@ -1,6 +1,6 @@
 <?php
 
-namespace Getwid\Blocks\New;
+namespace Getwid\Blocks;
 
 class ContactForm extends AbstractBlock {
 
@@ -14,6 +14,9 @@ class ContactForm extends AbstractBlock {
 		add_action( 'wp_ajax_nopriv_getwid_send_mail', array( $this, 'send' ) );
 
 		$this->register_contact_form_blocks();
+
+		add_action( 'enqueue_block_editor_assets', array( $this, 'block_editor_assets' ) );
+		add_action( 'enqueue_block_assets', array( $this, 'block_frontend_assets' ) );
 	}
 
 	public function get_label() {
@@ -23,28 +26,28 @@ class ContactForm extends AbstractBlock {
 	private function register_contact_form_blocks() {
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/contact-form' ),
+			getwid_get_plugin_path( 'assets/blocks/contact-form/contact-form' ),
 			array(
 				'render_callback' => array( $this, 'render_callback' ),
 			)
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/field-name' ),
+			getwid_get_plugin_path( 'assets/blocks/contact-form/field-name' ),
 			array(
 				'render_callback' => array( $this, 'render_field_name_block' ),
 			)
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/field-email' ),
+			getwid_get_plugin_path( 'assets/blocks/contact-form/field-email' ),
 			array(
 				'render_callback' => array( $this, 'render_field_email_block' ),
 			)
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/field-textarea' ),
+			getwid_get_plugin_path( 'assets/blocks/contact-form/field-textarea' ),
 			array(
 				'render_callback' => array( $this, 'render_field_textarea_block' ),
 			)
@@ -118,18 +121,35 @@ class ContactForm extends AbstractBlock {
 		);
 	}
 
+	public function block_editor_assets() {
+		$current_user_can_manage_options = current_user_can( 'manage_options' );
+
+		$recaptcha_site_key   = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_site_key', '' ) : '1';
+		$recaptcha_secret_key = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_secret_key', '' ) : '1';
+
+		$data = array(
+			'user_can_manage_options' => $current_user_can_manage_options,
+			'recaptcha_site_key'      => $recaptcha_site_key,
+			'recaptcha_secret_key'    => $recaptcha_secret_key,
+			'ajax_url'                => admin_url( 'admin-ajax.php' ),
+			'nonce'                   => wp_create_nonce( 'getwid_nonce_recaptcha_v2' ),
+		);
+
+		$inline_script = 'var Getwid = Getwid || {};';
+
+		$inline_script .= 'Getwid["ContactForm"] = ' . wp_json_encode( $data ) . ';';
+
+		wp_add_inline_script(
+			'getwid-contact-form-editor-script',
+			$inline_script,
+			'before'
+		);
+	}
+
 	public function render_callback( $attributes, $content ) {
 
 		$class      = 'wp-block-getwid-contact-form';
 		$block_name = $class;
-
-		if ( isset( $attributes['className'] ) ) {
-			$class .= ' ' . $attributes['className'];
-		}
-
-		if ( isset( $attributes['align'] ) ) {
-			$class .= ' align' . $attributes['align'];
-		}
 
 		$button_style = '';
 		$button_class = '';
@@ -148,18 +168,16 @@ class ContactForm extends AbstractBlock {
 			'button_class' => $button_class,
 		);
 
+		$wrapper_attributes = get_block_wrapper_attributes();
+
 		ob_start();
 		?>
-		<div class="<?php echo esc_attr( $class ); ?>">
+		<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php getwid_get_template_part( 'contact-form/contact-form', $attributes, false, $extra_attr ); ?>
 		</div>
 		<?php
 
-		$result = ob_get_clean();
-
-		$this->block_frontend_assets();
-
-		return $result;
+		return ob_get_clean();
 	}
 
 	public function send() {

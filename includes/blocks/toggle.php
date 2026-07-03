@@ -1,6 +1,6 @@
 <?php
 
-namespace Getwid\Blocks\New;
+namespace Getwid\Blocks;
 
 class Toggle extends AbstractBlock {
 
@@ -9,14 +9,14 @@ class Toggle extends AbstractBlock {
 		parent::__construct( 'getwid/toggle' );
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/toggle' ),
+			getwid_get_plugin_path( 'assets/blocks/toggle/toggle' ),
 			array(
 				'viewStyle' => getwid()->fontIconsManager()->enqueueFonts( array() ),
 			)
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/toggle-item' )
+			getwid_get_plugin_path( 'assets/blocks/toggle/toggle-item' )
 		);
 	}
 

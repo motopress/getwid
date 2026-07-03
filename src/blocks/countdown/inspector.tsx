@@ -10,6 +10,7 @@ import {
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { date, getDate } from '@wordpress/date';
 import {
 	FontSizeControl,
 	FontsControl,
@@ -17,21 +18,9 @@ import {
 	TabsControl,
 } from 'getwid-components';
 
-import type { CountdownEditProps, GetwidCountdownGlobal } from './types';
+import type { CountdownEditProps } from './types';
 
 type TabName = 'general' | 'style';
-
-const getwid = ( window as Window & { Getwid: GetwidCountdownGlobal } ).Getwid;
-
-function getDefaultDate() {
-	const defaultDate = new Date(
-		getwid.settings.date_time_utc.replace( /-/g, '/' )
-	);
-
-	defaultDate.setDate( defaultDate.getDate() + 1 );
-
-	return defaultDate;
-}
 
 export default function Inspector( props: CountdownEditProps ) {
 	const [ tabName, setTabName ] = useState< TabName >( 'general' );
@@ -55,10 +44,10 @@ export default function Inspector( props: CountdownEditProps ) {
 		innerPadding,
 		innerSpacings,
 	} = attributes;
-	const defaultDate = getDefaultDate();
+	const defaultDate = getDate();
 	const visualLabel = dateTime
 		? new Date( dateTime ).toLocaleString()
-		: defaultDate.toLocaleString();
+		: date( 'd.m.Y, H:i:s', defaultDate );
 
 	return (
 		<InspectorControls>
@@ -72,6 +61,7 @@ export default function Inspector( props: CountdownEditProps ) {
 			{ tabName === 'general' && (
 				<PanelBody initialOpen>
 					<BaseControl
+						id=""
 						label={ __( 'Time', 'getwid' ) }
 						__nextHasNoMarginBottom
 					>

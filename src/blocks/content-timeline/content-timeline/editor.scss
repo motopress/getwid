@@ -1,0 +1,10 @@
+.wp-block-getwid-content-timeline {
+	$item_class: ".wp-block-getwid-content-timeline-item";
+
+	position: relative;
+
+	.wp-block-getwid-content-timeline__add-item {
+		display: flex;
+		justify-content: center;
+	}
+}

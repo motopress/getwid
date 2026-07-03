@@ -1,27 +1,22 @@
-import { BlockControls, withColors } from '@wordpress/block-editor';
+import {
+	BlockControls,
+	useBlockProps,
+	withColors,
+} from '@wordpress/block-editor';
 import { ToolbarButton, ToolbarGroup } from '@wordpress/components';
 import { useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { ServerSideRender } from '@wordpress/server-side-render';
 import $ from 'jquery';
 import { GoogleFontLoader } from 'getwid-components';
 
 import Inspector from './inspector';
-import type { CountdownAttributes, CountdownEditProps } from './types';
+import type { CountdownEditProps } from './types';
 
 import './editor.scss';
 import './style.scss';
 
 const baseClass = 'wp-block-getwid-countdown';
-const ServerSideRender = (
-	window as Window & {
-		wp: {
-			serverSideRender: ( props: {
-				block: string;
-				attributes: CountdownAttributes;
-			} ) => JSX.Element;
-		};
-	}
- ).wp.serverSideRender;
 
 function initCountdown( block: HTMLElement | null ) {
 	if ( ! block ) {
@@ -152,7 +147,6 @@ function Edit( props: CountdownEditProps ) {
 		<>
 			{ shouldLoadGoogleFonts && (
 				<GoogleFontLoader
-					blockRef={ countdownRef }
 					fonts={ [
 						{
 							font: fontFamily,
@@ -179,11 +173,13 @@ function Edit( props: CountdownEditProps ) {
 				</ToolbarGroup>
 			</BlockControls>
 			<Inspector { ...props } />
-			<div ref={ countdownRef }>
-				<ServerSideRender
-					block="getwid/countdown"
-					attributes={ attributes }
-				/>
+			<div { ...useBlockProps() }>
+				<div ref={ countdownRef }>
+					<ServerSideRender
+						block="getwid/countdown"
+						attributes={ attributes }
+					/>
+				</div>
 			</div>
 		</>
 	);
