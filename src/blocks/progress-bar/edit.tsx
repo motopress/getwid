@@ -13,8 +13,7 @@ import './editor.scss';
 import './style.scss';
 
 function ProgressBarEdit( props: ProgressBarEditProps ) {
-	const { attributes, setAttributes, className, backgroundColor, textColor } =
-		props;
+	const { attributes, setAttributes, backgroundColor, textColor } = props;
 	const {
 		title,
 		fillAmount,
@@ -22,12 +21,9 @@ function ProgressBarEdit( props: ProgressBarEditProps ) {
 		customTextColor,
 		customBackgroundColor,
 	} = attributes;
-	const blockRef = useRef< HTMLDivElement >( null );
 	const progressRef = useRef< HTMLDivElement >( null );
 	const percentRef = useRef< HTMLSpanElement >( null );
-	const blockProps = useBlockProps( {
-		className,
-	} );
+	const blockProps = useBlockProps();
 	const contentWrapperProps = {
 		className: `${ baseClass }__bar`,
 		style: {
@@ -89,7 +85,7 @@ function ProgressBarEdit( props: ProgressBarEditProps ) {
 	return (
 		<>
 			<Inspector { ...props } />
-			<div { ...blockProps } ref={ blockRef }>
+			<div { ...blockProps }>
 				<div className={ `${ baseClass }__wrapper` }>
 					<div className={ `${ baseClass }__header` }>
 						<RichText

@@ -55,101 +55,22 @@ class ImageHotspot extends AbstractBlock {
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/image-hotspot' ),
-			array(
-				'render_callback' => array( $this, 'render_callback' ),
-			)
+			getwid_get_plugin_path( 'assets/blocks/image-hotspot' )
 		);
 
-		if ( $this->is_enabled() ) {
-			add_filter( 'getwid/editor_blocks_js/dependencies', array( $this, 'block_editor_scripts' ) );
-			add_filter( 'getwid/blocks_style_css/dependencies', array( $this, 'block_frontend_styles' ) );
-		}
+		add_action( 'enqueue_block_assets', array( $this, 'add_block_assets' ) );
 	}
 
 	public function get_label() {
 		return __( 'Image Hotspot', 'getwid' );
 	}
 
-	public function block_frontend_styles( $styles ) {
-
-		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
-
-		if ( is_admin() && ! in_array( 'tippy-themes', $styles, true ) ) {
-			$styles[] = 'tippy-themes';
-		}
-
-		if ( is_admin() && ! in_array( 'tippy-animation', $styles, true ) ) {
-			$styles[] = 'tippy-animation';
-		}
-
-		return $styles;
-	}
-
-	public function block_editor_scripts( $scripts ) {
-
-		if ( ! in_array( 'popper', $scripts, true ) ) {
-			$scripts[] = 'popper';
-		}
-
-		if ( ! in_array( 'tippy', $scripts, true ) ) {
-			$scripts[] = 'tippy';
-		}
-
-		return $scripts;
-	}
-
-	public function block_frontend_assets() {
-
-		if ( is_admin() ) {
+	public function add_block_assets() {
+		if ( ! is_admin() ) {
 			return;
 		}
 
-		if ( ! wp_script_is( 'popper', 'enqueued' ) ) {
-			wp_enqueue_script( 'popper' );
-		}
-
-		if ( ! wp_script_is( 'tippy', 'enqueued' ) ) {
-			wp_enqueue_script( 'tippy' );
-		}
-
-		if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
-			wp_enqueue_script( 'waypoints' );
-		}
-
-		if ( ! wp_script_is( 'unescape', 'enqueued' ) ) {
-			wp_enqueue_script( 'unescape' );
-		}
-
-		if ( ! wp_style_is( 'tippy-themes', 'enqueued' ) ) {
-			wp_enqueue_style( 'tippy-themes' );
-		}
-
-		if ( ! wp_style_is( 'tippy-animation', 'enqueued' ) ) {
-			wp_enqueue_style( 'tippy-animation' );
-		}
-
-		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		add_filter(
-			'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
-
-				return $assets;
-			}
-		);
-
-		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
-	}
-
-	public function render_callback( $attributes, $content ) {
-
-		$this->block_frontend_assets();
-
-		return $content;
+		wp_enqueue_script( 'tippy' );
 	}
 }
 

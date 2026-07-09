@@ -128,18 +128,6 @@ function Edit( props: ImageBoxEditProps ) {
 
 	return (
 		<>
-			{ ! url && (
-				<MediaPlaceholder
-					icon="format-image"
-					className={ baseClass }
-					labels={ {
-						title: __( 'Image Box', 'getwid' ),
-					} }
-					onSelect={ onSelectMedia }
-					accept="image/*"
-					allowedTypes={ allowedMediaTypes }
-				/>
-			) }
 			<BlockControls>
 				{ !! url && (
 					<MediaUploadCheck>
@@ -200,6 +188,18 @@ function Edit( props: ImageBoxEditProps ) {
 				/>
 			) }
 			<div { ...blockProps }>
+				{ ! url && (
+					<MediaPlaceholder
+						icon="format-image"
+						className={ baseClass }
+						labels={ {
+							title: __( 'Image Box', 'getwid' ),
+						} }
+						onSelect={ onSelectMedia }
+						accept="image/*"
+						allowedTypes={ allowedMediaTypes }
+					/>
+				) }
 				<div
 					style={ imageContainerStyle }
 					className={ imageContainerClassName }

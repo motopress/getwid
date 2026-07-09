@@ -39,17 +39,6 @@ export function getBlockClassName( attributes: ImageHotspotAttributes ) {
 	};
 }
 
-export function decodeEntities( value?: string ) {
-	if ( ! value ) {
-		return '';
-	}
-
-	const element = document.createElement( 'textarea' );
-	element.innerHTML = value;
-
-	return element.value;
-}
-
 export function animateElement(
 	element: JQuery< HTMLElement >,
 	animationSettings: {

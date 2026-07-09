@@ -1,12 +1,8 @@
 import {
-	BlockAlignmentToolbar,
 	BlockControls,
-	BlockIcon,
-	DropZone,
 	MediaPlaceholder,
 	MediaUpload,
 	URLInput,
-	store as blockEditorStore,
 	useBlockProps,
 } from '@wordpress/block-editor';
 import {
@@ -22,7 +18,6 @@ import { __, isRTL } from '@wordpress/i18n';
 import clsx from 'clsx';
 import jQuery from 'jquery';
 
-import ImagesSliderIcon from './icon';
 import Inspector from './inspector';
 import MediaContainer from './media-container';
 import type { CoreSelect, ImagesSliderEditProps, SliderImage } from './types';
@@ -36,52 +31,8 @@ import {
 import './editor.scss';
 import './style.scss';
 
-const alignmentsList = [ 'wide', 'full' ];
 const allowedMediaTypes = [ 'image' ];
 const newTabRel = 'noreferrer noopener';
-
-type ImagesLoadedInstance = {
-	elements: HTMLElement[];
-};
-
-type ImagesLoadedChain = {
-	done: ( callback: ( instance: ImagesLoadedInstance ) => void ) => void;
-};
-
-type SliderElement = JQuery< HTMLElement > & {
-	imagesLoaded?: () => ImagesLoadedChain;
-	slick?: ( actionOrOptions?: string | SliderOptions ) => SliderElement;
-};
-
-type SliderOptions = {
-	arrows: boolean;
-	dots: boolean;
-	fade: boolean;
-	slidesToShow: number;
-	slidesToScroll: number;
-	autoplaySpeed: number;
-	speed: number;
-	infinite: boolean;
-	autoplay: boolean;
-	draggable: boolean;
-	centerMode: boolean;
-	variableWidth: boolean;
-	pauseOnHover: boolean;
-	rows: number;
-	rtl: boolean;
-};
-
-type MediaUploadFunction = ( options: {
-	allowedTypes: string[];
-	filesList: FileList;
-	onFileChange: ( images: SliderImage[] ) => void;
-} ) => void;
-
-type BlockEditorSelect = {
-	getSettings: () => {
-		mediaUpload?: MediaUploadFunction;
-	};
-};
 
 function normalizeImages(
 	images: SliderImage[],
@@ -96,7 +47,6 @@ function normalizeImages(
 export default function Edit( props: ImagesSliderEditProps ) {
 	const { attributes, setAttributes, isSelected, className } = props;
 	const {
-		align,
 		images,
 		ids,
 		imageSize,
@@ -132,11 +82,6 @@ export default function Edit( props: ImagesSliderEditProps ) {
 		},
 		[ ids ]
 	);
-	const uploadMedia = useSelect( ( select ) => {
-		const { getSettings } = select( blockEditorStore ) as BlockEditorSelect;
-
-		return getSettings().mediaUpload;
-	}, [] );
 
 	function updateImages( nextImages: SliderImage[] ) {
 		setAttributes( {
@@ -158,36 +103,6 @@ export default function Edit( props: ImagesSliderEditProps ) {
 		}
 
 		updateImages( normalizeImages( nextImages, nextImageSize, images ) );
-	}
-
-	function addFiles( files: FileList ) {
-		let nextImageSize = imageSize;
-		const currentImages = images || [];
-
-		if (
-			! [ 'full', 'large', 'medium', 'thumbnail' ].includes(
-				nextImageSize
-			)
-		) {
-			nextImageSize = defaultAttributes.imageSize;
-			setAttributes( { imageSize: nextImageSize } );
-		}
-
-		uploadMedia?.( {
-			allowedTypes: allowedMediaTypes,
-			filesList: files,
-			onFileChange: ( nextImages: SliderImage[] ) => {
-				updateImages(
-					currentImages.concat(
-						normalizeImages(
-							nextImages,
-							nextImageSize,
-							currentImages
-						)
-					)
-				);
-			},
-		} );
 	}
 
 	function setImageAttributes(
@@ -228,23 +143,23 @@ export default function Edit( props: ImagesSliderEditProps ) {
 	}
 
 	function destroySlider() {
-		const thisBlock = jQuery( sliderRef.current );
-		const sliderSelector = jQuery(
-			`.${ baseClass }__wrapper`,
-			thisBlock
-		) as SliderElement;
+		if ( ! sliderRef.current ) {
+			return;
+		}
+
+		const sliderSelector = jQuery( sliderRef.current );
 
 		if ( sliderSelector.hasClass( 'slick-initialized' ) ) {
-			sliderSelector.slick?.( 'unslick' );
+			sliderSelector.slick( 'unslick' );
 		}
 	}
 
 	function initSlider() {
-		const thisBlock = jQuery( sliderRef.current );
-		const sliderSelector = jQuery(
-			`.${ baseClass }__wrapper`,
-			thisBlock
-		) as SliderElement;
+		if ( ! sliderRef.current ) {
+			return;
+		}
+
+		const sliderSelector = jQuery( sliderRef.current );
 
 		if ( sliderSelector.length && sliderSelector.imagesLoaded ) {
 			sliderSelector.imagesLoaded().done( () => {
@@ -270,7 +185,7 @@ export default function Edit( props: ImagesSliderEditProps ) {
 				} );
 
 				if ( slideHeight ) {
-					jQuery( `.${ baseClass }__item`, thisBlock ).css(
+					jQuery( `.${ baseClass }__item`, sliderSelector ).css(
 						'height',
 						slideHeight
 					);
@@ -293,42 +208,34 @@ export default function Edit( props: ImagesSliderEditProps ) {
 	const hasImages = !! images.length;
 	const hasImagesWithId = hasImages && images.some( ( image ) => image.id );
 
-	if ( images.length === 0 ) {
+	if ( ! hasImages ) {
 		return (
 			<>
-				<BlockControls>
-					<BlockAlignmentToolbar
-						controls={ alignmentsList }
-						value={ align }
-						onChange={ ( nextAlign ) =>
-							setAttributes( { align: nextAlign } )
-						}
+				<div { ...blockProps }>
+					<MediaPlaceholder
+						icon="format-gallery"
+						className={ baseClass }
+						labels={ {
+							title: __( 'Image Slider', 'getwid' ),
+							instructions: __(
+								'Drag images, upload new ones or select files from your library.',
+								'getwid'
+							),
+						} }
+						onSelect={ onSelectImages }
+						accept="image/*"
+						allowedTypes={ allowedMediaTypes }
+						multiple
 					/>
-				</BlockControls>
-				<MediaPlaceholder
-					icon="format-gallery"
-					className={ baseClass }
-					labels={ {
-						title: __( 'Image Slider', 'getwid' ),
-						instructions: __(
-							'Drag images, upload new ones or select files from your library.',
-							'getwid'
-						),
-					} }
-					onSelect={ onSelectImages }
-					accept="image/*"
-					allowedTypes={ allowedMediaTypes }
-					multiple
-				/>
+				</div>
 			</>
 		);
 	}
 
 	return (
 		<>
-			<div { ...blockProps } ref={ sliderRef }>
-				<DropZone onFilesDrop={ addFiles } />
-				<div className={ `${ baseClass }__wrapper` }>
+			<div { ...blockProps }>
+				<div ref={ sliderRef } className={ `${ baseClass }__wrapper` }>
 					{ images.map( ( image, index ) => (
 						<div
 							key={ image.id || image.url }
@@ -399,24 +306,10 @@ export default function Edit( props: ImagesSliderEditProps ) {
 				{ isSelected && (
 					<MediaPlaceholder
 						addToGallery={ hasImagesWithId }
-						isAppender={ hasImages }
-						className="components-form-file-upload"
-						disableMediaButtons={ hasImages && ! isSelected }
-						icon={
-							! hasImages && (
-								<BlockIcon icon={ <ImagesSliderIcon /> } />
-							)
-						}
+						isAppender={ true }
 						labels={ {
-							title: ! hasImages
-								? __( 'Gallery', 'getwid' )
-								: undefined,
-							instructions: ! hasImages
-								? __(
-										'Drag images, upload new ones or select files from your library.',
-										'getwid'
-								  )
-								: undefined,
+							title: '',
+							instructions: '',
 						} }
 						onSelect={ onSelectImages }
 						accept="image/*"
@@ -427,13 +320,6 @@ export default function Edit( props: ImagesSliderEditProps ) {
 				) }
 			</div>
 			<BlockControls>
-				<BlockAlignmentToolbar
-					controls={ alignmentsList }
-					value={ align }
-					onChange={ ( nextAlign ) =>
-						setAttributes( { align: nextAlign } )
-					}
-				/>
 				{ !! images.length && (
 					<ToolbarGroup>
 						<MediaUpload

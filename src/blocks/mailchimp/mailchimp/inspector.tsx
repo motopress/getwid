@@ -13,9 +13,7 @@ import { __ } from '@wordpress/i18n';
 
 import { CustomColorPalette } from 'getwid-components';
 import { baseClass, mailchimpApiKeyHelpUrl } from './constants';
-import type { MailchimpInspectorProps, MailchimpRuntime } from './types';
-
-const runtimeGlobal = window as MailchimpRuntime;
+import type { MailchimpInspectorProps } from './types';
 
 export default function Inspector( props: MailchimpInspectorProps ) {
 	const {
@@ -36,10 +34,11 @@ export default function Inspector( props: MailchimpInspectorProps ) {
 	return (
 		<InspectorControls>
 			<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen>
-				{ !! runtimeGlobal.Getwid?.current_user?.can_manage_options && (
+				{ !! Getwid.current_user.can_manage_options && (
 					<TextControl
 						label={ __( 'Mailchimp API Key', 'getwid' ) }
 						value={ getData( 'apiKey' ) }
+						onChange={ () => false }
 						readOnly
 						__nextHasNoMarginBottom
 					/>
@@ -54,31 +53,28 @@ export default function Inspector( props: MailchimpInspectorProps ) {
 				) }
 
 				<BaseControl>
-					<ButtonGroup>
+					<Button
+						variant="primary"
+						disabled={ waitLoadList }
+						onClick={ ( event ) =>
+							manageMailchimpApiKey( event, 'sync' )
+						}
+					>
+						{ __( 'Sync', 'getwid' ) }
+					</Button>
+					{ !! Getwid.current_user.can_manage_options && (
 						<Button
-							variant="primary"
-							disabled={ waitLoadList }
+							variant="secondary"
 							onClick={ ( event ) =>
-								manageMailchimpApiKey( event, 'sync' )
+								manageMailchimpApiKey( event, 'delete' )
 							}
 						>
-							{ __( 'Sync', 'getwid' ) }
+							{ __( 'Delete', 'getwid' ) }
 						</Button>
-						{ !! runtimeGlobal.Getwid?.current_user
-							?.can_manage_options && (
-							<Button
-								variant="secondary"
-								onClick={ ( event ) =>
-									manageMailchimpApiKey( event, 'delete' )
-								}
-							>
-								{ __( 'Delete', 'getwid' ) }
-							</Button>
-						) }
-					</ButtonGroup>
+					) }
 				</BaseControl>
 
-				{ !! runtimeGlobal.Getwid?.current_user?.can_manage_options && (
+				{ !! Getwid.current_user.can_manage_options && (
 					<BaseControl>
 						<ExternalLink href={ mailchimpApiKeyHelpUrl }>
 							{ __( 'Get your key.', 'getwid' ) }

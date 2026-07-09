@@ -15,7 +15,6 @@ class ContactForm extends AbstractBlock {
 
 		$this->register_contact_form_blocks();
 
-		add_action( 'enqueue_block_editor_assets', array( $this, 'block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'block_frontend_assets' ) );
 	}
 
@@ -116,31 +115,6 @@ class ContactForm extends AbstractBlock {
 
 		wp_add_inline_script(
 			'getwid-contact-form-view-script',
-			$inline_script,
-			'before'
-		);
-	}
-
-	public function block_editor_assets() {
-		$current_user_can_manage_options = current_user_can( 'manage_options' );
-
-		$recaptcha_site_key   = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_site_key', '' ) : '1';
-		$recaptcha_secret_key = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_secret_key', '' ) : '1';
-
-		$data = array(
-			'user_can_manage_options' => $current_user_can_manage_options,
-			'recaptcha_site_key'      => $recaptcha_site_key,
-			'recaptcha_secret_key'    => $recaptcha_secret_key,
-			'ajax_url'                => admin_url( 'admin-ajax.php' ),
-			'nonce'                   => wp_create_nonce( 'getwid_nonce_recaptcha_v2' ),
-		);
-
-		$inline_script = 'var Getwid = Getwid || {};';
-
-		$inline_script .= 'Getwid["ContactForm"] = ' . wp_json_encode( $data ) . ';';
-
-		wp_add_inline_script(
-			'getwid-contact-form-editor-script',
 			$inline_script,
 			'before'
 		);

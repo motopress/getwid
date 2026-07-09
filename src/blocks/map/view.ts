@@ -40,7 +40,7 @@ function mapStyles( mapStyle: string, customStyle?: string ) {
 	}
 
 	if ( mapStyle !== 'default' ) {
-		return ( window as StylesGlobal ).stylesArr?.[ mapStyle ];
+		return GetwidGoogleMapStyles[ mapStyle ] || {};
 	}
 
 	return undefined;

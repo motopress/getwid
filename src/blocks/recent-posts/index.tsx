@@ -13,17 +13,7 @@ const blockName = 'getwid/recent-posts';
 registerBlockType( metadata as BlockConfiguration< RecentPostsAttributes >, {
 	title: __( 'Recent Posts', 'getwid' ),
 	icon: <RecentPostsIcon />,
-	keywords: [ __( 'latest', 'getwid' ) ],
 	transforms,
-	getEditWrapperProps( attributes ) {
-		const { align } = attributes;
-
-		if ( align && [ 'wide', 'full' ].includes( align ) ) {
-			return { 'data-align': align };
-		}
-
-		return undefined;
-	},
 	edit: MaybeBlockIsDisabled( blockName ) || Edit,
 	save: () => null,
 } );

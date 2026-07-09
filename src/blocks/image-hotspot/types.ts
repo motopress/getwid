@@ -1,8 +1,8 @@
 import type { BlockEditProps } from '@wordpress/blocks';
 
 export type HotspotPosition = {
-	x: string | number;
-	y: string | number;
+	x: string;
+	y: string;
 };
 
 export type ImageHotspotPoint = {
@@ -14,7 +14,7 @@ export type ImageHotspotPoint = {
 	backgroundColor: string;
 	newTab: boolean;
 	popUpOpen: boolean;
-	popUpWidth: number | string;
+	popUpWidth: number;
 	placement: 'top' | 'right' | 'bottom' | 'left';
 	position: HotspotPosition;
 };

@@ -38,29 +38,12 @@ class PostSlider extends AbstractBlock {
 				'render_callback' => array( $this, 'render_callback' ),
 			)
 		);
-
-		if ( $this->is_enabled() ) {
-			add_filter( 'getwid/editor_blocks_js/dependencies', array( $this, 'block_editor_scripts' ) );
-			add_filter( 'getwid/blocks_style_css/dependencies', array( $this, 'block_frontend_styles' ) );
-		}
 	}
 
 	public function get_label() {
 		return __( 'Post Slider', 'getwid' );
 	}
 
-	public function block_editor_scripts( $scripts ) {
-
-		if ( ! in_array( 'imagesloaded', $scripts, true ) ) {
-			$scripts[] = 'imagesloaded';
-		}
-
-		if ( ! in_array( 'slick', $scripts, true ) ) {
-			$scripts[] = 'slick';
-		}
-
-		return $scripts;
-	}
 
 	public function block_frontend_styles( $styles ) {
 

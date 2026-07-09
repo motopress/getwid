@@ -12,31 +12,13 @@ import clsx from 'clsx';
 
 import Inspector from './inspector';
 import type {
-	ServerSideRenderProps,
 	TemplatePostContentAttributes,
 	TemplatePostContentEditProps,
 } from './types';
 
 import './editor.scss';
 import './style.scss';
-
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
-
-function getGetwidSettings() {
-	return (
-		window as unknown as {
-			Getwid?: {
-				templates?: { name?: string };
-			};
-		}
-	 ).Getwid;
-}
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 function getPreviewText(
 	showContent: TemplatePostContentAttributes[ 'showContent' ]
@@ -69,7 +51,6 @@ function Edit( props: TemplatePostContentEditProps ) {
 			 ).getCurrentPostType(),
 		[]
 	);
-	const getwidSettings = getGetwidSettings();
 	const blockProps = useBlockProps( {
 		className: clsx( className, fontSize?.class ),
 		style: {
@@ -84,7 +65,7 @@ function Edit( props: TemplatePostContentEditProps ) {
 		},
 	} );
 
-	if ( currentPostType === getwidSettings?.templates?.name ) {
+	if ( currentPostType === Getwid.templates.name ) {
 		return (
 			<>
 				<Inspector { ...props } />
@@ -104,14 +85,14 @@ function Edit( props: TemplatePostContentEditProps ) {
 	}
 
 	return (
-		<Disabled>
-			{ ServerSideRender && (
+		<div { ...blockProps }>
+			<Disabled>
 				<ServerSideRender
 					block="getwid/template-post-content"
 					attributes={ attributes }
 				/>
-			) }
-		</Disabled>
+			</Disabled>
+		</div>
 	);
 }
 

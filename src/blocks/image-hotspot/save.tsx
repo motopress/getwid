@@ -2,12 +2,8 @@ import { useBlockProps } from '@wordpress/block-editor';
 import clsx from 'clsx';
 
 import type { ImageHotspotAttributes, ImageHotspotPoint } from './types';
-import {
-	baseClass,
-	decodeEntities,
-	getBlockClassName,
-	parseImagePoints,
-} from './utils';
+import { baseClass, getBlockClassName, parseImagePoints } from './utils';
+import { decodeEntities } from '@wordpress/html-entities';
 
 type SaveProps = {
 	attributes: ImageHotspotAttributes;

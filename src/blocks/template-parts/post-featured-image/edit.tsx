@@ -9,31 +9,11 @@ import { __ } from '@wordpress/i18n';
 import clsx from 'clsx';
 
 import Inspector from './inspector';
-import type {
-	ServerSideRenderProps,
-	TemplatePostFeaturedImageEditProps,
-} from './types';
+import type { TemplatePostFeaturedImageEditProps } from './types';
 
 import './editor.scss';
 import './style.scss';
-
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
-
-function getGetwidSettings() {
-	return (
-		window as unknown as {
-			Getwid?: {
-				templates?: { name?: string };
-			};
-		}
-	 ).Getwid;
-}
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 export default function Edit( props: TemplatePostFeaturedImageEditProps ) {
 	const { attributes, setAttributes, className } = props;
@@ -47,12 +27,11 @@ export default function Edit( props: TemplatePostFeaturedImageEditProps ) {
 			 ).getCurrentPostType(),
 		[]
 	);
-	const getwidSettings = getGetwidSettings();
 	const blockProps = useBlockProps( {
 		className: clsx( className, align ? `align${ align }` : undefined ),
 	} );
 
-	if ( currentPostType === getwidSettings?.templates?.name ) {
+	if ( currentPostType === Getwid.templates.name ) {
 		return (
 			<>
 				<Inspector { ...props } />
@@ -80,13 +59,13 @@ export default function Edit( props: TemplatePostFeaturedImageEditProps ) {
 	}
 
 	return (
-		<Disabled>
-			{ ServerSideRender && (
+		<div { ...blockProps }>
+			<Disabled>
 				<ServerSideRender
 					block="getwid/template-post-featured-image"
 					attributes={ attributes }
 				/>
-			) }
-		</Disabled>
+			</Disabled>
+		</div>
 	);
 }

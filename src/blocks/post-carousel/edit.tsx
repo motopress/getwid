@@ -1,4 +1,8 @@
-import { BlockAlignmentToolbar, BlockControls } from '@wordpress/block-editor';
+import {
+	BlockAlignmentToolbar,
+	BlockControls,
+	useBlockProps,
+} from '@wordpress/block-editor';
 import { Placeholder, Spinner } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { Fragment, useEffect, useRef } from '@wordpress/element';
@@ -10,18 +14,13 @@ import {
 import jQuery from 'jquery';
 
 import Inspector from './inspector';
-import type { PostCarouselEditProps, ServerSideRenderProps } from './types';
+import type { PostCarouselEditProps } from './types';
 
 import './editor.scss';
+import { ServerSideRender } from '@wordpress/server-side-render';
+import { useRefEffect } from '@wordpress/compose';
 
 const baseClass = 'wp-block-getwid-post-carousel';
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
 
 type SlickElement = JQuery< HTMLElement > & {
 	slick?: ( options: Record< string, unknown > ) => void;
@@ -61,7 +60,6 @@ function initEditorSlider(
 function Edit( props: PostCarouselEditProps ) {
 	const { attributes, setAttributes, recentPosts } = props;
 	const {
-		align,
 		postTemplate,
 		postsToShow,
 		offset,
@@ -80,54 +78,54 @@ function Edit( props: PostCarouselEditProps ) {
 		orderBy,
 		metaQuery,
 	} = attributes;
-	const sliderRef = useRef< HTMLDivElement >( null );
 	const hasPosts = Array.isArray( recentPosts ) && recentPosts.length > 0;
+	const blockProps = useBlockProps();
 
-	useEffect( () => {
-		const block = sliderRef.current;
+	const sliderRef = useRefEffect(
+		( node ) => {
+			const block = node as HTMLDivElement;
+			const mutationObserver = new MutationObserver( () => {
+				initEditorSlider( block, attributes );
+			} );
 
-		if ( ! block ) {
-			return undefined;
-		}
+			mutationObserver.observe( block, {
+				childList: true,
+				subtree: true,
+			} );
 
-		const mutationObserver = new MutationObserver( () => {
 			initEditorSlider( block, attributes );
-		} );
 
-		mutationObserver.observe( block, {
-			childList: true,
-			subtree: true,
-		} );
-		initEditorSlider( block, attributes );
-
-		return () => mutationObserver.disconnect();
-	}, [
-		attributes.sliderAnimationSpeed,
-		attributes.sliderArrows,
-		attributes.sliderAutoplay,
-		attributes.sliderAutoplaySpeed,
-		attributes.sliderCenterMode,
-		attributes.sliderDots,
-		attributes.sliderInfinite,
-		attributes.sliderSlidesToScroll,
-		attributes.sliderSlidesToShowDesktop,
-	] );
+			return () => mutationObserver.disconnect();
+		},
+		[
+			attributes.sliderArrows,
+			attributes.sliderDots,
+			attributes.sliderSlidesToShowDesktop,
+			attributes.sliderSlidesToScroll,
+			attributes.sliderAutoplaySpeed,
+			attributes.sliderAnimationSpeed,
+			attributes.sliderCenterMode,
+			attributes.sliderAutoplay,
+			attributes.sliderInfinite,
+		]
+	);
 
 	if ( ! hasPosts ) {
 		return (
 			<Fragment>
 				<Inspector { ...props } />
-				<Placeholder
-					icon="admin-post"
-					label={ __( 'Post Carousel', 'getwid' ) }
-				>
-					{ ! Array.isArray( recentPosts ) ? (
-						<Spinner />
-					) : (
-						__( 'No posts found.', 'getwid' )
-					) }
-				</Placeholder>
-				<div ref={ sliderRef } />
+				<div { ...blockProps }>
+					<Placeholder
+						icon="admin-post"
+						label={ __( 'Post Carousel', 'getwid' ) }
+					>
+						{ ! Array.isArray( recentPosts ) ? (
+							<Spinner />
+						) : (
+							__( 'No posts found.', 'getwid' )
+						) }
+					</Placeholder>
+				</div>
 			</Fragment>
 		);
 	}
@@ -136,31 +134,20 @@ function Edit( props: PostCarouselEditProps ) {
 		<Fragment>
 			<Inspector { ...props } />
 			<BlockControls>
-				<BlockAlignmentToolbar
-					value={ align }
-					controls={ [ 'wide', 'full' ] }
-					onChange={ ( nextAlign ) => {
-						setAttributes( { align: nextAlign } );
-					} }
-				/>
 				<TemplateSelectToolbarButton
 					selectedTemplate={ postTemplate }
 					onSelect={ ( templateID ) =>
 						setAttributes( { postTemplate: templateID } )
 					}
-					previewRender={ ( templateID ) =>
-						ServerSideRender ? (
-							<ServerSideRender
-								block="getwid/post-carousel"
-								attributes={ {
-									...attributes,
-									postTemplate: String( templateID ),
-								} }
-							/>
-						) : (
-							<Fragment />
-						)
-					}
+					previewRender={ ( templateID ) => (
+						<ServerSideRender
+							block="getwid/post-carousel"
+							attributes={ {
+								...attributes,
+								postTemplate: String( templateID ),
+							} }
+						/>
+					) }
 				/>
 				<CustomQueryToolbarButton
 					query={ {
@@ -187,13 +174,13 @@ function Edit( props: PostCarouselEditProps ) {
 					}
 				/>
 			</BlockControls>
-			<div ref={ sliderRef }>
-				{ ServerSideRender && (
+			<div { ...blockProps }>
+				<div ref={ sliderRef }>
 					<ServerSideRender
 						block="getwid/post-carousel"
 						attributes={ attributes }
 					/>
-				) }
+				</div>
 			</div>
 		</Fragment>
 	);

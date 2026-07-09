@@ -1,7 +1,7 @@
-import { BlockAlignmentToolbar, BlockControls } from '@wordpress/block-editor';
+import { BlockControls, useBlockProps } from '@wordpress/block-editor';
 import { Placeholder, Spinner } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
-import { Fragment, useEffect, useRef } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 import { __, isRTL } from '@wordpress/i18n';
 import {
 	CustomQueryToolbarButton,
@@ -10,18 +10,13 @@ import {
 import jQuery from 'jquery';
 
 import Inspector from './inspector';
-import type { PostSliderEditProps, ServerSideRenderProps } from './types';
+import type { PostSliderEditProps } from './types';
 
 import './editor.scss';
+import { ServerSideRender } from '@wordpress/server-side-render';
+import { useRefEffect } from '@wordpress/compose';
 
 const baseClass = 'wp-block-getwid-post-slider';
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
 
 type SlickElement = JQuery< HTMLElement > & {
 	slick?: ( options: Record< string, unknown > ) => void;
@@ -80,52 +75,51 @@ function Edit( props: PostSliderEditProps ) {
 		orderBy,
 		metaQuery,
 	} = attributes;
-	const sliderRef = useRef< HTMLDivElement >( null );
 	const hasPosts = Array.isArray( recentPosts ) && recentPosts.length > 0;
+	const blockProps = useBlockProps();
 
-	useEffect( () => {
-		const block = sliderRef.current;
+	const sliderRef = useRefEffect(
+		( node ) => {
+			const block = node as HTMLDivElement;
+			const mutationObserver = new MutationObserver( () => {
+				initEditorSlider( block, attributes );
+			} );
 
-		if ( ! block ) {
-			return undefined;
-		}
+			mutationObserver.observe( block, {
+				childList: true,
+				subtree: true,
+			} );
 
-		const mutationObserver = new MutationObserver( () => {
 			initEditorSlider( block, attributes );
-		} );
 
-		mutationObserver.observe( block, {
-			childList: true,
-			subtree: true,
-		} );
-		initEditorSlider( block, attributes );
-
-		return () => mutationObserver.disconnect();
-	}, [
-		attributes.sliderAnimationEffect,
-		attributes.sliderAnimationSpeed,
-		attributes.sliderArrows,
-		attributes.sliderAutoplay,
-		attributes.sliderAutoplaySpeed,
-		attributes.sliderDots,
-		attributes.sliderInfinite,
-	] );
+			return () => mutationObserver.disconnect();
+		},
+		[
+			attributes.sliderArrows,
+			attributes.sliderDots,
+			attributes.sliderAutoplaySpeed,
+			attributes.sliderAnimationSpeed,
+			attributes.sliderAutoplay,
+			attributes.sliderInfinite,
+		]
+	);
 
 	if ( ! hasPosts ) {
 		return (
 			<Fragment>
 				<Inspector { ...props } />
-				<Placeholder
-					icon="admin-post"
-					label={ __( 'Post Slider', 'getwid' ) }
-				>
-					{ ! Array.isArray( recentPosts ) ? (
-						<Spinner />
-					) : (
-						__( 'No posts found.', 'getwid' )
-					) }
-				</Placeholder>
-				<div ref={ sliderRef } />
+				<div { ...blockProps }>
+					<Placeholder
+						icon="admin-post"
+						label={ __( 'Post Slider', 'getwid' ) }
+					>
+						{ ! Array.isArray( recentPosts ) ? (
+							<Spinner />
+						) : (
+							__( 'No posts found.', 'getwid' )
+						) }
+					</Placeholder>
+				</div>
 			</Fragment>
 		);
 	}
@@ -134,13 +128,6 @@ function Edit( props: PostSliderEditProps ) {
 		<Fragment>
 			<Inspector { ...props } />
 			<BlockControls>
-				<BlockAlignmentToolbar
-					value={ align }
-					controls={ [ 'wide', 'full' ] }
-					onChange={ ( nextAlign ) => {
-						setAttributes( { align: nextAlign } );
-					} }
-				/>
 				<TemplateSelectToolbarButton
 					selectedTemplate={ postTemplate }
 					onSelect={ ( templateID ) =>
@@ -185,13 +172,13 @@ function Edit( props: PostSliderEditProps ) {
 					}
 				/>
 			</BlockControls>
-			<div ref={ sliderRef }>
-				{ ServerSideRender && (
+			<div { ...blockProps }>
+				<div ref={ sliderRef }>
 					<ServerSideRender
 						block="getwid/post-slider"
 						attributes={ attributes }
 					/>
-				) }
+				</div>
 			</div>
 		</Fragment>
 	);

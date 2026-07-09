@@ -7,6 +7,7 @@ import {
 	RichText,
 	useBlockProps,
 } from '@wordpress/block-editor';
+import { store as coreDataStore } from '@wordpress/core-data';
 import { ToolbarButton, ToolbarGroup } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -29,10 +30,6 @@ const allowedFormats = [
 	'core/text-color',
 ];
 
-type CoreSelect = {
-	getMedia: ( id: number ) => MediaObject | null;
-};
-
 export default function Edit( props: PersonEditProps ) {
 	const { attributes, setAttributes, className } = props;
 	const {
@@ -47,9 +44,13 @@ export default function Edit( props: PersonEditProps ) {
 	} = attributes;
 	const imgObj = useSelect(
 		( select ) => {
-			const { getMedia } = select( 'core' ) as CoreSelect;
-
-			return imgId ? getMedia( imgId ) : null;
+			return imgId
+				? select( coreDataStore ).getEntityRecord(
+						'postType',
+						'attachment',
+						imgId
+				  )
+				: null;
 		},
 		[ imgId ]
 	);

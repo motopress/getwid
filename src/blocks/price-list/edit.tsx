@@ -175,8 +175,6 @@ function PriceListEdit( props: PriceListEditProps ) {
 	);
 }
 
-export default compose( [
-	withColors( 'backgroundColor', { textColor: 'color' } ),
-] )( PriceListEdit ) as ComponentType<
-	Omit< PriceListEditProps, 'textColor' | 'setTextColor' >
->;
+export default withColors( 'backgroundColor', { textColor: 'color' } )(
+	PriceListEdit
+) as ComponentType< Omit< PriceListEditProps, 'textColor' | 'setTextColor' > >;

@@ -6,13 +6,13 @@
 	"category": "getwid-blocks",
 	"title": "Price List",
 	"supports": {
-		"align": [ "wide", "full" ],
+		"align": [
+			"wide",
+			"full"
+		],
 		"html": false
 	},
 	"attributes": {
-		"align": {
-			"type": "string"
-		},
 		"textColor": {
 			"type": "string"
 		},

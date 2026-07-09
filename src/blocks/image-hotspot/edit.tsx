@@ -7,7 +7,7 @@ import {
 } from '@wordpress/block-editor';
 import { ToolbarButton, ToolbarGroup } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
-import { useEffect, useRef, useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import clsx from 'clsx';
 
@@ -43,7 +43,7 @@ const defaultPoint: ImageHotspotPoint = {
 	popUpOpen: false,
 	popUpWidth: 350,
 	placement: 'top',
-	position: { x: 0, y: 0 },
+	position: { x: '0%', y: '0%' },
 };
 
 export default function Edit( props: ImageHotspotEditProps ) {
@@ -71,7 +71,10 @@ export default function Edit( props: ImageHotspotEditProps ) {
 		editModal: false,
 		recentlyAddedPoint: null,
 	} );
-	const imageHotspotRef = useRef< HTMLDivElement | null >( null );
+	const [ clickedCoordinates, setClickedCoordinates ] = useState< {
+		x: number;
+		y: number;
+	} | null >( null );
 	const imgObj = useSelect(
 		( select ) => {
 			const { getMedia } = select( 'core' ) as CoreSelect;
@@ -138,12 +141,12 @@ export default function Edit( props: ImageHotspotEditProps ) {
 		changeState( { currentPoint: null } );
 	}
 
-	function addPoint( x: number, y: number ) {
+	function addPoint() {
 		const points = parseImagePoints( imagePoints );
+
 		const pointIndex =
 			points.push( {
 				...defaultPoint,
-				position: { x, y },
 			} ) - 1;
 
 		updatePoints( points );
@@ -244,7 +247,6 @@ export default function Edit( props: ImageHotspotEditProps ) {
 		},
 	];
 	const blockProps = useBlockProps( {
-		ref: imageHotspotRef,
 		className: clsx( className, {
 			'is-selected': isSelected,
 			[ `${ baseClass }--dropPoint` ]: state.action === 'drop',
@@ -327,10 +329,14 @@ export default function Edit( props: ImageHotspotEditProps ) {
 							src={ url }
 							alt={ alt || '' }
 							onClick={ ( event ) => {
+								event.preventDefault();
+								event.stopPropagation();
 								if ( state.action === 'drop' ) {
-									event.preventDefault();
-									event.stopPropagation();
-									addPoint( event.clientX, event.clientY );
+									addPoint();
+									setClickedCoordinates( {
+										x: event.clientX,
+										y: event.clientY,
+									} );
 								}
 							} }
 						/>
@@ -342,6 +348,11 @@ export default function Edit( props: ImageHotspotEditProps ) {
 							isSelected={ pointID === state.currentPoint }
 							isRecentlyAdded={
 								pointID === state.recentlyAddedPoint
+							}
+							clickedCoordinates={
+								pointID === state.recentlyAddedPoint
+									? clickedCoordinates
+									: null
 							}
 							common={ {
 								icon: dotIcon,
@@ -368,6 +379,7 @@ export default function Edit( props: ImageHotspotEditProps ) {
 							}
 							onCreate={ ( _point, coordinates ) => {
 								changeState( { recentlyAddedPoint: null } );
+								setClickedCoordinates( null );
 								updatePoint( pointID, {
 									position: coordinates,
 								} );

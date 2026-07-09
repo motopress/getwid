@@ -6,7 +6,11 @@
 	"category": "getwid-blocks",
 	"title": "Post Carousel",
 	"supports": {
-		"html": false
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"postTemplate": {
@@ -68,9 +72,6 @@
 		"orderBy": {
 			"type": "string",
 			"default": "date"
-		},
-		"align": {
-			"type": "string"
 		},
 		"sliderSlidesToShowDesktop": {
 			"type": "string",
@@ -136,8 +137,22 @@
 			"default": []
 		}
 	},
-	"editorScript": "file:./index.js",
+	"editorScript": [
+		"jquery",
+		"slick",
+		"imagesloaded",
+		"file:./index.js"
+	],
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"viewScript": [ "jquery", "imagesloaded", "slick", "file:./view.js" ]
+	"style": [
+		"slick",
+		"slick-theme",
+		"file:./style-index.css"
+	],
+	"viewScript": [
+		"jquery",
+		"slick",
+		"imagesloaded",
+		"file:./view.js"
+	]
 }

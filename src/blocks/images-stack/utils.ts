@@ -42,21 +42,6 @@ export function pickRelevantMediaFile( image: StackImage, imageSize: string ) {
 	};
 }
 
-export function getContainerClassName(
-	attributes: ImagesStackAttributes,
-	className?: string
-) {
-	const { align, stackStyle } = attributes;
-
-	return clsx(
-		className,
-		{
-			[ `is-layout-${ stackStyle }` ]: stackStyle !== 'default',
-		},
-		align ? `align${ align }` : null
-	);
-}
-
 export function getImageHref( image: StackImage, linkTo: string ) {
 	switch ( linkTo ) {
 		case 'media':

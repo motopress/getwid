@@ -6,7 +6,11 @@
 	"category": "getwid-blocks",
 	"title": "Post Slider",
 	"supports": {
-		"html": false
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"postTemplate": {
@@ -72,9 +76,6 @@
 		"minHeight": {
 			"type": "string"
 		},
-		"align": {
-			"type": "string"
-		},
 		"textAlignment": {
 			"type": "string",
 			"default": "left"
@@ -119,8 +120,22 @@
 			"default": []
 		}
 	},
-	"editorScript": "file:./index.js",
+	"editorScript": [
+		"jquery",
+		"slick",
+		"imagesloaded",
+		"file:./index.js"
+	],
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"viewScript": [ "jquery", "imagesloaded", "slick", "file:./view.js" ]
+	"style": [
+		"slick",
+		"slick-theme",
+		"file:./style-index.css"
+	],
+	"viewScript": [
+		"jquery",
+		"imagesloaded",
+		"slick",
+		"file:./view.js"
+	]
 }

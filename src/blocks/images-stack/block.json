@@ -5,9 +5,15 @@
 	"name": "getwid/images-stack",
 	"category": "getwid-blocks",
 	"title": "Image Stack Gallery",
-	"keywords": [ "photo" ],
+	"keywords": [
+		"photo"
+	],
 	"supports": {
-		"html": false
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"align": {

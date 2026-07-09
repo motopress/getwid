@@ -19,15 +19,6 @@ const icon = (
 registerBlockType( metadata as BlockConfiguration< InstagramAttributes >, {
 	title: __( 'Instagram', 'getwid' ),
 	icon,
-	getEditWrapperProps( attributes: InstagramAttributes ) {
-		const { align } = attributes;
-
-		if ( align && [ 'wide', 'full' ].includes( align ) ) {
-			return { 'data-align': align };
-		}
-
-		return undefined;
-	},
 	edit: MaybeBlockIsDisabled( blockName ) || Edit,
 	save: () => null,
 } );

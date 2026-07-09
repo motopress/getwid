@@ -67,6 +67,7 @@ export type MapInspectorProps = MapEditProps & {
 		option: 'set' | 'delete'
 	) => void;
 	removeGoogleAPIScript: () => void;
+	currentWindow: GoogleMapsRuntime | null | undefined;
 };
 
 export type GoogleMapsRuntime = Window & {

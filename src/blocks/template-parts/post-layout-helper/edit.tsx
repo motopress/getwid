@@ -248,7 +248,7 @@ export default function Edit( props: TemplatePostLayoutHelperEditProps ) {
 	const { replaceBlocks } = useDispatch( blockEditorStore );
 	const blockProps = useBlockProps();
 
-	if ( currentPostType !== Getwid.PostLayoutHelper.templates_name ) {
+	if ( currentPostType !== Getwid.templates.name ) {
 		return null;
 	}
 

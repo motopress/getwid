@@ -1,4 +1,10 @@
 .wp-block-getwid-mailchimp {
+	&__key-form {
+		.components-base-control {
+			margin-bottom: 16px;
+		}
+
+	}
 }
 
 .wp-block-getwid-mailchimp__message {

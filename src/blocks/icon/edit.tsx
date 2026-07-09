@@ -29,16 +29,9 @@ function Edit( props: IconEditProps ) {
 		link,
 		hoverAnimation,
 		textAlignment,
-		align,
 	} = attributes;
 	const blockProps = useBlockProps( {
 		className: clsx( className, getIconClassName( attributes ) ),
-		style: {
-			marginTop,
-			marginBottom,
-			marginLeft,
-			marginRight,
-		},
 	} );
 	function onIconMouseEnter( event: { currentTarget: HTMLElement } ) {
 		if ( hoverAnimation ) {
@@ -58,14 +51,33 @@ function Edit( props: IconEditProps ) {
 			'has-text-color': !! textColor.color,
 			[ textColor.class || '' ]: textColor.class,
 		} ),
-		style: prepareWrapperStyle( props, 'edit' ),
+		style: {
+			...prepareWrapperStyle( props, 'edit' ),
+			...{
+				marginTop,
+				marginBottom,
+				marginLeft,
+				marginRight,
+			},
+		},
 		'data-animation': hoverAnimation || undefined,
 		onMouseEnter: onIconMouseEnter,
 	};
 
 	return (
 		<>
+			<BlockControls>
+				<AlignmentToolbar
+					value={ textAlignment }
+					onChange={ ( nextTextAlignment ) =>
+						setAttributes( {
+							textAlignment: nextTextAlignment,
+						} )
+					}
+				/>
+			</BlockControls>
 			<Inspector { ...props } />
+
 			<div { ...blockProps }>
 				{ link ? (
 					<a
@@ -81,18 +93,6 @@ function Edit( props: IconEditProps ) {
 					</div>
 				) }
 			</div>
-			{ align !== 'left' && align !== 'right' && (
-				<BlockControls>
-					<AlignmentToolbar
-						value={ textAlignment }
-						onChange={ ( nextTextAlignment ) =>
-							setAttributes( {
-								textAlignment: nextTextAlignment,
-							} )
-						}
-					/>
-				</BlockControls>
-			) }
 		</>
 	);
 }

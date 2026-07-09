@@ -5,54 +5,30 @@ import {
 	withColors,
 	withFontSizes,
 } from '@wordpress/block-editor';
+import { store as editorStore } from '@wordpress/editor';
 import { Disabled, ToolbarGroup } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import clsx from 'clsx';
 
 import Inspector from './inspector';
-import type {
-	ServerSideRenderProps,
-	TemplatePostTitleEditProps,
-} from './types';
+import type { TemplatePostTitleEditProps } from './types';
 
 import './editor.scss';
 import './style.scss';
-
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
-
-function getGetwidSettings() {
-	return (
-		window as unknown as {
-			Getwid?: {
-				templates?: { name?: string };
-			};
-		}
-	 ).Getwid;
-}
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 function Edit( props: TemplatePostTitleEditProps ) {
 	const { attributes, setAttributes, textColor, fontSize } = props;
 	const { textAlignment, headerTag, bold, italic, customFontSize } =
 		attributes;
 	const currentPostType = useSelect(
-		( select ) =>
-			(
-				select( 'core/editor' ) as {
-					getCurrentPostType: () => string | undefined;
-				}
-			 ).getCurrentPostType(),
+		( select ) => select( editorStore ).getCurrentPostType(),
 		[]
 	);
-	const getwidSettings = getGetwidSettings();
 	const Tag = headerTag;
-	const blockProps = useBlockProps( {
+	const blockProps = useBlockProps();
+	const fontProps = {
 		className: clsx( fontSize?.class ),
 		style: {
 			color: textColor.color,
@@ -66,9 +42,9 @@ function Edit( props: TemplatePostTitleEditProps ) {
 						: fontSize.size
 					: customFontSize,
 		},
-	} );
+	};
 
-	if ( currentPostType === getwidSettings?.templates?.name ) {
+	if ( currentPostType === Getwid.templates.name ) {
 		return (
 			<>
 				<Inspector { ...props } />
@@ -102,20 +78,20 @@ function Edit( props: TemplatePostTitleEditProps ) {
 						] }
 					/>
 				</BlockControls>
-				<Tag { ...blockProps }>{ __( 'Post Title', 'getwid' ) }</Tag>
+				<Tag { ...fontProps }>{ __( 'Post Title', 'getwid' ) }</Tag>
 			</>
 		);
 	}
 
 	return (
-		<Disabled>
-			{ ServerSideRender && (
+		<div { ...blockProps }>
+			<Disabled>
 				<ServerSideRender
 					block="getwid/template-post-title"
 					attributes={ attributes }
 				/>
-			) }
-		</Disabled>
+			</Disabled>
+		</div>
 	);
 }
 

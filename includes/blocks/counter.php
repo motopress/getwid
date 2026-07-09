@@ -10,7 +10,7 @@ class Counter extends AbstractBlock {
 
 		$this->register_vendor_scripts();
 
-		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_editor_assets' ) );
+		// add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_editor_assets' ) );
 
 		register_block_type(
 			getwid_get_plugin_path( 'assets/blocks/counter' )
@@ -40,10 +40,10 @@ class Counter extends AbstractBlock {
 		);
 	}
 
-	public function enqueue_editor_assets() {
+	// public function enqueue_editor_assets() {
 
-		wp_enqueue_script( 'countup' );
-	}
+	//  wp_enqueue_script( 'countup' );
+	// }
 }
 
 getwid()->blocksManager()->addBlock(

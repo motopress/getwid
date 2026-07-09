@@ -1,19 +1,17 @@
 import {
-	BlockAlignmentToolbar,
 	BlockControls,
 	MediaPlaceholder,
 	MediaUpload,
-	mediaUpload,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import { DropZone, ToolbarButton, ToolbarGroup } from '@wordpress/components';
+import { store as coreDataStore } from '@wordpress/core-data';
+import { ToolbarButton, ToolbarGroup } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 import Inspector from './inspector';
 import MediaContainer from './media-container';
 import type {
-	CoreSelect,
 	ImagesStackAttributes,
 	ImagesStackEditProps,
 	StackImage,
@@ -21,27 +19,30 @@ import type {
 import {
 	baseClass,
 	chunkImages,
-	getContainerClassName,
 	getIdsFromImages,
 	pickRelevantMediaFile,
 } from './utils';
 
 import './editor.scss';
 import './style.scss';
+import clsx from 'clsx';
 
-const alignmentsList = [ 'wide', 'full' ];
 const allowedMediaTypes = [ 'image' ];
 
 export default function Edit( props: ImagesStackEditProps ) {
 	const { attributes, setAttributes, isSelected, className } = props;
-	const { align, images, ids, imageSize, linkTo } = attributes;
+	const { images, ids, imageSize, linkTo, stackStyle } = attributes;
 	const imgObj = useSelect(
 		( select ) => {
-			const { getMedia } = select( 'core' ) as CoreSelect;
-
-			return ids
-				? ids.map( ( id ) => ( id ? getMedia( Number( id ) ) : null ) )
-				: [];
+			return (
+				select( coreDataStore ).getEntityRecords(
+					'postType',
+					'attachment',
+					{
+						include: ids,
+					}
+				) || []
+			);
 		},
 		[ ids ]
 	);
@@ -88,38 +89,8 @@ export default function Edit( props: ImagesStackEditProps ) {
 		} );
 	}
 
-	function addFiles( files: FileList ) {
-		const currentImages = images || [];
-		const nextImageSize = normalizeImageSize();
-
-		mediaUpload( {
-			allowedTypes: allowedMediaTypes,
-			filesList: files,
-			onFileChange: ( nextImages: StackImage[] ) => {
-				if ( typeof nextImages[ 0 ]?.id === 'undefined' ) {
-					return;
-				}
-
-				setImagesAttributes( {
-					images: currentImages.concat(
-						nextImages.map( ( image ) =>
-							pickRelevantMediaFile( image, nextImageSize )
-						)
-					),
-				} );
-			},
-		} );
-	}
-
 	const controls = (
 		<BlockControls>
-			<BlockAlignmentToolbar
-				controls={ alignmentsList }
-				value={ align }
-				onChange={ ( nextAlign ) =>
-					setAttributes( { align: nextAlign } )
-				}
-			/>
 			{ !! images.length && (
 				<ToolbarGroup>
 					<MediaUpload
@@ -141,32 +112,34 @@ export default function Edit( props: ImagesStackEditProps ) {
 		</BlockControls>
 	);
 
+	const blockProps = useBlockProps( {
+		className: clsx( className, {
+			[ `is-layout-${ stackStyle }` ]: stackStyle !== 'default',
+		} ),
+	} );
+
 	if ( images.length === 0 ) {
 		return (
 			<>
 				{ controls }
-				<MediaPlaceholder
-					icon="format-gallery"
-					className={ className }
-					labels={ {
-						title: __( 'Image Stack Gallery', 'getwid' ),
-						instructions: __(
-							'Drag images, upload new ones or select files from your library.',
-							'getwid'
-						),
-					} }
-					onSelect={ onSelectImages }
-					accept="image/*"
-					allowedTypes={ allowedMediaTypes }
-					multiple
-				/>
+				<div { ...blockProps }>
+					<MediaPlaceholder
+						icon="format-gallery"
+						className={ className }
+						labels={ {
+							title: '',
+							instructions: '',
+						} }
+						onSelect={ onSelectImages }
+						accept="image/*"
+						allowedTypes={ allowedMediaTypes }
+						multiple
+					/>
+				</div>
 			</>
 		);
 	}
 
-	const blockProps = useBlockProps( {
-		className: getContainerClassName( attributes, className ),
-	} );
 	const hasImages = !! images.length;
 	const hasImagesWithId = hasImages && images.some( ( image ) => image.id );
 
@@ -179,7 +152,6 @@ export default function Edit( props: ImagesStackEditProps ) {
 				setImagesAttributes={ setImagesAttributes }
 			/>
 			<div { ...blockProps }>
-				<DropZone onFilesDrop={ addFiles } />
 				<div className={ `${ baseClass }__wrapper` }>
 					{ chunkImages( images, 3 ).map(
 						( imageChunk, chunkIndex ) => (

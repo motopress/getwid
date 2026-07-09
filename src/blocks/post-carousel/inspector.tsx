@@ -12,15 +12,8 @@ import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { CustomQueryControl, TemplateSelectControl } from 'getwid-components';
 
-import type { PostCarouselEditProps, ServerSideRenderProps } from './types';
-
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
+import type { PostCarouselEditProps } from './types';
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 const defaults = {
 	sliderSlidesToShowDesktop: '2',
@@ -122,19 +115,15 @@ export default function Inspector( {
 					onSelect={ ( templateID ) =>
 						setAttributes( { postTemplate: templateID } )
 					}
-					previewRender={ ( templateID ) =>
-						ServerSideRender ? (
-							<ServerSideRender
-								block="getwid/post-carousel"
-								attributes={ {
-									...attributes,
-									postTemplate: String( templateID ),
-								} }
-							/>
-						) : (
-							<Fragment />
-						)
-					}
+					previewRender={ ( templateID ) => (
+						<ServerSideRender
+							block="getwid/post-carousel"
+							attributes={ {
+								...attributes,
+								postTemplate: String( templateID ),
+							} }
+						/>
+					) }
 				/>
 				<TextControl
 					label={ __( 'Slides on Desktop', 'getwid' ) }

@@ -5,14 +5,19 @@
 	"name": "getwid/images-slider",
 	"category": "getwid-blocks",
 	"title": "Image Slider",
-	"keywords": [ "gallery", "carousel", "photo" ],
+	"keywords": [
+		"gallery",
+		"carousel",
+		"photo"
+	],
 	"supports": {
-		"html": false
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
-		"align": {
-			"type": "string"
-		},
 		"images": {
 			"type": "array",
 			"default": [],
@@ -206,8 +211,22 @@
 			"type": "boolean"
 		}
 	},
-	"editorScript": "file:./index.js",
+	"editorScript": [
+		"jquery",
+		"slick",
+		"imagesloaded",
+		"file:./index.js"
+	],
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"viewScript": [ "jquery", "imagesloaded", "slick", "file:./view.js" ]
+	"style": [
+		"slick",
+		"slick-theme",
+		"file:./style-index.css"
+	],
+	"viewScript": [
+		"jquery",
+		"imagesloaded",
+		"slick",
+		"file:./view.js"
+	]
 }

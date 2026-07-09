@@ -5,10 +5,15 @@
 	"name": "getwid/image-hotspot",
 	"category": "getwid-blocks",
 	"title": "Image Hotspot",
-	"keywords": [ "tooltip" ],
+	"keywords": [
+		"tooltip"
+	],
 	"supports": {
 		"alignWide": true,
-		"align": [ "wide", "full" ]
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"imageSize": {
@@ -106,9 +111,16 @@
 			"default": ""
 		}
 	},
-	"editorScript": [ "tippy", "file:./index.js" ],
+	"editorScript": [
+		"tippy",
+		"file:./index.js"
+	],
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
+	"style": [
+		"tippy-themes",
+		"tippy-animation",
+		"file:./style-index.css"
+	],
 	"viewScript": [
 		"jquery",
 		"popper",

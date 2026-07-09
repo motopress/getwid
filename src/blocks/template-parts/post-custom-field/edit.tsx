@@ -11,31 +11,11 @@ import { __ } from '@wordpress/i18n';
 import clsx from 'clsx';
 
 import Inspector from './inspector';
-import type {
-	ServerSideRenderProps,
-	TemplatePostCustomFieldEditProps,
-} from './types';
+import type { TemplatePostCustomFieldEditProps } from './types';
 
 import './editor.scss';
 import './style.scss';
-
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
-
-function getGetwidSettings() {
-	return (
-		window as unknown as {
-			Getwid?: {
-				templates?: { name?: string };
-			};
-		}
-	 ).Getwid;
-}
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 function Edit( props: TemplatePostCustomFieldEditProps ) {
 	const { attributes, setAttributes, textColor, fontSize } = props;
@@ -50,7 +30,6 @@ function Edit( props: TemplatePostCustomFieldEditProps ) {
 			 ).getCurrentPostType(),
 		[]
 	);
-	const getwidSettings = getGetwidSettings();
 	const blockProps = useBlockProps( {
 		className: clsx( className, fontSize?.class ),
 		style: {
@@ -67,7 +46,7 @@ function Edit( props: TemplatePostCustomFieldEditProps ) {
 		},
 	} );
 
-	if ( currentPostType === getwidSettings?.templates?.name ) {
+	if ( currentPostType === Getwid.templates.name ) {
 		return (
 			<>
 				<Inspector { ...props } />
@@ -106,14 +85,14 @@ function Edit( props: TemplatePostCustomFieldEditProps ) {
 	}
 
 	return (
-		<Disabled>
-			{ ServerSideRender && (
+		<div { ...blockProps }>
+			<Disabled>
 				<ServerSideRender
 					block="getwid/template-post-custom-field"
 					attributes={ attributes }
 				/>
-			) }
-		</Disabled>
+			</Disabled>
+		</div>
 	);
 }
 

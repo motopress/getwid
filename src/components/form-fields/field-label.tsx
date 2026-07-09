@@ -3,6 +3,8 @@ import { ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import type { FieldAttributes } from './types';
 
+import './editor.scss';
+
 const baseClass = 'getwid-field-label';
 
 type FieldLabelProps = {

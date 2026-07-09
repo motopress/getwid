@@ -28,8 +28,8 @@ import type {
 import { getMapStyles, parseMapMarkers, updateMarkerAt } from './utils';
 
 import './editor.scss';
-
-const runtimeGlobal = window as GoogleMapsRuntime;
+import { safeHTML } from '@wordpress/dom';
+import { decodeEntities } from '@wordpress/html-entities';
 
 function markerDefaults( index: number ): MapMarker {
 	return {
@@ -58,11 +58,14 @@ export default function Edit( props: MapEditProps ) {
 		mapMarkers,
 		blockAlignment,
 	} = attributes;
+
 	const mapRef = useRef< HTMLDivElement | null >( null );
 	const waitLoadGoogle = useRef< ReturnType< typeof setInterval > | null >(
 		null
 	);
-	const initialApiKey = runtimeGlobal.Getwid?.settings?.google_api_key || '';
+
+	const initialApiKey = Getwid.settings.google_api_key;
+
 	const [ state, setState ] = useState< MapState >( {
 		currentMarker: null,
 		googleApiKey: initialApiKey,
@@ -74,11 +77,23 @@ export default function Edit( props: MapEditProps ) {
 		firstInit: true,
 		readyState: false,
 	} );
+
 	const stateRef = useRef( state );
+	const mapMarkersRef = useRef( mapMarkers );
+
+	const blockProps = useBlockProps( {
+		className: classnames( {
+			[ `${ baseClass }--dropMarker` ]: state.action === 'drop',
+		} ),
+	} );
 
 	useEffect( () => {
 		stateRef.current = state;
 	}, [ state ] );
+
+	useEffect( () => {
+		mapMarkersRef.current = mapMarkers;
+	}, [ mapMarkers ] );
 
 	function changeState< K extends keyof MapState >(
 		key: K,
@@ -96,7 +111,8 @@ export default function Edit( props: MapEditProps ) {
 	}
 
 	function updateArrValues( value: Partial< MapMarker >, index: number ) {
-		const markers = parseMapMarkers( mapMarkers );
+		const markers = parseMapMarkers( mapMarkersRef.current );
+
 		setMarkers( updateMarkerAt( markers, index, value ) );
 	}
 
@@ -122,9 +138,10 @@ export default function Edit( props: MapEditProps ) {
 		const script = currentDocument.createElement( 'script' );
 		script.type = 'text/javascript';
 		script.src = `https://maps.googleapis.com/maps/api/js?key=${
-			runtimeGlobal.Getwid?.settings?.google_api_key || ''
+			Getwid.settings.google_api_key || ''
 		}`;
 		script.id = 'google_api_js';
+
 		currentDocument
 			.getElementsByTagName( 'head' )[ 0 ]
 			.appendChild( script );
@@ -159,12 +176,12 @@ export default function Edit( props: MapEditProps ) {
 		event.preventDefault?.();
 
 		jQuery.post(
-			runtimeGlobal.Getwid?.ajax_url || '',
+			Getwid.ajax_url,
 			{
 				action: 'get_google_api_key',
 				data: state.checkApiKey,
 				option,
-				nonce: runtimeGlobal.Getwid?.nonces?.google_api_key || '',
+				nonce: Getwid.nonces.google_api_key,
 			},
 			( response: { success: boolean; data?: string } ) => {
 				if ( ! response.success ) {
@@ -174,14 +191,15 @@ export default function Edit( props: MapEditProps ) {
 
 				switch ( option ) {
 					case 'set':
-						runtimeGlobal.Getwid!.settings!.google_api_key =
-							state.checkApiKey;
+						Getwid.settings.google_api_key = state.checkApiKey;
 						removeGoogleAPIScript();
 						addGoogleAPIScript();
 						break;
+
 					case 'delete':
-						runtimeGlobal.Getwid!.settings!.google_api_key = '';
+						Getwid.settings.google_api_key = '';
 						removeGoogleAPIScript();
+
 						setState( ( current ) => ( {
 							...current,
 							checkApiKey: '',
@@ -210,29 +228,34 @@ export default function Edit( props: MapEditProps ) {
 		googleMap.addListener( 'click', ( event ) => {
 			const currentState = stateRef.current;
 
-			if ( currentState.action === 'drop' && event?.latLng ) {
-				const latLng = {
-					lat: event.latLng.lat(),
-					lng: event.latLng.lng(),
-				};
-
-				geocoder.geocode( { location: latLng }, ( results, status ) => {
-					if ( status === 'OK' && results[ 0 ] ) {
-						updateArrValues(
-							{ description: results[ 0 ].formatted_address },
-							currentState.currentMarker || 0
-						);
-					}
-				} );
-
-				updateArrValues(
-					{ coords: latLng },
-					currentState.currentMarker || 0
-				);
-				changeState( 'editModal', true );
-			} else {
+			if (
+				currentState.action !== 'drop' ||
+				! event?.latLng ||
+				currentState.currentMarker === null
+			) {
 				changeState( 'currentMarker', null );
+				return;
 			}
+
+			const markerId = currentState.currentMarker;
+
+			const latLng = {
+				lat: event.latLng.lat(),
+				lng: event.latLng.lng(),
+			};
+
+			updateArrValues( { coords: latLng }, markerId );
+
+			geocoder.geocode( { location: latLng }, ( results, status ) => {
+				if ( status === 'OK' && results[ 0 ] ) {
+					updateArrValues(
+						{ description: results[ 0 ].formatted_address },
+						markerId
+					);
+				}
+			} );
+
+			changeState( 'editModal', true );
 		} );
 
 		googleMap.addListener( 'zoom_changed', () => {
@@ -240,10 +263,16 @@ export default function Edit( props: MapEditProps ) {
 		} );
 
 		googleMap.addListener( 'dragend', () => {
+			const center = googleMap.getCenter();
+
+			if ( ! center ) {
+				return;
+			}
+
 			setAttributes( {
 				mapCenter: {
-					lat: googleMap.getCenter().lat(),
-					lng: googleMap.getCenter().lng(),
+					lat: center.lat(),
+					lng: center.lng(),
 				},
 			} );
 		} );
@@ -290,6 +319,7 @@ export default function Edit( props: MapEditProps ) {
 			if ( popUp.content !== '' ) {
 				popUp.open( marker.get( 'map' ), marker );
 			}
+
 			changeState( 'currentMarker', marker.id );
 		} );
 
@@ -304,6 +334,10 @@ export default function Edit( props: MapEditProps ) {
 		} );
 
 		marker.addListener( 'dragend', ( event ) => {
+			if ( ! event?.latLng ) {
+				return;
+			}
+
 			updateArrValues(
 				{
 					coords: {
@@ -324,7 +358,7 @@ export default function Edit( props: MapEditProps ) {
 	) {
 		const currentWindow = getCurrentWindow();
 		const google = currentWindow?.google;
-		const markers = parseMapMarkers( mapMarkers );
+		const markers = parseMapMarkers( mapMarkersRef.current );
 		const markerData = markers[ markerId ];
 
 		if ( ! google || ! markerData ) {
@@ -360,15 +394,23 @@ export default function Edit( props: MapEditProps ) {
 				);
 			}
 		} else {
-			marker = state.markerArrTemp[ markerId ];
+			marker = stateRef.current.markerArrTemp[ markerId ];
+
+			if ( ! marker ) {
+				return;
+			}
+
 			marker.setPosition( latLng );
 		}
 
+		const markerDescription = safeHTML(
+			decodeEntities( markerData.description )
+		);
 		const message =
-			markerData.description !== ''
+			markerDescription !== ''
 				? `
 				<div class='getwid-poi-info-window'>
-					${ markerData.description }
+					${ markerDescription }
 				</div>
 			`
 				: '';
@@ -386,7 +428,7 @@ export default function Edit( props: MapEditProps ) {
 	function initMap( prevAttributes?: MapEditProps[ 'attributes' ] ) {
 		const currentWindow = getCurrentWindow();
 		const google = currentWindow?.google;
-		const markers = parseMapMarkers( mapMarkers );
+		const markers = parseMapMarkers( mapMarkersRef.current );
 		const mapCenterChanged =
 			JSON.stringify( attributes.mapCenter ) !==
 			JSON.stringify( prevAttributes?.mapCenter );
@@ -422,6 +464,7 @@ export default function Edit( props: MapEditProps ) {
 
 				jQuery( mapRef.current ).on( 'keydown', ( event ) => {
 					const currentState = stateRef.current;
+
 					if (
 						event.keyCode === 46 &&
 						currentState.currentMarker !== null &&
@@ -458,6 +501,7 @@ export default function Edit( props: MapEditProps ) {
 
 				initMapEvents( googleMap );
 			}, 100 );
+
 			return;
 		}
 
@@ -482,21 +526,29 @@ export default function Edit( props: MapEditProps ) {
 	}
 
 	function cancelMarker() {
-		const markers = parseMapMarkers( mapMarkers );
+		const currentState = stateRef.current;
+
+		if ( currentState.currentMarker === null ) {
+			return;
+		}
+
+		const markers = parseMapMarkers( mapMarkersRef.current );
 
 		setMarkers(
-			markers.filter(
-				( _marker, index ) => index !== state.currentMarker
-			)
+			markers.filter( ( _marker, index ) => {
+				return index !== currentState.currentMarker;
+			} )
 		);
+
 		changeState( 'currentMarker', null );
+		changeState( 'action', false );
+		changeState( 'editModal', false );
 	}
 
 	function onAddMarker() {
-		const markers = parseMapMarkers( mapMarkers );
+		const markers = parseMapMarkers( mapMarkersRef.current );
 		const nextMarkers = [ ...markers, markerDefaults( markers.length ) ];
-		const nextMarkerId =
-			nextMarkers.length === 1 ? 0 : nextMarkers.length - 1;
+		const nextMarkerId = nextMarkers.length - 1;
 
 		setMarkers( nextMarkers );
 		changeState( 'currentMarker', nextMarkerId );
@@ -504,12 +556,15 @@ export default function Edit( props: MapEditProps ) {
 	}
 
 	function onDeleteMarker( markerId = 0 ) {
-		const markers = parseMapMarkers( mapMarkers );
-		const marker = state.markerArrTemp[ markerId ];
+		const currentState = stateRef.current;
+		const markers = parseMapMarkers( mapMarkersRef.current );
+		const marker = currentState.markerArrTemp[ markerId ];
+
 		const nextMarkers = markers.filter(
 			( _marker, index ) => index !== markerId
 		);
-		const nextMarkerArrTemp = state.markerArrTemp
+
+		const nextMarkerArrTemp = currentState.markerArrTemp
 			.filter( ( _marker, index ) => index !== markerId )
 			.map( ( item, index ) => {
 				item.id = index;
@@ -517,8 +572,12 @@ export default function Edit( props: MapEditProps ) {
 			} );
 
 		marker?.setMap( null );
+
 		changeState( 'currentMarker', null );
 		changeState( 'markerArrTemp', nextMarkerArrTemp );
+		changeState( 'action', false );
+		changeState( 'editModal', false );
+
 		setMarkers( nextMarkers );
 	}
 
@@ -532,23 +591,21 @@ export default function Edit( props: MapEditProps ) {
 				clearInterval( waitLoadGoogle.current );
 			}
 		};
-		// Match legacy mount/unmount script behavior.
 	}, [] );
 
 	useEffect( () => {
 		if (
-			runtimeGlobal.Getwid?.settings?.google_api_key !== '' &&
+			Getwid.settings.google_api_key !== '' &&
 			( ( state.firstInit && state.readyState ) || state.mapObj )
 		) {
 			initMap();
 		}
-		// initMap depends on mutable Google map instances and mirrors legacy componentDidUpdate.
 	}, [ attributes, state.readyState ] );
 
-	if ( runtimeGlobal.Getwid?.settings?.google_api_key === '' ) {
-		if ( ! runtimeGlobal.Getwid?.current_user?.can_manage_options ) {
+	if ( Getwid.settings.google_api_key === '' ) {
+		if ( ! Getwid.current_user.can_manage_options ) {
 			return (
-				<div>
+				<div { ...blockProps }>
 					<p>
 						{ __(
 							'Contact the site administrator to set up the required keys.',
@@ -560,52 +617,55 @@ export default function Edit( props: MapEditProps ) {
 		}
 
 		return (
-			<form
-				className={ `${ baseClass }__key-form` }
-				onSubmit={ ( event ) => manageGoogleAPIKey( event, 'set' ) }
-			>
-				<span className="form-title">
-					{ __( 'Google Maps API key.', 'getwid' ) }{ ' ' }
-					<a
-						href={ googleMapsApiKeyHelpUrl }
-						target="_blank"
-						rel="noreferrer"
-					>
-						{ __( 'Get your key.', 'getwid' ) }
-					</a>
-				</span>
+			<div { ...blockProps }>
+				<form
+					className={ `${ baseClass }__key-form` }
+					onSubmit={ ( event ) => manageGoogleAPIKey( event, 'set' ) }
+				>
+					<span className="form-title">
+						{ __( 'Google Maps API key.', 'getwid' ) }{ ' ' }
+						<a
+							href={ googleMapsApiKeyHelpUrl }
+							target="_blank"
+							rel="noreferrer"
+						>
+							{ __( 'Get your key.', 'getwid' ) }
+						</a>
+					</span>
 
-				<div className="form-wrapper">
-					<TextControl
-						placeholder={ __( 'Google Maps API Key', 'getwid' ) }
-						value={ state.checkApiKey }
-						onChange={ ( value ) =>
-							changeState( 'checkApiKey', value )
-						}
-						__nextHasNoMarginBottom
-					/>
+					<div className="form-wrapper">
+						<TextControl
+							placeholder={ __(
+								'Google Maps API Key',
+								'getwid'
+							) }
+							value={ state.checkApiKey }
+							onChange={ ( value ) =>
+								changeState( 'checkApiKey', value )
+							}
+							__nextHasNoMarginBottom
+						/>
 
-					<Button
-						isPrimary
-						type="submit"
-						disabled={ state.checkApiKey === '' }
-					>
-						{ __( 'Save API Key', 'getwid' ) }
-					</Button>
-				</div>
-				{ state.error && (
-					<span className="form-description">{ state.error }</span>
-				) }
-				<div ref={ mapRef } />
-			</form>
+						<Button
+							isPrimary
+							type="submit"
+							disabled={ state.checkApiKey === '' }
+						>
+							{ __( 'Save API Key', 'getwid' ) }
+						</Button>
+					</div>
+
+					{ state.error && (
+						<span className="form-description">
+							{ state.error }
+						</span>
+					) }
+
+					<div ref={ mapRef } />
+				</form>
+			</div>
 		);
 	}
-
-	const blockProps = useBlockProps( {
-		className: classnames( {
-			[ `${ baseClass }--dropMarker` ]: state.action === 'drop',
-		} ),
-	} );
 
 	return (
 		<>
@@ -619,7 +679,7 @@ export default function Edit( props: MapEditProps ) {
 				/>
 				<ToolbarGroup>
 					<ToolbarButton
-						isDisabled={ state.currentMarker !== null }
+						disabled={ state.currentMarker !== null }
 						onClick={ () => {
 							if ( state.action !== 'drop' ) {
 								onAddMarker();
@@ -631,7 +691,7 @@ export default function Edit( props: MapEditProps ) {
 				</ToolbarGroup>
 				<ToolbarGroup>
 					<ToolbarButton
-						isDisabled={
+						disabled={
 							state.currentMarker === null ||
 							state.action === 'drop'
 						}
@@ -643,15 +703,18 @@ export default function Edit( props: MapEditProps ) {
 					>
 						{ __( 'Edit Marker', 'getwid' ) }
 					</ToolbarButton>
+
 					<ToolbarButton
 						icon="trash"
 						title={ __( 'Delete Marker', 'getwid' ) }
-						isDisabled={
+						disabled={
 							state.currentMarker === null ||
 							state.action === 'drop'
 						}
 						onClick={ () => {
-							onDeleteMarker( state.currentMarker || 0 );
+							if ( state.currentMarker !== null ) {
+								onDeleteMarker( state.currentMarker );
+							}
 						} }
 					/>
 				</ToolbarGroup>
@@ -666,12 +729,15 @@ export default function Edit( props: MapEditProps ) {
 				getState={ getState }
 				manageGoogleAPIKey={ manageGoogleAPIKey }
 				removeGoogleAPIScript={ removeGoogleAPIScript }
+				currentWindow={ getCurrentWindow() }
 			/>
-			<div { ...blockProps } ref={ mapRef }>
-				<div
-					style={ { height: `${ mapHeight }px` } }
-					className={ `${ baseClass }__container` }
-				/>
+			<div { ...blockProps }>
+				<div ref={ mapRef }>
+					<div
+						style={ { height: `${ mapHeight }px` } }
+						className={ `${ baseClass }__container` }
+					/>
+				</div>
 			</div>
 		</>
 	);

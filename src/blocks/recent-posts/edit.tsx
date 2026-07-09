@@ -1,4 +1,4 @@
-import { BlockAlignmentToolbar, BlockControls } from '@wordpress/block-editor';
+import { BlockControls, useBlockProps } from '@wordpress/block-editor';
 import {
 	Disabled,
 	Placeholder,
@@ -11,41 +11,37 @@ import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import Inspector from './inspector';
-import type { RecentPostsEditProps, ServerSideRenderProps } from './types';
+import type { RecentPostsEditProps } from './types';
 
 import './editor.scss';
 import './style.scss';
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 const categoriesListQuery = {
 	per_page: -1,
 };
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
-
 function Edit( props: RecentPostsEditProps ) {
 	const { attributes, setAttributes, recentPosts } = props;
-	const { align, postLayout } = attributes;
+	const { postLayout } = attributes;
 	const hasPosts = Array.isArray( recentPosts ) && recentPosts.length > 0;
+	const blockProps = useBlockProps();
 
 	if ( ! hasPosts ) {
 		return (
 			<Fragment>
 				<Inspector { ...props } />
-				<Placeholder
-					icon="admin-post"
-					label={ __( 'Recent Posts', 'getwid' ) }
-				>
-					{ ! Array.isArray( recentPosts ) ? (
-						<Spinner />
-					) : (
-						__( 'No posts found.', 'getwid' )
-					) }
-				</Placeholder>
+				<div { ...blockProps }>
+					<Placeholder
+						icon="admin-post"
+						label={ __( 'Recent Posts', 'getwid' ) }
+					>
+						{ ! Array.isArray( recentPosts ) ? (
+							<Spinner />
+						) : (
+							__( 'No posts found.', 'getwid' )
+						) }
+					</Placeholder>
+				</div>
 			</Fragment>
 		);
 	}
@@ -54,13 +50,6 @@ function Edit( props: RecentPostsEditProps ) {
 		<Fragment>
 			<Inspector { ...props } />
 			<BlockControls>
-				<BlockAlignmentToolbar
-					value={ align }
-					controls={ [ 'wide', 'full' ] }
-					onChange={ ( nextAlign ) => {
-						setAttributes( { align: nextAlign } );
-					} }
-				/>
 				<ToolbarGroup>
 					<ToolbarButton
 						icon="list-view"
@@ -80,14 +69,14 @@ function Edit( props: RecentPostsEditProps ) {
 					/>
 				</ToolbarGroup>
 			</BlockControls>
-			<Disabled>
-				{ ServerSideRender && (
+			<div { ...blockProps }>
+				<Disabled>
 					<ServerSideRender
 						block="getwid/recent-posts"
 						attributes={ attributes }
 					/>
-				) }
-			</Disabled>
+				</Disabled>
+			</div>
 		</Fragment>
 	);
 }

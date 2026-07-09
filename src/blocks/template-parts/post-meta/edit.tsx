@@ -13,10 +13,11 @@ import { __ } from '@wordpress/i18n';
 import clsx from 'clsx';
 
 import Inspector from './inspector';
-import type { ServerSideRenderProps, TemplatePostMetaEditProps } from './types';
+import type { TemplatePostMetaEditProps } from './types';
 
 import './editor.scss';
 import './style.scss';
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 const TEMPLATE = [
 	[ 'getwid/template-post-author' ],
@@ -37,34 +38,11 @@ const ALLOWED_BLOCKS = [
 
 const baseClass = 'wp-block-getwid-template-post-meta';
 
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
-
-function getGetwidSettings() {
-	return (
-		window as unknown as {
-			Getwid?: {
-				templates?: { name?: string };
-			};
-		}
-	 ).Getwid;
-}
-
 function Edit( props: TemplatePostMetaEditProps ) {
 	const { attributes, setAttributes, textColor, clientId } = props;
 	const { textAlignment, direction, blockDivider } = attributes;
 	const currentPostType = useSelect(
-		( select ) =>
-			(
-				select( 'core/editor' ) as {
-					getCurrentPostType: () => string | undefined;
-				}
-			 ).getCurrentPostType(),
+		( select ) => select( 'core/editor' ).getCurrentPostType(),
 		[]
 	);
 	const innerBlocks = useSelect(
@@ -83,13 +61,7 @@ function Edit( props: TemplatePostMetaEditProps ) {
 			 ).getBlock( clientId )?.innerBlocks || [],
 		[ clientId ]
 	);
-	const { updateBlockAttributes } = useDispatch( blockEditorStore ) as {
-		updateBlockAttributes: (
-			nextClientId: string,
-			nextAttributes: Record< string, unknown >
-		) => void;
-	};
-	const getwidSettings = getGetwidSettings();
+	const { updateBlockAttributes } = useDispatch( blockEditorStore );
 	const blockProps = useBlockProps( {
 		className: clsx( baseClass, {
 			[ `has-direction-${ direction }` ]: direction !== 'row',
@@ -110,7 +82,7 @@ function Edit( props: TemplatePostMetaEditProps ) {
 		} );
 	}, [ blockDivider, innerBlocks, updateBlockAttributes ] );
 
-	if ( currentPostType === getwidSettings?.templates?.name ) {
+	if ( currentPostType === Getwid.templates.name ) {
 		return (
 			<>
 				<Inspector { ...props } />
@@ -136,14 +108,14 @@ function Edit( props: TemplatePostMetaEditProps ) {
 	}
 
 	return (
-		<Disabled>
-			{ ServerSideRender && (
+		<div { ...blockProps }>
+			<Disabled>
 				<ServerSideRender
 					block="getwid/template-post-meta"
 					attributes={ attributes }
 				/>
-			) }
-		</Disabled>
+			</Disabled>
+		</div>
 	);
 }
 

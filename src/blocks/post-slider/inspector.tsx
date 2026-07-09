@@ -15,15 +15,8 @@ import {
 	TemplateSelectControl,
 } from 'getwid-components';
 
-import type { PostSliderEditProps, ServerSideRenderProps } from './types';
-
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
+import type { PostSliderEditProps } from './types';
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 const defaults = {
 	sliderAnimationEffect: 'slide',
@@ -106,19 +99,15 @@ export default function Inspector( {
 					onSelect={ ( templateID ) =>
 						setAttributes( { postTemplate: templateID } )
 					}
-					previewRender={ ( templateID ) =>
-						ServerSideRender ? (
-							<ServerSideRender
-								block="getwid/post-slider"
-								attributes={ {
-									...attributes,
-									postTemplate: String( templateID ),
-								} }
-							/>
-						) : (
-							<Fragment />
-						)
-					}
+					previewRender={ ( templateID ) => (
+						<ServerSideRender
+							block="getwid/post-slider"
+							attributes={ {
+								...attributes,
+								postTemplate: String( templateID ),
+							} }
+						/>
+					) }
 				/>
 				<StyleLengthControl
 					label={ __( 'Slider Minimum Height', 'getwid' ) }

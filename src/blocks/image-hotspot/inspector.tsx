@@ -1,12 +1,7 @@
-import {
-	InspectorControls,
-	MediaPlaceholder,
-	MediaUpload,
-} from '@wordpress/block-editor';
+import { InspectorControls } from '@wordpress/block-editor';
 import {
 	BaseControl,
 	Button,
-	ButtonGroup,
 	Dashicon,
 	Modal,
 	PanelBody,
@@ -24,6 +19,8 @@ import {
 	AnimationSelectControl,
 	CustomColorPalette,
 	IconPicker,
+	ImageSizeSelect,
+	MediaControl,
 	TabsControl,
 } from 'getwid-components';
 
@@ -33,7 +30,6 @@ import type {
 	ImageHotspotEditProps,
 	ImageHotspotPoint,
 	MediaObject,
-	RuntimeGlobal,
 } from './types';
 import { baseClass, parseImagePoints } from './utils';
 
@@ -59,87 +55,10 @@ const pointPlacementOptions = [
 	{ value: 'left', label: __( 'Left', 'getwid' ) },
 ];
 
-function MediaControl( {
-	id,
-	url,
-	onSelectMedia,
-	onRemoveMedia,
-	label,
-}: {
-	id?: number;
-	url?: string;
-	onSelectMedia: ( media: MediaObject ) => void;
-	onRemoveMedia: () => void;
-	label: string;
-} ) {
-	return (
-		<BaseControl label={ label }>
-			{ ! url && (
-				<MediaPlaceholder
-					icon="format-image"
-					labels={ {
-						title: __( 'Image', 'getwid' ),
-						instructions: __(
-							'Upload an image file, pick one from your media library, or add one with a URL.',
-							'getwid'
-						),
-					} }
-					onSelect={ onSelectMedia }
-					accept="image/*"
-					allowedTypes={ [ 'image' ] }
-				/>
-			) }
-			{ url && (
-				<MediaUpload
-					onSelect={ onSelectMedia }
-					allowedTypes={ [ 'image' ] }
-					value={ id }
-					render={ ( { open } ) => (
-						<BaseControl>
-							<div
-								onClick={ open }
-								className="getwid-background-image-wrapper"
-								role="button"
-								tabIndex={ 0 }
-								onKeyDown={ ( event ) => {
-									if (
-										event.key === 'Enter' ||
-										event.key === ' '
-									) {
-										open();
-									}
-								} }
-							>
-								<img src={ url } alt="" />
-							</div>
-							<div>
-								<Button variant="primary" onClick={ open }>
-									{ id
-										? __( 'Replace Image', 'getwid' )
-										: __( 'Select Image', 'getwid' ) }
-								</Button>
-								{ !! id && (
-									<Button
-										variant="secondary"
-										onClick={ onRemoveMedia }
-									>
-										{ __( 'Remove Image', 'getwid' ) }
-									</Button>
-								) }
-							</div>
-						</BaseControl>
-					) }
-				/>
-			) }
-		</BaseControl>
-	);
-}
-
 export default function Inspector( props: InspectorProps ) {
 	const {
 		attributes,
 		setAttributes,
-		className,
 		imgObj,
 		onCancelPoint,
 		updatePoint,
@@ -171,10 +90,8 @@ export default function Inspector( props: InspectorProps ) {
 	} = attributes;
 	const [ tabName, setTabName ] = useState< TabName >( 'general' );
 	const points = parseImagePoints( imagePoints );
-	const runtimeGlobal = window as RuntimeGlobal;
-	const imageSizeOptions = runtimeGlobal.Getwid?.settings?.image_sizes || [];
 
-	function contentFields( index: number ) {
+	function contentFields( index: number, popup = false ) {
 		return (
 			<>
 				<TextControl
@@ -185,10 +102,13 @@ export default function Inspector( props: InspectorProps ) {
 				<div
 					className={ `components-base-control ${ baseClass }__url-field` }
 				>
-					<Dashicon
-						className={ `${ baseClass }__url-icon` }
-						icon="admin-links"
-					/>
+					{ popup && (
+						<Dashicon
+							className={ `${ baseClass }__url-icon` }
+							icon="admin-links"
+						/>
+					) }
+
 					<TextControl
 						placeholder={ __( 'Enter URL', 'getwid' ) }
 						value={ points[ index ].link }
@@ -296,8 +216,8 @@ export default function Inspector( props: InspectorProps ) {
 					label={ __( 'Popup Maximum Width, px.', 'getwid' ) }
 					value={ String( points[ index ].popUpWidth ) }
 					type="number"
-					onChange={ ( popUpWidth ) =>
-						updatePoint( index, { popUpWidth } )
+					onChange={ ( value ) =>
+						updatePoint( index, { popUpWidth: parseInt( value ) } )
 					}
 				/>
 			</>
@@ -380,7 +300,7 @@ export default function Inspector( props: InspectorProps ) {
 			>
 				{ ( tab ) => {
 					if ( tab.name === 'content' ) {
-						return contentFields( index );
+						return contentFields( index, true );
 					}
 					if ( tab.name === 'placement' ) {
 						return placementFields( index, true );
@@ -391,15 +311,9 @@ export default function Inspector( props: InspectorProps ) {
 			</TabPanel>
 		) : (
 			<>
-				<PanelBody title={ __( 'Content', 'getwid' ) } initialOpen>
-					{ contentFields( index ) }
-				</PanelBody>
-				<PanelBody title={ __( 'Position', 'getwid' ) } initialOpen>
-					{ placementFields( index ) }
-				</PanelBody>
-				<PanelBody title={ __( 'Style', 'getwid' ) } initialOpen>
-					{ styleFields( index ) }
-				</PanelBody>
+				{ contentFields( index ) }
+				{ placementFields( index ) }
+				{ styleFields( index ) }
 			</>
 		);
 	}
@@ -434,7 +348,7 @@ export default function Inspector( props: InspectorProps ) {
 						}
 					/>
 					{ imgObj && (
-						<SelectControl
+						<ImageSizeSelect
 							label={ __( 'Image Size', 'getwid' ) }
 							help={ __(
 								'For images from Media Library only.',
@@ -445,7 +359,6 @@ export default function Inspector( props: InspectorProps ) {
 								setAttributes( { imageSize: nextImageSize } );
 								changeImageSize( imgObj, nextImageSize );
 							} }
-							options={ imageSizeOptions }
 						/>
 					) }
 					<RadioControl
@@ -644,7 +557,7 @@ export default function Inspector( props: InspectorProps ) {
 			) }
 			{ showModal && (
 				<Modal
-					className={ `${ className }__modal` }
+					className={ `${ baseClass }__modal` }
 					title={ __( 'Edit Point', 'getwid' ) }
 					shouldCloseOnClickOutside={ false }
 					shouldCloseOnEsc={ false }
@@ -659,7 +572,7 @@ export default function Inspector( props: InspectorProps ) {
 					} }
 				>
 					{ pointFields( currentPoint, true ) }
-					<ButtonGroup>
+					<div className={ `${ baseClass }__modal-actions` }>
 						<Button
 							variant="primary"
 							onClick={ () =>
@@ -688,7 +601,7 @@ export default function Inspector( props: InspectorProps ) {
 								{ __( 'Cancel', 'getwid' ) }
 							</Button>
 						) }
-					</ButtonGroup>
+					</div>
 				</Modal>
 			) }
 			{ hasSelectedPoint && selectedPoint !== null && (

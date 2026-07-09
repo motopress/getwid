@@ -11,28 +11,11 @@ import { __ } from '@wordpress/i18n';
 import clsx from 'clsx';
 
 import Inspector from './inspector';
-import type { ServerSideRenderProps, TemplatePostTagsEditProps } from './types';
+import type { TemplatePostTagsEditProps } from './types';
 
 import './editor.scss';
 import './style.scss';
-
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
-
-function getGetwidSettings() {
-	return (
-		window as unknown as {
-			Getwid?: {
-				templates?: { name?: string };
-			};
-		}
-	 ).Getwid;
-}
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 function Edit( props: TemplatePostTagsEditProps ) {
 	const {
@@ -54,7 +37,6 @@ function Edit( props: TemplatePostTagsEditProps ) {
 			 ).getCurrentPostType(),
 		[]
 	);
-	const getwidSettings = getGetwidSettings();
 	const blockProps = useBlockProps( {
 		className: clsx( className, {
 			'has-background': backgroundColor.color,
@@ -76,7 +58,7 @@ function Edit( props: TemplatePostTagsEditProps ) {
 		},
 	} );
 
-	if ( currentPostType === getwidSettings?.templates?.name ) {
+	if ( currentPostType === Getwid.templates.name ) {
 		return (
 			<>
 				<Inspector { ...props } />
@@ -115,14 +97,14 @@ function Edit( props: TemplatePostTagsEditProps ) {
 	}
 
 	return (
-		<Disabled>
-			{ ServerSideRender && (
+		<div { ...blockProps }>
+			<Disabled>
 				<ServerSideRender
 					block="getwid/template-post-tags"
 					attributes={ attributes }
 				/>
-			) }
-		</Disabled>
+			</Disabled>
+		</div>
 	);
 }
 

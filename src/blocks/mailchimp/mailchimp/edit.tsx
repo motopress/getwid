@@ -22,25 +22,23 @@ import type {
 	MailchimpApiKeyAction,
 	MailchimpEditProps,
 	MailchimpList,
-	MailchimpRuntime,
 	MailchimpState,
 } from './types';
 
 import './editor.scss';
 import './style.scss';
 
-const runtimeGlobal = window as MailchimpRuntime;
-
 function Edit( props: MailchimpEditProps ) {
 	const { attributes, setAttributes, backgroundColor, textColor } = props;
-	const initialApiKey =
-		runtimeGlobal.Getwid?.settings?.mailchimp_api_key || '';
+	const initialApiKey = Getwid.settings.mailchimp_api_key;
 	const [ state, setState ] = useState< MailchimpState >( {
 		apiKey: initialApiKey,
 		waitLoadList: true,
 		error: '',
 		list: [],
 	} );
+
+	const blockProps = useBlockProps();
 
 	function changeData( data: Partial< MailchimpState > ) {
 		setState( ( current ) => ( {
@@ -88,13 +86,13 @@ function Edit( props: MailchimpEditProps ) {
 				api_key: getData( 'apiKey' ),
 			},
 			option,
-			nonce: runtimeGlobal.Getwid?.nonces?.mailchimp_api_key || '',
+			nonce: Getwid.nonces.mailchimp_api_key || '',
 		};
 
 		changeData( { waitLoadList: true } );
 
 		jQuery.post(
-			runtimeGlobal.Getwid?.ajax_url || '',
+			Getwid.ajax_url,
 			data,
 			(
 				response:
@@ -118,8 +116,7 @@ function Edit( props: MailchimpEditProps ) {
 
 				switch ( option ) {
 					case 'save':
-						runtimeGlobal.Getwid!.settings!.mailchimp_api_key =
-							getData( 'apiKey' );
+						Getwid.settings.mailchimp_api_key = getData( 'apiKey' );
 					// fall through
 					case 'sync':
 					case 'load':
@@ -129,7 +126,7 @@ function Edit( props: MailchimpEditProps ) {
 						} );
 						break;
 					case 'delete':
-						runtimeGlobal.Getwid!.settings!.mailchimp_api_key = '';
+						Getwid.settings.mailchimp_api_key = '';
 						changeData( {
 							error: '',
 							apiKey: '',
@@ -145,13 +142,12 @@ function Edit( props: MailchimpEditProps ) {
 		if ( initialApiKey !== '' ) {
 			manageMailchimpApiKey( null, 'load' );
 		}
-		// The mount-time load mirrors the legacy componentDidMount behavior.
 	}, [] );
 
-	if ( runtimeGlobal.Getwid?.settings?.mailchimp_api_key === '' ) {
-		if ( ! runtimeGlobal.Getwid?.current_user?.can_manage_options ) {
+	if ( Getwid.settings.mailchimp_api_key === '' ) {
+		if ( ! Getwid.current_user.can_manage_options ) {
 			return (
-				<div>
+				<div { ...blockProps }>
 					<p>
 						{ __(
 							'Contact the site administrator to set up the required keys.',
@@ -163,49 +159,52 @@ function Edit( props: MailchimpEditProps ) {
 		}
 
 		return (
-			<form
-				className={ `${ baseClass }__key-form` }
-				onSubmit={ ( event ) => manageMailchimpApiKey( event, 'save' ) }
-			>
-				<span className="form-title">
-					{ __( 'Mailchimp API key.', 'getwid' ) }{ ' ' }
-					<a
-						href={ mailchimpApiKeyHelpUrl }
-						target="_blank"
-						rel="noreferrer"
-					>
-						{ __( 'Get your key.', 'getwid' ) }
-					</a>
-				</span>
+			<div { ...blockProps }>
+				<form
+					className={ `${ baseClass }__key-form` }
+					onSubmit={ ( event ) =>
+						manageMailchimpApiKey( event, 'save' )
+					}
+				>
+					<span className="form-title">
+						{ __( 'Mailchimp API key.', 'getwid' ) }{ ' ' }
+						<a
+							href={ mailchimpApiKeyHelpUrl }
+							target="_blank"
+							rel="noreferrer"
+						>
+							{ __( 'Get your key.', 'getwid' ) }
+						</a>
+					</span>
 
-				<div className="form-wrapper">
-					<TextControl
-						placeholder={ __( 'Mailchimp API Key', 'getwid' ) }
-						value={ state.apiKey }
-						onChange={ ( nextApiKey ) =>
-							changeData( { apiKey: nextApiKey } )
-						}
-						__nextHasNoMarginBottom
-					/>
+					<div className="form-wrapper">
+						<TextControl
+							placeholder={ __( 'Mailchimp API Key', 'getwid' ) }
+							value={ state.apiKey }
+							onChange={ ( nextApiKey ) =>
+								changeData( { apiKey: nextApiKey } )
+							}
+							__nextHasNoMarginBottom
+						/>
 
-					<Button
-						isPrimary
-						type="submit"
-						isBusy={ state.waitLoadList }
-						disabled={ state.apiKey === '' }
-					>
-						{ __( 'Save API Key', 'getwid' ) }
-					</Button>
-				</div>
+						<Button
+							variant="primary"
+							type="submit"
+							disabled={ state.apiKey === '' }
+						>
+							{ __( 'Save API Key', 'getwid' ) }
+						</Button>
+					</div>
 
-				{ state.error && (
-					<span className="form-description">{ state.error }</span>
-				) }
-			</form>
+					{ state.error && (
+						<span className="form-description">
+							{ state.error }
+						</span>
+					) }
+				</form>
+			</div>
 		);
 	}
-
-	const blockProps = useBlockProps();
 	const buttonSubmitClass = classnames( 'wp-block-button__link', {
 		'has-background': !! backgroundColor.color,
 		[ backgroundColor.class || '' ]: !! backgroundColor.class,

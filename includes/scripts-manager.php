@@ -41,6 +41,10 @@ class ScriptsManager {
 	}
 
 	public function enqueue_block_editor_assets() {
+
+		$this->setup_editor_global_data();
+		$this->register_frontend_common_assets();
+
 		$style_url  = getwid_get_plugin_url( '/assets/components/index.css' );
 		$script_url = getwid_get_plugin_url( '/assets/components/index.js' );
 		$asset_path = getwid_get_plugin_path( '/assets/components/index.asset.php' );
@@ -107,8 +111,6 @@ class ScriptsManager {
 		);
 
 		wp_style_add_data( "{$this->prefix}-blocks-editor-common", 'rtl', 'replace' );
-
-		$this->register_frontend_common_assets();
 	}
 
 	public function register_frontend_common_assets() {
@@ -120,6 +122,80 @@ class ScriptsManager {
 		);
 
 		wp_style_add_data( "{$this->prefix}-blocks-common", 'rtl', 'replace' );
+	}
+
+	public function setup_editor_global_data() {
+		$disabled_blocks      = array();
+		$disabled_blocks_data = array();
+		if ( getwid()->blocksManager()->hasDisabledBlocks() ) {
+			$disabled_blocks = getwid()->blocksManager()->getDisabledBlocks();
+			foreach ( $disabled_blocks as $block ) {
+				$disabled_blocks_data[] = $block->getBlockName();
+			}
+		}
+
+		$current_user_can_manage_options = current_user_can( 'manage_options' );
+
+		$mailchimp_api_key = get_option( 'getwid_mailchimp_api_key', '' );
+
+		if ( ! $current_user_can_manage_options ) {
+			$mailchimp_api_key = $mailchimp_api_key ? '1' : '';
+		}
+
+		$recaptcha_site_key   = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_site_key', '' ) : '1';
+		$recaptcha_secret_key = $current_user_can_manage_options ? get_option( 'getwid_recaptcha_v2_secret_key', '' ) : '1';
+
+		$data = apply_filters(
+			'getwid/editor_blocks_js/localize_data',
+			array(
+				'disabled_blocks'         => $disabled_blocks_data,
+				'settings'                => array(
+					'wide_support'          => get_theme_support( 'align-wide' ),
+					'date_time_utc'         => current_time( 'Y-m-d H:i:s' ),
+					'post_type'             => get_post_type(),
+					'google_api_key'        => get_option( 'getwid_google_api_key', '' ),
+					'instagram_token_isset' => (bool) get_option( 'getwid_instagram_token', '' ),
+
+					'assets_path'           => getwid_get_plugin_url( '/assets' ),
+					'image_sizes'           => $this->get_image_sizes(),
+
+					'excerpt_length'        => apply_filters( 'excerpt_length', 55 ),
+					'recaptcha_site_key'    => $recaptcha_site_key,
+					'recaptcha_secret_key'  => $recaptcha_secret_key,
+					'mailchimp_api_key'     => $mailchimp_api_key,
+					'debug'                 => ( defined( 'WP_DEBUG' ) ? WP_DEBUG : false ),
+				),
+				'templates'               => array(
+					'name' => getwid()->postTemplatePart()->postType,
+					'new'  => admin_url( 'post-new.php?post_type=' . getwid()->postTemplatePart()->postType ),
+					'view' => admin_url( 'edit.php?post_type=' . getwid()->postTemplatePart()->postType ),
+					'edit' => admin_url( 'post.php?post=' ),
+				),
+				'ajax_url'                => admin_url( 'admin-ajax.php' ),
+				'options_general_url'     => admin_url( 'options-general.php' ),
+				'get_instagram_token_url' => add_query_arg(
+					array( 'nonce' => wp_create_nonce( 'getwid_nonce_save_instagram_token' ) ),
+					admin_url( 'options-general.php' )
+				),
+				'options_url'             => array(
+					'general'    => getwid()->settingsPage()->getTabUrl( 'general' ),
+					'appearance' => getwid()->settingsPage()->getTabUrl( 'appearance' ),
+					'blocks'     => getwid()->settingsPage()->getTabUrl( 'blocks' ),
+				),
+				'nonces'                  => array(
+					'google_api_key'        => wp_create_nonce( 'getwid_nonce_google_api_key' ),
+					'recaptcha_v2'          => wp_create_nonce( 'getwid_nonce_recaptcha_v2' ),
+					'mailchimp_api_key'     => wp_create_nonce( 'getwid_nonce_mailchimp_api_key' ),
+					'check_instagram_token' => wp_create_nonce( 'getwid_nonce_check_instagram_token' ),
+				),
+				'acf_exist'               => getwid_acf_is_active(),
+				'current_user'            => array(
+					'can_manage_options' => $current_user_can_manage_options,
+				),
+			)
+		);
+
+		wp_add_inline_script( 'wp-blocks', 'const Getwid = ' . wp_json_encode( $data ), 'before' );
 	}
 
 	public function get_image_sizes() {

@@ -63,7 +63,7 @@ export function getMapStyles( mapStyle: string, customStyle?: string ) {
 	}
 
 	if ( mapStyle !== 'default' ) {
-		const stylesArr = ( window as StylesGlobal ).stylesArr || {};
+		const stylesArr = GetwidGoogleMapStyles || {};
 
 		return stylesArr[ mapStyle ];
 	}

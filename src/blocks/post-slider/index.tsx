@@ -19,15 +19,6 @@ registerBlockType( metadata as BlockConfiguration< PostSliderAttributes >, {
 	icon: <PostSliderIcon />,
 	transforms,
 	deprecated,
-	getEditWrapperProps( attributes ) {
-		const { align } = attributes;
-
-		if ( align && [ 'wide', 'full' ].includes( align ) ) {
-			return { 'data-align': align };
-		}
-
-		return undefined;
-	},
 	edit: MaybeBlockIsDisabled( blockName ) || Edit,
 	save,
 } );

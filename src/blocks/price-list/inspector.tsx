@@ -30,7 +30,7 @@ export default function Inspector( {
 	return (
 		<InspectorControls>
 			<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen>
-				<MediaControl< MediaObject >
+				<MediaControl
 					label={ __( 'Image', 'getwid' ) }
 					url={ url }
 					id={ id }

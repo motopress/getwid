@@ -17,6 +17,8 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import {
 	AnimationSelectControl,
+	ImageSizeSelect,
+	MediaControl,
 	StyleLengthControl,
 	TabsControl,
 } from 'getwid-components';
@@ -211,69 +213,21 @@ export default function Inspector( props: InspectorProps ) {
 						}
 						allowAnimation={ [ 'Seeker', 'Icon' ] }
 					/>
-					<BaseControl label={ __( 'Image', 'getwid' ) }>
-						{ ! url && (
-							<MediaPlaceholder
-								icon="format-image"
-								labels={ {
-									title: __( 'Image', 'getwid' ),
-									instructions: __(
-										'Upload an image file, pick one from your media library, or add one with a URL.',
-										'getwid'
-									),
-								} }
-								onSelect={ onSelectMedia }
-								accept="image/*"
-								allowedTypes={ allowedMediaTypes }
-							/>
-						) }
-						{ url && (
-							<MediaUpload
-								onSelect={ onSelectMedia }
-								allowedTypes={ allowedMediaTypes }
-								value={ id }
-								render={ ( { open } ) => (
-									<BaseControl>
-										<div
-											onClick={ open }
-											onKeyDown={ ( event ) => {
-												if (
-													event.key === 'Enter' ||
-													event.key === ' '
-												) {
-													open();
-												}
-											} }
-											className="getwid-background-image-wrapper"
-											role="button"
-											tabIndex={ 0 }
-										>
-											<img src={ url } alt="" />
-										</div>
-										<div>
-											<Button
-												variant="primary"
-												onClick={ open }
-											>
-												{ ! id &&
-													__(
-														'Select Image',
-														'getwid'
-													) }
-												{ !! id &&
-													__(
-														'Replace Image',
-														'getwid'
-													) }
-											</Button>
-										</div>
-									</BaseControl>
-								) }
-							/>
-						) }
-					</BaseControl>
+					<MediaControl
+						label={ __( 'Image', 'getwid' ) }
+						removeButton={ false }
+						url={ url }
+						id={ id }
+						onSelectMedia={ onSelectMedia }
+						onRemoveMedia={ () =>
+							setAttributes( {
+								url: undefined,
+								id: undefined,
+							} )
+						}
+					/>
 					{ imgObj && (
-						<SelectControl
+						<ImageSizeSelect
 							label={ __( 'Image Size', 'getwid' ) }
 							help={ __(
 								'For images from Media Library only.',
@@ -281,7 +235,6 @@ export default function Inspector( props: InspectorProps ) {
 							) }
 							value={ imageSize }
 							onChange={ onChangeImageSize }
-							options={ imageSizeOptions }
 						/>
 					) }
 				</PanelBody>

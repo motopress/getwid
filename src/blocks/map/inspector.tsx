@@ -1,9 +1,7 @@
 import {
 	BaseControl,
 	Button,
-	ButtonGroup,
 	ExternalLink,
-	Modal,
 	PanelBody,
 	RadioControl,
 	RangeControl,
@@ -15,17 +13,13 @@ import {
 import { InspectorControls } from '@wordpress/block-editor';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { CustomPanelBody, TabsControl } from 'getwid-components';
+import { TabsControl } from 'getwid-components';
 
-import {
-	baseClass,
-	googleMapsApiKeyHelpUrl,
-	mapStyleOptions,
-} from './constants';
-import type { GoogleMapsRuntime, MapInspectorProps } from './types';
+import { googleMapsApiKeyHelpUrl, mapStyleOptions } from './constants';
+import type { MapInspectorProps } from './types';
 import { parseMapMarkers } from './utils';
-
-const runtimeGlobal = window as GoogleMapsRuntime;
+import { MarkerModal } from './marker-modal';
+import { MarkerSettingsPanel } from './marker-setting-panel';
 
 type TabName = 'general' | 'style' | 'layout';
 
@@ -40,6 +34,7 @@ export default function Inspector( props: MapInspectorProps ) {
 		changeState,
 		getState,
 		manageGoogleAPIKey,
+		currentWindow,
 	} = props;
 	const {
 		mapHeight,
@@ -60,265 +55,7 @@ export default function Inspector( props: MapInspectorProps ) {
 	const action = getState( 'action' );
 	const editModal = getState( 'editModal' );
 
-	function renderEditModal( index: number | null ) {
-		if ( index === null || typeof markers[ index ] === 'undefined' ) {
-			return null;
-		}
-
-		const marker = markers[ index ];
-
-		if (
-			! ( action === 'edit' || action === 'drop' ) ||
-			editModal !== true
-		) {
-			return null;
-		}
-
-		return (
-			<Modal
-				className={ `${ baseClass }__modal` }
-				title={ __( 'Edit Marker', 'getwid' ) }
-				onRequestClose={ () => {
-					changeState( 'action', false );
-					changeState( 'editModal', false );
-
-					if ( action === 'drop' ) {
-						cancelMarker();
-					} else {
-						changeState( 'currentMarker', null );
-					}
-				} }
-			>
-				<TextControl
-					label={ __( 'Name', 'getwid' ) }
-					value={ marker.name }
-					onChange={ ( value ) =>
-						updateArrValues( { name: value }, index )
-					}
-					__nextHasNoMarginBottom
-				/>
-				<TextareaControl
-					label={ __(
-						'Popup Content. Plain Text or HTML.',
-						'getwid'
-					) }
-					rows={ 5 }
-					value={ marker.description }
-					onChange={ ( value ) =>
-						updateArrValues( { description: value }, index )
-					}
-				/>
-				<ToggleControl
-					label={ __( 'Opened by default', 'getwid' ) }
-					checked={ marker.popUpOpen }
-					onChange={ ( value ) =>
-						updateArrValues( { popUpOpen: value }, index )
-					}
-				/>
-				<TextControl
-					label={ __( 'Popup Maximum Width, px.', 'getwid' ) }
-					value={ String( marker.popUpMaxWidth ) }
-					type="number"
-					onChange={ ( value ) =>
-						updateArrValues( { popUpMaxWidth: value }, index )
-					}
-					__nextHasNoMarginBottom
-				/>
-				<TextControl
-					label={ __( 'Latitude', 'getwid' ) }
-					value={ String( marker.coords.lat ) }
-					type="number"
-					onChange={ ( value ) =>
-						updateArrValues(
-							{
-								coords: {
-									lat: parseFloat( value ),
-									lng: marker.coords.lng,
-								},
-							},
-							index
-						)
-					}
-					__nextHasNoMarginBottom
-				/>
-				<TextControl
-					label={ __( 'Longitude', 'getwid' ) }
-					value={ String( marker.coords.lng ) }
-					type="number"
-					onChange={ ( value ) =>
-						updateArrValues(
-							{
-								coords: {
-									lat: marker.coords.lat,
-									lng: parseFloat( value ),
-								},
-							},
-							index
-						)
-					}
-					__nextHasNoMarginBottom
-				/>
-				<ButtonGroup>
-					<Button
-						isPrimary
-						onClick={ () => {
-							if ( action === 'drop' ) {
-								initMarkers(
-									false,
-									false,
-									currentMarker || 0,
-									getState( 'mapObj' )
-								);
-							} else if ( action === 'edit' ) {
-								initMarkers(
-									false,
-									true,
-									currentMarker || 0,
-									getState( 'mapObj' )
-								);
-							}
-
-							changeState( 'currentMarker', null );
-							changeState( 'action', false );
-							changeState( 'editModal', false );
-						} }
-					>
-						{ action === 'drop'
-							? __( 'Save', 'getwid' )
-							: __( 'Update', 'getwid' ) }
-					</Button>
-					{ action === 'drop' && (
-						<Button
-							isSecondary
-							onClick={ () => {
-								changeState( 'action', false );
-								changeState( 'editModal', false );
-								cancelMarker();
-							} }
-						>
-							{ __( 'Cancel', 'getwid' ) }
-						</Button>
-					) }
-				</ButtonGroup>
-			</Modal>
-		);
-	}
-
-	function renderMarkersSettings( index: number ) {
-		const marker = markers[ index ];
-		const markerInstance = getState( 'markerArrTemp' )[ index ];
-
-		if ( typeof marker === 'undefined' ) {
-			return null;
-		}
-
-		return (
-			<CustomPanelBody
-				key={ index }
-				title={ `${ __( 'Marker', 'getwid' ) }: ${ marker.name }` }
-				initialOpen={ false }
-				onOpen={ () =>
-					markerInstance?.setAnimation(
-						runtimeGlobal.google?.maps.Animation.BOUNCE || null
-					)
-				}
-				onClose={ () => markerInstance?.setAnimation( null ) }
-			>
-				<TextControl
-					label={ __( 'Name', 'getwid' ) }
-					value={ marker.name }
-					onChange={ ( value ) =>
-						updateArrValues( { name: value }, index )
-					}
-					__nextHasNoMarginBottom
-				/>
-				<TextareaControl
-					label={ __(
-						'Popup Content. Plain Text or HTML.',
-						'getwid'
-					) }
-					rows={ 5 }
-					value={ marker.description }
-					onChange={ ( value ) =>
-						updateArrValues( { description: value }, index )
-					}
-				/>
-				<ToggleControl
-					label={ __( 'Opened by default', 'getwid' ) }
-					checked={ marker.popUpOpen }
-					onChange={ ( value ) =>
-						updateArrValues( { popUpOpen: value }, index )
-					}
-				/>
-				<TextControl
-					label={ __( 'Popup Width', 'getwid' ) }
-					value={ String( marker.popUpMaxWidth ) }
-					type="number"
-					onChange={ ( value ) =>
-						updateArrValues( { popUpMaxWidth: value }, index )
-					}
-					__nextHasNoMarginBottom
-				/>
-				<TextControl
-					label={ __( 'Latitude', 'getwid' ) }
-					value={ String( marker.coords.lat ) }
-					type="number"
-					onChange={ ( value ) =>
-						updateArrValues(
-							{
-								coords: {
-									lat: parseFloat( value ),
-									lng: marker.coords.lng,
-								},
-							},
-							index
-						)
-					}
-					__nextHasNoMarginBottom
-				/>
-				<TextControl
-					label={ __( 'Longitude', 'getwid' ) }
-					value={ String( marker.coords.lng ) }
-					type="number"
-					onChange={ ( value ) =>
-						updateArrValues(
-							{
-								coords: {
-									lat: marker.coords.lat,
-									lng: parseFloat( value ),
-								},
-							},
-							index
-						)
-					}
-					__nextHasNoMarginBottom
-				/>
-				<ButtonGroup>
-					<Button
-						isPrimary
-						onClick={ () => {
-							initMarkers(
-								false,
-								true,
-								index,
-								getState( 'mapObj' )
-							);
-						} }
-					>
-						{ __( 'Update', 'getwid' ) }
-					</Button>
-					<Button
-						isSecondary
-						onClick={ () => {
-							onDeleteMarker( index );
-						} }
-					>
-						{ __( 'Delete', 'getwid' ) }
-					</Button>
-				</ButtonGroup>
-			</CustomPanelBody>
-		);
-	}
+	const google = currentWindow?.google;
 
 	return (
 		<InspectorControls>
@@ -426,8 +163,7 @@ export default function Inspector( props: MapInspectorProps ) {
 						/>
 					</PanelBody>
 
-					{ !! runtimeGlobal.Getwid?.current_user
-						?.can_manage_options && (
+					{ !! Getwid.current_user.can_manage_options && (
 						<PanelBody
 							title={ __( 'Google Maps API Key', 'getwid' ) }
 							initialOpen={ false }
@@ -441,30 +177,25 @@ export default function Inspector( props: MapInspectorProps ) {
 								__nextHasNoMarginBottom
 							/>
 							<BaseControl>
-								<ButtonGroup>
-									<Button
-										isPrimary
-										disabled={
-											getState( 'checkApiKey' ) === ''
-										}
-										onClick={ ( event ) =>
-											manageGoogleAPIKey( event, 'set' )
-										}
-									>
-										{ __( 'Update', 'getwid' ) }
-									</Button>
-									<Button
-										isSecondary
-										onClick={ ( event ) =>
-											manageGoogleAPIKey(
-												event,
-												'delete'
-											)
-										}
-									>
-										{ __( 'Delete', 'getwid' ) }
-									</Button>
-								</ButtonGroup>
+								<Button
+									variant="primary"
+									disabled={
+										getState( 'checkApiKey' ) === ''
+									}
+									onClick={ ( event ) =>
+										manageGoogleAPIKey( event, 'set' )
+									}
+								>
+									{ __( 'Update', 'getwid' ) }
+								</Button>
+								<Button
+									variant="secondary"
+									onClick={ ( event ) =>
+										manageGoogleAPIKey( event, 'delete' )
+									}
+								>
+									{ __( 'Delete', 'getwid' ) }
+								</Button>
 							</BaseControl>
 							<BaseControl>
 								<ExternalLink href={ googleMapsApiKeyHelpUrl }>
@@ -553,13 +284,79 @@ export default function Inspector( props: MapInspectorProps ) {
 				</PanelBody>
 			) }
 
-			{ renderEditModal( currentMarker ) }
+			{ currentMarker !== null && editModal && (
+				<MarkerModal
+					isUpdating={ action !== 'drop' }
+					marker={ markers[ currentMarker ] }
+					onClose={ () => {
+						changeState( 'action', false );
+						changeState( 'editModal', false );
+						if ( action === 'drop' ) {
+							cancelMarker();
+						}
+					} }
+					onSave={ ( marker ) => {
+						updateArrValues( marker, currentMarker );
+
+						if ( action === 'drop' ) {
+							initMarkers(
+								false,
+								false,
+								currentMarker || 0,
+								getState( 'mapObj' )
+							);
+						} else if ( action === 'edit' ) {
+							initMarkers(
+								false,
+								true,
+								currentMarker || 0,
+								getState( 'mapObj' )
+							);
+						}
+
+						changeState( 'currentMarker', null );
+						changeState( 'action', false );
+						changeState( 'editModal', false );
+					} }
+				/>
+			) }
 
 			{ markers.length > 0 && tabName === 'layout' && (
 				<PanelBody title={ __( 'Markers', 'getwid' ) }>
-					{ markers.map( ( _marker, index ) =>
-						renderMarkersSettings( index )
-					) }
+					{ markers.map( ( _marker, index ) => (
+						<MarkerSettingsPanel
+							key={ index }
+							marker={ _marker }
+							onOpen={ () => {
+								if ( ! google ) {
+									return;
+								}
+
+								getState( 'markerArrTemp' )?.[
+									index
+								].setAnimation(
+									google.maps.Animation.BOUNCE || null
+								);
+							} }
+							onClose={ () =>
+								getState( 'markerArrTemp' )?.[
+									index
+								].setAnimation( null )
+							}
+							onEdit={ ( value ) =>
+								updateArrValues( value, index )
+							}
+							onUpdate={ () =>
+								initMarkers(
+									false,
+									true,
+									index,
+									getState( 'mapObj' )
+								)
+							}
+							onDelete={ () => onDeleteMarker( index ) }
+						/>
+					) ) }
 				</PanelBody>
 			) }
 		</InspectorControls>

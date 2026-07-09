@@ -5,10 +5,16 @@
 	"name": "getwid/image-box",
 	"category": "getwid-blocks",
 	"title": "Image Box",
-	"keywords": [ "feature", "service" ],
+	"keywords": [
+		"feature",
+		"service"
+	],
 	"supports": {
 		"alignWide": true,
-		"align": [ "wide", "full" ]
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"imageSize": {
@@ -89,8 +95,17 @@
 			"attribute": "rel"
 		}
 	},
-	"editorScript": "file:./index.js",
+	"editorScript": [
+		"jquery",
+		"file:./index.js"
+	],
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"viewScript": [ "jquery", "file:./view.js" ]
+	"style": [
+		"animate",
+		"file:./style-index.css"
+	],
+	"viewScript": [
+		"jquery",
+		"file:./view.js"
+	]
 }

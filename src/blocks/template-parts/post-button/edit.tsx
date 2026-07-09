@@ -11,13 +11,11 @@ import { __ } from '@wordpress/i18n';
 import clsx from 'clsx';
 
 import Inspector from './inspector';
-import type {
-	ServerSideRenderProps,
-	TemplatePostButtonEditProps,
-} from './types';
+import type { TemplatePostButtonEditProps } from './types';
 
 import './editor.scss';
 import './style.scss';
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 const allowedFormats = [
 	'core/bold',
@@ -27,24 +25,6 @@ const allowedFormats = [
 	'core/strikethrough',
 	'core/text-color',
 ];
-
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
-
-function getGetwidSettings() {
-	return (
-		window as unknown as {
-			Getwid?: {
-				templates?: { name?: string };
-			};
-		}
-	 ).Getwid;
-}
 
 function Edit( props: TemplatePostButtonEditProps ) {
 	const { attributes, setAttributes, backgroundColor, textColor } = props;
@@ -58,14 +38,14 @@ function Edit( props: TemplatePostButtonEditProps ) {
 			 ).getCurrentPostType(),
 		[]
 	);
-	const getwidSettings = getGetwidSettings();
+
 	const blockProps = useBlockProps( {
 		style: {
 			textAlign: textAlignment,
 		},
 	} );
 
-	if ( currentPostType === getwidSettings?.templates?.name ) {
+	if ( currentPostType === Getwid.templates.name ) {
 		return (
 			<>
 				<Inspector { ...props } />
@@ -109,14 +89,14 @@ function Edit( props: TemplatePostButtonEditProps ) {
 	}
 
 	return (
-		<Disabled>
-			{ ServerSideRender && (
+		<div { ...blockProps }>
+			<Disabled>
 				<ServerSideRender
 					block="getwid/template-post-link"
 					attributes={ attributes }
 				/>
-			) }
-		</Disabled>
+			</Disabled>
+		</div>
 	);
 }
 

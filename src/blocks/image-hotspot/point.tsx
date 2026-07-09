@@ -1,12 +1,18 @@
 import { useCallback, useEffect, useRef } from '@wordpress/element';
 import clsx from 'clsx';
 
-import type { ImageHotspotPoint, RuntimeGlobal } from './types';
-import { baseClass, decodeEntities } from './utils';
+import type { ImageHotspotPoint } from './types';
+import { useMergeRefs, useRefEffect } from '@wordpress/compose';
+import { safeHTML } from '@wordpress/dom';
+import { decodeEntities } from '@wordpress/html-entities';
 
 type PointProps = ImageHotspotPoint & {
 	isSelected: boolean;
 	isRecentlyAdded: boolean;
+	clickedCoordinates: {
+		x: number;
+		y: number;
+	} | null;
 	common: {
 		icon: string;
 		size: number;
@@ -42,6 +48,7 @@ export default function Point( props: PointProps ) {
 		popUpWidth,
 		placement,
 		position,
+		clickedCoordinates,
 		isSelected,
 		onMoveEnd,
 		common,
@@ -51,118 +58,129 @@ export default function Point( props: PointProps ) {
 		onDeselect,
 		onCreate,
 	} = props;
-	const pointElement = useRef< HTMLDivElement | null >( null );
+
 	const isDragged = useRef( false );
-	const safeTitle = decodeEntities( title );
-	const safeContent = decodeEntities( content );
+	const safeTitle = safeHTML( decodeEntities( title ) );
+	const safeContent = safeHTML( decodeEntities( content ) );
 
 	const calculatePosition = useCallback(
 		( point: HTMLElement, mouseX: number, mouseY: number ) => {
-			const parentRect = point.parentElement?.getBoundingClientRect();
-
-			if ( ! parentRect ) {
-				return { x: '0%', y: '0%' };
-			}
+			const parent = point.parentNode as Element;
+			const parentRect = parent.getBoundingClientRect();
 
 			const pointWidth = point.offsetWidth;
 			const pointHeight = point.offsetHeight;
 			let computedX = mouseX - parentRect.left - pointWidth / 2;
 			let computedY = mouseY - parentRect.top - pointHeight / 2;
 
-			computedX = Math.max(
-				0,
-				Math.min( computedX, parentRect.width - pointWidth )
-			);
-			computedY = Math.max(
-				0,
-				Math.min( computedY, parentRect.height - pointHeight )
-			);
+			if ( computedX > parentRect.width - pointWidth ) {
+				computedX = parentRect.width - pointWidth;
+			}
+
+			if ( computedX < 0 ) {
+				computedX = 0;
+			}
+
+			if ( computedY > parentRect.height - pointHeight ) {
+				computedY = parentRect.height - pointHeight;
+			}
+
+			if ( computedY < 0 ) {
+				computedY = 0;
+			}
 
 			return {
-				x: `${ ( ( 100 * computedX ) / parentRect.width ).toFixed(
-					2
-				) }%`,
-				y: `${ ( ( 100 * computedY ) / parentRect.height ).toFixed(
-					2
-				) }%`,
+				x:
+					( ( 100 * computedX ) / parentRect.width ).toFixed( 2 ) +
+					'%',
+				y:
+					( ( 100 * computedY ) / parentRect.height ).toFixed( 2 ) +
+					'%',
 			};
 		},
 		[]
 	);
 
-	const onPointMove = useCallback(
-		( event: MouseEvent ) => {
-			if ( ! pointElement.current ) {
-				return;
-			}
+	const onPointSelect = useCallback( () => {
+		onSelect();
+	}, [] );
 
-			const nextPosition = calculatePosition(
-				pointElement.current,
-				event.clientX,
-				event.clientY
-			);
+	const onPointDeselect: EventListener = useCallback( ( event ) => {
+		if (
+			event.target !== pointElement.current &&
+			! pointElement.current?.contains( event.target as Node )
+		) {
+			onDeselect();
+		}
+	}, [] );
 
-			pointElement.current.style.left = nextPosition.x;
-			pointElement.current.style.top = nextPosition.y;
-			isDragged.current = true;
-		},
-		[ calculatePosition ]
-	);
-
-	const onPointMoveEnd = useCallback(
-		( event: MouseEvent ) => {
-			if ( ! pointElement.current ) {
-				return;
-			}
-
-			const ownerDocument = pointElement.current.ownerDocument;
-
-			ownerDocument.removeEventListener( 'mousemove', onPointMove );
-			ownerDocument.removeEventListener( 'mouseup', onPointMoveEnd );
-
-			if ( ! isDragged.current ) {
-				return;
-			}
-
-			const nextPosition = calculatePosition(
-				pointElement.current,
-				event.clientX,
-				event.clientY
-			);
-
-			onMoveEnd( nextPosition.x, nextPosition.y );
-			isDragged.current = false;
-		},
-		[ calculatePosition, onMoveEnd, onPointMove ]
-	);
-
-	const onPointMoveStart = useCallback(
-		( event: MouseEvent ) => {
-			if ( ! pointElement.current ) {
-				return;
-			}
-
-			event.preventDefault();
-			event.stopPropagation();
-
-			const ownerDocument = pointElement.current.ownerDocument;
-
-			ownerDocument.addEventListener( 'mousemove', onPointMove );
-			ownerDocument.addEventListener( 'mouseup', onPointMoveEnd );
-		},
-		[ onPointMove, onPointMoveEnd ]
-	);
-
-	useEffect( () => {
-		const runtimeGlobal = window as RuntimeGlobal;
-		const currentPoint = pointElement.current;
-
-		if ( ! currentPoint || ! runtimeGlobal.tippy ) {
+	const onPointMove: EventListener = useCallback( ( event ) => {
+		if ( ! pointElement.current ) {
 			return;
 		}
 
-		const popup = runtimeGlobal.tippy( currentPoint, {
-			maxWidth: parseInt( String( popUpWidth ), 10 ),
+		const mouseEvent = event as MouseEvent;
+
+		const calculatedPosition = calculatePosition(
+			pointElement.current,
+			mouseEvent.clientX,
+			mouseEvent.clientY
+		);
+
+		pointElement.current.style.left = calculatedPosition.x;
+		pointElement.current.style.top = calculatedPosition.y;
+
+		isDragged.current = true;
+	}, [] );
+
+	const onPointMoveStart: EventListener = useCallback( ( event ) => {
+		event.preventDefault();
+		event.stopPropagation();
+		if ( ! pointElement.current ) {
+			return;
+		}
+
+		const document = pointElement.current.ownerDocument;
+
+		document.addEventListener( 'mousemove', onPointMove );
+		document.addEventListener( 'mouseup', onPointMoveEnd );
+	}, [] );
+
+	const onPointMoveEnd: EventListener = useCallback( ( event ) => {
+		if ( ! pointElement.current ) {
+			return;
+		}
+
+		const document = pointElement.current.ownerDocument;
+
+		document.removeEventListener( 'mousemove', onPointMove );
+		document.removeEventListener( 'mouseup', onPointMoveEnd );
+
+		if ( ! isDragged.current ) {
+			return;
+		}
+
+		const mouseEvent = event as MouseEvent;
+		const calculatedPosition = calculatePosition(
+			pointElement.current,
+			mouseEvent.clientX,
+			mouseEvent.clientY
+		);
+
+		onMoveEnd( calculatedPosition.x, calculatedPosition.y );
+
+		isDragged.current = false;
+	}, [] );
+
+	useEffect( () => {
+		if ( ! tippy ) {
+			return;
+		}
+
+		const element = pointElement.current;
+
+		const popup = new tippy( element, {
+			maxWidth: popUpWidth,
 			theme: tooltip.theme,
 			animation: tooltip.animation,
 			animateFill: false,
@@ -171,78 +189,65 @@ export default function Point( props: PointProps ) {
 			arrow: tooltip.arrow,
 			placement,
 			allowHTML: true,
-			content: `<div class="${ baseClass }__tooltip"><div class="${ baseClass }__tooltip-title">${ safeTitle }</div><div class="${ baseClass }__tooltip-content">${ safeContent }</div></div>`,
+			content: `<div class="wp-block-getwid-image-hotspot__tooltip"><div class="wp-block-getwid-image-hotspot__tooltip-title">${ safeTitle }</div><div class="wp-block-getwid-image-hotspot__tooltip-content">${ safeContent }</div></div>`,
 		} );
 
-		return () => popup.destroy();
-	}, [ placement, popUpWidth, safeContent, safeTitle, tooltip ] );
-
-	useEffect( () => {
-		const currentPoint = pointElement.current;
-		const hotspot = currentPoint?.closest( `.${ baseClass }` );
-
-		if ( ! currentPoint || ! hotspot ) {
-			return;
-		}
-
-		const onPointSelect = () => onSelect();
-		const onPointDeselect = ( event: Event ) => {
-			const target = event.target as Node;
-
-			if (
-				target !== currentPoint &&
-				! currentPoint.contains( target )
-			) {
-				onDeselect();
-			}
-		};
-
-		if ( isSelected ) {
-			currentPoint.addEventListener( 'mousedown', onPointMoveStart );
-			hotspot.addEventListener( 'click', onPointDeselect );
-		} else {
-			currentPoint.addEventListener( 'click', onPointSelect );
-		}
-
-		if ( isRecentlyAdded ) {
-			onCreate(
-				currentPoint,
-				calculatePosition(
-					currentPoint,
-					Number( position.x ),
-					Number( position.y )
-				)
-			);
-		}
-
 		return () => {
-			hotspot.removeEventListener( 'click', onPointDeselect );
-			currentPoint.removeEventListener( 'mousedown', onPointMoveStart );
-			currentPoint.removeEventListener( 'click', onPointSelect );
+			popup.destroy();
 		};
-	}, [
-		calculatePosition,
-		isRecentlyAdded,
-		isSelected,
-		onCreate,
-		onDeselect,
-		onPointMoveStart,
-		onSelect,
-		position.x,
-		position.y,
-	] );
+	}, [ tooltip, placement, popUpWidth ] );
 
-	const linkHTML =
-		link !== ''
-			? `<a href="${ link }"${
-					newTab ? ' target="_blank" rel="noopener noreferrer"' : ''
-			  }>${ safeTitle }</a>`
-			: safeTitle;
+	const pointRef = useRefEffect(
+		( point: HTMLElement ) => {
+			if ( isSelected ) {
+				point.addEventListener( 'mousedown', onPointMoveStart );
+				point
+					.closest( '.wp-block-getwid-image-hotspot' )
+					?.addEventListener( 'click', onPointDeselect );
+			} else {
+				point.addEventListener( 'click', onPointSelect );
+			}
+
+			if ( isRecentlyAdded && clickedCoordinates ) {
+				onCreate(
+					point,
+					calculatePosition(
+						point,
+						clickedCoordinates.x,
+						clickedCoordinates.y
+					)
+				);
+			}
+
+			return () => {
+				point
+					.closest( '.wp-block-getwid-image-hotspot' )
+					?.removeEventListener( 'click', onPointDeselect );
+				point.removeEventListener( 'mousedown', onPointMoveStart );
+				point.removeEventListener( 'click', onPointSelect );
+			};
+		},
+		[ isSelected ]
+	);
+
+	const pointElement = useRef< HTMLElement >();
+
+	const pointMergedRefs = useMergeRefs( [ pointRef, pointElement ] );
+
+	let linkHTML = '';
+	if ( link !== '' ) {
+		linkHTML =
+			`<a href="${ link }"` +
+			( newTab ? ' target="_blank" rel="noopener noreferrer"' : '' ) +
+			`>${ safeTitle }</a>`;
+	} else {
+		linkHTML = safeTitle;
+	}
 
 	return (
 		<div
-			ref={ pointElement }
-			className={ clsx( `${ baseClass }__dot`, {
+			ref={ pointMergedRefs }
+			className={ clsx( 'wp-block-getwid-image-hotspot__dot', {
 				[ `has-animation-${ common.pulse }` ]: common.pulse !== 'none',
 				'is-selected': isSelected,
 			} ) }
@@ -250,29 +255,34 @@ export default function Point( props: PointProps ) {
 				top: position.y,
 				left: position.x,
 				backgroundColor: backgroundColor || common.backgroundColor,
-				padding: `${ common.padding }px`,
+				padding: common.padding + 'px',
 				opacity: common.opacity / 100,
 			} }
 		>
-			<div className={ `${ baseClass }__dot-wrapper` }>
+			<div className={ 'wp-block-getwid-image-hotspot__dot-wrapper' }>
 				<div
-					className={ `${ baseClass }__dot-content` }
+					className={ 'wp-block-getwid-image-hotspot__dot-content' }
 					style={ {
-						fontSize: `${ common.size }px`,
+						fontSize: common.size + 'px',
 						color: color || common.color,
 					} }
 				>
 					<i
-						className={ `${ baseClass }__dot-icon ${
+						className={ `wp-block-getwid-image-hotspot__dot-icon ${
 							icon || common.icon
 						}` }
-					/>
+					></i>
 				</div>
-				<div className={ `${ baseClass }__dot-description` }>
+				<div
+					className={
+						'wp-block-getwid-image-hotspot__dot-description'
+					}
+				>
 					<div
-						className={ `${ baseClass }__dot-title` }
-						dangerouslySetInnerHTML={ { __html: linkHTML } }
-					/>
+						className={ 'wp-block-getwid-image-hotspot__dot-title' }
+					>
+						${ linkHTML }
+					</div>
 				</div>
 			</div>
 		</div>

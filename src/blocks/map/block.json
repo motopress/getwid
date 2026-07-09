@@ -68,8 +68,15 @@
 			"default": ""
 		}
 	},
-	"editorScript": "file:./index.js",
+	"editorScript": [
+		"getwid-map-styles",
+		"jquery",
+		"file:./index.js"
+	],
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"viewScript": "file:./view.js"
+	"viewScript": [
+		"jquery",
+		"file:./view.js"
+	]
 }

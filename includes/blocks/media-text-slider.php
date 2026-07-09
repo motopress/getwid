@@ -40,7 +40,7 @@ class MediaTextSlider extends AbstractBlock {
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/media-text-slider' ),
+			getwid_get_plugin_path( 'assets/blocks/media-text-slider/media-text-slider' ),
 			array(
 				'render_callback' => array( $this, 'render_callback' ),
 			)

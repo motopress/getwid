@@ -6,7 +6,12 @@
 	"category": "getwid-blocks",
 	"title": "Icon",
 	"supports": {
-		"align": [ "left", "right", "wide", "full" ]
+		"align": [
+			"left",
+			"right",
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"backgroundColor": {
@@ -85,8 +90,17 @@
 			"attribute": "rel"
 		}
 	},
-	"editorScript": "file:./index.js",
+	"editorScript": [
+		"jquery",
+		"file:./index.js"
+	],
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"viewScript": [ "jquery", "file:./view.js" ]
+	"style": [
+		"animate",
+		"file:./style-index.css"
+	],
+	"viewScript": [
+		"jquery",
+		"file:./view.js"
+	]
 }

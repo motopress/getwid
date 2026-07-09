@@ -2,8 +2,9 @@ import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-import type { ImagesStackEditProps, RuntimeGlobal, StackImage } from './types';
+import type { ImagesStackEditProps, StackImage } from './types';
 import { pickRelevantMediaFile } from './utils';
+import { ImageSizeSelect } from 'getwid-components';
 
 type InspectorProps = ImagesStackEditProps & {
 	imgObj: Array< StackImage | null >;
@@ -18,8 +19,6 @@ export default function Inspector( {
 	imgObj,
 }: InspectorProps ) {
 	const { imageSize, linkTo, stackStyle } = attributes;
-	const runtimeGlobal = window as RuntimeGlobal;
-	const imageSizeOptions = runtimeGlobal.Getwid?.settings?.image_sizes || [];
 
 	function onChangeImageSize( nextImageSize: string ) {
 		if ( imgObj.some( ( image ) => ! image ) ) {
@@ -38,7 +37,7 @@ export default function Inspector( {
 		<InspectorControls>
 			<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen>
 				{ imgObj.length !== 0 && (
-					<SelectControl
+					<ImageSizeSelect
 						label={ __( 'Image Size', 'getwid' ) }
 						help={ __(
 							'For images from Media Library only.',
@@ -46,7 +45,6 @@ export default function Inspector( {
 						) }
 						value={ imageSize }
 						onChange={ onChangeImageSize }
-						options={ imageSizeOptions }
 					/>
 				) }
 				<SelectControl

@@ -35,28 +35,6 @@ class Instagram extends AbstractBlock {
 		wp_send_json_success( $response );
 	}
 
-	public function block_frontend_assets() {
-
-		if ( is_admin() ) {
-			return;
-		}
-
-		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		add_filter(
-			'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
-
-				return $assets;
-			}
-		);
-
-		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
-	}
-
 	public function render_callback( $attributes, $content ) {
 
 		$attributes = wp_parse_args(
@@ -158,8 +136,6 @@ class Instagram extends AbstractBlock {
 		<?php
 
 		$result = ob_get_clean();
-
-		$this->block_frontend_assets();
 
 		return $result;
 	}

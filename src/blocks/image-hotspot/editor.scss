@@ -5,6 +5,10 @@ $base_class: ".wp-block-getwid-image-hotspot";
 }
 
 #{$base_class}__modal {
+	.components-base-control {
+		margin-bottom: 16px;
+	}
+
 	.getwid-modal-editor-tabs {
 		padding: 0;
 		width: 450px;
@@ -55,6 +59,7 @@ $base_class: ".wp-block-getwid-image-hotspot";
 
 		.components-base-control {
 			margin-left: 10px;
+			margin-bottom: 0;
 		}
 
 		.components-base-control + .components-base-control {
@@ -70,6 +75,12 @@ $base_class: ".wp-block-getwid-image-hotspot";
 		.components-base-control__field {
 			align-items: flex-end;
 			margin: 0;
+		}
+	}
+
+	&-actions {
+		.components-button {
+			margin-inline-start: 10px;
 		}
 	}
 }
@@ -101,15 +112,20 @@ $base_class: ".wp-block-getwid-image-hotspot";
 
 .wp-block-getwid-image-hotspot {
 	&--dropPoint {
-		cursor: crosshair;
 
 		.wp-block-getwid-image-hotspot__image {
+			cursor: crosshair;
 			pointer-events: all !important;
+
 		}
 	}
 
 	&__wrapper {
 		user-select: none;
+	}
+
+	&__image {
+		max-width: 100%;
 	}
 
 	&.is-selected {

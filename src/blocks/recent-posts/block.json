@@ -5,9 +5,15 @@
 	"name": "getwid/recent-posts",
 	"category": "getwid-blocks",
 	"title": "Recent Posts",
-	"keywords": [ "latest" ],
+	"keywords": [
+		"latest"
+	],
 	"supports": {
-		"html": false
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"titleTag": {
@@ -64,9 +70,6 @@
 		"columns": {
 			"type": "number",
 			"default": 3
-		},
-		"align": {
-			"type": "string"
 		},
 		"order": {
 			"type": "string",

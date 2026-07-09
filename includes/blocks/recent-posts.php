@@ -20,28 +20,6 @@ class RecentPosts extends AbstractBlock {
 		return __( 'Recent Posts', 'getwid' );
 	}
 
-	public function block_frontend_assets() {
-
-		if ( is_admin() ) {
-			return;
-		}
-
-		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		add_filter(
-			'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
-
-				return $assets;
-			}
-		);
-
-		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
-	}
-
 	public function render_callback( $attributes, $content ) {
 
 		$query_args = array(
@@ -92,7 +70,7 @@ class RecentPosts extends AbstractBlock {
 			$wrapper_class .= ' getwid-columns getwid-columns-' . $attributes['columns'];
 		}
 
-		$attributes['titleTag'] = $this->validateHeadingHTMLTag( $attributes['titleTag'] );
+		$attributes['titleTag'] = $this->validate_heading_html_tag( $attributes['titleTag'] );
 
 		$q = new \WP_Query( $query_args );
 		ob_start();
@@ -120,8 +98,6 @@ class RecentPosts extends AbstractBlock {
 		<?php
 
 		$result = ob_get_clean();
-
-		$this->block_frontend_assets();
 
 		return $result;
 	}

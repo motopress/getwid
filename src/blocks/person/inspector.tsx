@@ -1,7 +1,7 @@
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, ToggleControl } from '@wordpress/components';
+import { PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { MediaControl } from 'getwid-components';
+import { ImageSizeSelect, MediaControl } from 'getwid-components';
 
 import type { MediaObject, PersonEditProps } from './types';
 
@@ -9,17 +9,6 @@ type InspectorProps = PersonEditProps & {
 	onSelectMedia: ( media: MediaObject ) => void;
 	changeImageSize: ( media: MediaObject, imageSize: string ) => void;
 };
-
-const imageSizeOptions =
-	(
-		window as Window & {
-			Getwid?: {
-				settings?: {
-					image_sizes?: Array< { value: string; label: string } >;
-				};
-			};
-		}
-	 ).Getwid?.settings?.image_sizes || [];
 
 export default function Inspector( {
 	attributes,
@@ -54,7 +43,7 @@ export default function Inspector( {
 					}
 				/>
 				{ imgObj && (
-					<SelectControl
+					<ImageSizeSelect
 						label={ __( 'Image Size', 'getwid' ) }
 						help={ __(
 							'For images from Media Library only.',
@@ -62,7 +51,6 @@ export default function Inspector( {
 						) }
 						value={ imageSize }
 						onChange={ onChangeImageSize }
-						options={ imageSizeOptions }
 					/>
 				) }
 				<ToggleControl

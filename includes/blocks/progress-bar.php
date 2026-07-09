@@ -17,31 +17,12 @@ class ProgressBar extends AbstractBlock {
 		);
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/progress-bar' ),
-			array(
-				'render_callback' => array( $this, 'render_callback' ),
-			)
+			getwid_get_plugin_path( 'assets/blocks/progress-bar' )
 		);
 	}
 
 	public function get_label() {
 		return __( 'Progress Bar', 'getwid' );
-	}
-
-	public function block_frontend_assets() {
-
-		if ( is_admin() ) {
-			return;
-		}
-
-		wp_enqueue_script( 'waypoints' );
-	}
-
-	public function render_callback( $attributes, $content ) {
-
-		$this->block_frontend_assets();
-
-		return $content;
 	}
 }
 

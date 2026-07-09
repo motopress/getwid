@@ -2,12 +2,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 import clsx from 'clsx';
 
 import type { ImagesStackAttributes, StackImage } from './types';
-import {
-	baseClass,
-	chunkImages,
-	getContainerClassName,
-	getImageHref,
-} from './utils';
+import { baseClass, chunkImages, getImageHref } from './utils';
 
 type SaveProps = {
 	attributes: ImagesStackAttributes;
@@ -43,9 +38,11 @@ export function renderImage( image: StackImage, linkTo: string ) {
 }
 
 export default function Save( { attributes, className }: SaveProps ) {
-	const { images, linkTo } = attributes;
+	const { images, linkTo, stackStyle } = attributes;
 	const blockProps = useBlockProps.save( {
-		className: getContainerClassName( attributes, className ),
+		className: clsx( className, {
+			[ `is-layout-${ stackStyle }` ]: stackStyle !== 'default',
+		} ),
 	} );
 
 	return (

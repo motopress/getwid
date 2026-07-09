@@ -57,8 +57,6 @@ export default function Edit( props: MediaTextSliderEditProps ) {
 	const blockProps = useBlockProps( {
 		className: clsx( className, {
 			[ `${ baseClass }--current-slide-${ currentSlide }` ]: true,
-			alignfull: align === 'full',
-			alignwide: align === 'wide',
 		} ),
 	} );
 
@@ -85,7 +83,6 @@ export default function Edit( props: MediaTextSliderEditProps ) {
 			}
 		} );
 	}, [
-		block?.innerBlocks,
 		parentAttributes.attributes.contentMaxWidth,
 		parentAttributes.attributes.horizontalAlign,
 		parentAttributes.attributes.imageSize,
@@ -98,7 +95,6 @@ export default function Edit( props: MediaTextSliderEditProps ) {
 		parentAttributes.attributes.paddingTop,
 		parentAttributes.attributes.textColor,
 		parentAttributes.attributes.verticalAlign,
-		updateBlockAttributes,
 	] );
 
 	function addNewSlide( nextSlide: number ) {

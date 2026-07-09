@@ -6,34 +6,14 @@ import clsx from 'clsx';
 
 import Inspector from './inspector';
 import { getCustomPaddingStyle, prepareGradientStyle } from './style-utils';
-import type {
-	ServerSideRenderProps,
-	TemplatePostFeaturedBackgroundImageEditProps,
-} from './types';
+import type { TemplatePostFeaturedBackgroundImageEditProps } from './types';
 
 import './editor.scss';
 import './style.scss';
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 const TEMPLATE = [ [ 'core/paragraph' ] ];
 const baseClass = 'wp-block-getwid-template-post-featured-background-image';
-
-const ServerSideRender = (
-	window as unknown as {
-		wp?: {
-			serverSideRender?: ( props: ServerSideRenderProps ) => JSX.Element;
-		};
-	}
- ).wp?.serverSideRender;
-
-function getGetwidSettings() {
-	return (
-		window as unknown as {
-			Getwid?: {
-				templates?: { name?: string };
-			};
-		}
-	 ).Getwid;
-}
 
 function Edit( props: TemplatePostFeaturedBackgroundImageEditProps ) {
 	const { attributes } = props;
@@ -71,7 +51,6 @@ function Edit( props: TemplatePostFeaturedBackgroundImageEditProps ) {
 			 ).getCurrentPostType(),
 		[]
 	);
-	const getwidSettings = getGetwidSettings();
 	const blockProps = useBlockProps( {
 		className: clsx( {
 			[ `getwid-padding-top-${ paddingTop }` ]:
@@ -128,7 +107,7 @@ function Edit( props: TemplatePostFeaturedBackgroundImageEditProps ) {
 		...getCustomPaddingStyle( attributes ),
 	};
 
-	if ( currentPostType === getwidSettings?.templates?.name ) {
+	if ( currentPostType === Getwid.templates.name ) {
 		return (
 			<>
 				<Inspector { ...props } />
@@ -161,14 +140,14 @@ function Edit( props: TemplatePostFeaturedBackgroundImageEditProps ) {
 	}
 
 	return (
-		<Disabled>
-			{ ServerSideRender && (
+		<div { ...blockProps }>
+			<Disabled>
 				<ServerSideRender
 					block="getwid/template-post-featured-background-image"
 					attributes={ attributes }
 				/>
-			) }
-		</Disabled>
+			</Disabled>
+		</div>
 	);
 }
 

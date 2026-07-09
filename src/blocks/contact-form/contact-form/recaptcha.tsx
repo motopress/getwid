@@ -17,13 +17,12 @@ type RecaptchaProps = {
 };
 
 export default function Recaptcha( { theme, setTheme }: RecaptchaProps ) {
-	const currentUserCanManageOptions =
-		Getwid.ContactForm.user_can_manage_options;
+	const currentUserCanManageOptions = Getwid.current_user.can_manage_options;
 	const [ siteKey, setSiteKey ] = useState(
-		Getwid.ContactForm.recaptcha_site_key
+		Getwid.settings.recaptcha_site_key
 	);
 	const [ secretKey, setSecretKey ] = useState(
-		Getwid.ContactForm.recaptcha_secret_key
+		Getwid.settings.recaptcha_secret_key
 	);
 	const [ isLoading, setIsLoading ] = useState( false );
 
@@ -37,13 +36,13 @@ export default function Recaptcha( { theme, setTheme }: RecaptchaProps ) {
 					site_key: nextSiteKey,
 					secret_key: nextSecretKey,
 				},
-				nonce: Getwid.ContactForm.nonce,
+				nonce: Getwid.nonces.recaptcha_v2,
 			};
 
-			Getwid.ContactForm.recaptcha_site_key = nextSiteKey;
-			Getwid.ContactForm.recaptcha_secret_key = nextSecretKey;
+			Getwid.settings.recaptcha_site_key = nextSiteKey;
+			Getwid.settings.recaptcha_secret_key = nextSecretKey;
 
-			$.post( Getwid.ContactForm.ajax_url, data ).done( () => {
+			$.post( Getwid.ajax_url, data ).done( () => {
 				setIsLoading( false );
 			} );
 		},

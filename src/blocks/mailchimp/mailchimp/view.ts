@@ -16,14 +16,12 @@ type AjaxResponse =
 			data: string;
 	  };
 
-const runtimeGlobal = window as MailchimpRuntime;
-
 function initSubscribeForms() {
 	const $forms = jQuery(
 		'.wp-block-getwid-mailchimp__form:not(.getwid-init)'
 	);
 
-	if ( ! $forms.length || ! runtimeGlobal.Getwid?.ajax_url ) {
+	if ( ! $forms.length || ! Getwid.ajax_url ) {
 		return;
 	}
 
@@ -51,7 +49,7 @@ function initSubscribeForms() {
 			}
 
 			jQuery.post(
-				runtimeGlobal.Getwid?.ajax_url || '',
+				Getwid.ajax_url || '',
 				{
 					action: 'getwid_subscribe',
 					data: formValues,
