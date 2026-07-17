@@ -7,6 +7,7 @@ import metadata from './block.json';
 import Edit from './edit';
 import SectionIcon from './icon';
 import Save from './save';
+import deprecated from './deprecated';
 import type { SectionAttributes } from './types';
 
 const blockName = 'getwid/section';
@@ -21,15 +22,7 @@ registerBlockType( metadata as BlockConfiguration< SectionAttributes >, {
 		__( 'wrapper', 'getwid' ),
 		__( 'row', 'getwid' ),
 	],
-	getEditWrapperProps( attributes ) {
-		const { align } = attributes;
-
-		if ( align && [ 'wide', 'full' ].includes( align ) ) {
-			return { 'data-align': align };
-		}
-
-		return undefined;
-	},
 	edit: MaybeBlockIsDisabled( blockName ) || Edit,
 	save: Save,
+	deprecated,
 } );

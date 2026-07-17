@@ -1,5 +1,4 @@
 import {
-	BlockAlignmentToolbar,
 	BlockControls,
 	MediaUpload,
 	MediaUploadCheck,
@@ -29,7 +28,6 @@ import {
 import './editor.scss';
 import './style.scss';
 
-const alignmentsList = [ 'wide', 'full' ];
 const imageBackgroundType = 'image';
 const allowedFormats = [
 	'core/bold',
@@ -172,14 +170,13 @@ function Edit( props: VideoPopupEditProps ) {
 			color: titleColor.color || customTitleColor,
 		},
 	};
-	const hasTitle = ! RichText.isEmpty( title );
 	const linkAttributes = {
 		className: `${ baseClass }__link`,
 		href: typeof link !== 'undefined' ? link : '',
 		style: {
 			maxWidth: ! url ? buttonMaxWidth : undefined,
 		},
-		'aria-label': hasTitle ? title : undefined,
+		'aria-label': title,
 		onClick: ( event: {
 			preventDefault: () => void;
 			stopPropagation: () => void;
@@ -190,7 +187,7 @@ function Edit( props: VideoPopupEditProps ) {
 	};
 	const imgAttributes = {
 		src: url,
-		alt: hasTitle ? title : '',
+		alt: title || '',
 		className: clsx(
 			`${ baseClass }__image`,
 			`${ baseClass }__source`,
@@ -200,6 +197,42 @@ function Edit( props: VideoPopupEditProps ) {
 
 	return (
 		<>
+			<BlockControls>
+				<MediaUploadCheck>
+					<ToolbarGroup>
+						<MediaUpload
+							onSelect={ onSelectMedia }
+							allowedTypes={ allowedMediaTypes }
+							value={ id }
+							render={ ( { open } ) => (
+								<ToolbarButton
+									label={ __( 'Select Image', 'getwid' ) }
+									icon="format-image"
+									onClick={ open }
+								/>
+							) }
+						/>
+						{ !! url && (
+							<ToolbarButton
+								label={ __( 'Delete Image', 'getwid' ) }
+								icon="trash"
+								onClick={ () =>
+									setAttributes( {
+										id: undefined,
+										url: undefined,
+									} )
+								}
+							/>
+						) }
+					</ToolbarGroup>
+				</MediaUploadCheck>
+			</BlockControls>
+			<Inspector
+				{ ...props }
+				imgObj={ imgObj }
+				changeImageSize={ changeImageSize }
+				onSelectMedia={ onSelectMedia }
+			/>
 			<div { ...blockProps }>
 				{ isSelected && (
 					<div className={ `${ baseClass }__url-field` }>
@@ -213,49 +246,6 @@ function Edit( props: VideoPopupEditProps ) {
 						/>
 					</div>
 				) }
-				<BlockControls>
-					<BlockAlignmentToolbar
-						controls={ alignmentsList }
-						value={ align }
-						onChange={ ( nextAlign ) =>
-							setAttributes( { align: nextAlign } )
-						}
-					/>
-					<MediaUploadCheck>
-						<ToolbarGroup>
-							<MediaUpload
-								onSelect={ onSelectMedia }
-								allowedTypes={ allowedMediaTypes }
-								value={ id }
-								render={ ( { open } ) => (
-									<ToolbarButton
-										label={ __( 'Select Image', 'getwid' ) }
-										icon="format-image"
-										onClick={ open }
-									/>
-								) }
-							/>
-							{ !! url && (
-								<ToolbarButton
-									label={ __( 'Delete Image', 'getwid' ) }
-									icon="trash"
-									onClick={ () =>
-										setAttributes( {
-											id: undefined,
-											url: undefined,
-										} )
-									}
-								/>
-							) }
-						</ToolbarGroup>
-					</MediaUploadCheck>
-				</BlockControls>
-				<Inspector
-					{ ...props }
-					imgObj={ imgObj }
-					changeImageSize={ changeImageSize }
-					onSelectMedia={ onSelectMedia }
-				/>
 				<a { ...linkAttributes }>
 					<div { ...containerProps }>
 						{ !! url && <img { ...imgAttributes } /> }

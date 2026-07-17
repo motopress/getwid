@@ -5,7 +5,11 @@
 	"name": "getwid/video-popup",
 	"category": "getwid-blocks",
 	"title": "Video Popup",
-	"keywords": [ "video", "popup", "button" ],
+	"keywords": [
+		"video",
+		"popup",
+		"button"
+	],
 	"attributes": {
 		"titleColor": {
 			"type": "string"
@@ -87,6 +91,13 @@
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"viewScript": [ "jquery", "mp-fancybox", "file:./view.js" ]
+	"style": [
+		"mp-fancybox",
+		"file:./style-index.css"
+	],
+	"viewScript": [
+		"jquery",
+		"mp-fancybox",
+		"file:./view.js"
+	]
 }

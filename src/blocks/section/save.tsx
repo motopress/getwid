@@ -32,6 +32,10 @@ export default function Save( {
 		backgroundImage,
 		sliderImages,
 		backgroundVideoType,
+		backgroundVideoAutoplay,
+		backgroundVideoLoop,
+		backgroundVideoMute,
+		backgroundVideoPoster,
 		youTubeVideoScale,
 		youTubeVideoUrl,
 		youTubeVideoMute,
@@ -278,10 +282,38 @@ export default function Save( {
 								<div
 									className={ `${ baseClass }__background-slider-wrapper` }
 								>
-									<BackgroundSlider
-										attributes={ attributes }
-										baseClass={ baseClass }
-									/>
+									<div
+										className={ `${ baseClass }__background-slider` }
+										data-autoplay="true"
+										data-autoplay-speed={
+											attributes.sliderAnimationSpeed
+										}
+										data-slide-effect={
+											attributes.sliderAnimationEffect
+										}
+										data-slide-speed={
+											attributes.sliderAnimationDuration
+										}
+										data-infinite="true"
+									>
+										{ sliderImages.map( ( image ) => (
+											<div
+												className={ `${ baseClass }__background-slider-item` }
+												key={ image.id || image.url }
+											>
+												<img
+													src={ image.url }
+													className={
+														image.id
+															? `wp-image-${ image.id }`
+															: undefined
+													}
+													alt={ image.alt }
+													data-id={ image.id }
+												/>
+											</div>
+										) ) }
+									</div>
 								</div>
 							) }
 							{ ( !! backgroundVideoUrl ||
@@ -309,10 +341,26 @@ export default function Save( {
 										) }
 									{ !! backgroundVideoUrl &&
 										backgroundVideoType === 'self' && (
-											<BackgroundVideo
-												attributes={ attributes }
-												baseClass={ baseClass }
-											/>
+											<video
+												className={ `${ baseClass }__background-video source-media-library` }
+												playsInline
+												autoPlay={
+													backgroundVideoAutoplay
+												}
+												muted={ backgroundVideoMute }
+												loop={ backgroundVideoLoop }
+												poster={
+													backgroundVideoPoster ||
+													undefined
+												}
+											>
+												<source
+													src={
+														backgroundVideoUrl.url
+													}
+													type="video/mp4"
+												/>
+											</video>
 										) }
 								</div>
 							) }

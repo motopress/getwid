@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 /*!
  * getwid-video-popup
  */
@@ -34,6 +36,7 @@
 		position: relative;
 		display: flex;
 		align-items: center;
+		border: 0;
 		border-radius: 45px;
 		border-color: #ff0000;
 		color: inherit;
@@ -366,7 +369,7 @@
 }
 
 @function opac($var1, $var2) {
-	@return ($var1 * $var2) / 100;
+	@return math.div($var1 * $var2, 100);
 }
 
 @for $i from 0 through 20 {

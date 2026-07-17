@@ -11,7 +11,7 @@ import {
 	ToolbarButton,
 	ToolbarGroup,
 } from '@wordpress/components';
-import { select, useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useCallback, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import clsx from 'clsx';
@@ -22,10 +22,6 @@ import type { TableOfContentsEditProps, TableOfContentsHeading } from './types';
 import { getHeadingTree } from './utils';
 
 import './editor.scss';
-
-type BlockEditorSelect = {
-	getBlocks: () => Block[];
-};
 
 const headingBlockNames = [ 'core/heading', 'getwid/advanced-heading' ];
 const containerBlockNames = [ 'core/columns', 'core/column', 'getwid/section' ];
@@ -55,6 +51,10 @@ function getHeadingLevel( block: Block ) {
 export default function Edit( props: TableOfContentsEditProps ) {
 	const { attributes, setAttributes } = props;
 	const { headings, align, allowedTags, listStyle } = attributes;
+	const { getBlocks } = useSelect(
+		( select ) => select( blockEditorStore ),
+		[]
+	);
 	const { updateBlockAttributes } = useDispatch( blockEditorStore );
 	const blockProps = useBlockProps( {
 		className: clsx( `is-style-${ listStyle }`, {
@@ -63,12 +63,10 @@ export default function Edit( props: TableOfContentsEditProps ) {
 	} );
 
 	const checkHeadings = useCallback( () => {
-		const store = select( blockEditorStore ) as BlockEditorSelect;
 		const headingBlocks: Block[] = [];
 		const headingData: TableOfContentsHeading[] = [];
 
-		store
-			.getBlocks()
+		getBlocks()
 			.filter(
 				( block ) =>
 					headingBlockNames.includes( block.name ) ||
@@ -89,7 +87,6 @@ export default function Edit( props: TableOfContentsEditProps ) {
 				return;
 			}
 
-			const content = heading.attributes.content;
 			let anchor = String( heading.attributes.anchor ?? '' );
 
 			if ( ! anchor ) {
@@ -101,12 +98,10 @@ export default function Edit( props: TableOfContentsEditProps ) {
 			headingData.push( {
 				level: level - 1,
 				content:
-					typeof content === 'string' && content.length
-						? getBlockContent( heading ).replace(
-								/<(?:.|\n)*?>/gm,
-								''
-						  )
-						: '',
+					getBlockContent( heading ).replace(
+						/<(?:.|\n)*?>/gm,
+						''
+					) || '',
 				anchor,
 			} );
 		} );

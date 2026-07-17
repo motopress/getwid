@@ -17,7 +17,7 @@ export default function Inspector( {
 	return (
 		<InspectorControls>
 			<PanelBody title={ __( 'Settings', 'getwid' ) }>
-				<MediaControl< TestimonialMedia >
+				<MediaControl
 					label={ __( 'Image', 'getwid' ) }
 					removeButton={ false }
 					url={ imgUrl }

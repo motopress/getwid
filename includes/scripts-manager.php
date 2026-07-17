@@ -25,6 +25,7 @@ class ScriptsManager {
 		// add_action( 'enqueue_block_editor_assets', [ $this, 'enqueueEditorAssets'] );
 
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_assets' ) );
 
 		// Fires after enqueuing block assets for both editor and front-end.
 		// add_action( 'enqueue_block_assets', [ $this, 'enqueueFrontBlockAssets' ] );
@@ -43,7 +44,6 @@ class ScriptsManager {
 	public function enqueue_block_editor_assets() {
 
 		$this->setup_editor_global_data();
-		$this->register_frontend_common_assets();
 
 		$style_url  = getwid_get_plugin_url( '/assets/components/index.css' );
 		$script_url = getwid_get_plugin_url( '/assets/components/index.js' );
@@ -113,12 +113,17 @@ class ScriptsManager {
 		wp_style_add_data( "{$this->prefix}-blocks-editor-common", 'rtl', 'replace' );
 	}
 
+	public function enqueue_block_assets() {
+		$this->register_frontend_common_assets();
+		wp_enqueue_style( "{$this->prefix}-blocks-common" );
+	}
+
 	public function register_frontend_common_assets() {
 		wp_register_style(
 			"{$this->prefix}-blocks-common",
 			getwid_get_plugin_url( 'assets/common-styles/style.css' ),
 			array(),
-			$this->version
+			$this->version,
 		);
 
 		wp_style_add_data( "{$this->prefix}-blocks-common", 'rtl', 'replace' );

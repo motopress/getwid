@@ -9,10 +9,7 @@ class Tabs extends AbstractBlock {
 		parent::__construct( 'getwid/tabs' );
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/tabs/tabs' ),
-			array(
-				'render_callback' => array( $this, 'render_callback' ),
-			)
+			getwid_get_plugin_path( 'assets/blocks/tabs/tabs' )
 		);
 
 		register_block_type(
@@ -22,10 +19,6 @@ class Tabs extends AbstractBlock {
 
 	public function get_label() {
 		return __( 'Tabs', 'getwid' );
-	}
-
-	public function render_callback( $attributes, $content ) {
-		return $content;
 	}
 }
 

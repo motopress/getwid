@@ -1,6 +1,6 @@
 .has-child-selected,
 .is-selected {
-	.wp-block-getwid-tabs {
+	&.wp-block-getwid-tabs {
 		.active-tab {
 			outline: 2px solid #0085ba;
 			z-index: 1;
@@ -9,25 +9,25 @@
 }
 
 .wp-block-getwid-tabs {
-	.wp-block-getwid-tabs__add-tab {
+	&__add-tab {
 		margin-left: 6px !important;
 		border: none !important;
 		margin-top: 5px !important;
 		margin-bottom: 5px !important;
 	}
 
-	.wp-block-getwid-tabs__nav-links {
+	&__nav-links {
 		margin: 0 !important;
 		padding: 0 !important;
 		list-style: none !important;
 	}
 
-	.wp-block-getwid-tabs__title-wrapper {
+	&__title-wrapper {
 		margin-bottom: 0 !important;
 		margin-top: 0 !important;
 	}
 
-	.wp-block-getwid-tabs__tab-content-wrapper {
+	&__tab-content-wrapper {
 		flex: 0 1 auto;
 		min-width: 0;
 		height: auto;

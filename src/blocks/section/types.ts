@@ -114,6 +114,13 @@ export type SectionAttributes = {
 	className?: string;
 };
 
+export type ColorValue = {
+	color?: string;
+	class?: string;
+};
+
 export type SectionEditProps = BlockEditProps< SectionAttributes > & {
 	className?: string;
+	backgroundColor: ColorValue;
+	setBackgroundColor: ( color?: string ) => void;
 };

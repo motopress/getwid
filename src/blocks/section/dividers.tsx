@@ -1,13 +1,15 @@
 import { Fragment } from '@wordpress/element';
+import type { ReactElement } from 'react';
 
 import type { SectionAttributes } from './types';
+import dividers from './dividers-list';
 
 type DividerProps = {
 	attributes: SectionAttributes;
 	baseClass: string;
 };
 
-function fallbackDivider( color: string, height?: string ) {
+function fallbackDivider( color: string, height?: string ): ReactElement {
 	return (
 		<svg
 			style={ { height: height || undefined } }
@@ -32,16 +34,26 @@ export default function Dividers( { attributes, baseClass }: DividerProps ) {
 		dividerBottomColor = 'white',
 	} = attributes;
 
+	function getDividerRenderer( dividerName?: string ) {
+		return dividerName
+			? dividers[ dividerName ] ?? fallbackDivider
+			: fallbackDivider;
+	}
+
+	const renderTopDivider = getDividerRenderer( dividerTop );
+	const renderBottomDivider = getDividerRenderer( dividerBottom );
+
 	return (
 		<Fragment>
 			{ dividerTop && (
 				<div className={ `${ baseClass }__divider is-top-divider` }>
-					{ fallbackDivider( dividerTopColor, dividersTopHeight ) }
+					{ renderTopDivider( dividerTopColor, dividersTopHeight ) }
 				</div>
 			) }
+
 			{ dividerBottom && (
 				<div className={ `${ baseClass }__divider is-bottom-divider` }>
-					{ fallbackDivider(
+					{ renderBottomDivider(
 						dividerBottomColor,
 						dividersBottomHeight
 					) }

@@ -9,15 +9,13 @@ import {
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { CustomColorPalette, TabsControl } from 'getwid-components';
+import { CustomColorPalette } from 'getwid-components';
 
 import type { SocialLinksEditProps } from './types';
 
-type TabName = 'general' | 'style';
 type ResponsiveTab = 'desktop' | 'tablet' | 'mobile';
 
 function Inspector( props: SocialLinksEditProps ) {
-	const [ tabName, setTabName ] = useState< TabName >( 'general' );
 	const {
 		attributes,
 		setAttributes,
@@ -38,115 +36,99 @@ function Inspector( props: SocialLinksEditProps ) {
 
 	return (
 		<InspectorControls>
-			<TabsControl
-				state={ tabName }
-				onChangeTab={ ( nextTabName ) =>
-					setTabName( nextTabName as TabName )
-				}
-				tabs={ [ 'general', 'style' ] }
-			/>
-
-			{ tabName === 'general' && (
-				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen>
-					<ResponsiveAlignmentControls { ...props } />
-					<RadioControl
-						label={ __( 'Layout', 'getwid' ) }
-						selected={ iconsStyle || 'default' }
-						options={ [
-							{ value: 'default', label: __( 'Icon', 'getwid' ) },
-							{
-								value: 'stacked',
-								label: __( 'Background', 'getwid' ),
+			<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen>
+				<ResponsiveAlignmentControls { ...props } />
+				<RadioControl
+					label={ __( 'Layout', 'getwid' ) }
+					selected={ iconsStyle || 'default' }
+					options={ [
+						{ value: 'default', label: __( 'Icon', 'getwid' ) },
+						{
+							value: 'stacked',
+							label: __( 'Background', 'getwid' ),
+						},
+						{
+							value: 'framed',
+							label: __( 'Outline', 'getwid' ),
+						},
+					] }
+					onChange={ ( nextIconsStyle ) =>
+						setAttributes( {
+							iconsStyle:
+								nextIconsStyle as SocialLinksEditProps[ 'attributes' ][ 'iconsStyle' ],
+						} )
+					}
+				/>
+				<CustomColorPalette
+					colorSettings={ [
+						{
+							title: __( 'Icon Color', 'getwid' ),
+							colors: {
+								customColor: customTextColor,
+								defaultColor: textColor,
 							},
-							{
-								value: 'framed',
-								label: __( 'Outline', 'getwid' ),
-							},
-						] }
-						onChange={ ( nextIconsStyle ) =>
-							setAttributes( {
-								iconsStyle:
-									nextIconsStyle as SocialLinksEditProps[ 'attributes' ][ 'iconsStyle' ],
-							} )
-						}
-					/>
-					<CustomColorPalette
-						colorSettings={ [
-							{
-								title: __( 'Icon Color', 'getwid' ),
-								colors: {
-									customColor: customTextColor,
-									defaultColor: textColor,
-								},
-								changeColor: setTextColor,
-							},
-							...( useSecondaryColor && iconsStyle === 'stacked'
-								? [
-										{
-											title: __(
-												'Background Color',
-												'getwid'
-											),
-											colors: {
-												customColor:
-													customBackgroundColor,
-												defaultColor: backgroundColor,
-											},
-											changeColor: setBackgroundColor,
+							changeColor: setTextColor,
+						},
+						...( useSecondaryColor && iconsStyle === 'stacked'
+							? [
+									{
+										title: __(
+											'Background Color',
+											'getwid'
+										),
+										colors: {
+											customColor: customBackgroundColor,
+											defaultColor: backgroundColor,
 										},
-								  ]
-								: [] ),
-						] }
-					/>
-				</PanelBody>
-			) }
+										changeColor: setBackgroundColor,
+									},
+							  ]
+							: [] ),
+					] }
+				/>
+				<TextControl
+					type="number"
+					label={ __( 'Icon Size', 'getwid' ) }
+					value={ iconsSize !== undefined ? iconsSize : '' }
+					onChange={ ( nextIconsSize ) => {
+						const parsedIconsSize = Number.parseInt(
+							nextIconsSize,
+							10
+						);
 
-			{ tabName === 'style' && (
-				<PanelBody title={ __( 'Style', 'getwid' ) } initialOpen>
-					<TextControl
-						type="number"
-						label={ __( 'Icon Size', 'getwid' ) }
-						value={ iconsSize !== undefined ? iconsSize : '' }
-						onChange={ ( nextIconsSize ) => {
-							const parsedIconsSize = Number.parseInt(
-								nextIconsSize,
-								10
-							);
-
-							setAttributes( {
-								iconsSize: Number.isNaN( parsedIconsSize )
-									? undefined
-									: parsedIconsSize,
-							} );
-						} }
-						min={ 0 }
-						step={ 1 }
-					/>
-					<SelectControl
-						label={ __( 'Space between icons', 'getwid' ) }
-						value={ iconsSpacing }
-						options={ [
-							{ value: 'none', label: __( 'None', 'getwid' ) },
-							{
-								value: 'default',
-								label: __( 'Default', 'getwid' ),
-							},
-							{ value: 'small', label: __( 'Small', 'getwid' ) },
-							{
-								value: 'medium',
-								label: __( 'Medium', 'getwid' ),
-							},
-							{ value: 'large', label: __( 'Large', 'getwid' ) },
-						] }
-						onChange={ ( nextIconsSpacing ) =>
-							setAttributes( {
-								iconsSpacing:
-									nextIconsSpacing as SocialLinksEditProps[ 'attributes' ][ 'iconsSpacing' ],
-							} )
-						}
-					/>
-				</PanelBody>
-			) }
+						setAttributes( {
+							iconsSize: Number.isNaN( parsedIconsSize )
+								? undefined
+								: parsedIconsSize,
+						} );
+					} }
+					min={ 0 }
+					step={ 1 }
+				/>
+				<SelectControl
+					label={ __( 'Space between icons', 'getwid' ) }
+					value={ iconsSpacing }
+					options={ [
+						{ value: 'none', label: __( 'None', 'getwid' ) },
+						{
+							value: 'default',
+							label: __( 'Default', 'getwid' ),
+						},
+						{ value: 'small', label: __( 'Small', 'getwid' ) },
+						{
+							value: 'medium',
+							label: __( 'Medium', 'getwid' ),
+						},
+						{ value: 'large', label: __( 'Large', 'getwid' ) },
+					] }
+					onChange={ ( nextIconsSpacing ) =>
+						setAttributes( {
+							iconsSpacing:
+								nextIconsSpacing as SocialLinksEditProps[ 'attributes' ][ 'iconsSpacing' ],
+						} )
+					}
+				/>
+			</PanelBody>
 		</InspectorControls>
 	);
 }
@@ -169,9 +151,6 @@ function ResponsiveAlignmentControls( {
 
 	return (
 		<BaseControl>
-			<BaseControl.VisualLabel>
-				{ __( 'Responsive Alignment', 'getwid' ) }
-			</BaseControl.VisualLabel>
 			<TabPanel
 				className="getwid-editor-tabs"
 				activeClass="is-active"

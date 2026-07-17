@@ -1,13 +1,13 @@
 import {
 	BlockControls,
 	BlockIcon,
-	Placeholder,
 	RichText,
 	withColors,
 	useBlockProps,
 } from '@wordpress/block-editor';
 import {
 	Button,
+	Placeholder,
 	TextControl,
 	ToolbarDropdownMenu,
 	ToolbarGroup,
@@ -71,6 +71,14 @@ function Edit( props: TableEditProps ) {
 		useState< TableSelectionCell | null >( null );
 	const [ selectedSection, setSelectedSection ] =
 		useState< TableSectionName | null >( null );
+
+	const blockProps = useBlockProps( {
+		className: clsx(
+			className,
+			baseClass,
+			getBlockClassName( attributes )
+		),
+	} );
 
 	const normalizedAttributes = useMemo(
 		() => ( {
@@ -701,47 +709,51 @@ function Edit( props: TableEditProps ) {
 
 	function renderInitTableForm() {
 		return (
-			<Placeholder
-				label={ __( 'Table', 'getwid' ) }
-				icon={ <BlockIcon icon="editor-table" showColors /> }
-				instructions={ __(
-					'Hint: Hold Ctrl/Cmd key to select multiple cells. Hold Shift key to select range.',
-					'getwid'
-				) }
-			>
-				<form
-					className={ `${ baseClass }__placeholder-form` }
-					onSubmit={ onCreateTable }
+			<div { ...blockProps }>
+				<Placeholder
+					label={ __( 'Table', 'getwid' ) }
+					icon={ <BlockIcon icon="editor-table" showColors /> }
+					instructions={ __(
+						'Hint: Hold Ctrl/Cmd key to select multiple cells. Hold Shift key to select range.',
+						'getwid'
+					) }
 				>
-					<TextControl
-						type="number"
-						className={ `${ baseClass }__placeholder-input` }
-						label={ __( 'Rows', 'getwid' ) }
-						value={ rowCount }
-						onChange={ ( value ) =>
-							setRowCount( Number.parseInt( value, 10 ) || 1 )
-						}
-						min="1"
-					/>
-					<TextControl
-						type="number"
-						className={ `${ baseClass }__placeholder-input` }
-						label={ __( 'Columns', 'getwid' ) }
-						value={ columnCount }
-						onChange={ ( value ) =>
-							setColumnCount( Number.parseInt( value, 10 ) || 1 )
-						}
-						min="1"
-					/>
-					<Button
-						className={ `${ baseClass }__placeholder-button` }
-						variant="primary"
-						type="submit"
+					<form
+						className={ `${ baseClass }__placeholder-form` }
+						onSubmit={ onCreateTable }
 					>
-						{ __( 'Create', 'getwid' ) }
-					</Button>
-				</form>
-			</Placeholder>
+						<TextControl
+							type="number"
+							className={ `${ baseClass }__placeholder-input` }
+							label={ __( 'Rows', 'getwid' ) }
+							value={ rowCount }
+							onChange={ ( value ) =>
+								setRowCount( Number.parseInt( value, 10 ) || 1 )
+							}
+							min="1"
+						/>
+						<TextControl
+							type="number"
+							className={ `${ baseClass }__placeholder-input` }
+							label={ __( 'Columns', 'getwid' ) }
+							value={ columnCount }
+							onChange={ ( value ) =>
+								setColumnCount(
+									Number.parseInt( value, 10 ) || 1
+								)
+							}
+							min="1"
+						/>
+						<Button
+							className={ `${ baseClass }__placeholder-button` }
+							variant="primary"
+							type="submit"
+						>
+							{ __( 'Create', 'getwid' ) }
+						</Button>
+					</form>
+				</Placeholder>
+			</div>
 		);
 	}
 
@@ -908,14 +920,6 @@ function Edit( props: TableEditProps ) {
 	if ( isEmpty ) {
 		return renderInitTableForm();
 	}
-
-	const blockProps = useBlockProps( {
-		className: clsx(
-			className,
-			baseClass,
-			getBlockClassName( attributes )
-		),
-	} );
 
 	return (
 		<>

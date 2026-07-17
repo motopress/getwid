@@ -11,7 +11,7 @@ class SocialLinks extends AbstractBlock {
 		register_block_type(
 			getwid_get_plugin_path( 'assets/blocks/social-links' ),
 			array(
-				'render_callback' => array( $this, 'render_callback' ),
+				'viewStyle' => getwid()->fontIconsManager()->enqueueFonts( array() ),
 			)
 		);
 
@@ -22,42 +22,6 @@ class SocialLinks extends AbstractBlock {
 
 	public function get_label() {
 		return __( 'Social Links', 'getwid' );
-	}
-
-	public function block_frontend_styles( $styles ) {
-
-		return getwid()->fontIconsManager()->enqueueFonts( $styles );
-	}
-
-	public function block_frontend_assets() {
-
-		if ( is_admin() ) {
-			return;
-		}
-
-		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		add_filter(
-			'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
-
-				return $assets;
-			}
-		);
-
-		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
-
-		getwid()->fontIconsManager()->enqueueFonts( array() );
-	}
-
-	public function render_callback( $attributes, $content ) {
-
-		$this->block_frontend_assets();
-
-		return $content;
 	}
 }
 

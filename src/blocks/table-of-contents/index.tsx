@@ -14,7 +14,6 @@ registerBlockType(
 	metadata as BlockConfiguration< TableOfContentsAttributes >,
 	{
 		title: __( 'Table of Contents', 'getwid' ),
-		keywords: [ __( 'summary', 'getwid' ) ],
 		icon: <TableOfContentsIcon />,
 		edit: MaybeBlockIsDisabled( blockName ) || Edit,
 		save: Save,
