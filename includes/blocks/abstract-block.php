@@ -62,6 +62,10 @@ abstract class AbstractBlock {
 		return ! $this->is_disabled();
 	}
 
+	public function can_be_disabled() {
+		return true;
+	}
+
 	public function pre_render_block( $block_content, $block ) {
 
 		if ( $block['blockName'] === $this->block_name ) {

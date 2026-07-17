@@ -17,6 +17,10 @@ class TemplatePostLayoutHelper extends \Getwid\Blocks\AbstractBlock {
 		return __( 'Layout', 'getwid' );
 	}
 
+	public function can_be_disabled() {
+		return false;
+	}
+
 	public function is_disabled() {
 		return apply_filters( 'getwid/blocks/is_disabled', false, 'getwid/template-post-layout-helper' );
 	}

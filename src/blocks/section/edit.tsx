@@ -354,7 +354,7 @@ function Edit( props: SectionEditProps ) {
 		style: sectionStyle,
 	} );
 	const wrapperClassName = clsx( `${ baseClass }__wrapper`, {
-		[ `getwid-anim ${ entranceAnimation } animated` ]: !! entranceAnimation,
+		[ `${ entranceAnimation } animated` ]: !! entranceAnimation,
 		[ `getwid-padding-top-${ paddingTop }` ]:
 			paddingTop !== 'custom' && paddingTop !== '',
 		[ `getwid-padding-bottom-${ paddingBottom }` ]:

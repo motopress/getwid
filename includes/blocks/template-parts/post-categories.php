@@ -22,33 +22,8 @@ class PostCategories extends \Getwid\Blocks\AbstractBlock {
 		return __( 'Categories', 'getwid' );
 	}
 
-	public function block_frontend_assets() {
-
-		if ( is_admin() ) {
-			return;
-		}
-
-		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		add_filter(
-			'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = self::$assets_handle;
-
-				return $assets;
-			}
-		);
-
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$assets_handle,
-			getwid_get_plugin_url( 'assets/blocks/template-parts/style' . $rtl . '.css' ),
-			array(),
-			getwid()->settings()->getVersion()
-		);
+	public function can_be_disabled() {
+		return false;
 	}
 
 	public function render_callback( $attributes, $content ) {
@@ -120,8 +95,6 @@ class PostCategories extends \Getwid\Blocks\AbstractBlock {
 
 			$result = ob_get_clean();
 		}
-
-		$this->block_frontend_assets();
 
 		return $result;
 	}

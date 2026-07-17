@@ -22,6 +22,10 @@ class AcfImage extends \Getwid\Blocks\AbstractBlock {
 		return __( 'ACF Image', 'getwid' );
 	}
 
+	public function can_be_disabled() {
+		return false;
+	}
+
 	public function render_callback( $attributes, $content ) {
 
 		if ( ( get_post_type() === getwid()->postTemplatePart()->postType ) || ( get_post_type() === 'revision' ) ) {

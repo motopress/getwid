@@ -164,16 +164,6 @@ class BlocksManager {
 			$this->require_block( $block_file_name );
 		}
 
-		// fill array of active blocks
-		foreach ( $this->blocks as $block ) {
-
-			if ( $block->is_enabled() ) {
-				$this->enabledBlocks[] = $block;
-			} else {
-				$this->disabledBlocks[] = $block;
-			}
-		}
-
 		$template_parts = array(
 			'template-parts/post-title',
 			'template-parts/post-featured-image',
@@ -207,6 +197,16 @@ class BlocksManager {
 		foreach ( $template_parts_acf as $block_file_name ) {
 			$this->require_block( $block_file_name );
 		}
+
+		// fill array of active blocks
+		foreach ( $this->blocks as $block ) {
+
+			if ( $block->is_enabled() ) {
+				$this->enabledBlocks[] = $block;
+			} else {
+				$this->disabledBlocks[] = $block;
+			}
+		}
 	}
 
 	private function require_block( $block_file_name ) {
@@ -227,6 +227,15 @@ class BlocksManager {
 
 	public function getBlocks() {
 		return $this->blocks;
+	}
+
+	public function getControlledBlocks() {
+		return array_filter(
+			$this->getBlocks(),
+			function ( $block ) {
+				return $block->can_be_disabled();
+			}
+		);
 	}
 
 	public function getEnabledBlocks() {
@@ -257,7 +266,7 @@ class BlocksManager {
 			$blocks = $this->getBlocks();
 			foreach ( $blocks as $block ) {
 
-				if ( has_block( $block->getBlockName() ) ) {
+				if ( has_block( $block->get_block_name() ) ) {
 					$has_getwid_blocks = true;
 					break;
 				}
@@ -272,9 +281,9 @@ class BlocksManager {
 		$has_getwid_nested_blocks = false;
 
 		$nestedBlocks = array(
-			\Getwid\Blocks\PostCarousel::getBlockName(),
-			\Getwid\Blocks\PostSlider::getBlockName(),
-			\Getwid\Blocks\CustomPostType::getBlockName(),
+			\Getwid\Blocks\PostCarousel::get_block_name(),
+			\Getwid\Blocks\PostSlider::get_block_name(),
+			\Getwid\Blocks\CustomPostType::get_block_name(),
 		);
 
 		foreach ( $nestedBlocks as $block ) {

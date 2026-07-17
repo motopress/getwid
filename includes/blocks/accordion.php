@@ -20,7 +20,7 @@ class Accordion extends AbstractBlock {
 		);
 	}
 
-	public function getLabel() {
+	public function get_label() {
 		return __( 'Accordion', 'getwid' );
 	}
 }

@@ -22,6 +22,10 @@ class AcfWysiwyg extends \Getwid\Blocks\AbstractBlock {
 		return __( 'ACF Wysiwyg', 'getwid' );
 	}
 
+	public function can_be_disabled() {
+		return false;
+	}
+
 	public function render_callback( $attributes, $content ) {
 
 		if ( ( get_post_type() === getwid()->postTemplatePart()->postType ) || ( get_post_type() === 'revision' ) ) {
