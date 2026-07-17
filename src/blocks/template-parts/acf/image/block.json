@@ -8,8 +8,11 @@
 	"description": "ACF image template part.",
 	"textdomain": "getwid",
 	"supports": {
-		"inserter": true,
-		"align": [ "left", "center", "right" ]
+		"align": [
+			"left",
+			"center",
+			"right"
+		]
 	},
 	"attributes": {
 		"align": {

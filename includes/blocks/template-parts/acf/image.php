@@ -22,35 +22,6 @@ class AcfImage extends \Getwid\Blocks\AbstractBlock {
 		return __( 'ACF Image', 'getwid' );
 	}
 
-	public function block_frontend_assets() {
-
-		if ( is_admin() ) {
-			return;
-		}
-
-		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		add_filter(
-			'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = self::$assets_handle;
-
-				return $assets;
-			}
-		);
-
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$assets_handle,
-			getwid_get_plugin_url( 'assets/blocks/template-parts/acf/style' . $rtl . '.css' ),
-			array(),
-			getwid()->settings()->getVersion()
-		);
-	}
-
 	public function render_callback( $attributes, $content ) {
 
 		if ( ( get_post_type() === getwid()->postTemplatePart()->postType ) || ( get_post_type() === 'revision' ) ) {
@@ -86,8 +57,6 @@ class AcfImage extends \Getwid\Blocks\AbstractBlock {
 
 			$result = ob_get_clean();
 		}
-
-		$this->block_frontend_assets();
 
 		return $result;
 	}

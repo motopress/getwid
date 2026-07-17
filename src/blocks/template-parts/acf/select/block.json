@@ -7,9 +7,6 @@
 	"icon": "tag",
 	"description": "ACF select template part.",
 	"textdomain": "getwid",
-	"supports": {
-		"inserter": true
-	},
 	"attributes": {
 		"customField": {
 			"type": "string"

@@ -7,9 +7,6 @@
 	"icon": "text",
 	"description": "ACF Wysiwyg template part.",
 	"textdomain": "getwid",
-	"supports": {
-		"inserter": true
-	},
 	"attributes": {
 		"customField": {
 			"type": "string"
