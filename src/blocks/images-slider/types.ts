@@ -12,7 +12,7 @@ export type SliderImage = {
 	custom_link_rel?: string;
 	alt?: string;
 	alt_text?: string;
-	caption?: string | { raw?: string };
+	caption?: string;
 	media_details?: {
 		sizes?: Record< string, { source_url?: string } >;
 	};

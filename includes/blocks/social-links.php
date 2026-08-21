@@ -9,15 +9,8 @@ class SocialLinks extends AbstractBlock {
 		parent::__construct( 'getwid/social-links' );
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/social-links' ),
-			array(
-				'viewStyle' => getwid()->fontIconsManager()->enqueueFonts( array() ),
-			)
+			getwid_get_plugin_path( 'assets/blocks/social-links' )
 		);
-
-		if ( $this->is_enabled() ) {
-			add_filter( 'getwid/blocks_style_css/dependencies', array( $this, 'block_frontend_styles' ) );
-		}
 	}
 
 	public function get_label() {

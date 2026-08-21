@@ -10,28 +10,6 @@ class PostSlider extends AbstractBlock {
 
 		parent::__construct( 'getwid/post-slider' );
 
-		wp_register_script(
-			'slick',
-			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
-			array( 'jquery' ),
-			'1.9.0',
-			true
-		);
-
-		wp_register_style(
-			'slick',
-			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
-			array(),
-			'1.9.0'
-		);
-
-		wp_register_style(
-			'slick-theme',
-			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
-			array(),
-			'1.9.0'
-		);
-
 		register_block_type(
 			getwid_get_plugin_path( 'assets/blocks/post-slider' ),
 			array(
@@ -42,72 +20,6 @@ class PostSlider extends AbstractBlock {
 
 	public function get_label() {
 		return __( 'Post Slider', 'getwid' );
-	}
-
-
-	public function block_frontend_styles( $styles ) {
-
-		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
-
-		if ( ! in_array( 'slick', $styles, true ) ) {
-			$styles[] = 'slick';
-		}
-
-		if ( ! in_array( 'slick-theme', $styles, true ) ) {
-			$styles[] = 'slick-theme';
-		}
-
-		return $styles;
-	}
-
-	public function block_frontend_assets() {
-
-		if ( is_admin() ) {
-			return;
-		}
-
-		wp_enqueue_script( 'slick' );
-		wp_enqueue_script( 'imagesloaded' );
-
-		if ( false === getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		$deps = array(
-			'slick',
-			'slick-theme',
-		);
-
-		$deps = getwid()->fontIconsManager()->enqueueFonts( $deps );
-
-		add_filter(
-			'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = 'slick';
-				$assets[] = 'slick-theme';
-				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
-
-				return $assets;
-			}
-		);
-
-		wp_enqueue_style( 'slick' );
-		wp_enqueue_style( 'slick-theme' );
-
-		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
-
-		if ( ! $this->assets_already_enqueued ) {
-			$inline_script  = 'var Getwid = Getwid || {};';
-			$inline_script .= 'Getwid["isRTL"] = ' . wp_json_encode( is_rtl() ) . ';';
-
-			wp_add_inline_script(
-				'getwid-post-slider-view-script',
-				$inline_script,
-				'before'
-			);
-		}
-
-		$this->assets_already_enqueued = true;
 	}
 
 	public function render_callback( $attributes, $content ) {
@@ -207,8 +119,6 @@ class PostSlider extends AbstractBlock {
 		<?php
 
 		$result = ob_get_clean();
-
-		$this->block_frontend_assets();
 
 		return $result;
 	}

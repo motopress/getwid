@@ -9,7 +9,7 @@ class Person extends AbstractBlock {
 		parent::__construct( 'getwid/person' );
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/person' ),
+			getwid_get_plugin_path( 'assets/blocks/person' )
 		);
 	}
 

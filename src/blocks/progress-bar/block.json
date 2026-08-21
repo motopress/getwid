@@ -6,7 +6,10 @@
 	"category": "getwid-blocks",
 	"title": "Progress Bar",
 	"supports": {
-		"align": [ "wide", "full" ],
+		"align": [
+			"wide",
+			"full"
+		],
 		"html": false
 	},
 	"attributes": {
@@ -48,5 +51,8 @@
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"viewScript": [ "waypoints", "file:./view.js" ]
+	"viewScript": [
+		"waypoints",
+		"file:./view.js"
+	]
 }

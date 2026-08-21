@@ -9,10 +9,7 @@ class Toggle extends AbstractBlock {
 		parent::__construct( 'getwid/toggle' );
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/toggle/toggle' ),
-			array(
-				'viewStyle' => getwid()->fontIconsManager()->enqueueFonts( array() ),
-			)
+			getwid_get_plugin_path( 'assets/blocks/toggle/toggle' )
 		);
 
 		register_block_type(

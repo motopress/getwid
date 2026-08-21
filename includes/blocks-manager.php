@@ -24,6 +24,8 @@ class BlocksManager {
 		}
 
 		add_action( 'init', array( $this, 'includeBlocks' ) );
+
+		add_filter( 'block_type_metadata_settings', array( $this, 'filter_block_type_metadata_settings' ), 10, 2 );
 	}
 
 	public function block_categories_all( $block_categories, $editor_context ) {
@@ -281,9 +283,9 @@ class BlocksManager {
 		$has_getwid_nested_blocks = false;
 
 		$nestedBlocks = array(
-			\Getwid\Blocks\PostCarousel::get_block_name(),
-			\Getwid\Blocks\PostSlider::get_block_name(),
-			\Getwid\Blocks\CustomPostType::get_block_name(),
+			'getwid/post-carousel',
+			'getwid/post-slider',
+			'getwid/custom-post-type',
 		);
 
 		foreach ( $nestedBlocks as $block ) {
@@ -294,5 +296,29 @@ class BlocksManager {
 		}
 
 		return apply_filters( 'getwid/blocks/has_getwid_nested_blocks', $has_getwid_nested_blocks );
+	}
+
+	public function filter_block_type_metadata_settings( $settings, $metadata ) {
+
+		$blocks = array(
+			'getwid/accordion',
+			'getwid/custom-post-type',
+			'getwid/icon-box',
+			'getwid/icon',
+			'getwid/icon',
+			'getwid/image-hotspot',
+			'getwid/post-carousel',
+			'getwid/post-slider',
+			'getwid/section',
+			'getwid/social-links',
+			'getwid/toggle',
+			'getwid/video-popup',
+		);
+
+		if ( in_array( $metadata['name'], $blocks ) ) {
+			$settings['style_handles'] = getwid()->fontIconsManager()->enqueueFonts( $settings['style_handles'] );
+		}
+
+		return $settings;
 	}
 }

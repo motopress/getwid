@@ -407,7 +407,7 @@ function Edit( props: SectionEditProps ) {
 	} );
 	const backgroundClassName = getColorClassName(
 		'background-color',
-		backgroundColor
+		backgroundColor?.slug
 	);
 	const backgroundClass = clsx( `${ baseClass }__background`, {
 		'has-background': backgroundColor || customBackgroundColor,

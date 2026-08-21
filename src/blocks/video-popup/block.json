@@ -92,6 +92,7 @@
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": [
+		"getwid-blocks-common",
 		"mp-fancybox",
 		"file:./style-index.css"
 	],

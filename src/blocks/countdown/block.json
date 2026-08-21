@@ -7,7 +7,10 @@
 	"title": "Countdown",
 	"supports": {
 		"alignWide": true,
-		"align": [ "wide", "full" ]
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"dateTime": {
@@ -104,6 +107,12 @@
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"viewScript": [ "jquery-countdown", "file:./view.js" ]
+	"style": [
+		"getwid-blocks-common",
+		"file:./style-index.css"
+	],
+	"viewScript": [
+		"jquery-countdown",
+		"file:./view.js"
+	]
 }

@@ -25,5 +25,8 @@
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css"
+	"style": [
+		"getwid-blocks-common",
+		"file:./style-index.css"
+	]
 }

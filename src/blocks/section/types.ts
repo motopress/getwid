@@ -116,6 +116,7 @@ export type SectionAttributes = {
 
 export type ColorValue = {
 	color?: string;
+	slug?: string;
 	class?: string;
 };
 

@@ -9,7 +9,7 @@ class ButtonGroup extends AbstractBlock {
 		parent::__construct( 'getwid/button-group' );
 
 		register_block_type(
-			getwid_get_plugin_path( 'assets/blocks/button-group' ),
+			getwid_get_plugin_path( 'assets/blocks/button-group' )
 		);
 	}
 

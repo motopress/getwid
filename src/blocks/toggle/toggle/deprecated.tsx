@@ -12,7 +12,7 @@ import type {
 	ToggleAttributes,
 	ToggleDeprecatedAttributes,
 	ToggleHeaderTag,
-} from '../types';
+} from './types';
 
 const baseClass = 'wp-block-getwid-toggle';
 

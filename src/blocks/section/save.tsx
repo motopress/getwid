@@ -9,7 +9,6 @@ import type { CSSProperties } from 'react';
 
 import { baseClass } from './constants';
 import Dividers from './dividers';
-import { BackgroundSlider, BackgroundVideo } from './media';
 import {
 	prepareBackgroundImageStyles,
 	prepareGradientStyle,

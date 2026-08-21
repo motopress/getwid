@@ -8,13 +8,6 @@ class ImageBox extends AbstractBlock {
 
 		parent::__construct( 'getwid/image-box' );
 
-		wp_register_style(
-			'animate',
-			getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
-			array(),
-			'3.7.0'
-		);
-
 		register_block_type(
 			getwid_get_plugin_path( 'assets/blocks/image-box' )
 		);

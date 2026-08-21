@@ -6,7 +6,10 @@
 	"category": "getwid-blocks",
 	"title": "Counter",
 	"supports": {
-		"align": [ "wide", "full" ]
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"align": {
@@ -84,8 +87,15 @@
 			"default": "default"
 		}
 	},
-	"editorScript": "file:./index.js",
+	"editorScript": [
+		"countup",
+		"file:./index.js"
+	],
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"viewScript": [ "waypoints", "countup", "file:./view.js" ]
+	"viewScript": [
+		"waypoints",
+		"countup",
+		"file:./view.js"
+	]
 }

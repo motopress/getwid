@@ -5,10 +5,17 @@
 	"name": "getwid/media-text-slider",
 	"category": "getwid-blocks",
 	"title": "Media & Text Slider",
-	"keywords": [ "gallery", "carousel", "image" ],
+	"keywords": [
+		"gallery",
+		"carousel",
+		"image"
+	],
 	"supports": {
 		"alignWide": true,
-		"align": [ "wide", "full" ]
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"slideCount": {
@@ -121,6 +128,16 @@
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"viewScript": [ "jquery", "slick", "file:./view.js" ]
+	"style": [
+		"getwid-blocks-common",
+		"animate",
+		"slick",
+		"slick-theme",
+		"file:./style-index.css"
+	],
+	"viewScript": [
+		"jquery",
+		"slick",
+		"file:./view.js"
+	]
 }

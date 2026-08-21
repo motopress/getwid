@@ -3,6 +3,31 @@
  * getwid-common-styles
  */
 
+/*
+ * Blocks that require common styles:
+ *
+ * template-parts/acf/background-image
+ * template-parts/post-featured-background-image
+ * advanced-heading
+ * advanced-spacer
+ * content-slider
+ * content-timeline
+ * countdown
+ * custom-post-type
+ * icon-box
+ * icon
+ * image-box
+ * image-hotspot
+ * images-slider
+ * media-text-slider
+ * post-carousel
+ * post-slider
+ * recent-posts
+ * section
+ * social-links
+ * video-popup
+ */
+
 // used in media-text-slider, section, video-popup, image-hotspot
 @forward './animations';
 // used in post-carousel, images-slider, media-text-slider, post-slider, advanced-heading, countdown, image-box, icon, icon-box

@@ -5,9 +5,16 @@
 	"name": "getwid/social-links",
 	"category": "getwid-blocks",
 	"title": "Social Links",
-	"keywords": [ "facebook", "twitter", "share" ],
+	"keywords": [
+		"facebook",
+		"twitter",
+		"share"
+	],
 	"supports": {
-		"align": [ "wide", "full" ]
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"backgroundColor": {
@@ -101,5 +108,8 @@
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css"
+	"style": [
+		"getwid-blocks-common",
+		"file:./style-index.css"
+	]
 }

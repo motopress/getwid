@@ -23,8 +23,6 @@ class ScriptsManager {
 
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_assets' ) );
-
-		add_action( 'wp_enqueue_scripts', array( $this, 'register_frontend_common_assets' ) );
 	}
 
 	public function enqueue_block_editor_assets() {
@@ -100,14 +98,113 @@ class ScriptsManager {
 	}
 
 	public function enqueue_block_assets() {
-		$this->register_frontend_common_assets();
-		wp_enqueue_style( "{$this->prefix}-blocks-common" );
 
-		wp_add_inline_style( "{$this->prefix}-blocks-common", getwid_generate_section_content_width_css() );
-		wp_add_inline_style( "{$this->prefix}-blocks-common", getwid_generate_smooth_animation_css() );
-	}
+		wp_register_script(
+			'slick',
+			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.js' ),
+			array( 'jquery' ),
+			'1.9.0',
+			true
+		);
 
-	public function register_frontend_common_assets() {
+		wp_register_style(
+			'slick',
+			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),
+			array(),
+			'1.9.0'
+		);
+
+		wp_register_style(
+			'slick-theme',
+			getwid_get_plugin_url( 'vendors/slick/slick/slick-theme.min.css' ),
+			array(),
+			'1.9.0'
+		);
+
+		wp_register_style(
+			'animate',
+			getwid_get_plugin_url( 'vendors/animate.css/animate.min.css' ),
+			array(),
+			'3.7.0'
+		);
+
+		wp_register_script(
+			'wow',
+			getwid_get_plugin_url( 'vendors/wow.js/dist/wow.min.js' ),
+			array( 'jquery' ),
+			'1.2.1',
+			true
+		);
+
+		wp_register_script(
+			'mp-fancybox',
+			getwid_get_plugin_url( 'vendors/mp-fancybox/jquery.fancybox.min.js' ),
+			array( 'jquery' ),
+			'3.5.7-mp.1',
+			true
+		);
+
+		wp_register_style(
+			'mp-fancybox',
+			getwid_get_plugin_url( 'vendors/mp-fancybox/jquery.fancybox.min.css' ),
+			array(),
+			'3.5.7-mp.1'
+		);
+
+		wp_register_script(
+			'countup',
+			getwid_get_plugin_url( 'vendors/countup.js/dist/countUp.min.js' ),
+			array(),
+			'2.0.4',
+			true
+		);
+
+		wp_register_script(
+			'waypoints',
+			getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
+			array( 'jquery' ),
+			'4.0.1',
+			true
+		);
+
+		wp_register_script(
+			'popper',
+			getwid_get_plugin_url( 'vendors/tippy.js/popper.min.js' ),
+			array( 'jquery' ),
+			'2.4.0',
+			true
+		);
+
+		wp_register_script(
+			'tippy',
+			getwid_get_plugin_url( 'vendors/tippy.js/tippy-bundle.umd.min.js' ),
+			array( 'jquery', 'popper' ),
+			'6.2.3',
+			true
+		);
+
+		wp_register_script(
+			'unescape',
+			getwid_get_plugin_url( 'vendors/lodash.unescape/unescape.min.js' ),
+			array(),
+			'4.0.1',
+			true
+		);
+
+		wp_register_style(
+			'tippy-themes',
+			getwid_get_plugin_url( 'vendors/tippy.js/themes.css' ),
+			array(),
+			'6.2.3'
+		);
+
+		wp_register_style(
+			'tippy-animation',
+			getwid_get_plugin_url( 'vendors/tippy.js/animations.css' ),
+			array(),
+			'6.2.3'
+		);
+
 		wp_register_style(
 			"{$this->prefix}-blocks-common",
 			getwid_get_plugin_url( 'assets/common-styles/style.css' ),
@@ -116,6 +213,9 @@ class ScriptsManager {
 		);
 
 		wp_style_add_data( "{$this->prefix}-blocks-common", 'rtl', 'replace' );
+
+		wp_add_inline_style( "{$this->prefix}-blocks-common", getwid_generate_section_content_width_css() );
+		wp_add_inline_style( "{$this->prefix}-blocks-common", getwid_generate_smooth_animation_css() );
 	}
 
 	public function setup_editor_global_data() {

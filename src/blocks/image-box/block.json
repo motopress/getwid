@@ -101,6 +101,7 @@
 	],
 	"editorStyle": "file:./index.css",
 	"style": [
+		"getwid-blocks-common",
 		"animate",
 		"file:./style-index.css"
 	],

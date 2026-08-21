@@ -12,7 +12,6 @@ class CustomPostType extends AbstractBlock {
 			getwid_get_plugin_path( 'assets/blocks/custom-post-type' ),
 			array(
 				'render_callback' => array( $this, 'render_callback' ),
-				'viewStyle'       => getwid()->fontIconsManager()->enqueueFonts( array() ),
 			)
 		);
 	}

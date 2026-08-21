@@ -7,7 +7,10 @@
 	"title": "Content Slider",
 	"supports": {
 		"alignWide": true,
-		"align": [ "wide", "full" ]
+		"align": [
+			"wide",
+			"full"
+		]
 	},
 	"attributes": {
 		"align": {
@@ -147,7 +150,15 @@
 			"default": "1"
 		}
 	},
+	"style": [
+		"getwid-blocks-common",
+		"slick",
+		"slick-theme"
+	],
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"viewScript": [ "slick", "file:./view.js" ]
+	"viewScript": [
+		"slick",
+		"file:./view.js"
+	]
 }

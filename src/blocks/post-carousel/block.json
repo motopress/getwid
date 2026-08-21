@@ -145,6 +145,7 @@
 	],
 	"editorStyle": "file:./index.css",
 	"style": [
+		"getwid-blocks-common",
 		"slick",
 		"slick-theme",
 		"file:./style-index.css"
