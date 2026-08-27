@@ -60,7 +60,7 @@ export default function Inspector( {
 				<PanelBody title={ __( 'Settings', 'getwid' ) } initialOpen>
 					<TextControl
 						type="number"
-						label={ __( 'Start Number', 'getwid' ) }
+						label={ __( 'Start', 'getwid' ) }
 						value={ parseInteger( start, 0 ) }
 						onChange={ ( nextStart ) =>
 							setAttributes( { start: nextStart } )
@@ -68,7 +68,7 @@ export default function Inspector( {
 					/>
 					<TextControl
 						type="number"
-						label={ __( 'End Number', 'getwid' ) }
+						label={ __( 'End', 'getwid' ) }
 						value={ parseInteger( end, 100 ) }
 						onChange={ ( nextEnd ) =>
 							setAttributes( { end: nextEnd } )
@@ -161,24 +161,15 @@ export default function Inspector( {
 					/>
 					{ useEasing === 'true' && (
 						<SelectControl
-							label={ __( 'Easing Function', 'getwid' ) }
+							label={ __( 'Animation Effect', 'getwid' ) }
 							value={ easing }
 							onChange={ ( nextEasing ) =>
 								setAttributes( { easing: nextEasing } )
 							}
 							options={ [
-								{
-									value: 'outExpo',
-									label: __( 'Exponential', 'getwid' ),
-								},
-								{
-									value: 'outQuintic',
-									label: __( 'Quintic', 'getwid' ),
-								},
-								{
-									value: 'outCubic',
-									label: __( 'Cubic', 'getwid' ),
-								},
+								{ value: 'outExpo', label: 'OutExpo' },
+								{ value: 'outQuintic', label: 'OutQuintic' },
+								{ value: 'outCubic', label: 'OutCubic' },
 							] }
 						/>
 					) }

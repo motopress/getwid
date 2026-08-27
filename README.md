@@ -28,20 +28,24 @@ For developers building sites with Getwid, there is [Getwid Style Kit](https://g
 Useful links: [Watch Getwid videos](https://www.youtube.com/playlist?list=PLbDImkyrISyLX7CwC1bHWTwJLwlBBmrhp) | [Getwid block examples and news](https://motopress.com/blog/category/getwid-gutenberg-blocks/)
 
 ## Getting Started
-The plugin has two build scripts. The first one is responsible for building blocks into one file. The second one is for generating separate files for each block.
+The plugin provides build commands for blocks, shared components, and common CSS.
 
 Before running any of the scripts, you must complete several steps:
 1. Clone the GitHub repository into your plugins directory.
+1. Use 22.* node version.
 1. In the plugin directory run `npm i`.
-1. `nvm use 14.21.3`
 
-For the first option (build blocks into one file):
-* Run `npm run dev` to compile your files automatically whenever you've made changes to the associated files.
-* Run `npm run build` to compile files for release.
+### Blocks
+* Run `npm run start` to watch and compile block files during development.
+* Run `npm run build` to create a production build of block files.
 
-For the second option (generating separate files for each block):
-* Run `npm run dev:splitted` to compile your files automatically whenever you've made changes to the associated files.
-* Run `npm run build:splitted` to compile files for release.
+### Components
+* Run `npm run start:components` to watch and compile shared components during development.
+* Run `npm run build:components` to create a production build of shared components.
+
+### Common CSS
+* Run `npm run start:common-css` to watch and compile common CSS during development.
+* Run `npm run build:common-css` to create a production build of common CSS.
 
 ### Update/generate POT(languages) file
 1. Install WP-CLI and add it to PATH (check out [official guide](https://wp-cli.org/#installing))

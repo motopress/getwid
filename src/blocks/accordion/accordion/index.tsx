@@ -22,8 +22,8 @@ registerBlockType( metadata as BlockConfiguration< AccordionAttributes >, {
 		</SVG>
 	),
 	title: __( 'Accordion', 'getwid' ),
-	// deprecated,
-	// transforms,
+	deprecated,
+	transforms,
 	edit: MaybeBlockIsDisabled( 'getwid/accordion' ) || Edit,
 	save: Save,
 } );

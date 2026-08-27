@@ -107,6 +107,17 @@ class ScriptsManager {
 			true
 		);
 
+		wp_add_inline_script(
+			'slick',
+			sprintf(
+				'window.Getwid = window.Getwid || {}; window.Getwid = {...window.Getwid, ...%s};',
+				wp_json_encode(
+					array( 'isRTL' => is_rtl() )
+				)
+			),
+			'before'
+		);
+
 		wp_register_style(
 			'slick',
 			getwid_get_plugin_url( 'vendors/slick/slick/slick.min.css' ),

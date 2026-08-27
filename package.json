@@ -8,8 +8,6 @@
 		"build": "wp-scripts build --source-path=src/blocks --output-path=assets/blocks",
 		"start:components": "wp-scripts start --config webpack.components.js",
 		"build:components": "wp-scripts build --config webpack.components.js",
-		"lint:js": "wp-scripts lint-js \"src/**/*.{js,jsx,ts,tsx}\"",
-		"format": "wp-scripts format \"src/**/*.{js,jsx,ts,tsx,scss,json}\"",
 		"start:common-css": "gulp start",
 		"build:common-css": "gulp build"
 	},

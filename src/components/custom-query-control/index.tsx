@@ -212,11 +212,11 @@ function CustomQueryControl( props: CustomQueryControlProps ) {
 					options={ [
 						{
 							value: 'desc',
-							label: __( 'Z -> A, 9 -> 1', 'getwid' ),
+							label: __( 'Z → A, 9 → 1', 'getwid' ),
 						},
 						{
 							value: 'asc',
-							label: __( 'A -> Z, 1 -> 9', 'getwid' ),
+							label: __( 'A → Z, 1 → 9', 'getwid' ),
 						},
 					] }
 				/>

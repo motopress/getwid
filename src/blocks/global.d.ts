@@ -46,12 +46,3 @@ declare const Getwid: {
 
 declare module '*.css';
 declare module '*.scss';
-
-// declare module 'getwid-components' {
-// 	export interface IconPickerProps {
-// 		value?: string;
-// 		onChange?: ( value: string ) => void;
-// 	}
-
-// 	export const IconPicker: ComponentType< IconPickerProps >;
-// }
