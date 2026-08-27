@@ -8,7 +8,6 @@
 	"description": "Template post layout picker.",
 	"textdomain": "getwid",
 	"supports": {
-		"inserter": true,
 		"multiple": false,
 		"customClassName": false
 	},

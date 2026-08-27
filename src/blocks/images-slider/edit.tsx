@@ -13,7 +13,7 @@ import {
 	ToolbarGroup,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
-import { useEffect, useRef } from '@wordpress/element';
+import { useEffect, useMemo, useRef } from '@wordpress/element';
 import { __, isRTL } from '@wordpress/i18n';
 import clsx from 'clsx';
 import jQuery from 'jquery';
@@ -30,6 +30,7 @@ import {
 
 import './editor.scss';
 import './style.scss';
+import { useMergeRefs, useRefEffect } from '@wordpress/compose';
 
 const allowedMediaTypes = [ 'image' ];
 const newTabRel = 'noreferrer noopener';
@@ -161,46 +162,57 @@ export default function Edit( props: ImagesSliderEditProps ) {
 
 		const sliderSelector = jQuery( sliderRef.current );
 
-		if ( sliderSelector.length && sliderSelector.imagesLoaded ) {
-			sliderSelector.imagesLoaded().done( () => {
-				sliderSelector.not( '.slick-initialized' ).slick?.( {
-					arrows: sliderArrows !== 'none',
-					dots: sliderDots !== 'none',
-					fade: sliderAnimationEffect === 'fade',
-					slidesToShow:
-						sliderAnimationEffect === 'fade'
-							? 1
-							: parseInt( sliderSlidesToShow, 10 ),
-					slidesToScroll: parseInt( sliderSlidesToScroll, 10 ),
-					autoplaySpeed: parseInt( sliderAutoplaySpeed, 10 ),
-					speed: parseInt( sliderAnimationSpeed, 10 ),
-					infinite: linkTo !== 'custom' ? sliderInfinite : false,
-					autoplay: sliderAutoplay,
-					draggable: linkTo === 'custom' ? false : true,
-					centerMode: sliderCenterMode,
-					variableWidth: sliderVariableWidth,
-					pauseOnHover: true,
-					rows: 0,
-					rtl: isRTL(),
-				} );
-
-				if ( slideHeight ) {
-					jQuery( `.${ baseClass }__item`, sliderSelector ).css(
-						'height',
-						slideHeight
-					);
-				}
+		if ( sliderSelector.length > 0 ) {
+			sliderSelector.not( '.slick-initialized' ).slick?.( {
+				arrows: sliderArrows !== 'none',
+				dots: sliderDots !== 'none',
+				fade: sliderAnimationEffect === 'fade',
+				slidesToShow:
+					sliderAnimationEffect === 'fade'
+						? 1
+						: parseInt( sliderSlidesToShow, 10 ),
+				slidesToScroll: parseInt( sliderSlidesToScroll, 10 ),
+				autoplaySpeed: parseInt( sliderAutoplaySpeed, 10 ),
+				speed: parseInt( sliderAnimationSpeed, 10 ),
+				infinite: linkTo !== 'custom' ? sliderInfinite : false,
+				autoplay: sliderAutoplay,
+				draggable: linkTo === 'custom' ? false : true,
+				centerMode: sliderCenterMode,
+				variableWidth: sliderVariableWidth,
+				pauseOnHover: true,
+				rows: 0,
+				rtl: isRTL(),
 			} );
+
+			if ( slideHeight ) {
+				jQuery( `.${ baseClass }__item`, sliderSelector ).css(
+					'height',
+					slideHeight
+				);
+			}
 		}
 	}
 
 	useEffect( () => {
-		if ( images.length ) {
-			initSlider();
-		}
+		initSlider();
 
 		return destroySlider;
-	} );
+	}, [
+		ids.join( ',' ),
+		sliderArrows,
+		sliderDots,
+		sliderAnimationEffect,
+		sliderSlidesToShow,
+		sliderSlidesToScroll,
+		sliderAutoplaySpeed,
+		sliderAnimationSpeed,
+		sliderInfinite,
+		linkTo,
+		sliderAutoplay,
+		sliderCenterMode,
+		sliderVariableWidth,
+		slideHeight,
+	] );
 
 	const blockProps = useBlockProps( {
 		className: getContainerClassName( attributes, className, isSelected ),
@@ -237,10 +249,7 @@ export default function Edit( props: ImagesSliderEditProps ) {
 			<div { ...blockProps }>
 				<div ref={ sliderRef } className={ `${ baseClass }__wrapper` }>
 					{ images.map( ( image, index ) => (
-						<div
-							key={ image.id || image.url }
-							className={ `${ baseClass }__item` }
-						>
+						<div key={ index } className={ `${ baseClass }__item` }>
 							<MediaContainer image={ image } />
 							{ linkTo === 'custom' && (
 								<div

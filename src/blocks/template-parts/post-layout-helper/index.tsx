@@ -6,20 +6,7 @@ import Edit from './edit';
 import save from './save';
 import type { TemplatePostLayoutHelperAttributes } from './types';
 
-function getGetwidSettings() {
-	return (
-		window as unknown as {
-			Getwid?: {
-				settings?: { post_type?: string };
-				templates?: { name?: string };
-			};
-		}
-	 ).Getwid;
-}
-
-const getwidSettings = getGetwidSettings();
-const isTemplateEditor =
-	getwidSettings?.settings?.post_type === getwidSettings?.templates?.name;
+const isTemplateEditor = Getwid.settings.post_type === Getwid.templates.name;
 
 registerBlockType(
 	metadata as BlockConfiguration< TemplatePostLayoutHelperAttributes >,

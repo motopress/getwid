@@ -90,10 +90,10 @@ export function BackgroundSlider( {
 			data-slide-speed={ sliderAnimationDuration }
 			data-infinite="true"
 		>
-			{ sliderImages.map( ( image ) => (
+			{ sliderImages.map( ( image, index ) => (
 				<div
 					className={ `${ baseClass }__background-slider-item` }
-					key={ image.id || image.url }
+					key={ index }
 				>
 					<img
 						src={ image.url }
