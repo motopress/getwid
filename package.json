@@ -1,6 +1,6 @@
 {
 	"name": "getwid",
-	"version": "1.6.10",
+	"version": "2.3.0",
 	"license": "GPL",
 	"private": true,
 	"scripts": {
