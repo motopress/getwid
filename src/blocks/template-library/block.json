@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/template-library",
+	"description": "Browses and inserts pre-designed templates.",
+	"category": "getwid-blocks",
+	"title": "Template Library",
+	"icon": "category",
+	"supports": {
+		"multiple": true,
+		"customClassName": false
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css"
+}

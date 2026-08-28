@@ -1,10 +1,14 @@
-.editor-block-list__block .wp-block-getwid-media-text-slider-slide-content{
-    display: block;
-    max-width: 100%;
+.editor-block-list__block .wp-block-getwid-media-text-slider-slide-content {
+	display: block;
+	max-width: 100%;
 }
 
-.wp-block-getwid-media-text-slider-slide-content .block-library-media-text__media-container img,
-.wp-block-getwid-media-text-slider-slide-content .block-library-media-text__media-container video {
-    vertical-align: middle;
-    width: 100%;
+.wp-block-getwid-media-text-slider-slide-content
+	.block-library-media-text__media-container
+	img,
+.wp-block-getwid-media-text-slider-slide-content
+	.block-library-media-text__media-container
+	video {
+	vertical-align: middle;
+	width: 100%;
 }

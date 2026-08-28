@@ -12,37 +12,43 @@
 	}
 
 	&.has-horizontal-align-left {
-		th, td {
+		th,
+		td {
 			text-align: left;
 		}
 	}
 
 	&.has-horizontal-align-center {
-		th, td {
+		th,
+		td {
 			text-align: center;
 		}
 	}
 
 	&.has-horizontal-align-right {
-		th, td {
+		th,
+		td {
 			text-align: right;
 		}
 	}
 
 	&.has-vertical-align-top {
-		td, th {
+		td,
+		th {
 			vertical-align: top;
 		}
 	}
 
 	&.has-vertical-align-middle {
-		td, th {
+		td,
+		th {
 			vertical-align: middle;
 		}
 	}
 
 	&.has-vertical-align-bottom {
-		td, th {
+		td,
+		th {
 			vertical-align: bottom;
 		}
 	}

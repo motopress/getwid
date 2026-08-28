@@ -2,14 +2,14 @@
  * getwid-advanced-heading
  */
 
-.wp-block-getwid-advanced-heading{
-    & &__content{
-        display: block;
-    }
+.wp-block-getwid-advanced-heading {
+	& &__content {
+		display: block;
+	}
 }
 
-.has-custom-font-size{
-	.wp-block-getwid-advanced-heading__content{
+.has-custom-font-size {
+	.wp-block-getwid-advanced-heading__content {
 		font-size: inherit;
 	}
 }

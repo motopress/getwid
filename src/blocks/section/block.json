@@ -1,0 +1,41 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/section",
+	"description": "Groups content into a customizable section.",
+	"category": "getwid-blocks",
+	"title": "Section",
+	"keywords": [
+		"container",
+		"wrapper",
+		"row"
+	],
+	"supports": {
+		"anchor": true,
+		"align": [
+			"wide",
+			"full"
+		],
+		"html": false
+	},
+	"editorScript": [
+		"jquery",
+		"slick",
+		"file:./index.js"
+	],
+	"editorStyle": [
+		"slick",
+		"slick-theme",
+		"animate",
+		"file:./index.css"
+	],
+	"style": [
+		"getwid-blocks-common",
+		"file:./style-index.css"
+	],
+	"viewScript": [
+		"jquery",
+		"file:./view.js"
+	]
+}

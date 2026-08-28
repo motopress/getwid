@@ -3,7 +3,7 @@
  */
 
 .wp-block-getwid-recent-posts {
-	$base-class: '.wp-block-getwid-recent-posts';
+	$base-class: ".wp-block-getwid-recent-posts";
 	overflow: hidden;
 
 	& > &__wrapper {
@@ -60,7 +60,7 @@
 	}
 
 	&__entry-meta {
-		margin-top: .5em;
+		margin-top: 0.5em;
 
 		&:first-child {
 			margin-top: 0;
@@ -77,12 +77,12 @@
 
 	&__entry-meta,
 	&__entry-footer {
-		font-size: .875em;
+		font-size: 0.875em;
 	}
 
 	&__post-content,
 	&__entry-footer {
-		margin-top: .5em;
+		margin-top: 0.5em;
 
 		&:first-child {
 			margin-top: 0;
@@ -121,10 +121,11 @@
 
 .has-layout-list {
 	.wp-block-getwid-recent-posts__post {
-		@media screen and(min-width: 768px) {
+		@media screen and (min-width: 768px) {
 			.wp-block-getwid-recent-posts__post-wrapper {
 				flex-direction: row;
 			}
+
 			.wp-block-getwid-recent-posts__entry-header {
 				margin-top: 0;
 

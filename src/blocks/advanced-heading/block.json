@@ -1,0 +1,116 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/advanced-heading",
+	"description": "Creates a customizable heading.",
+	"category": "getwid-blocks",
+	"title": "Advanced Heading",
+	"keywords": [
+		"Title"
+	],
+	"supports": {
+		"anchor": true,
+		"align": [
+			"wide",
+			"full"
+		]
+	},
+	"attributes": {
+		"content": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-advanced-heading__content",
+			"default": ""
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string"
+		},
+		"customBackgroundColor": {
+			"type": "string"
+		},
+		"customTextColor": {
+			"type": "string"
+		},
+		"titleTag": {
+			"type": "string",
+			"default": "span"
+		},
+		"anchor": {
+			"type": "string"
+		},
+		"fontGroupID": {
+			"type": "string",
+			"default": ""
+		},
+		"fontFamily": {
+			"type": "string",
+			"default": ""
+		},
+		"fontSize": {
+			"type": "string"
+		},
+		"fontSizeTablet": {
+			"type": "string",
+			"default": "fs-tablet-100"
+		},
+		"fontSizeMobile": {
+			"type": "string",
+			"default": "fs-mobile-100"
+		},
+		"fontWeight": {
+			"type": "string"
+		},
+		"fontStyle": {
+			"type": "string"
+		},
+		"textTransform": {
+			"type": "string"
+		},
+		"lineHeight": {
+			"type": "string"
+		},
+		"letterSpacing": {
+			"type": "string"
+		},
+		"align": {
+			"type": "string"
+		},
+		"textAlignment": {
+			"type": "string"
+		},
+		"paddingTop": {
+			"type": "string"
+		},
+		"paddingBottom": {
+			"type": "string"
+		},
+		"paddingLeft": {
+			"type": "string"
+		},
+		"paddingRight": {
+			"type": "string"
+		},
+		"marginTop": {
+			"type": "string"
+		},
+		"marginBottom": {
+			"type": "string"
+		},
+		"marginLeft": {
+			"type": "string"
+		},
+		"marginRight": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": [
+		"file:./style-index.css",
+		"getwid-blocks-common"
+	]
+}

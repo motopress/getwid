@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getwid/template-acf-select",
+	"description": "Displays a selected value from an ACF field.",
+	"title": "ACF Select",
+	"category": "getwid-acf-blocks",
+	"icon": "tag",
+	"textdomain": "getwid",
+	"attributes": {
+		"customField": {
+			"type": "string"
+		},
+		"labelName": {
+			"type": "string"
+		},
+		"separator": {
+			"type": "string",
+			"default": ","
+		},
+		"textColor": {
+			"type": "string"
+		},
+		"customTextColor": {
+			"type": "string"
+		},
+		"fontSize": {
+			"type": "string"
+		},
+		"customFontSize": {
+			"type": "string"
+		},
+		"bold": {
+			"type": "boolean",
+			"default": false
+		},
+		"italic": {
+			"type": "boolean",
+			"default": false
+		},
+		"textAlignment": {
+			"type": "string"
+		},
+		"className": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css"
+}

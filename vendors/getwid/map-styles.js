@@ -1,4 +1,4 @@
-const stylesArr = {
+const GetwidGoogleMapStyles = {
 	default: null,
 	silver: [
 		{
@@ -2430,5 +2430,5 @@ const stylesArr = {
 	    }
 	]
 
-	
+
 };

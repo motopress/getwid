@@ -36,7 +36,7 @@
 		border-width: 1px 1px 0 1px;
 		border-top-left-radius: 4px;
 		border-top-right-radius: 4px;
-		transition: all .2s ease-in-out;
+		transition: all 0.2s ease-in-out;
 	}
 
 	& .wp-block-getwid-media-text-slider__content {
@@ -86,9 +86,7 @@
 
 	.wp-block-getwid-media-text-slider-slide-content {
 		max-width: 100%;
-	}
 
-	.wp-block-getwid-media-text-slider-slide-content {
 		.wp-block-getwid-media-text-slider-slide-content__media {
 			img {
 				height: 100%;
@@ -106,5 +104,4 @@
 			margin-right: 14px;
 		}
 	}
-
 }

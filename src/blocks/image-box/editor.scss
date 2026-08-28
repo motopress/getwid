@@ -1,7 +1,5 @@
-.wp-block-getwid-image-box{
-   
-    .wp-block {
-        max-width: 100% !important;
-    }
-
+.wp-block-getwid-image-box {
+	&__image {
+		max-width: 100%;
+	}
 }

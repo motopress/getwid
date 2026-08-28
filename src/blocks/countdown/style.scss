@@ -3,7 +3,7 @@
  */
 
 .wp-block-getwid-countdown {
-	$base_class: '.wp-block-getwid-countdown';
+	$base_class: ".wp-block-getwid-countdown";
 
 	font-size: 32px;
 
@@ -74,10 +74,10 @@
 					display: block;
 					line-height: 1.4;
 					font-size: 12px;
-					@media screen and(min-width: 768px) {
+					@media screen and (min-width: 768px) {
 						font-size: 14px;
 					}
-					@media screen and(min-width: 992px) {
+					@media screen and (min-width: 992px) {
 						font-size: 16px;
 					}
 				}
@@ -154,4 +154,3 @@
 		}
 	}
 }
-

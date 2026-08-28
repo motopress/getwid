@@ -1,0 +1,35 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/tabs",
+	"description": "Organizes content into switchable tabs.",
+	"category": "getwid-blocks",
+	"title": "Tabs",
+	"supports": {
+		"align": [ "wide", "full" ]
+	},
+	"attributes": {
+		"align": {
+			"type": "string"
+		},
+		"active": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-tabs",
+			"attribute": "data-active-tab"
+		},
+		"type": {
+			"type": "string",
+			"default": ""
+		},
+		"headerTag": {
+			"type": "string",
+			"default": "span"
+		}
+	},
+	"editorScript": [ "jquery-ui-tabs", "file:./index.js" ],
+	"viewScript": [ "jquery", "jquery-ui-tabs", "file:./view.js" ],
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

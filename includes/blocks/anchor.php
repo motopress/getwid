@@ -2,25 +2,22 @@
 
 namespace Getwid\Blocks;
 
-class Anchor extends \Getwid\Blocks\AbstractBlock {
-
-	protected static $blockName = 'getwid/anchor';
+class Anchor extends AbstractBlock {
 
 	public function __construct() {
 
-		parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/anchor' );
 
 		register_block_type(
-			'getwid/anchor'
+			getwid_get_plugin_path( 'assets/blocks/anchor' )
 		);
-
 	}
 
-	public function getLabel() {
-		return __('Anchor', 'getwid');
+	public function get_label() {
+		return __( 'Anchor', 'getwid' );
 	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\Anchor()
+	new Anchor()
 );

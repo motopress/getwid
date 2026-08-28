@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getwid/template-post-layout-helper",
+	"description": "Sets the layout for post template content.",
+	"title": "Layout",
+	"category": "getwid-post-blocks",
+	"icon": "layout",
+	"textdomain": "getwid",
+	"supports": {
+		"multiple": false,
+		"customClassName": false
+	},
+	"attributes": {
+		"align": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style.css"
+}

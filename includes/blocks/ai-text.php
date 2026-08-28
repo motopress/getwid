@@ -2,24 +2,22 @@
 
 namespace Getwid\Blocks;
 
-class AIText extends \Getwid\Blocks\AbstractBlock {
+class AIText extends AbstractBlock {
 
-	protected static $blockName = 'getwid/ai-text';
+	public function __construct() {
 
-    public function __construct() {
-
-        parent::__construct( self::$blockName );
+		parent::__construct( 'getwid/ai-text' );
 
 		register_block_type(
-			'getwid/ai-text'
+			getwid_get_plugin_path( 'assets/blocks/ai-text' )
 		);
 	}
 
-	public function getLabel() {
-		return __('AI Assistant', 'getwid');
+	public function get_label() {
+		return __( 'AI Assistant', 'getwid' );
 	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\AIText()
+	new AIText()
 );

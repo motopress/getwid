@@ -2,75 +2,22 @@
 
 namespace Getwid\Blocks;
 
-class ProgressBar extends \Getwid\Blocks\AbstractBlock {
+class ProgressBar extends AbstractBlock {
 
-	protected static $blockName = 'getwid/progress-bar';
+	public function __construct() {
 
-    public function __construct() {
+		parent::__construct( 'getwid/progress-bar' );
 
-		parent::__construct( self::$blockName );
-
-        register_block_type(
-            'getwid/progress-bar',
-            array(
-                'render_callback' => [ $this, 'render_callback' ]
-            )
-        );
-
-        //Register JS/CSS assets
-		wp_register_script(
-			'waypoints',
-			getwid_get_plugin_url( 'vendors/waypoints/lib/jquery.waypoints.min.js' ),
-			[ 'jquery' ],
-			'4.0.1',
-			true
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/progress-bar' )
 		);
-    }
-
-	public function getLabel() {
-		return __('Progress Bar', 'getwid');
 	}
 
-    public function block_frontend_assets() {
-
-        if ( is_admin() ) {
-            return;
-        }
-
-        if ( ! wp_script_is( 'waypoints', 'enqueued' ) ) {
-            wp_enqueue_script('waypoints');
-        }
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/progress-bar/style' . $rtl . '.css' ),
-			[],
-			getwid()->settings()->getVersion()
-		);
-
-		wp_enqueue_script(
-            self::$blockName,
-            getwid_get_plugin_url( 'assets/blocks/progress-bar/frontend.js' ),
-            [ 'jquery', 'waypoints' ],
-            getwid()->settings()->getVersion(),
-            true
-        );
-    }
-
-    public function render_callback( $attributes, $content ) {
-
-        $this->block_frontend_assets();
-
-        return $content;
-    }
+	public function get_label() {
+		return __( 'Progress Bar', 'getwid' );
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\ProgressBar()
+	new ProgressBar()
 );

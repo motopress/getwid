@@ -1,0 +1,56 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/person",
+	"description": "Introduces a person with image and details.",
+	"category": "getwid-blocks",
+	"title": "Person",
+	"keywords": [ "team", "member" ],
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"imageSize": {
+			"type": "string",
+			"default": "full"
+		},
+		"imageCrop": {
+			"type": "boolean",
+			"default": true
+		},
+		"title": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-person__title"
+		},
+		"subtitle": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-person__subtitle"
+		},
+		"content": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-person__content"
+		},
+		"imgId": {
+			"type": "number"
+		},
+		"imgUrl": {
+			"type": "string",
+			"source": "attribute",
+			"attribute": "src",
+			"selector": ".wp-block-getwid-person__image img"
+		},
+		"imgAlt": {
+			"type": "string",
+			"source": "attribute",
+			"attribute": "alt",
+			"selector": ".wp-block-getwid-person__image img"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

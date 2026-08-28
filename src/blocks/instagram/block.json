@@ -1,0 +1,35 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/instagram",
+	"description": "Displays posts from an Instagram account.",
+	"category": "getwid-blocks",
+	"title": "Instagram",
+	"supports": {
+		"align": [ "wide", "full" ]
+	},
+	"attributes": {
+		"photoCount": {
+			"type": "number",
+			"default": 6
+		},
+		"gridColumns": {
+			"type": "number",
+			"default": 3
+		},
+		"spacing": {
+			"type": "string",
+			"default": "default"
+		},
+		"align": {
+			"type": "string"
+		},
+		"className": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

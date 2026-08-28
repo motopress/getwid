@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/button-group",
+	"description": "Arranges buttons in a customizable group.",
+	"category": "getwid-blocks",
+	"title": "Button Group",
+	"attributes": {
+		"spacing": {
+			"type": "string",
+			"default": ""
+		},
+		"alignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"alignmentTablet": {
+			"type": "string",
+			"default": ""
+		},
+		"alignmentMobile": {
+			"type": "string",
+			"default": ""
+		},
+		"direction": {
+			"type": "string",
+			"default": "row"
+		},
+		"directionTablet": {
+			"type": "string",
+			"default": ""
+		},
+		"directionMobile": {
+			"type": "string",
+			"default": ""
+		},
+		"width": {
+			"type": "string",
+			"default": "auto"
+		},
+		"widthTablet": {
+			"type": "string",
+			"default": "auto"
+		},
+		"widthMobile": {
+			"type": "string",
+			"default": "auto"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

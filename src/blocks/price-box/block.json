@@ -1,0 +1,62 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/price-box",
+	"description": "Highlights a pricing plan with features.",
+	"category": "getwid-blocks",
+	"title": "Price Box",
+	"supports": {
+		"align": [
+			"wide",
+			"full"
+		],
+		"html": false
+	},
+	"attributes": {
+		"backgroundColor": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string"
+		},
+		"customBackgroundColor": {
+			"type": "string"
+		},
+		"customTextColor": {
+			"type": "string"
+		},
+		"title": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-price-box__title"
+		},
+		"currency": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-price-box__currency"
+		},
+		"amount": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-price-box__amount"
+		},
+		"period": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-price-box__period"
+		},
+		"features": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-price-box__features"
+		},
+		"headerTag": {
+			"type": "string",
+			"default": "p"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

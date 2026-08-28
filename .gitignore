@@ -4,3 +4,6 @@
 /stats.json
 /src/blocks/all-blocks
 *.code-workspace
+/assets/blocks/
+/assets/components/
+/assets/common-styles/

@@ -1,0 +1,59 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getwid/template-post-tags",
+	"description": "Displays the post tags.",
+	"title": "Tags",
+	"category": "getwid-post-blocks",
+	"icon": "tag",
+	"textdomain": "getwid",
+	"supports": {
+		"inserter": true
+	},
+	"attributes": {
+		"blockDivider": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string"
+		},
+		"customTextColor": {
+			"type": "string"
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"customBackgroundColor": {
+			"type": "string"
+		},
+		"icon": {
+			"type": "string",
+			"default": "fas fa-tags"
+		},
+		"iconColor": {
+			"type": "string"
+		},
+		"customIconColor": {
+			"type": "string"
+		},
+		"fontSize": {
+			"type": "string"
+		},
+		"customFontSize": {
+			"type": "string"
+		},
+		"divider": {
+			"type": "string",
+			"default": ","
+		},
+		"textAlignment": {
+			"type": "string"
+		},
+		"className": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css"
+}

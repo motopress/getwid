@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/field-name",
+	"description": "Adds a name input to a contact form.",
+	"category": "getwid-blocks",
+	"title": "Name",
+	"ancestor": [ "getwid/contact-form" ],
+	"supports": {
+		"multiple": false,
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": null
+		},
+		"required": {
+			"type": "boolean",
+			"default": false
+		},
+		"placeholder": {
+			"type": "string",
+			"default": ""
+		},
+		"id": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"editorScript": "file:./index.js"
+}

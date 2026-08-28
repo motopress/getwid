@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getwid/accordion-item",
+	"description": "Adds a collapsible section to an accordion.",
+	"title": "Accordion Item",
+	"category": "getwid-blocks",
+	"parent": [ "getwid/accordion" ],
+	"supports": {
+		"multiple": true,
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"outerParent": {
+			"type": "object"
+		},
+		"title": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-accordion__header-title"
+		}
+	},
+	"editorScript": "file:./index.js"
+}

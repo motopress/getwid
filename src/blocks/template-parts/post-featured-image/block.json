@@ -1,0 +1,31 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/template-post-featured-image",
+	"description": "Displays the post featured image.",
+	"category": "getwid-post-blocks",
+	"title": "Featured Image",
+	"supports": {
+		"inserter": true
+	},
+	"attributes": {
+		"linkTo": {
+			"type": "string",
+			"default": "none"
+		},
+		"align": {
+			"type": "string"
+		},
+		"imageSize": {
+			"type": "string",
+			"default": "large"
+		},
+		"className": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

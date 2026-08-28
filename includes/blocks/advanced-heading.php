@@ -2,105 +2,70 @@
 
 namespace Getwid\Blocks;
 
-class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
+class AdvancedHeading extends AbstractBlock {
 
-	protected static $blockName = 'getwid/advanced-heading';
+	public function __construct() {
 
-    public function __construct() {
+		parent::__construct( 'getwid/advanced-heading' );
 
-		parent::__construct( self::$blockName );
-
-        register_block_type(
-            'getwid/advanced-heading',
-            array(
-                'render_callback' => [ $this, 'render_callback' ]
-            )
-        );
-    }
-
-	public function getLabel() {
-		return __('Advanced Heading', 'getwid');
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/advanced-heading' ),
+			array(
+				'render_callback' => array( $this, 'render_callback' ),
+			)
+		);
 	}
 
-    public function block_frontend_assets() {
+	public function get_label() {
+		return __( 'Advanced Heading', 'getwid' );
+	}
 
-        if ( is_admin() ) {
-            return;
-        }
+	public function render_callback( $attributes, $content ) {
 
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
+		if (
+			isset( $attributes['fontWeight'] ) &&
+			( 'regular' === $attributes['fontWeight'] || 'normal' === $attributes['fontWeight'] )
+		) {
+			$attributes['fontWeight'] = '400';
 		}
 
-		add_filter( 'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
+		if ( $this->should_load_google_font( $attributes ) ) {
+			$font_family        = $attributes['fontFamily'];
+			$font_family_handle = strtolower( preg_replace( '/\s+/', '_', $font_family ) );
+			$font_weight        = '';
+			$font_weight_handle = '';
+			$font_weight_part   = '';
 
-				return $assets;
-			}
-		);
-
-		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
-
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/advanced-heading/style' . $rtl . '.css' ),
-			[],
-			getwid()->settings()->getVersion()
-		);
-    }
-
-    public function render_callback( $attributes, $content ) {
-
-        if ( isset( $attributes['fontWeight'] ) &&
-			( $attributes['fontWeight'] == 'regular' || $attributes['fontWeight'] == 'normal') ) {
-
-            $attributes['fontWeight'] = '400';
-        }
-
-        $should_load_gf = $this->shouldLoadGoogleFont( $attributes );
-
-		if ( $should_load_gf ) {
-
-			$fontFamily = $attributes['fontFamily'];
-
-			$fontFamilyHandle = strtolower( preg_replace( '/\s+/', '_', $fontFamily ) );
-
-			$fontWeight = '';
-			$fontWeightHandle = '';
-			$fontWeightPart = '';
-			if ( isset( $attributes['fontWeight'] ) && $attributes['fontWeight'] != '400' ) {
-				$fontWeight = $attributes['fontWeight'];
-				$fontWeightHandle = '_' . $fontWeight;
-				$fontWeightPart = ':' . $fontWeight;
+			if ( isset( $attributes['fontWeight'] ) && '400' !== $attributes['fontWeight'] ) {
+				$font_weight        = $attributes['fontWeight'];
+				$font_weight_handle = '_' . $font_weight;
+				$font_weight_part   = ':' . $font_weight;
 			}
 
 			wp_enqueue_style(
-				'google-font-' . esc_attr( $fontFamilyHandle ) . esc_attr( $fontWeightHandle ),
-				'https://fonts.googleapis.com/css?family=' . esc_attr( $fontFamily ) . esc_attr( $fontWeightPart ),
+				'google-font-' . esc_attr( $font_family_handle ) . esc_attr( $font_weight_handle ),
+				'https://fonts.googleapis.com/css?family=' . esc_attr( $font_family ) . esc_attr( $font_weight_part ),
 				null,
-				'all'
+				getwid()->settings()->getVersion()
 			);
 		}
 
-		$this->block_frontend_assets();
+		return $content;
+	}
 
-        return $content;
-    }
+	private function should_load_google_font( $attributes ) {
 
-    private function shouldLoadGoogleFont( $attributes ) {
-    	$should_load = false;
+		$should_load = false;
 
-    	// if fontFamily set maybe GF should be loaded
-		if ( isset( $attributes['fontFamily'] ) && !empty( $attributes['fontFamily'] ) ) {
+		if ( isset( $attributes['fontFamily'] ) && ! empty( $attributes['fontFamily'] ) ) {
 			$should_load = true;
 		}
 
-		// if fontGroupID isset but not equal to 'google-fonts' it shouldn't be loaded
-		// if fontGroupID is not set(older plugin versions) the condition above will do all the work
-		if ( $should_load && isset( $attributes['fontGroupID'] ) && $attributes['fontGroupID'] != 'google-fonts' ) {
+		if (
+			$should_load &&
+			isset( $attributes['fontGroupID'] ) &&
+			'google-fonts' !== $attributes['fontGroupID']
+		) {
 			$should_load = false;
 		}
 
@@ -109,5 +74,5 @@ class AdvancedHeading extends \Getwid\Blocks\AbstractBlock {
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\AdvancedHeading()
+	new AdvancedHeading()
 );

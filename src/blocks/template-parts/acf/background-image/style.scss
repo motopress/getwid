@@ -1,3 +1,6 @@
+/*!
+ * getwid-template-acf-background-image
+ */
 .wp-block-getwid-template-acf-background-image {
 	padding: 25px;
 	width: 100%;
@@ -28,7 +31,7 @@
 		bottom: 0;
 		right: 0;
 		left: 0;
-		opacity: .35;
+		opacity: 0.35;
 	}
 
 	&__content {
@@ -39,5 +42,4 @@
 			height: 100%;
 		}
 	}
-
 }

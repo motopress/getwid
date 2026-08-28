@@ -3,7 +3,7 @@
  */
 
 .wp-block-getwid-images-stack {
-	$base_class: '.wp-block-getwid-images-stack';
+	$base_class: ".wp-block-getwid-images-stack";
 
 	position: relative;
 
@@ -13,7 +13,7 @@
 
 		&:after {
 			display: table;
-			content: '';
+			content: "";
 			clear: both;
 		}
 	}
@@ -43,7 +43,7 @@
 		box-sizing: border-box;
 
 		&:last-child {
-			margin-bottom: 0
+			margin-bottom: 0;
 		}
 
 		&:nth-child(2n) {
@@ -87,7 +87,7 @@
 		&:after {
 			clear: both;
 			display: table;
-			content: '';
+			content: "";
 		}
 
 		&:nth-child(2n) {
@@ -179,7 +179,7 @@
 		&:after {
 			clear: both;
 			display: table;
-			content: '';
+			content: "";
 		}
 
 		&:nth-child(2n) {
@@ -247,7 +247,7 @@
 		&:after {
 			clear: both;
 			display: table;
-			content: '';
+			content: "";
 		}
 
 		&:nth-child(2n) {
@@ -315,7 +315,7 @@
 		&:after {
 			clear: both;
 			display: table;
-			content: '';
+			content: "";
 		}
 
 		&:nth-child(2n) {

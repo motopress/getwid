@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/mailchimp",
+	"description": "Adds a Mailchimp subscription form.",
+	"category": "getwid-blocks",
+	"title": "Mailchimp",
+	"supports": {
+		"align": [ "wide", "full" ],
+		"html": false
+	},
+	"attributes": {
+		"align": {
+			"type": "string"
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string"
+		},
+		"customBackgroundColor": {
+			"type": "string"
+		},
+		"customTextColor": {
+			"type": "string"
+		},
+		"text": {
+			"type": "string",
+			"default": "Subscribe"
+		},
+		"ids": {
+			"type": "array",
+			"default": []
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

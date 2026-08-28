@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/content-timeline-item",
+	"description": "Adds an event to a content timeline.",
+	"category": "getwid-blocks",
+	"title": "Timeline Block",
+	"parent": [ "getwid/content-timeline" ],
+	"supports": {
+		"multiple": true,
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"outerParent": {
+			"type": "object"
+		},
+		"cardPosition": {
+			"type": "string",
+			"default": ""
+		},
+		"meta": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-content-timeline-item__meta-content"
+		},
+		"imageSize": {
+			"type": "string",
+			"default": "full"
+		},
+		"id": {
+			"type": "number"
+		},
+		"alt": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-content-timeline-item__image",
+			"attribute": "alt",
+			"default": ""
+		},
+		"url": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-content-timeline-item__image",
+			"attribute": "src"
+		}
+	},
+	"editorScript": "file:./index.js"
+}

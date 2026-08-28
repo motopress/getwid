@@ -2,153 +2,48 @@
 
 namespace Getwid\Blocks;
 
-class RecentPosts extends \Getwid\Blocks\AbstractBlock {
+class RecentPosts extends AbstractBlock {
 
-	protected static $blockName = 'getwid/recent-posts';
+	public function __construct() {
 
-    public function __construct() {
+		parent::__construct( 'getwid/recent-posts' );
 
-		parent::__construct( self::$blockName );
-
-        register_block_type(
-            'getwid/recent-posts',
-            array(
-				'attributes' => array(
-					'titleTag' => array(
-						'type' => 'string',
-						'default' => 'h3',
-					),
-					'imageSize' => array(
-						'type' => 'string',
-						'default' => 'large',
-					),
-					'cropImages' => array(
-						'type' => 'boolean',
-						'default' => true,
-					),
-					'categories' => array(
-						'type' => 'string',
-					),
-					'postsToShow' => array(
-						'type' => 'number',
-						'default' => 5,
-					),
-					'showTitle' => array(
-						'type' => 'boolean',
-						'default' => true,
-					),
-					'showDate' => array(
-						'type' => 'boolean',
-						'default' => false,
-					),
-					'showCategories' => array(
-						'type' => 'boolean',
-						'default' => false,
-					),
-					'showCommentsCount' => array(
-						'type' => 'boolean',
-						'default' => false,
-					),
-					'showContent' => array(
-						'type' => 'boolean',
-						'default' => false,
-					),
-					'contentLength' => array(
-						'type' => 'number',
-						'default' => apply_filters('excerpt_length', 55),
-					),
-					'showFeaturedImage' => array(
-						'type' => 'boolean',
-						'default' => false,
-					),
-					'postLayout' => array(
-						'type' => 'string',
-						'default' => 'list',
-					),
-					'columns' => array(
-						'type' => 'number',
-						'default' => 3,
-					),
-					'align' => array(
-						'type' => 'string',
-					),
-					'order' => array(
-						'type' => 'string',
-						'default' => 'desc',
-					),
-					'orderBy' => array(
-						'type' => 'string',
-						'default' => 'date',
-					),
-
-					'className' => array(
-						'type' => 'string',
-					),
-				),
-                'render_callback' => [ $this, 'render_callback' ]
-            )
-        );
-    }
-
-	public function getLabel() {
-		return __('Recent Posts', 'getwid');
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/recent-posts' ),
+			array(
+				'render_callback' => array( $this, 'render_callback' ),
+			)
+		);
 	}
 
-    public function block_frontend_assets() {
-
-		if ( is_admin() ) {
-            return;
-        }
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		add_filter( 'getwid/optimize/assets',
-			function ( $assets ) {
-				$assets[] = getwid()->settings()->getPrefix() . '-blocks-common';
-
-				return $assets;
-			}
-		);
-
-		add_filter( 'getwid/optimize/should_load_common_css', '__return_true' );
-
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/recent-posts/style' . $rtl . '.css' ),
-			[],
-			getwid()->settings()->getVersion()
-		);
-
+	public function get_label() {
+		return __( 'Recent Posts', 'getwid' );
 	}
 
-    public function render_callback( $attributes, $content ) {
+	public function render_callback( $attributes, $content ) {
 
 		$query_args = array(
-			'posts_per_page'   => $attributes['postsToShow'],
+			'posts_per_page'      => $attributes['postsToShow'],
 			'ignore_sticky_posts' => 1,
-			'post_status'      => 'publish',
-			'order'            => $attributes['order'],
-			'orderby'          => $attributes['orderBy'],
+			'post_status'         => 'publish',
+			'order'               => $attributes['order'],
+			'orderby'             => $attributes['orderBy'],
 		);
 
 		if ( isset( $attributes['categories'] ) ) {
 			$query_args['tax_query'] = array(
 				array(
 					'taxonomy' => 'category',
-					'field' => 'id',
-					'terms' => $attributes['categories']
-				)
+					'field'    => 'id',
+					'terms'    => $attributes['categories'],
+				),
 			);
 		}
 
 		$block_name = 'wp-block-getwid-recent-posts';
 
 		$extra_attr = array(
-			'block_name' => $block_name
+			'block_name' => $block_name,
 		);
 
 		$class = $block_name;
@@ -165,38 +60,38 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 		if ( isset( $attributes['className'] ) ) {
 			$class .= ' ' . $attributes['className'];
 		}
-		if( isset( $attributes['cropImages'] ) && $attributes['cropImages'] === true ){
+		if ( isset( $attributes['cropImages'] ) && true === $attributes['cropImages'] ) {
 			$class .= ' has-cropped-images';
 		}
 
 		$wrapper_class = $block_name . '__wrapper';
 
-		if ( isset( $attributes['columns'] ) && $attributes['postLayout'] === 'grid' ) {
+		if ( isset( $attributes['columns'] ) && 'grid' === $attributes['postLayout'] ) {
 			$wrapper_class .= ' getwid-columns getwid-columns-' . $attributes['columns'];
 		}
 
-		$attributes['titleTag'] = $this->validateHeadingHTMLTag( $attributes['titleTag'] );
+		$attributes['titleTag'] = $this->validate_heading_html_tag( $attributes['titleTag'] );
 
 		$q = new \WP_Query( $query_args );
 		ob_start();
 		?>
 
 		<div class="<?php echo esc_attr( $class ); ?>">
-			<div class="<?php echo esc_attr( $wrapper_class );?>">
+			<div class="<?php echo esc_attr( $wrapper_class ); ?>">
 				<?php
-				if ( $q->have_posts() ):
+				if ( $q->have_posts() ) :
 					ob_start();
 
-					while( $q->have_posts() ):
+					while ( $q->have_posts() ) :
 						$q->the_post();
-						getwid_get_template_part('recent-posts/post', $attributes, false, $extra_attr);
+						getwid_get_template_part( 'recent-posts/post', $attributes, false, $extra_attr );
 					endwhile;
 
 					wp_reset_postdata();
 					ob_end_flush();
-				else:
+				else :
 					do_action( 'getwid/blocks/recent-posts/no-items', $attributes, $content );
-                endif;
+				endif;
 				?>
 			</div>
 		</div>
@@ -204,12 +99,10 @@ class RecentPosts extends \Getwid\Blocks\AbstractBlock {
 
 		$result = ob_get_clean();
 
-		$this->block_frontend_assets();
-
 		return $result;
-    }
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\RecentPosts()
+	new RecentPosts()
 );

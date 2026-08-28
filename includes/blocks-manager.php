@@ -8,8 +8,8 @@ namespace Getwid;
  */
 class BlocksManager {
 
-	private $blocks = array();
-	private $enabledBlocks = array();
+	private $blocks         = array();
+	private $enabledBlocks  = array();
 	private $disabledBlocks = array();
 
 	/**
@@ -23,7 +23,9 @@ class BlocksManager {
 			add_filter( 'block_categories', array( $this, 'block_categories' ), 10, 2 );
 		}
 
-		add_action( 'init', [$this, 'includeBlocks'] );
+		add_action( 'init', array( $this, 'includeBlocks' ) );
+
+		add_filter( 'block_type_metadata_settings', array( $this, 'filter_block_type_metadata_settings' ), 10, 2 );
 	}
 
 	public function block_categories_all( $block_categories, $editor_context ) {
@@ -33,7 +35,7 @@ class BlocksManager {
 			$block_categories,
 			array(
 				array(
-					'slug' => 'getwid-blocks',
+					'slug'  => 'getwid-blocks',
 					'title' => __( 'Getwid Blocks', 'getwid' ),
 				),
 			)
@@ -45,7 +47,7 @@ class BlocksManager {
 				$block_categories,
 				array(
 					array(
-						'slug' => 'getwid-post-blocks',
+						'slug'  => 'getwid-post-blocks',
 						'title' => __( 'Getwid Post Blocks', 'getwid' ),
 					),
 				)
@@ -58,7 +60,7 @@ class BlocksManager {
 					$block_categories,
 					array(
 						array(
-							'slug' => 'getwid-acf-blocks',
+							'slug'  => 'getwid-acf-blocks',
 							'title' => __( 'Getwid ACF Blocks', 'getwid' ),
 						),
 					)
@@ -76,7 +78,7 @@ class BlocksManager {
 			$categories,
 			array(
 				array(
-					'slug' => 'getwid-blocks',
+					'slug'  => 'getwid-blocks',
 					'title' => __( 'Getwid Blocks', 'getwid' ),
 				),
 			)
@@ -88,7 +90,7 @@ class BlocksManager {
 				$categories,
 				array(
 					array(
-						'slug' => 'getwid-post-blocks',
+						'slug'  => 'getwid-post-blocks',
 						'title' => __( 'Getwid Post Blocks', 'getwid' ),
 					),
 				)
@@ -101,7 +103,7 @@ class BlocksManager {
 					$categories,
 					array(
 						array(
-							'slug' => 'getwid-acf-blocks',
+							'slug'  => 'getwid-acf-blocks',
 							'title' => __( 'Getwid ACF Blocks', 'getwid' ),
 						),
 					)
@@ -156,22 +158,12 @@ class BlocksManager {
 			'mailchimp',
 			'content-timeline',
 			'table',
-			'content-slider'
+			'content-slider',
 		);
 
 		// load and register main blocks
 		foreach ( $block_files as $block_file_name ) {
-			$this->require_block($block_file_name);
-		}
-
-		// fill array of active blocks
-		foreach ( $this->blocks as $block ) {
-
-			if ( $block->isEnabled() ) {
-				$this->enabledBlocks[] = $block;
-			} else {
-				$this->disabledBlocks[] = $block;
-			}
+			$this->require_block( $block_file_name );
 		}
 
 		$template_parts = array(
@@ -193,7 +185,7 @@ class BlocksManager {
 
 		// load template-parts blocks
 		foreach ( $template_parts as $block_file_name ) {
-			$this->require_block($block_file_name);
+			$this->require_block( $block_file_name );
 		}
 
 		$template_parts_acf = array(
@@ -205,9 +197,18 @@ class BlocksManager {
 
 		// load template-acf blocks
 		foreach ( $template_parts_acf as $block_file_name ) {
-			$this->require_block($block_file_name);
+			$this->require_block( $block_file_name );
 		}
 
+		// fill array of active blocks
+		foreach ( $this->blocks as $block ) {
+
+			if ( $block->is_enabled() ) {
+				$this->enabledBlocks[] = $block;
+			} else {
+				$this->disabledBlocks[] = $block;
+			}
+		}
 	}
 
 	private function require_block( $block_file_name ) {
@@ -215,19 +216,28 @@ class BlocksManager {
 		$path = getwid_get_plugin_path( '/includes/blocks/' . $block_file_name . '.php' );
 
 		if ( file_exists( $path ) ) {
-			require_once( $path );
+			require_once $path;
 		}
 	}
 
 	public function addBlock( $block ) {
 
 		if ( $block instanceof \Getwid\Blocks\AbstractBlock ) {
-			$this->blocks[ $block::getBlockName() ] = $block;
+			$this->blocks[ $block->get_block_name() ] = $block;
 		}
 	}
 
 	public function getBlocks() {
 		return $this->blocks;
+	}
+
+	public function getControlledBlocks() {
+		return array_filter(
+			$this->getBlocks(),
+			function ( $block ) {
+				return $block->can_be_disabled();
+			}
+		);
 	}
 
 	public function getEnabledBlocks() {
@@ -239,11 +249,11 @@ class BlocksManager {
 	}
 
 	public function hasEnabledBlocks() {
-		return ( sizeof ($this->enabledBlocks ) > 0 );
+		return ( sizeof( $this->enabledBlocks ) > 0 );
 	}
 
 	public function hasDisabledBlocks() {
-		return ( sizeof ($this->disabledBlocks ) > 0 );
+		return ( sizeof( $this->disabledBlocks ) > 0 );
 	}
 
 	/**
@@ -258,34 +268,57 @@ class BlocksManager {
 			$blocks = $this->getBlocks();
 			foreach ( $blocks as $block ) {
 
-				if ( has_block( $block->getBlockName() ) ) {
+				if ( has_block( $block->get_block_name() ) ) {
 					$has_getwid_blocks = true;
 					break;
 				}
 			}
 		}
 
-		return apply_filters( 'getwid/blocks/has_getwid_blocks', $has_getwid_blocks);
+		return apply_filters( 'getwid/blocks/has_getwid_blocks', $has_getwid_blocks );
 	}
 
 	public function hasGetwidNestedBlocks() {
 
 		$has_getwid_nested_blocks = false;
 
-		$nestedBlocks = [
-			\Getwid\Blocks\PostCarousel::getBlockName(),
-			\Getwid\Blocks\PostSlider::getBlockName(),
-			\Getwid\Blocks\CustomPostType::getBlockName(),
-		];
+		$nestedBlocks = array(
+			'getwid/post-carousel',
+			'getwid/post-slider',
+			'getwid/custom-post-type',
+		);
 
-		foreach( $nestedBlocks as $block ) {
-			if ( has_block($block) ) {
+		foreach ( $nestedBlocks as $block ) {
+			if ( has_block( $block ) ) {
 				$has_getwid_nested_blocks = true;
 				break;
 			}
 		}
 
-		return apply_filters( 'getwid/blocks/has_getwid_nested_blocks', $has_getwid_nested_blocks);
+		return apply_filters( 'getwid/blocks/has_getwid_nested_blocks', $has_getwid_nested_blocks );
 	}
 
+	public function filter_block_type_metadata_settings( $settings, $metadata ) {
+
+		$blocks = array(
+			'getwid/accordion',
+			'getwid/custom-post-type',
+			'getwid/icon-box',
+			'getwid/icon',
+			'getwid/icon',
+			'getwid/image-hotspot',
+			'getwid/post-carousel',
+			'getwid/post-slider',
+			'getwid/section',
+			'getwid/social-links',
+			'getwid/toggle',
+			'getwid/video-popup',
+		);
+
+		if ( in_array( $metadata['name'], $blocks ) ) {
+			$settings['style_handles'] = getwid()->fontIconsManager()->enqueueFonts( $settings['style_handles'] );
+		}
+
+		return $settings;
+	}
 }

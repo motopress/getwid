@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/media-text-slider-slide",
+	"description": "Adds a slide to a media and text slider.",
+	"category": "getwid-blocks",
+	"title": "Slide",
+	"parent": [ "getwid/media-text-slider" ],
+	"supports": {
+		"multiple": true,
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"slideId": {
+			"type": "number",
+			"default": 1
+		},
+		"outerParent": {
+			"type": "object",
+			"default": {}
+		},
+		"mediaId": {
+			"type": "number"
+		},
+		"url": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js"
+}

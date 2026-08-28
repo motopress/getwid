@@ -3,11 +3,10 @@
  */
 
 .wp-block-getwid-icon-box {
-
 	&.has-icon-left,
 	&.has-icon-right {
 		display: flex;
-		flex-direction: row #{'/*rtl: row-reverse*/'};
+		flex-direction: row;
 		flex-wrap: nowrap;
 		justify-content: flex-start;
 		align-content: stretch;
@@ -70,8 +69,7 @@
 			width: 1em;
 			position: relative;
 
-			&:before {
-				//margin-top: -0.03em;
+			&::before {
 				position: absolute;
 				left: 50%;
 				transform: translateX(-50%);
@@ -81,7 +79,7 @@
 
 	a.wp-block-getwid-icon-box__icon-wrapper {
 		text-decoration: none;
-		transition: all .3s ease;
+		transition: all 0.3s ease;
 
 		&:hover {
 			cursor: pointer;

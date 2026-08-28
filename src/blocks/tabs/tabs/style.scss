@@ -2,11 +2,9 @@
  * getwid-tabs
  */
 
- .wp-block-getwid-tabs {
-	//Specific variables for this block
-
-	$border_color: #ebeef1;
-	$border_width: 1px;
+.wp-block-getwid-tabs {
+	$border-color: #ebeef1;
+	$border-width: 1px;
 
 	position: relative;
 
@@ -16,7 +14,7 @@
 		flex-wrap: wrap;
 		align-items: center;
 		padding: 0;
-		margin: 0 0 -#{$border_width} 0;
+		margin: 0 0 -#{$border-width} 0;
 		/*rtl:raw: justify-content: flex-end; */
 	}
 
@@ -24,29 +22,29 @@
 		margin: 0 5px 0 0;
 		padding: 0;
 		position: relative;
-		border: #{$border_width} solid transparent;
+		border: #{$border-width} solid transparent;
 		border-bottom: 0;
 
 		&:last-child {
 			margin-right: 0;
 		}
 
-		&:before,
-		&:after {
+		&::before,
+		&::after {
 			display: none;
 		}
 
 		&:hover {
-			border-color: $border_color;
+			border-color: $border-color;
 		}
 
 		&.ui-tabs-active {
-			border-color: $border_color;
+			border-color: $border-color;
 			background: #fff;
 		}
 
 		a {
-			padding: .5em 0.75em !important;
+			padding: 0.5em 0.75em !important;
 			display: block;
 			text-decoration: none;
 			border: 0;
@@ -69,8 +67,8 @@
 		padding: 0;
 		border: 0;
 
-		&:before,
-		&:after {
+		&::before,
+		&::after {
 			display: none;
 		}
 	}
@@ -90,11 +88,11 @@
 	}
 
 	&__tab-content {
-		border: #{$border_width} solid #{$border_color};
+		border: #{$border-width} solid #{$border-color};
 		padding: 1.5em;
 
-		&:after {
-			content: '';
+		&::after {
+			content: "";
 			display: table;
 			clear: both;
 		}
@@ -147,7 +145,7 @@
 }
 
 .has-layout-vertical-right {
-	flex-direction: row-reverse #{'/*rtl: row;*/'};
+	flex-direction: row-reverse #{"/*rtl: row;*/"};
 
 	> .wp-block-getwid-tabs__nav-links {
 		margin: 0 0 0 -1px;
@@ -167,6 +165,6 @@
 
 .has-layout-horizontal-right {
 	> .wp-block-getwid-tabs__nav-links {
-		justify-content: flex-end #{'/*rtl: flex-start*/'};
+		justify-content: flex-end #{"/*rtl: flex-start*/"};
 	}
 }

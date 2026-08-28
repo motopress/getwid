@@ -2,85 +2,26 @@
 
 namespace Getwid\Blocks;
 
-class Toggle extends \Getwid\Blocks\AbstractBlock {
+class Toggle extends AbstractBlock {
 
-	protected static $blockName = 'getwid/toggle';
+	public function __construct() {
 
-    public function __construct() {
+		parent::__construct( 'getwid/toggle' );
 
-		parent::__construct( self::$blockName );
-
-        register_block_type(
-			'getwid/toggle',
-			array(
-				'render_callback' => [ $this, 'render_callback' ]
-			)
-        );
-
-		if ( $this->isEnabled() ) {
-
-			add_filter( 'getwid/editor_blocks_js/dependencies', [ $this, 'block_editor_scripts'] );
-			add_filter( 'getwid/blocks_style_css/dependencies', [ $this, 'block_frontend_styles' ] );
-		}
-    }
-
-	public function getLabel() {
-		return __('Toggle', 'getwid');
-	}
-
-	public function block_editor_scripts($scripts) {
-
-        return $scripts;
-    }
-
-	public function block_frontend_styles($styles) {
-
-		//fontawesome
-		$styles = getwid()->fontIconsManager()->enqueueFonts( $styles );
-
-        return $styles;
-	}
-
-    public function block_frontend_assets() {
-
-        if ( is_admin() ) {
-            return;
-        }
-
-		if ( FALSE == getwid()->assetsOptimization()->load_assets_on_demand() ) {
-			return;
-		}
-
-		//fontawesome
-		$deps = getwid()->fontIconsManager()->enqueueFonts( [] );
-
-		$rtl = is_rtl() ? '.rtl' : '';
-
-		wp_enqueue_style(
-			self::$blockName,
-			getwid_get_plugin_url( 'assets/blocks/toggle/style' . $rtl . '.css' ),
-			$deps,
-			getwid()->settings()->getVersion()
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/toggle/toggle' )
 		);
 
-		wp_enqueue_script(
-            self::$blockName,
-            getwid_get_plugin_url( 'assets/blocks/toggle/frontend.js' ),
-            [ 'jquery' ],
-            getwid()->settings()->getVersion(),
-            true
-        );
+		register_block_type(
+			getwid_get_plugin_path( 'assets/blocks/toggle/toggle-item' )
+		);
+	}
 
-    }
-
-	public function render_callback( $attributes, $content ) {
-
-        $this->block_frontend_assets();
-
-        return $content;
-    }
+	public function get_label() {
+		return __( 'Toggle', 'getwid' );
+	}
 }
 
 getwid()->blocksManager()->addBlock(
-	new \Getwid\Blocks\Toggle()
+	new Toggle()
 );

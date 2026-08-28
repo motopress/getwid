@@ -52,7 +52,7 @@
 	}
 
 	&__post-excerpt {
-		margin-top: .5em;
+		margin-top: 0.5em;
 
 		&:first-child {
 			margin-top: 0;
@@ -69,7 +69,7 @@
 		}
 
 		> .wp-block-getwid-template-post-title {
-			margin-bottom: .5em;
+			margin-bottom: 0.5em;
 
 			&:last-child {
 				margin-bottom: 0;
@@ -81,7 +81,7 @@
 		}
 
 		> .wp-block-getwid-template-post-content {
-			margin-bottom: .5em;
+			margin-bottom: 0.5em;
 
 			&:last-child {
 				margin-bottom: 0;
@@ -102,7 +102,7 @@
 		}
 
 		> .wp-block-getwid-template-post-meta {
-			margin-bottom: .25em;
+			margin-bottom: 0.25em;
 
 			+ .wp-block-getwid-template-post-featured-image {
 				margin-top: 1.25em;
@@ -231,13 +231,13 @@
 		&:last-child {
 			margin-bottom: 0;
 		}
-
 	}
 
-	@media screen and(min-width: 768px) {
+	@media screen and (min-width: 768px) {
 		.wp-block-getwid-custom-post-type__post-wrapper {
 			flex-direction: row;
 		}
+
 		.wp-block-getwid-custom-post-type__entry-header {
 			margin-top: 0;
 
@@ -255,10 +255,7 @@
 			}
 
 			+ .wp-block-getwid-custom-post-type__content-wrapper {
-				/*rtl:begin:remove*/
 				margin-left: 5%;
-				/*rtl:end:remove*/
-				/*rtl:raw: margin-right: 5%; */
 				margin-top: 0;
 				max-width: 55%;
 				width: 100%;
@@ -267,7 +264,7 @@
 	}
 }
 
-@media screen and(min-width: 991px) {
+@media screen and (min-width: 991px) {
 	@for $i from 1 through 6 {
 		.getwid-columns-#{$i} {
 			.wp-block-getwid-custom-post-type__post {

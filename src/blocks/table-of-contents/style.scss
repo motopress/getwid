@@ -3,11 +3,6 @@
  */
 
 .wp-block-getwid-table-of-contents {
-
-	&.is-style-default {
-
-	}
-
 	&.is-style-none {
 		ul {
 			list-style: none;
@@ -17,8 +12,8 @@
 			padding-left: 0;
 			margin-left: 0;
 
-			&:after,
-			&:before {
+			&::after,
+			&::before {
 				display: none;
 			}
 		}
@@ -45,8 +40,8 @@
 			padding-left: 0;
 			margin-left: 0;
 
-			&:after,
-			&:before {
+			&::after,
+			&::before {
 				display: none;
 			}
 		}
@@ -67,15 +62,15 @@
 			padding-left: 0;
 			margin-left: 0;
 
-			&:after {
+			&::after {
 				display: none;
 			}
 
-			&:before {
+			&::before {
 				content: counters(item, ".") ".";
 				counter-increment: item;
 				/*rtl:begin:remove*/
-				margin-right: .5em;
+				margin-right: 0.5em;
 				/*rtl:end:remove*/
 				/*rtl:raw: margin-left: .5em; float: right; */
 			}

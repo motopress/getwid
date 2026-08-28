@@ -1,0 +1,105 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/video-popup",
+	"description": "Opens a video in a popup.",
+	"category": "getwid-blocks",
+	"title": "Video Popup",
+	"keywords": [
+		"video",
+		"popup",
+		"button"
+	],
+	"attributes": {
+		"titleColor": {
+			"type": "string"
+		},
+		"customTitleColor": {
+			"type": "string"
+		},
+		"iconColor": {
+			"type": "string"
+		},
+		"customIconColor": {
+			"type": "string"
+		},
+		"buttonColorHEX": {
+			"type": "string"
+		},
+		"buttonColor": {
+			"type": "string"
+		},
+		"customButtonColor": {
+			"type": "string"
+		},
+		"overlayColor": {
+			"type": "string"
+		},
+		"customOverlayColor": {
+			"type": "string"
+		},
+		"imageSize": {
+			"type": "string",
+			"default": "full"
+		},
+		"id": {
+			"type": "number"
+		},
+		"url": {
+			"type": "string",
+			"source": "attribute",
+			"selector": ".wp-block-getwid-video-popup__source",
+			"attribute": "src"
+		},
+		"title": {
+			"type": "string",
+			"source": "html",
+			"selector": ".wp-block-getwid-video-popup__title"
+		},
+		"link": {
+			"type": "string"
+		},
+		"align": {
+			"type": "string"
+		},
+		"minHeight": {
+			"type": "string"
+		},
+		"buttonMaxWidth": {
+			"type": "string"
+		},
+		"overlayOpacity": {
+			"type": "number",
+			"default": 35
+		},
+		"imageAnimation": {
+			"type": "string",
+			"default": "none"
+		},
+		"buttonStyle": {
+			"type": "string",
+			"default": "default"
+		},
+		"buttonAnimation": {
+			"type": "string",
+			"default": "none"
+		},
+		"buttonSize": {
+			"type": "string",
+			"default": "default"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": [
+		"getwid-blocks-common",
+		"mp-fancybox",
+		"file:./style-index.css"
+	],
+	"viewScript": [
+		"jquery",
+		"mp-fancybox",
+		"file:./view.js"
+	]
+}

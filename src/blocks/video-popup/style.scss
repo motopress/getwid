@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 /*!
  * getwid-video-popup
  */
@@ -14,14 +16,14 @@
 
 		&:after {
 			display: none;
-			content: '';
+			content: "";
 			position: absolute;
 			top: 0;
 			bottom: 0;
 			left: 0;
 			right: 0;
 			background-color: inherit;
-			opacity: .35;
+			opacity: 0.35;
 		}
 	}
 
@@ -34,12 +36,13 @@
 		position: relative;
 		display: flex;
 		align-items: center;
+		border: 0;
 		border-radius: 45px;
 		border-color: #ff0000;
 		color: inherit;
 
 		&:before {
-			content: '';
+			content: "";
 			position: absolute;
 			top: 0;
 			bottom: 0;
@@ -85,7 +88,7 @@
 				border-color: #ff0000;
 
 				&:before {
-					content: '';
+					content: "";
 					position: absolute;
 					top: 0;
 					bottom: 0;
@@ -95,7 +98,7 @@
 					display: block;
 					background-color: inherit;
 					border-radius: inherit;
-					animation: getwidPulseAnimation 1.5s linear .5s infinite;
+					animation: getwidPulseAnimation 1.5s linear 0.5s infinite;
 				}
 
 				i {
@@ -126,7 +129,7 @@
 			}
 
 			.wp-block-getwid-video-popup__button-caption {
-				padding: 5px 35px 5px 10px #{'/*rtl: 5px 10px 5px 35px*/'};
+				padding: 5px 35px 5px 10px #{"/*rtl: 5px 10px 5px 35px*/"};
 			}
 		}
 
@@ -152,7 +155,7 @@
 			}
 
 			.wp-block-getwid-video-popup__button-caption {
-				padding: 15px 55px 15px 25px #{'/*rtl: 15px 25px 15px 55px*/'};
+				padding: 15px 55px 15px 25px #{"/*rtl: 15px 25px 15px 55px*/"};
 			}
 		}
 	}
@@ -174,7 +177,7 @@
 	}
 
 	&__button-caption {
-		padding: 10px 45px 10px 20px #{'/*rtl: 10px 20px 10px 45px*/'};
+		padding: 10px 45px 10px 20px #{"/*rtl: 10px 20px 10px 45px*/"};
 		flex: 0 1 auto;
 		word-break: break-word;
 
@@ -190,7 +193,7 @@
 	}
 
 	&__caption {
-		margin-top: .5em;
+		margin-top: 0.5em;
 
 		.wp-block-getwid-video-popup__title {
 			text-align: center;
@@ -240,7 +243,7 @@
 		width: 100%;
 		height: 100%;
 		border-radius: 0;
-		transition: all .3s ease;
+		transition: all 0.3s ease;
 		max-width: none;
 	}
 }
@@ -262,7 +265,7 @@
 		//Fix for vertical alignment in IE
 		&:before {
 			display: block;
-			content: '';
+			content: "";
 			min-height: inherit;
 			font-size: 0;
 		}
@@ -289,26 +292,24 @@
 	&:hover {
 		.wp-block-getwid-video-popup__image,
 		.wp-block-getwid-video-popup__video {
-			transform: translateX(-25px) #{'/*rtl: none*/'};
+			transform: translateX(-25px) #{"/*rtl: none*/"};
 		}
 	}
-
 }
 
 .has-animation-slide-right {
 	.wp-block-getwid-video-popup__image,
 	.wp-block-getwid-video-popup__video {
 		width: calc(100% + 25px);
-		transform: translateX(-25px) #{'/*rtl: none*/'};
+		transform: translateX(-25px) #{"/*rtl: none*/"};
 	}
 
 	&:hover {
 		.wp-block-getwid-video-popup__image,
 		.wp-block-getwid-video-popup__video {
-			transform: none #{'/*rtl: translateX(25px)*/'};
+			transform: none #{"/*rtl: translateX(25px)*/"};
 		}
 	}
-
 }
 
 .has-animation-slide-top {
@@ -320,7 +321,7 @@
 	&:hover {
 		.wp-block-getwid-video-popup__image,
 		.wp-block-getwid-video-popup__video {
-			transform: translateY(-25px)
+			transform: translateY(-25px);
 		}
 	}
 }
@@ -329,7 +330,7 @@
 	.wp-block-getwid-video-popup__image,
 	.wp-block-getwid-video-popup__video {
 		height: calc(100% + 25px);
-		transform: translateY(-25px)
+		transform: translateY(-25px);
 	}
 
 	&:hover {
@@ -368,7 +369,7 @@
 }
 
 @function opac($var1, $var2) {
-	@return ($var1 * $var2) / 100;
+	@return math.div($var1 * $var2, 100);
 }
 
 @for $i from 0 through 20 {

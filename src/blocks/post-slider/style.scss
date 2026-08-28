@@ -3,7 +3,6 @@
  */
 
 .wp-block-getwid-post-slider {
-
 	&__content {
 		.slick-list,
 		.slick-track {
@@ -74,7 +73,7 @@
 	}
 
 	& &__post-title {
-		color: #ffffff;
+		color: #fff;
 		position: relative;
 
 		a {
@@ -84,6 +83,6 @@
 
 	&__post-excerpt {
 		position: relative;
-		color: #ffffff;
+		color: #fff;
 	}
 }

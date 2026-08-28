@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/template-post-title",
+	"description": "Displays the post title.",
+	"category": "getwid-post-blocks",
+	"title": "Title",
+	"supports": {
+		"inserter": true
+	},
+	"attributes": {
+		"textColor": {
+			"type": "string"
+		},
+		"customTextColor": {
+			"type": "string"
+		},
+		"linkTo": {
+			"type": "string",
+			"default": "none"
+		},
+		"fontSize": {
+			"type": "string"
+		},
+		"customFontSize": {
+			"type": "string"
+		},
+		"bold": {
+			"type": "boolean"
+		},
+		"italic": {
+			"type": "boolean",
+			"default": false
+		},
+		"textAlignment": {
+			"type": "string"
+		},
+		"headerTag": {
+			"type": "string",
+			"default": "h2"
+		},
+		"className": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

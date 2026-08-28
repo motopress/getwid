@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/advanced-spacer",
+	"description": "Adds responsive vertical space between blocks.",
+	"category": "getwid-blocks",
+	"title": "Advanced Spacer",
+	"attributes": {
+		"height": {
+			"type": "string",
+			"default": "100px"
+		},
+		"isHideDesktop": {
+			"type": "boolean",
+			"default": false
+		},
+		"isHideTablet": {
+			"type": "boolean",
+			"default": false
+		},
+		"isHideMobile": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": [
+		"getwid-blocks-common",
+		"file:./style-index.css"
+	]
+}

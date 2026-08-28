@@ -1,0 +1,93 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"textdomain": "getwid",
+	"name": "getwid/recent-posts",
+	"description": "Displays a list of recent posts.",
+	"category": "getwid-blocks",
+	"title": "Recent Posts",
+	"keywords": [
+		"latest"
+	],
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		]
+	},
+	"attributes": {
+		"titleTag": {
+			"type": "string",
+			"default": "h3"
+		},
+		"imageSize": {
+			"type": "string",
+			"default": "full"
+		},
+		"cropImages": {
+			"type": "boolean",
+			"default": true
+		},
+		"categories": {
+			"type": "string"
+		},
+		"postsToShow": {
+			"type": "number",
+			"default": 5
+		},
+		"showTitle": {
+			"type": "boolean",
+			"default": true
+		},
+		"showDate": {
+			"type": "boolean",
+			"default": false
+		},
+		"showCategories": {
+			"type": "boolean",
+			"default": false
+		},
+		"showCommentsCount": {
+			"type": "boolean",
+			"default": false
+		},
+		"showContent": {
+			"type": "boolean",
+			"default": false
+		},
+		"contentLength": {
+			"type": "number",
+			"default": 55
+		},
+		"showFeaturedImage": {
+			"type": "boolean",
+			"default": false
+		},
+		"postLayout": {
+			"type": "string",
+			"default": "list"
+		},
+		"columns": {
+			"type": "number",
+			"default": 3
+		},
+		"order": {
+			"type": "string",
+			"default": "desc"
+		},
+		"orderBy": {
+			"type": "string",
+			"default": "date"
+		},
+		"className": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": [
+		"getwid-blocks-common",
+		"file:./style-index.css"
+	]
+}

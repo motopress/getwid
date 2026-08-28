@@ -1,10 +1,4 @@
 .wp-block-getwid-accordion {
-
-	&__add-accordion {
-		display: flex;
-		justify-content: center;
-	}
-
 	&__header-title {
 		display: block;
 	}
@@ -42,20 +36,19 @@
 		&.is-selected,
 		&.has-child-selected,
 		&.is-typing {
-			> .wp-block-getwid-accordion-item {
-				> .wp-block-getwid-accordion__content-wrapper {
-					height: auto;
-					overflow: visible;
+			> .wp-block-getwid-accordion__content-wrapper {
+				height: auto;
+				overflow: visible;
+			}
+
+			> .wp-block-getwid-accordion__header-wrapper
+				.wp-block-getwid-accordion__icon {
+				&.is-active {
+					display: none;
 				}
 
-				> .wp-block-getwid-accordion__header-wrapper .wp-block-getwid-accordion__icon {
-					&.is-active {
-						display: none;
-					}
-
-					&.is-passive {
-						display: block;
-					}
+				&.is-passive {
+					display: block;
 				}
 			}
 		}
@@ -75,18 +68,18 @@
 		}
 	}
 
-	&.alignfull{
+	&.alignfull {
 		padding-left: 14px;
 		padding-right: 14px;
 	}
 
 	@for $index from 1 through 15 {
-		&--current-item-#{$index} [data-type="getwid/accordion-item"]:nth-of-type(#{$index}) {
+		&--current-item-#{$index}
+			[data-type="getwid/accordion-item"]:nth-of-type(#{$index}) {
 			.wp-block-getwid-accordion__content-wrapper {
 				height: auto;
 				overflow: visible;
 			}
 		}
 	}
-
 }

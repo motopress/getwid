@@ -7,7 +7,7 @@
 	overflow: hidden;
 
 	&__list {
-		margin: 0 -.2em -.2em;
+		margin: 0 -0.2em -0.2em;
 		padding: 0;
 		list-style: none;
 		display: flex;
@@ -16,7 +16,7 @@
 	}
 
 	&__item {
-		padding: 0 .2em .2em;
+		padding: 0 0.2em 0.2em;
 		margin: 0;
 
 		&:before,
@@ -52,14 +52,6 @@
 			justify-content: center;
 			line-height: 1em;
 			font-style: normal;
-
-			&:before {
-				//width: 1em;
-				//height: 1em;
-				//display: block;
-				//text-align: center;
-				//line-height: 1em;
-			}
 		}
 	}
 
@@ -67,22 +59,20 @@
 		display: inline-block;
 		line-height: 0;
 	}
-
-
 }
 
 .has-icons-framed {
 	.wp-block-getwid-social-links__wrapper {
 		border: 1px solid;
 		border-radius: 50%;
-		padding: .75em;
+		padding: 0.75em;
 	}
 }
 
 .has-icons-stacked {
 	.wp-block-getwid-social-links__link {
 		.wp-block-getwid-social-links__wrapper {
-			padding: .75em;
+			padding: 0.75em;
 			border-radius: 50%;
 		}
 	}
@@ -100,30 +90,30 @@
 
 .has-small-spacing {
 	.wp-block-getwid-social-links__list {
-		margin: 0 -.125em -.125em;
+		margin: 0 -0.125em -0.125em;
 	}
 
 	.wp-block-getwid-social-links__item {
-		padding: 0 0.125em .125em;
+		padding: 0 0.125em 0.125em;
 	}
 }
 
 .has-medium-spacing {
 	.wp-block-getwid-social-links__list {
-		margin: 0 -.25em -.25em;
+		margin: 0 -0.25em -0.25em;
 	}
 
 	.wp-block-getwid-social-links__item {
-		padding: 0 .25em .25em;
+		padding: 0 0.25em 0.25em;
 	}
 }
 
 .has-large-spacing {
 	.wp-block-getwid-social-links__list {
-		margin: 0 -.5em -.5em;
+		margin: 0 -0.5em -0.5em;
 	}
 
 	.wp-block-getwid-social-links__item {
-		padding: 0 .5em .5em;
+		padding: 0 0.5em 0.5em;
 	}
 }

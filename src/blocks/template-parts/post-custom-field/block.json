@@ -1,0 +1,47 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getwid/template-post-custom-field",
+	"description": "Displays a selected post custom field.",
+	"title": "Custom Field",
+	"category": "getwid-post-blocks",
+	"icon": "tag",
+	"textdomain": "getwid",
+	"supports": {
+		"inserter": true
+	},
+	"attributes": {
+		"textColor": {
+			"type": "string"
+		},
+		"customTextColor": {
+			"type": "string"
+		},
+		"fontSize": {
+			"type": "string"
+		},
+		"customFontSize": {
+			"type": "string"
+		},
+		"customField": {
+			"type": "string"
+		},
+		"bold": {
+			"type": "boolean",
+			"default": false
+		},
+		"italic": {
+			"type": "boolean",
+			"default": false
+		},
+		"textAlignment": {
+			"type": "string"
+		},
+		"className": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css"
+}
