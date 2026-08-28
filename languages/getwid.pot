@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Getwid 2.3.0\n"
+"Project-Id-Version: Getwid 3.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getwid\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-28T08:11:18+00:00\n"
+"POT-Creation-Date: 2026-08-28T10:37:02+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: getwid\n"
@@ -797,6 +797,7 @@ msgid "Accordion Item"
 msgstr ""
 
 #: assets/blocks/accordion/accordion-item/index.js:1
+#: assets/blocks/accordion/accordion/index.js:3
 #: assets/blocks/advanced-heading/index.js:1
 #: assets/blocks/banner/index.js:1
 #: assets/blocks/content-timeline/content-timeline-item/index.js:1
@@ -1850,7 +1851,7 @@ msgid "Center Mode"
 msgstr ""
 
 #: assets/blocks/content-slider/content-slider/index.js:1
-msgid "Displays slides centered, with partial previews of the previous and next slides. Use with odd numbered \"Slides to show\" slides."
+msgid "Displays slides centered, with partial previews of the previous and next slides. Use with odd-numbered \"Slides to show\" slides."
 msgstr ""
 
 #: assets/blocks/content-slider/content-slider/index.js:1
@@ -2709,7 +2710,7 @@ msgstr ""
 
 #: assets/blocks/images-slider/index.js:1
 #: assets/blocks/post-carousel/index.js:1
-msgid "Displays slides centered, with partial previews of the previous and next slides. Use with odd numbered \"Slides on …\" slides."
+msgid "Displays slides centered, with partial previews of the previous and next slides. Use with odd-numbered \"Slides on …\" slides."
 msgstr ""
 
 #: assets/blocks/images-slider/index.js:1
@@ -4799,13 +4800,28 @@ msgid "ID"
 msgstr ""
 
 #: assets/blocks/accordion/accordion-item/block.json
+msgctxt "block description"
+msgid "Adds a collapsible section to an accordion."
+msgstr ""
+
+#: assets/blocks/accordion/accordion-item/block.json
 msgctxt "block title"
 msgid "Accordion Item"
 msgstr ""
 
 #: assets/blocks/accordion/accordion/block.json
+msgctxt "block description"
+msgid "Organizes content into expandable sections."
+msgstr ""
+
+#: assets/blocks/accordion/accordion/block.json
 msgctxt "block title"
 msgid "Accordion"
+msgstr ""
+
+#: assets/blocks/advanced-heading/block.json
+msgctxt "block description"
+msgid "Creates a customizable heading."
 msgstr ""
 
 #: assets/blocks/advanced-heading/block.json
@@ -4819,8 +4835,18 @@ msgid "Title"
 msgstr ""
 
 #: assets/blocks/advanced-spacer/block.json
+msgctxt "block description"
+msgid "Adds responsive vertical space between blocks."
+msgstr ""
+
+#: assets/blocks/advanced-spacer/block.json
 msgctxt "block title"
 msgid "Advanced Spacer"
+msgstr ""
+
+#: assets/blocks/ai-text/block.json
+msgctxt "block description"
+msgid "Generates text content with AI assistance."
 msgstr ""
 
 #: assets/blocks/ai-text/block.json
@@ -4829,13 +4855,13 @@ msgid "AI Assistant"
 msgstr ""
 
 #: assets/blocks/ai-text/block.json
-msgctxt "block description"
-msgid "This Getwid block offers automated content generation fueled by the power of AI."
-msgstr ""
-
-#: assets/blocks/ai-text/block.json
 msgctxt "block keyword"
 msgid "ai"
+msgstr ""
+
+#: assets/blocks/anchor/block.json
+msgctxt "block description"
+msgid "Creates a link target within a page."
 msgstr ""
 
 #: assets/blocks/anchor/block.json
@@ -4844,13 +4870,13 @@ msgid "Anchor"
 msgstr ""
 
 #: assets/blocks/banner/block.json
-msgctxt "block title"
-msgid "Banner"
+msgctxt "block description"
+msgid "Displays a promotional image or video banner."
 msgstr ""
 
 #: assets/blocks/banner/block.json
-msgctxt "block description"
-msgid "Link an image or video with a text overlay."
+msgctxt "block title"
+msgid "Banner"
 msgstr ""
 
 #: assets/blocks/banner/block.json
@@ -4865,8 +4891,18 @@ msgid "cover"
 msgstr ""
 
 #: assets/blocks/button-group/block.json
+msgctxt "block description"
+msgid "Arranges buttons in a customizable group."
+msgstr ""
+
+#: assets/blocks/button-group/block.json
 msgctxt "block title"
 msgid "Button Group"
+msgstr ""
+
+#: assets/blocks/circle-progress-bar/block.json
+msgctxt "block description"
+msgid "Shows progress in a circular indicator."
 msgstr ""
 
 #: assets/blocks/circle-progress-bar/block.json
@@ -4875,8 +4911,18 @@ msgid "Circular Progress Bar"
 msgstr ""
 
 #: assets/blocks/contact-form/contact-form/block.json
+msgctxt "block description"
+msgid "Adds a customizable contact form."
+msgstr ""
+
+#: assets/blocks/contact-form/contact-form/block.json
 msgctxt "block title"
 msgid "Contact Form"
+msgstr ""
+
+#: assets/blocks/contact-form/field-email/block.json
+msgctxt "block description"
+msgid "Adds an email input to a contact form."
 msgstr ""
 
 #: assets/blocks/contact-form/field-email/block.json
@@ -4885,13 +4931,28 @@ msgid "Email"
 msgstr ""
 
 #: assets/blocks/contact-form/field-name/block.json
+msgctxt "block description"
+msgid "Adds a name input to a contact form."
+msgstr ""
+
+#: assets/blocks/contact-form/field-name/block.json
 msgctxt "block title"
 msgid "Name"
 msgstr ""
 
 #: assets/blocks/contact-form/field-textarea/block.json
+msgctxt "block description"
+msgid "Adds a message field to a contact form."
+msgstr ""
+
+#: assets/blocks/contact-form/field-textarea/block.json
 msgctxt "block title"
 msgid "Message"
+msgstr ""
+
+#: assets/blocks/content-slider/content-slider-slide/block.json
+msgctxt "block description"
+msgid "Adds a slide to a content slider."
 msgstr ""
 
 #: assets/blocks/content-slider/content-slider-slide/block.json
@@ -4901,8 +4962,18 @@ msgid "Slide"
 msgstr ""
 
 #: assets/blocks/content-slider/content-slider/block.json
+msgctxt "block description"
+msgid "Displays content in a customizable slider."
+msgstr ""
+
+#: assets/blocks/content-slider/content-slider/block.json
 msgctxt "block title"
 msgid "Content Slider"
+msgstr ""
+
+#: assets/blocks/content-timeline/content-timeline-item/block.json
+msgctxt "block description"
+msgid "Adds an event to a content timeline."
 msgstr ""
 
 #: assets/blocks/content-timeline/content-timeline-item/block.json
@@ -4911,8 +4982,18 @@ msgid "Timeline Block"
 msgstr ""
 
 #: assets/blocks/content-timeline/content-timeline/block.json
+msgctxt "block description"
+msgid "Displays events in a visual timeline."
+msgstr ""
+
+#: assets/blocks/content-timeline/content-timeline/block.json
 msgctxt "block title"
 msgid "Content Timeline"
+msgstr ""
+
+#: assets/blocks/countdown/block.json
+msgctxt "block description"
+msgid "Counts down to a chosen date and time."
 msgstr ""
 
 #: assets/blocks/countdown/block.json
@@ -4921,8 +5002,18 @@ msgid "Countdown"
 msgstr ""
 
 #: assets/blocks/counter/block.json
+msgctxt "block description"
+msgid "Animates a number from start to finish."
+msgstr ""
+
+#: assets/blocks/counter/block.json
 msgctxt "block title"
 msgid "Counter"
+msgstr ""
+
+#: assets/blocks/custom-post-type/block.json
+msgctxt "block description"
+msgid "Displays a filtered list of custom posts."
 msgstr ""
 
 #: assets/blocks/custom-post-type/block.json
@@ -4946,6 +5037,11 @@ msgid "posts"
 msgstr ""
 
 #: assets/blocks/icon-box/block.json
+msgctxt "block description"
+msgid "Combines an icon with text and a link."
+msgstr ""
+
+#: assets/blocks/icon-box/block.json
 msgctxt "block title"
 msgid "Icon Box"
 msgstr ""
@@ -4963,13 +5059,28 @@ msgid "service"
 msgstr ""
 
 #: assets/blocks/icon/block.json
+msgctxt "block description"
+msgid "Displays a customizable icon."
+msgstr ""
+
+#: assets/blocks/icon/block.json
 msgctxt "block title"
 msgid "Icon"
 msgstr ""
 
 #: assets/blocks/image-box/block.json
+msgctxt "block description"
+msgid "Combines an image with text and a link."
+msgstr ""
+
+#: assets/blocks/image-box/block.json
 msgctxt "block title"
 msgid "Image Box"
+msgstr ""
+
+#: assets/blocks/image-hotspot/block.json
+msgctxt "block description"
+msgid "Adds interactive hotspots to an image."
 msgstr ""
 
 #: assets/blocks/image-hotspot/block.json
@@ -4980,6 +5091,11 @@ msgstr ""
 #: assets/blocks/image-hotspot/block.json
 msgctxt "block keyword"
 msgid "tooltip"
+msgstr ""
+
+#: assets/blocks/images-slider/block.json
+msgctxt "block description"
+msgid "Displays images in a customizable slider."
 msgstr ""
 
 #: assets/blocks/images-slider/block.json
@@ -5006,8 +5122,18 @@ msgid "photo"
 msgstr ""
 
 #: assets/blocks/images-stack/block.json
+msgctxt "block description"
+msgid "Displays an overlapping image gallery."
+msgstr ""
+
+#: assets/blocks/images-stack/block.json
 msgctxt "block title"
 msgid "Image Stack Gallery"
+msgstr ""
+
+#: assets/blocks/instagram/block.json
+msgctxt "block description"
+msgid "Displays posts from an Instagram account."
 msgstr ""
 
 #: assets/blocks/instagram/block.json
@@ -5016,8 +5142,18 @@ msgid "Instagram"
 msgstr ""
 
 #: assets/blocks/mailchimp/mailchimp-field-email/block.json
+msgctxt "block description"
+msgid "Adds an email field to a Mailchimp form."
+msgstr ""
+
+#: assets/blocks/mailchimp/mailchimp-field-email/block.json
 msgctxt "block title"
 msgid "Email address"
+msgstr ""
+
+#: assets/blocks/mailchimp/mailchimp-field-first-name/block.json
+msgctxt "block description"
+msgid "Adds a first-name field to a Mailchimp form."
 msgstr ""
 
 #: assets/blocks/mailchimp/mailchimp-field-first-name/block.json
@@ -5026,8 +5162,18 @@ msgid "First name"
 msgstr ""
 
 #: assets/blocks/mailchimp/mailchimp-field-last-name/block.json
+msgctxt "block description"
+msgid "Adds a last-name field to a Mailchimp form."
+msgstr ""
+
+#: assets/blocks/mailchimp/mailchimp-field-last-name/block.json
 msgctxt "block title"
 msgid "Last name"
+msgstr ""
+
+#: assets/blocks/mailchimp/mailchimp/block.json
+msgctxt "block description"
+msgid "Adds a Mailchimp subscription form."
 msgstr ""
 
 #: assets/blocks/mailchimp/mailchimp/block.json
@@ -5036,8 +5182,18 @@ msgid "Mailchimp"
 msgstr ""
 
 #: assets/blocks/map/block.json
+msgctxt "block description"
+msgid "Displays a Google Map with location markers."
+msgstr ""
+
+#: assets/blocks/map/block.json
 msgctxt "block title"
 msgid "Google Maps"
+msgstr ""
+
+#: assets/blocks/media-text-slider/media-text-slider-slide-content/block.json
+msgctxt "block description"
+msgid "Adds media to a media and text slide."
 msgstr ""
 
 #: assets/blocks/media-text-slider/media-text-slider-slide-content/block.json
@@ -5045,9 +5201,24 @@ msgctxt "block title"
 msgid "Image"
 msgstr ""
 
+#: assets/blocks/media-text-slider/media-text-slider-slide/block.json
+msgctxt "block description"
+msgid "Adds a slide to a media and text slider."
+msgstr ""
+
+#: assets/blocks/media-text-slider/media-text-slider/block.json
+msgctxt "block description"
+msgid "Displays media and text in a slider."
+msgstr ""
+
 #: assets/blocks/media-text-slider/media-text-slider/block.json
 msgctxt "block title"
 msgid "Media & Text Slider"
+msgstr ""
+
+#: assets/blocks/person/block.json
+msgctxt "block description"
+msgid "Introduces a person with image and details."
 msgstr ""
 
 #: assets/blocks/person/block.json
@@ -5066,8 +5237,18 @@ msgid "member"
 msgstr ""
 
 #: assets/blocks/post-carousel/block.json
+msgctxt "block description"
+msgid "Displays posts in a scrolling carousel."
+msgstr ""
+
+#: assets/blocks/post-carousel/block.json
 msgctxt "block title"
 msgid "Post Carousel"
+msgstr ""
+
+#: assets/blocks/post-slider/block.json
+msgctxt "block description"
+msgid "Displays posts in a customizable slider."
 msgstr ""
 
 #: assets/blocks/post-slider/block.json
@@ -5076,8 +5257,18 @@ msgid "Post Slider"
 msgstr ""
 
 #: assets/blocks/price-box/block.json
+msgctxt "block description"
+msgid "Highlights a pricing plan with features."
+msgstr ""
+
+#: assets/blocks/price-box/block.json
 msgctxt "block title"
 msgid "Price Box"
+msgstr ""
+
+#: assets/blocks/price-list/block.json
+msgctxt "block description"
+msgid "Lists products or services with prices."
 msgstr ""
 
 #: assets/blocks/price-list/block.json
@@ -5086,8 +5277,18 @@ msgid "Price List"
 msgstr ""
 
 #: assets/blocks/progress-bar/block.json
+msgctxt "block description"
+msgid "Shows progress with a horizontal bar."
+msgstr ""
+
+#: assets/blocks/progress-bar/block.json
 msgctxt "block title"
 msgid "Progress Bar"
+msgstr ""
+
+#: assets/blocks/recent-posts/block.json
+msgctxt "block description"
+msgid "Displays a list of recent posts."
 msgstr ""
 
 #: assets/blocks/recent-posts/block.json
@@ -5098,6 +5299,11 @@ msgstr ""
 #: assets/blocks/recent-posts/block.json
 msgctxt "block keyword"
 msgid "latest"
+msgstr ""
+
+#: assets/blocks/section/block.json
+msgctxt "block description"
+msgid "Groups content into a customizable section."
 msgstr ""
 
 #: assets/blocks/section/block.json
@@ -5121,6 +5327,11 @@ msgid "row"
 msgstr ""
 
 #: assets/blocks/social-links/block.json
+msgctxt "block description"
+msgid "Adds links to social media profiles."
+msgstr ""
+
+#: assets/blocks/social-links/block.json
 msgctxt "block title"
 msgid "Social Links"
 msgstr ""
@@ -5141,6 +5352,11 @@ msgid "share"
 msgstr ""
 
 #: assets/blocks/table-of-contents/block.json
+msgctxt "block description"
+msgid "Creates navigation from page headings."
+msgstr ""
+
+#: assets/blocks/table-of-contents/block.json
 msgctxt "block title"
 msgid "Table of Contents"
 msgstr ""
@@ -5151,8 +5367,18 @@ msgid "summary"
 msgstr ""
 
 #: assets/blocks/table/block.json
+msgctxt "block description"
+msgid "Creates a responsive data table."
+msgstr ""
+
+#: assets/blocks/table/block.json
 msgctxt "block title"
 msgid "Table"
+msgstr ""
+
+#: assets/blocks/tabs/tabs-item/block.json
+msgctxt "block description"
+msgid "Adds a tab panel to a tabs block."
 msgstr ""
 
 #: assets/blocks/tabs/tabs-item/block.json
@@ -5161,8 +5387,18 @@ msgid "Tabs Item"
 msgstr ""
 
 #: assets/blocks/tabs/tabs/block.json
+msgctxt "block description"
+msgid "Organizes content into switchable tabs."
+msgstr ""
+
+#: assets/blocks/tabs/tabs/block.json
 msgctxt "block title"
 msgid "Tabs"
+msgstr ""
+
+#: assets/blocks/template-library/block.json
+msgctxt "block description"
+msgid "Browses and inserts pre-designed templates."
 msgstr ""
 
 #: assets/blocks/template-library/block.json
@@ -5171,13 +5407,18 @@ msgid "Template Library"
 msgstr ""
 
 #: assets/blocks/template-parts/acf/background-image/block.json
+msgctxt "block description"
+msgid "Shows an ACF image as a content background."
+msgstr ""
+
+#: assets/blocks/template-parts/acf/background-image/block.json
 msgctxt "block title"
 msgid "ACF Background Image"
 msgstr ""
 
-#: assets/blocks/template-parts/acf/background-image/block.json
+#: assets/blocks/template-parts/acf/image/block.json
 msgctxt "block description"
-msgid "ACF background image template part."
+msgid "Displays an image from an ACF field."
 msgstr ""
 
 #: assets/blocks/template-parts/acf/image/block.json
@@ -5185,9 +5426,9 @@ msgctxt "block title"
 msgid "ACF Image"
 msgstr ""
 
-#: assets/blocks/template-parts/acf/image/block.json
+#: assets/blocks/template-parts/acf/select/block.json
 msgctxt "block description"
-msgid "ACF image template part."
+msgid "Displays a selected value from an ACF field."
 msgstr ""
 
 #: assets/blocks/template-parts/acf/select/block.json
@@ -5195,9 +5436,9 @@ msgctxt "block title"
 msgid "ACF Select"
 msgstr ""
 
-#: assets/blocks/template-parts/acf/select/block.json
+#: assets/blocks/template-parts/acf/wysiwyg/block.json
 msgctxt "block description"
-msgid "ACF select template part."
+msgid "Displays rich text from an ACF field."
 msgstr ""
 
 #: assets/blocks/template-parts/acf/wysiwyg/block.json
@@ -5205,9 +5446,9 @@ msgctxt "block title"
 msgid "ACF Wysiwyg"
 msgstr ""
 
-#: assets/blocks/template-parts/acf/wysiwyg/block.json
+#: assets/blocks/template-parts/post-author/block.json
 msgctxt "block description"
-msgid "ACF Wysiwyg template part."
+msgid "Displays the post author."
 msgstr ""
 
 #: assets/blocks/template-parts/post-author/block.json
@@ -5215,9 +5456,9 @@ msgctxt "block title"
 msgid "Author"
 msgstr ""
 
-#: assets/blocks/template-parts/post-author/block.json
+#: assets/blocks/template-parts/post-button/block.json
 msgctxt "block description"
-msgid "Post author template part."
+msgid "Adds a button linking to the post."
 msgstr ""
 
 #: assets/blocks/template-parts/post-button/block.json
@@ -5225,9 +5466,9 @@ msgctxt "block title"
 msgid "Button"
 msgstr ""
 
-#: assets/blocks/template-parts/post-button/block.json
+#: assets/blocks/template-parts/post-categories/block.json
 msgctxt "block description"
-msgid "Post button template part."
+msgid "Displays the post categories."
 msgstr ""
 
 #: assets/blocks/template-parts/post-categories/block.json
@@ -5235,9 +5476,9 @@ msgctxt "block title"
 msgid "Categories"
 msgstr ""
 
-#: assets/blocks/template-parts/post-categories/block.json
+#: assets/blocks/template-parts/post-comments/block.json
 msgctxt "block description"
-msgid "Post categories template part."
+msgid "Displays the post comment count."
 msgstr ""
 
 #: assets/blocks/template-parts/post-comments/block.json
@@ -5245,9 +5486,9 @@ msgctxt "block title"
 msgid "Comments"
 msgstr ""
 
-#: assets/blocks/template-parts/post-comments/block.json
+#: assets/blocks/template-parts/post-content/block.json
 msgctxt "block description"
-msgid "Post comments template part."
+msgid "Displays the post content or excerpt."
 msgstr ""
 
 #: assets/blocks/template-parts/post-content/block.json
@@ -5255,9 +5496,9 @@ msgctxt "block title"
 msgid "Content"
 msgstr ""
 
-#: assets/blocks/template-parts/post-content/block.json
+#: assets/blocks/template-parts/post-custom-field/block.json
 msgctxt "block description"
-msgid "Post content template part."
+msgid "Displays a selected post custom field."
 msgstr ""
 
 #: assets/blocks/template-parts/post-custom-field/block.json
@@ -5265,9 +5506,9 @@ msgctxt "block title"
 msgid "Custom Field"
 msgstr ""
 
-#: assets/blocks/template-parts/post-custom-field/block.json
+#: assets/blocks/template-parts/post-date/block.json
 msgctxt "block description"
-msgid "Post custom field template part."
+msgid "Displays the post date."
 msgstr ""
 
 #: assets/blocks/template-parts/post-date/block.json
@@ -5275,9 +5516,9 @@ msgctxt "block title"
 msgid "Date"
 msgstr ""
 
-#: assets/blocks/template-parts/post-date/block.json
+#: assets/blocks/template-parts/post-featured-background-image/block.json
 msgctxt "block description"
-msgid "Post date template part."
+msgid "Shows the featured image as a content background."
 msgstr ""
 
 #: assets/blocks/template-parts/post-featured-background-image/block.json
@@ -5285,9 +5526,9 @@ msgctxt "block title"
 msgid "Background Featured Image"
 msgstr ""
 
-#: assets/blocks/template-parts/post-featured-background-image/block.json
+#: assets/blocks/template-parts/post-featured-image/block.json
 msgctxt "block description"
-msgid "Post featured background image template part."
+msgid "Displays the post featured image."
 msgstr ""
 
 #: assets/blocks/template-parts/post-featured-image/block.json
@@ -5296,13 +5537,18 @@ msgid "Featured Image"
 msgstr ""
 
 #: assets/blocks/template-parts/post-layout-helper/block.json
+msgctxt "block description"
+msgid "Sets the layout for post template content."
+msgstr ""
+
+#: assets/blocks/template-parts/post-layout-helper/block.json
 msgctxt "block title"
 msgid "Layout"
 msgstr ""
 
-#: assets/blocks/template-parts/post-layout-helper/block.json
+#: assets/blocks/template-parts/post-link/block.json
 msgctxt "block description"
-msgid "Template post layout picker."
+msgid "Displays a link to the post."
 msgstr ""
 
 #: assets/blocks/template-parts/post-link/block.json
@@ -5310,9 +5556,9 @@ msgctxt "block title"
 msgid "Link"
 msgstr ""
 
-#: assets/blocks/template-parts/post-link/block.json
+#: assets/blocks/template-parts/post-meta/block.json
 msgctxt "block description"
-msgid "Post link template part."
+msgid "Groups post metadata in one area."
 msgstr ""
 
 #: assets/blocks/template-parts/post-meta/block.json
@@ -5320,9 +5566,9 @@ msgctxt "block title"
 msgid "Meta"
 msgstr ""
 
-#: assets/blocks/template-parts/post-meta/block.json
+#: assets/blocks/template-parts/post-tags/block.json
 msgctxt "block description"
-msgid "Post meta template part."
+msgid "Displays the post tags."
 msgstr ""
 
 #: assets/blocks/template-parts/post-tags/block.json
@@ -5330,14 +5576,19 @@ msgctxt "block title"
 msgid "Tags"
 msgstr ""
 
-#: assets/blocks/template-parts/post-tags/block.json
+#: assets/blocks/template-parts/post-title/block.json
 msgctxt "block description"
-msgid "Post tags template part."
+msgid "Displays the post title."
 msgstr ""
 
 #: assets/blocks/template-parts/post-title/block.json
 msgctxt "block title"
 msgid "Title"
+msgstr ""
+
+#: assets/blocks/testimonial/block.json
+msgctxt "block description"
+msgid "Displays a customer testimonial."
 msgstr ""
 
 #: assets/blocks/testimonial/block.json
@@ -5356,13 +5607,28 @@ msgid "feedback"
 msgstr ""
 
 #: assets/blocks/toggle/toggle-item/block.json
+msgctxt "block description"
+msgid "Adds a collapsible item to a toggle."
+msgstr ""
+
+#: assets/blocks/toggle/toggle-item/block.json
 msgctxt "block title"
 msgid "Toggle Item"
 msgstr ""
 
 #: assets/blocks/toggle/toggle/block.json
+msgctxt "block description"
+msgid "Displays collapsible content sections."
+msgstr ""
+
+#: assets/blocks/toggle/toggle/block.json
 msgctxt "block title"
 msgid "Toggle"
+msgstr ""
+
+#: assets/blocks/video-popup/block.json
+msgctxt "block description"
+msgid "Opens a video in a popup."
 msgstr ""
 
 #: assets/blocks/video-popup/block.json

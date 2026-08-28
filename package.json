@@ -9,7 +9,8 @@
 		"start:components": "wp-scripts start --config webpack.components.js",
 		"build:components": "wp-scripts build --config webpack.components.js",
 		"start:common-css": "gulp start",
-		"build:common-css": "gulp build"
+		"build:common-css": "gulp build",
+		"build:all": "npm run build && npm run build:components && npm run build:common-css"
 	},
 	"devDependencies": {
 		"@types/jquery": "^4.0.0",
@@ -46,6 +47,7 @@
 		"@wordpress/icons": "^13.2.0",
 		"@wordpress/server-side-render": "6.16.0",
 		"@wordpress/url": "^4.40.0",
+		"classnames": "^2.5.1",
 		"clsx": "^2.1.1",
 		"jquery": "^3.7.1",
 		"mini-css-extract-plugin": "^2.10.2",
