@@ -9,7 +9,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { createBlock } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 import Inspector from './inspector';
 import Navigation from './navigation';
@@ -49,7 +49,7 @@ export default function Edit( props: ContentSliderEditProps ) {
 	const activeSlideID =
 		blockOrder[ activeSlideIndex ] || blockOrder[ 0 ] || '';
 	const blockProps = useBlockProps( {
-		className: classnames(
+		className: clsx(
 			className,
 			`has-arrows-${ attributes.arrows }`,
 			`has-dots-${ attributes.dots }`

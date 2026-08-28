@@ -5,7 +5,7 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import type { BlockSaveProps } from '@wordpress/blocks';
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 import { itemBaseClass } from '../content-timeline/constants';
 import type { ContentTimelineItemAttributes } from '../content-timeline/types';
@@ -23,7 +23,7 @@ export default function Save( {
 		backgroundColor
 	);
 	const blockProps = useBlockProps.save( {
-		className: classnames( {
+		className: clsx( {
 			'has-card-left': cardPosition === 'left',
 			'has-card-right': cardPosition === 'right',
 		} ),
@@ -37,7 +37,7 @@ export default function Save( {
 		paddingLeft: outerAttributes.paddingLeft,
 		paddingRight: outerAttributes.paddingRight,
 	};
-	const cardClass = classnames( `${ itemBaseClass }__card`, {
+	const cardClass = clsx( `${ itemBaseClass }__card`, {
 		'has-background': backgroundColor || customBackgroundColor,
 		[ backgroundClass || '' ]: backgroundClass,
 	} );

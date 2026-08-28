@@ -6,7 +6,7 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { PanelBody, TextControl } from '@wordpress/components';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { __ } from '@wordpress/i18n';
 
 import { CustomColorPalette } from 'getwid-components';
@@ -40,7 +40,7 @@ function Edit( props: ContactFormEditProps ) {
 	} = attributes;
 	const blockProps = useBlockProps();
 
-	const buttonSubmitClass = classnames( 'wp-block-button__link', {
+	const buttonSubmitClass = clsx( 'wp-block-button__link', {
 		'has-background': backgroundColor.color,
 		[ backgroundColor.class || '' ]: backgroundColor.class,
 		'has-text-color': textColor.color,

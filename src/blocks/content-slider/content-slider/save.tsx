@@ -1,6 +1,6 @@
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import type { BlockSaveProps } from '@wordpress/blocks';
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 import { sliderAttributeNames, sliderDataAttributes } from './attributes';
 import type { ContentSliderAttributes } from './types';
@@ -26,7 +26,7 @@ export default function Save( {
 }: BlockSaveProps< ContentSliderAttributes > ) {
 	const dataAttributes = generateDataAttributes( attributes );
 	const blockProps = useBlockProps.save( {
-		className: classnames(
+		className: clsx(
 			`has-arrows-${ attributes.arrows }`,
 			`has-dots-${ attributes.dots }`
 		),

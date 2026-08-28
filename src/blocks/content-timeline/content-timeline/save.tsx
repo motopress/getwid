@@ -4,7 +4,7 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import type { BlockSaveProps } from '@wordpress/blocks';
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 import { baseClass } from './constants';
 import type { ContentTimelineAttributes } from './types';
@@ -17,14 +17,14 @@ export default function Save( {
 	const { animation, filling, fillColor, customFillColor } = attributes;
 	const fillClass = getColorClassName( 'background-color', fillColor );
 	const blockProps = useBlockProps.save( {
-		className: classnames( {
+		className: clsx( {
 			'is-animated': animation !== 'none',
 		} ),
 		'data-animation': animation,
 		'data-filling': filling,
 	} );
 	const barProps = {
-		className: classnames( `${ baseClass }__bar`, {
+		className: clsx( `${ baseClass }__bar`, {
 			'has-background': fillColor || customFillColor,
 			[ fillClass || '' ]: fillClass,
 		} ),

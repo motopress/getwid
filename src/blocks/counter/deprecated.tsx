@@ -3,7 +3,7 @@ import {
 	getColorClassName,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 import metadata from './block.json';
 import Save from './save';
@@ -49,7 +49,7 @@ function DeprecatedSave( { attributes }: SaveProps ) {
 		'data-numerals': numerals,
 	};
 	const numberProps = {
-		className: classnames( `${ baseClass }__number`, {
+		className: clsx( `${ baseClass }__number`, {
 			'has-text-color': textColorClass || customTextColor,
 			[ textColorClass || '' ]: textColorClass,
 		} ),

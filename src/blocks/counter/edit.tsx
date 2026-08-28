@@ -5,7 +5,7 @@ import {
 	useBlockProps,
 	withColors,
 } from '@wordpress/block-editor';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -33,7 +33,7 @@ function CounterEdit( props: CounterEditProps ) {
 	const blockProps = useBlockProps( {
 		className: clientId,
 	} );
-	const numberClassName = classnames( `${ baseClass }__number`, {
+	const numberClassName = clsx( `${ baseClass }__number`, {
 		'has-text-color': textColor.color || customTextColor,
 		[ textColor.class || '' ]: textColor.class,
 	} );

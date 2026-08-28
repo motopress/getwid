@@ -3,7 +3,7 @@ import {
 	getColorClassName,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 import type { CounterAttributes } from './types';
 import { sanitizeInlineAttribute } from './utils';
@@ -51,7 +51,7 @@ export default function Save( { attributes }: SaveProps ) {
 		'data-numerals': numerals,
 	};
 	const numberProps = {
-		className: classnames( `${ baseClass }__number`, {
+		className: clsx( `${ baseClass }__number`, {
 			'has-text-color': textColorClass || customTextColor,
 			[ textColorClass || '' ]: textColorClass,
 		} ),

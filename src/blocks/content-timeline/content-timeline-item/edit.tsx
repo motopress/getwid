@@ -11,7 +11,7 @@ import {
 import { ToolbarButton, ToolbarGroup } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 import { allowedFormats, itemBaseClass } from '../content-timeline/constants';
 import Inspector from './inspector';
@@ -73,7 +73,7 @@ export default function Edit( props: ContentTimelineItemEditProps ) {
 				?.color
 		: customBackgroundColor;
 	const blockProps = useBlockProps( {
-		className: classnames( outerAttributes.animation, {
+		className: clsx( outerAttributes.animation, {
 			'has-card-left': cardPosition === 'left',
 			'has-card-right': cardPosition === 'right',
 		} ),

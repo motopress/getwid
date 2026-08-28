@@ -1,5 +1,5 @@
 import { useBlockProps } from '@wordpress/block-editor';
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 import { baseClass } from './constants';
 import type { MapAttributes } from './types';
@@ -40,7 +40,7 @@ export default function Save( { attributes }: SaveProps ) {
 			...attributes,
 			mapMarkers: JSON.stringify( markers ),
 		} ),
-		className: classnames(
+		className: clsx(
 			attributes.className,
 			attributes.blockAlignment
 				? `align${ attributes.blockAlignment }`

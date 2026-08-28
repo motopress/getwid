@@ -1,5 +1,5 @@
 import type { BlockConfiguration } from '@wordpress/blocks';
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 import { attributes } from './attributes';
 import type { MapAttributes } from './types';
@@ -20,7 +20,7 @@ function DeprecatedSave( {
 	attributes: MapAttributes;
 } ) {
 	const markers = parseMapMarkers( blockAttributes.mapMarkers );
-	const wrapperClass = classnames(
+	const wrapperClass = clsx(
 		'wp-block-getwid-map',
 		blockAttributes.className,
 		blockAttributes.blockAlignment

@@ -7,7 +7,7 @@ import {
 import { Button, TextControl } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import jQuery from 'jquery';
 
 import {
@@ -205,7 +205,7 @@ function Edit( props: MailchimpEditProps ) {
 			</div>
 		);
 	}
-	const buttonSubmitClass = classnames( 'wp-block-button__link', {
+	const buttonSubmitClass = clsx( 'wp-block-button__link', {
 		'has-background': !! backgroundColor.color,
 		[ backgroundColor.class || '' ]: !! backgroundColor.class,
 		'has-text-color': !! textColor.color,
