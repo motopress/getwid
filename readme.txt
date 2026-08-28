@@ -225,7 +225,7 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 2.3.0, Aug 27 2026 =
+= 2.3.0, Aug 28 2026 =
 * Migrated all blocks to API version 3, removed editor deprecation warnings, and fixed iframe compatibility.
 
 = 2.2.0, Apr 24 2026 =
