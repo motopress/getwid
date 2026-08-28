@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.3.0
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -225,8 +225,8 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 
 == Changelog ==
 
-= 2.3.0, Aug 28 2026 =
-* Migrated all blocks to API version 3, removed editor deprecation warnings, and fixed iframe compatibility.
+= 3.0.0, Aug 28 2026 =
+* Modernized all Getwid blocks to use the latest WordPress Block API and native block asset loading, improving compatibility, stability, and performance.
 
 = 2.2.0, Apr 24 2026 =
 * Fixed potential security vulnerability in Google Maps block.
