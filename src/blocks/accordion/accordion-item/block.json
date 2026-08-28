@@ -2,6 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "getwid/accordion-item",
+	"description": "Adds a collapsible section to an accordion.",
 	"title": "Accordion Item",
 	"category": "getwid-blocks",
 	"parent": [ "getwid/accordion" ],

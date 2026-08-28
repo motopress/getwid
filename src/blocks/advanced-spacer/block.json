@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/advanced-spacer",
+	"description": "Adds responsive vertical space between blocks.",
 	"category": "getwid-blocks",
 	"title": "Advanced Spacer",
 	"attributes": {

@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/mailchimp",
+	"description": "Adds a Mailchimp subscription form.",
 	"category": "getwid-blocks",
 	"title": "Mailchimp",
 	"supports": {

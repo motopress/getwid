@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/social-links",
+	"description": "Adds links to social media profiles.",
 	"category": "getwid-blocks",
 	"title": "Social Links",
 	"keywords": [

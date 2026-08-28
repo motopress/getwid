@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/table-of-contents",
+	"description": "Creates navigation from page headings.",
 	"category": "getwid-blocks",
 	"title": "Table of Contents",
 	"keywords": [ "summary" ],

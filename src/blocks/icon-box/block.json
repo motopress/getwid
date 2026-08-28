@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/icon-box",
+	"description": "Combines an icon with text and a link.",
 	"category": "getwid-blocks",
 	"title": "Icon Box",
 	"keywords": [

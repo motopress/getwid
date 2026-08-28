@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/accordion",
+	"description": "Organizes content into expandable sections.",
 	"category": "getwid-blocks",
 	"title": "Accordion",
 	"supports": {

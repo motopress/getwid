@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/map",
+	"description": "Displays a Google Map with location markers.",
 	"category": "getwid-blocks",
 	"title": "Google Maps",
 	"attributes": {

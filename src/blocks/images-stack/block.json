@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/images-stack",
+	"description": "Displays an overlapping image gallery.",
 	"category": "getwid-blocks",
 	"title": "Image Stack Gallery",
 	"keywords": [

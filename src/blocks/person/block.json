@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/person",
+	"description": "Introduces a person with image and details.",
 	"category": "getwid-blocks",
 	"title": "Person",
 	"keywords": [ "team", "member" ],

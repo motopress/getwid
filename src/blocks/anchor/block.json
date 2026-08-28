@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/anchor",
+	"description": "Creates a link target within a page.",
 	"category": "getwid-blocks",
 	"title": "Anchor",
 	"supports": {

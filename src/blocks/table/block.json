@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/table",
+	"description": "Creates a responsive data table.",
 	"category": "getwid-blocks",
 	"title": "Table",
 	"icon": "editor-table",

@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/media-text-slider",
+	"description": "Displays media and text in a slider.",
 	"category": "getwid-blocks",
 	"title": "Media & Text Slider",
 	"keywords": [

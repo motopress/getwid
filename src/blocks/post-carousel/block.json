@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/post-carousel",
+	"description": "Displays posts in a scrolling carousel.",
 	"category": "getwid-blocks",
 	"title": "Post Carousel",
 	"supports": {

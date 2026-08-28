@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/progress-bar",
+	"description": "Shows progress with a horizontal bar.",
 	"category": "getwid-blocks",
 	"title": "Progress Bar",
 	"supports": {

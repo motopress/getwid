@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/image-hotspot",
+	"description": "Adds interactive hotspots to an image.",
 	"category": "getwid-blocks",
 	"title": "Image Hotspot",
 	"keywords": [

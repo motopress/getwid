@@ -3,9 +3,9 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/banner",
+	"description": "Displays a promotional image or video banner.",
 	"category": "getwid-blocks",
 	"title": "Banner",
-	"description": "Link an image or video with a text overlay.",
 	"keywords": [
 		"image",
 		"cover"

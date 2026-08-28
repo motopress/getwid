@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/field-textarea",
+	"description": "Adds a message field to a contact form.",
 	"category": "getwid-blocks",
 	"title": "Message",
 	"ancestor": [ "getwid/contact-form" ],

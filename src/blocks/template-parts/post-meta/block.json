@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "getwid/template-post-meta",
+	"description": "Groups post metadata in one area.",
 	"title": "Meta",
 	"category": "getwid-post-blocks",
 	"icon": "tagcloud",
-	"description": "Post meta template part.",
 	"textdomain": "getwid",
 	"supports": {
 		"inserter": true

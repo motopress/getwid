@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/section",
+	"description": "Groups content into a customizable section.",
 	"category": "getwid-blocks",
 	"title": "Section",
 	"keywords": [

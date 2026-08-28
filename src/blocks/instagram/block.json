@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/instagram",
+	"description": "Displays posts from an Instagram account.",
 	"category": "getwid-blocks",
 	"title": "Instagram",
 	"supports": {

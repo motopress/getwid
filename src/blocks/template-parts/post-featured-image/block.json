@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/template-post-featured-image",
+	"description": "Displays the post featured image.",
 	"category": "getwid-post-blocks",
 	"title": "Featured Image",
 	"supports": {

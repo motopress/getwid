@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/icon",
+	"description": "Displays a customizable icon.",
 	"category": "getwid-blocks",
 	"title": "Icon",
 	"supports": {

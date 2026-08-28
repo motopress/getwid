@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/contact-form",
+	"description": "Adds a customizable contact form.",
 	"category": "getwid-blocks",
 	"title": "Contact Form",
 	"supports": {

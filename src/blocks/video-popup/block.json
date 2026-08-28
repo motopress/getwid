@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/video-popup",
+	"description": "Opens a video in a popup.",
 	"category": "getwid-blocks",
 	"title": "Video Popup",
 	"keywords": [

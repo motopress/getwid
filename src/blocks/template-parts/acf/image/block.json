@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "getwid/template-acf-image",
+	"description": "Displays an image from an ACF field.",
 	"title": "ACF Image",
 	"category": "getwid-acf-blocks",
 	"icon": "format-image",
-	"description": "ACF image template part.",
 	"textdomain": "getwid",
 	"supports": {
 		"align": [

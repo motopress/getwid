@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/media-text-slider-slide",
+	"description": "Adds a slide to a media and text slider.",
 	"category": "getwid-blocks",
 	"title": "Slide",
 	"parent": [ "getwid/media-text-slider" ],

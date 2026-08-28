@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/custom-post-type",
+	"description": "Displays a filtered list of custom posts.",
 	"category": "getwid-blocks",
 	"title": "Custom Post Type",
 	"keywords": [

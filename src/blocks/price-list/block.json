@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/price-list",
+	"description": "Lists products or services with prices.",
 	"category": "getwid-blocks",
 	"title": "Price List",
 	"supports": {

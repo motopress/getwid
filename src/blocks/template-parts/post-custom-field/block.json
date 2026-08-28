@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "getwid/template-post-custom-field",
+	"description": "Displays a selected post custom field.",
 	"title": "Custom Field",
 	"category": "getwid-post-blocks",
 	"icon": "tag",
-	"description": "Post custom field template part.",
 	"textdomain": "getwid",
 	"supports": {
 		"inserter": true

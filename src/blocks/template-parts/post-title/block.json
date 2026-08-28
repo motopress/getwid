@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/template-post-title",
+	"description": "Displays the post title.",
 	"category": "getwid-post-blocks",
 	"title": "Title",
 	"supports": {

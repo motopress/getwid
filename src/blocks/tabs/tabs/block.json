@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/tabs",
+	"description": "Organizes content into switchable tabs.",
 	"category": "getwid-blocks",
 	"title": "Tabs",
 	"supports": {

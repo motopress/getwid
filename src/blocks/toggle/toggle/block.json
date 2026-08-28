@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/toggle",
+	"description": "Displays collapsible content sections.",
 	"category": "getwid-blocks",
 	"title": "Toggle",
 	"supports": {

@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/content-timeline",
+	"description": "Displays events in a visual timeline.",
 	"category": "getwid-blocks",
 	"title": "Content Timeline",
 	"supports": {

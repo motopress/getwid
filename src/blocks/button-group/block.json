@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/button-group",
+	"description": "Arranges buttons in a customizable group.",
 	"category": "getwid-blocks",
 	"title": "Button Group",
 	"attributes": {

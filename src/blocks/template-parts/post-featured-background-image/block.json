@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "getwid/template-post-featured-background-image",
+	"description": "Shows the featured image as a content background.",
 	"title": "Background Featured Image",
 	"category": "getwid-post-blocks",
 	"icon": "images-alt2",
-	"description": "Post featured background image template part.",
 	"textdomain": "getwid",
 	"supports": {
 		"inserter": true

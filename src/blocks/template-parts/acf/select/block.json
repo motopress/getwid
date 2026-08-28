@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "getwid/template-acf-select",
+	"description": "Displays a selected value from an ACF field.",
 	"title": "ACF Select",
 	"category": "getwid-acf-blocks",
 	"icon": "tag",
-	"description": "ACF select template part.",
 	"textdomain": "getwid",
 	"attributes": {
 		"customField": {

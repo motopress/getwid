@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "getwid/template-acf-background-image",
+	"description": "Shows an ACF image as a content background.",
 	"title": "ACF Background Image",
 	"category": "getwid-acf-blocks",
 	"icon": "images-alt2",
-	"description": "ACF background image template part.",
 	"textdomain": "getwid",
 	"attributes": {
 		"customField": {

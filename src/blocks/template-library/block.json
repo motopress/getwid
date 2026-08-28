@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/template-library",
+	"description": "Browses and inserts pre-designed templates.",
 	"category": "getwid-blocks",
 	"title": "Template Library",
 	"icon": "category",

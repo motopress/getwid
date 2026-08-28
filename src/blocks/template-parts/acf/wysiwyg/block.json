@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "getwid/template-acf-wysiwyg",
+	"description": "Displays rich text from an ACF field.",
 	"title": "ACF Wysiwyg",
 	"category": "getwid-acf-blocks",
 	"icon": "text",
-	"description": "ACF Wysiwyg template part.",
 	"textdomain": "getwid",
 	"attributes": {
 		"customField": {

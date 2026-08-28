@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/field-name",
+	"description": "Adds a name input to a contact form.",
 	"category": "getwid-blocks",
 	"title": "Name",
 	"ancestor": [ "getwid/contact-form" ],

@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "getwid/template-post-button",
+	"description": "Adds a button linking to the post.",
 	"title": "Button",
 	"category": "getwid-post-blocks",
 	"icon": "button",
-	"description": "Post button template part.",
 	"textdomain": "getwid",
 	"supports": {
 		"inserter": true

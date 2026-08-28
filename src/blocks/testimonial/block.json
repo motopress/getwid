@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/testimonial",
+	"description": "Displays a customer testimonial.",
 	"category": "getwid-blocks",
 	"title": "Testimonial",
 	"keywords": [ "review", "feedback" ],

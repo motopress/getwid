@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/content-slider",
+	"description": "Displays content in a customizable slider.",
 	"category": "getwid-blocks",
 	"title": "Content Slider",
 	"supports": {

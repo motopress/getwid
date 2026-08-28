@@ -3,9 +3,9 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/ai-text",
+	"description": "Generates text content with AI assistance.",
 	"category": "getwid-blocks",
 	"title": "AI Assistant",
-	"description": "This Getwid block offers automated content generation fueled by the power of AI.",
 	"keywords": [ "ai" ],
 	"supports": {
 		"customClassName": false

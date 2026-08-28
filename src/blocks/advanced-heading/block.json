@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/advanced-heading",
+	"description": "Creates a customizable heading.",
 	"category": "getwid-blocks",
 	"title": "Advanced Heading",
 	"keywords": [

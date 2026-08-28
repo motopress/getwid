@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/content-slider-slide",
+	"description": "Adds a slide to a content slider.",
 	"category": "getwid-blocks",
 	"title": "Slide",
 	"parent": [ "getwid/content-slider" ],

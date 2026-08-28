@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/images-slider",
+	"description": "Displays images in a customizable slider.",
 	"category": "getwid-blocks",
 	"title": "Image Slider",
 	"keywords": [

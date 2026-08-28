@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/image-box",
+	"description": "Combines an image with text and a link.",
 	"category": "getwid-blocks",
 	"title": "Image Box",
 	"keywords": [

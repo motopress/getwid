@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/field-email",
+	"description": "Adds an email input to a contact form.",
 	"category": "getwid-blocks",
 	"title": "Email",
 	"ancestor": [ "getwid/contact-form" ],

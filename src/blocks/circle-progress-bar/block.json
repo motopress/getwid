@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/circle-progress-bar",
+	"description": "Shows progress in a circular indicator.",
 	"category": "getwid-blocks",
 	"title": "Circular Progress Bar",
 	"supports": {

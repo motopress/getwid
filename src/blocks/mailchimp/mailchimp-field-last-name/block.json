@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/mailchimp-field-last-name",
+	"description": "Adds a last-name field to a Mailchimp form.",
 	"category": "getwid-blocks",
 	"title": "Last name",
 	"parent": [ "getwid/mailchimp" ],

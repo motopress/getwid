@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/content-timeline-item",
+	"description": "Adds an event to a content timeline.",
 	"category": "getwid-blocks",
 	"title": "Timeline Block",
 	"parent": [ "getwid/content-timeline" ],

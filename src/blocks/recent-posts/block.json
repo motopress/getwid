@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/recent-posts",
+	"description": "Displays a list of recent posts.",
 	"category": "getwid-blocks",
 	"title": "Recent Posts",
 	"keywords": [

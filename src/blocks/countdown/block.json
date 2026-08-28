@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/countdown",
+	"description": "Counts down to a chosen date and time.",
 	"category": "getwid-blocks",
 	"title": "Countdown",
 	"supports": {

@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/tabs-item",
+	"description": "Adds a tab panel to a tabs block.",
 	"category": "getwid-blocks",
 	"title": "Tabs Item",
 	"parent": [ "getwid/tabs" ],

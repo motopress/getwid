@@ -501,7 +501,7 @@ export default function Inspector( props: InspectorProps ) {
 						<ToggleControl
 							label={ __( 'Center Mode', 'getwid' ) }
 							help={ __(
-								'Displays slides centered, with partial previews of the previous and next slides. Use with odd numbered "Slides on …" slides.',
+								'Displays slides centered, with partial previews of the previous and next slides. Use with odd-numbered "Slides on …" slides.',
 								'getwid'
 							) }
 							checked={ sliderCenterMode }

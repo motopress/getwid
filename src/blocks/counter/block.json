@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/counter",
+	"description": "Animates a number from start to finish.",
 	"category": "getwid-blocks",
 	"title": "Counter",
 	"supports": {

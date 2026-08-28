@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/mailchimp-field-email",
+	"description": "Adds an email field to a Mailchimp form.",
 	"category": "getwid-blocks",
 	"title": "Email address",
 	"parent": [ "getwid/mailchimp" ],

@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/mailchimp-field-first-name",
+	"description": "Adds a first-name field to a Mailchimp form.",
 	"category": "getwid-blocks",
 	"title": "First name",
 	"parent": [ "getwid/mailchimp" ],

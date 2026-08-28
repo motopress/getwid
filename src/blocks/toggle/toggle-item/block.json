@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/toggle-item",
+	"description": "Adds a collapsible item to a toggle.",
 	"category": "getwid-blocks",
 	"title": "Toggle Item",
 	"parent": [ "getwid/toggle" ],
