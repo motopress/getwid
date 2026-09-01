@@ -143,7 +143,6 @@
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": [
-		"file:./style-index.css",
-		"getwid-blocks-common"
+		"file:./style-index.css"
 	]
 }

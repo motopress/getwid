@@ -152,7 +152,6 @@
 		}
 	},
 	"style": [
-		"getwid-blocks-common",
 		"slick",
 		"slick-theme"
 	],

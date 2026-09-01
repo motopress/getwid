@@ -21,8 +21,10 @@ class ScriptsManager {
 		$this->version = $settings->getVersion();
 		$this->prefix  = $settings->getPrefix();
 
-		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
-		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_assets' ) );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ), 10 );
+		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_assets' ), 10 );
+
+		add_action( 'enqueue_block_assets', array( $this, 'enqueue_common_blocks_assets' ), 15 );
 	}
 
 	public function enqueue_block_editor_assets() {
@@ -215,18 +217,6 @@ class ScriptsManager {
 			array(),
 			'6.2.3'
 		);
-
-		wp_register_style(
-			"{$this->prefix}-blocks-common",
-			getwid_get_plugin_url( 'assets/common-styles/style.css' ),
-			array(),
-			$this->version,
-		);
-
-		wp_style_add_data( "{$this->prefix}-blocks-common", 'rtl', 'replace' );
-
-		wp_add_inline_style( "{$this->prefix}-blocks-common", getwid_generate_section_content_width_css() );
-		wp_add_inline_style( "{$this->prefix}-blocks-common", getwid_generate_smooth_animation_css() );
 	}
 
 	public function setup_editor_global_data() {
@@ -338,5 +328,19 @@ class ScriptsManager {
 		);
 
 		return $sizes_arr;
+	}
+
+	public function enqueue_common_blocks_assets() {
+		wp_enqueue_style(
+			"{$this->prefix}-blocks-common",
+			getwid_get_plugin_url( 'assets/common-styles/style.css' ),
+			array(),
+			$this->version,
+		);
+
+		wp_style_add_data( "{$this->prefix}-blocks-common", 'rtl', 'replace' );
+
+		wp_add_inline_style( "{$this->prefix}-blocks-common", getwid_generate_section_content_width_css() );
+		wp_add_inline_style( "{$this->prefix}-blocks-common", getwid_generate_smooth_animation_css() );
 	}
 }
