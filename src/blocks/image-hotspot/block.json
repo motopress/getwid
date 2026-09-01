@@ -118,7 +118,6 @@
 	],
 	"editorStyle": "file:./index.css",
 	"style": [
-		"getwid-blocks-common",
 		"tippy-themes",
 		"tippy-animation",
 		"file:./style-index.css"

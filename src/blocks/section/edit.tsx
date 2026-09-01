@@ -524,42 +524,46 @@ function Edit( props: SectionEditProps ) {
 
 	if ( shouldShowLayoutPicker ) {
 		return (
-			<Placeholder
-				className="block-editor-inner-blocks__template-picker has-many-options"
-				label={
-					<>
-						<Dashicon icon="layout" />
-						{ __( 'Choose Section Layout', 'getwid' ) }
-					</>
-				}
-				instructions={ __(
-					'Select a layout to start with, or make one yourself.',
-					'getwid'
-				) }
-			>
-				<ul className="block-editor-inner-blocks__template-picker-options">
-					{ templates.map( ( item, index ) => (
-						<li key={ index }>
-							<Tooltip text={ item.title }>
-								<Button
-									className="components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
-									onClick={ item.layout }
-								>
-									{ item.icon }
-								</Button>
-							</Tooltip>
-						</li>
-					) ) }
-				</ul>
-				<div className="block-editor-inner-blocks__template-picker-skip">
-					<Button
-						className="components-button is-link"
-						onClick={ () => setAttributes( { skipLayout: true } ) }
-					>
-						{ __( 'Skip', 'getwid' ) }
-					</Button>
-				</div>
-			</Placeholder>
+			<div { ...blockProps }>
+				<Placeholder
+					className="block-editor-inner-blocks__template-picker has-many-options"
+					label={
+						<>
+							<Dashicon icon="layout" />
+							{ __( 'Choose Section Layout', 'getwid' ) }
+						</>
+					}
+					instructions={ __(
+						'Select a layout to start with, or make one yourself.',
+						'getwid'
+					) }
+				>
+					<ul className="block-editor-inner-blocks__template-picker-options">
+						{ templates.map( ( item, index ) => (
+							<li key={ index }>
+								<Tooltip text={ item.title }>
+									<Button
+										className="components-icon-button block-editor-inner-blocks__template-picker-option is-button is-default is-large"
+										onClick={ item.layout }
+									>
+										{ item.icon }
+									</Button>
+								</Tooltip>
+							</li>
+						) ) }
+					</ul>
+					<div className="block-editor-inner-blocks__template-picker-skip">
+						<Button
+							className="components-button is-link"
+							onClick={ () =>
+								setAttributes( { skipLayout: true } )
+							}
+						>
+							{ __( 'Skip', 'getwid' ) }
+						</Button>
+					</div>
+				</Placeholder>
+			</div>
 		);
 	}
 

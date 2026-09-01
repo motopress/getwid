@@ -31,7 +31,6 @@
 		"file:./index.css"
 	],
 	"style": [
-		"getwid-blocks-common",
 		"file:./style-index.css"
 	],
 	"viewScript": [

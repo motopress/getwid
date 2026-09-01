@@ -5,7 +5,7 @@ Tags: gutenberg, gutenberg blocks, wordpress blocks, blocks, editor, block, gute
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -224,6 +224,9 @@ Getwid plugin is distributed under the terms of the GNU GPL.
 * Waypoints.js, Copyright 2011-2012 Caleb Troughton, MIT license.
 
 == Changelog ==
+
+= 3.0.1, Sep 1 2026 =
+* Fixed block styling issues caused by an incorrect stylesheet loading order.
 
 = 3.0.0, Aug 28 2026 =
 * Modernized all Getwid blocks to use the latest WordPress Block API and native block asset loading, improving compatibility, stability, and performance.
