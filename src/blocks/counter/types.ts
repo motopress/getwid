@@ -65,13 +65,5 @@ declare global {
 	interface Window {
 		CountUp?: CountUpConstructor;
 		Waypoint?: WaypointConstructor;
-		wp?: {
-			dom?: {
-				safeHTML?: ( value: string ) => string;
-			};
-			htmlEntities?: {
-				decodeEntities?: ( value: string ) => string;
-			};
-		};
 	}
 }

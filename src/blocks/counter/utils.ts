@@ -1,3 +1,5 @@
+import { safeHTML } from '@wordpress/dom';
+import { decodeEntities } from '@wordpress/html-entities';
 import type { CountUpOptions, CounterAttributes } from './types';
 
 export function parseBooleanString( value: string | undefined ) {
@@ -5,14 +7,7 @@ export function parseBooleanString( value: string | undefined ) {
 }
 
 export function sanitizeInlineAttribute( value: string | undefined ) {
-	const nextValue = value ?? '';
-	const decodeEntities = window.wp?.htmlEntities?.decodeEntities;
-	const safeHTML = window.wp?.dom?.safeHTML;
-	const decodedValue = decodeEntities
-		? decodeEntities( nextValue )
-		: nextValue;
-
-	return safeHTML ? safeHTML( decodedValue ) : decodedValue;
+	return value ? safeHTML( decodeEntities( value ) ) : '';
 }
 
 export function getEasingFunction( attributes: CounterAttributes ) {

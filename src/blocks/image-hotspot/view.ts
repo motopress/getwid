@@ -2,6 +2,8 @@ import jQuery from 'jquery';
 
 import type { RuntimeGlobal } from './types';
 import { animateElement, baseClass } from './utils';
+import { safeHTML } from '@wordpress/dom';
+import { decodeEntities } from '@wordpress/html-entities';
 
 function initImageHotspot() {
 	const runtimeGlobal = window as RuntimeGlobal;
@@ -40,10 +42,16 @@ function initImageHotspot() {
 				const point = imagePoints[ pointId ] || {};
 				const unescape =
 					runtimeGlobal._unescape || ( ( value: string ) => value );
-				const title = unescape(
-					element.find( `.${ baseClass }__dot-title` ).html() || ''
+				const title = safeHTML(
+					decodeEntities(
+						unescape(
+							element.find( `.${ baseClass }__dot-title` ).html()
+						)
+					) || ''
 				);
-				const content = unescape( point.content || '' );
+				const content = safeHTML(
+					decodeEntities( unescape( point.content || '' ) )
+				);
 				const tooltip = runtimeGlobal.tippy?.( dot, {
 					maxWidth: parseInt( String( point.popUpWidth ), 10 ),
 					hideOnClick:

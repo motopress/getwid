@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import type { ImageHotspotAttributes, ImageHotspotPoint } from './types';
 import { baseClass, getBlockClassName, parseImagePoints } from './utils';
 import { decodeEntities } from '@wordpress/html-entities';
+import { safeHTML } from '@wordpress/dom';
 
 type SaveProps = {
 	attributes: ImageHotspotAttributes;
@@ -13,8 +14,8 @@ type SaveProps = {
 function getPreparedPoints( imagePoints: string ) {
 	return parseImagePoints( imagePoints ).map( ( point ) => ( {
 		...point,
-		title: decodeEntities( point.title ),
-		content: decodeEntities( point.content ),
+		title: safeHTML( decodeEntities( point.title ) ),
+		content: safeHTML( decodeEntities( point.content ) ),
 	} ) );
 }
 

@@ -8,6 +8,8 @@ import type {
 	MapMarker,
 	StylesGlobal,
 } from './types';
+import { decodeEntities } from '@wordpress/html-entities';
+import { safeHTML } from '@wordpress/dom';
 
 const runtimeGlobal = window as GoogleMapsRuntime;
 
@@ -21,13 +23,6 @@ function removeAllAttributes( element: JQuery< HTMLElement > ) {
 			element.removeAttr( attribute );
 		}
 	} );
-}
-
-function decodeHtml( value: string ) {
-	const textarea = document.createElement( 'textarea' );
-	textarea.innerHTML = value;
-
-	return textarea.value;
 }
 
 function mapStyles( mapStyle: string, customStyle?: string ) {
@@ -101,18 +96,9 @@ function initMarker(
 		);
 	}
 
-	const message =
-		decodeHtml( markerData.description ) !== ''
-			? `
-				<div class='getwid-poi-info-window'>
-					${ decodeHtml( markerData.description ) }
-				</div>
-			`
-			: '';
-
 	attachMessage(
 		marker,
-		message,
+		safeHTML( decodeEntities( markerData.description ) ),
 		markerData.popUpOpen,
 		markerData.popUpMaxWidth
 	);

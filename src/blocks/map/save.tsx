@@ -4,24 +4,8 @@ import clsx from 'clsx';
 import { baseClass } from './constants';
 import type { MapAttributes } from './types';
 import { getMapDataAttributes, parseMapMarkers } from './utils';
-
-function decodeEntities( value: string ) {
-	const textarea = document.createElement( 'textarea' );
-	textarea.innerHTML = value;
-
-	return textarea.value;
-}
-
-function safeHtml( value: string ) {
-	const template = document.createElement( 'template' );
-	template.innerHTML = value;
-
-	template.content
-		.querySelectorAll( 'script,iframe,object,embed' )
-		.forEach( ( element ) => element.remove() );
-
-	return template.innerHTML;
-}
+import { safeHTML } from '@wordpress/dom';
+import { decodeEntities } from '@wordpress/html-entities';
 
 type SaveProps = {
 	attributes: MapAttributes;
@@ -31,10 +15,11 @@ export default function Save( { attributes }: SaveProps ) {
 	const markers = parseMapMarkers( attributes.mapMarkers ).map(
 		( marker ) => ( {
 			...marker,
-			name: safeHtml( decodeEntities( marker.name ) ),
-			description: safeHtml( decodeEntities( marker.description ) ),
+			name: safeHTML( decodeEntities( marker.name ) ),
+			description: safeHTML( decodeEntities( marker.description ) ),
 		} )
 	);
+
 	const blockProps = useBlockProps.save( {
 		...getMapDataAttributes( {
 			...attributes,
