@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"textdomain": "getwid",
 	"name": "getwid/ai-text",
-	"description": "Generates text content with AI assistance.",
+	"description": "Generate draft text with AI assistance. Review before publishing.",
 	"category": "getwid-blocks",
 	"title": "AI Assistant",
 	"keywords": [ "ai" ],

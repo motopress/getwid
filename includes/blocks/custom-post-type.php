@@ -25,17 +25,8 @@ class CustomPostType extends AbstractBlock {
 		$query_args = getwid_build_custom_post_type_query( $attributes );
 		$q          = new \WP_Query( $query_args );
 
-		$use_template          = false;
-		$template_part_content = '';
-
-		if ( isset( $attributes['postTemplate'] ) && '' !== $attributes['postTemplate'] ) {
-			$template_post = get_post( $attributes['postTemplate'], ARRAY_A );
-
-			if ( ! is_null( $template_post ) && '' !== $template_post['post_content'] ) {
-				$use_template          = true;
-				$template_part_content = $template_post['post_content'];
-			}
-		}
+		$template_part_content = getwid_get_post_template_content( isset( $attributes['postTemplate'] ) ? $attributes['postTemplate'] : '' );
+		$use_template          = '' !== $template_part_content;
 
 		$block_name = 'wp-block-getwid-custom-post-type';
 		$post_type  = isset( $attributes['postType'] ) ? $attributes['postType'] : 'post';

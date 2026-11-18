@@ -130,7 +130,7 @@ export default function Edit( props: AiTextEditProps ) {
 							required
 							disabled={ loading }
 							placeholder={ __(
-								'Write your request or question to receive an AI-generated reply',
+								'Ask AI to generate a draft. Review before publishing.',
 								'getwid'
 							) }
 						/>

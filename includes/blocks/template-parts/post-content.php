@@ -32,6 +32,12 @@ class PostContent extends \Getwid\Blocks\AbstractBlock {
 			return $content;
 		}
 
+		$current_post = get_post( get_the_ID() );
+
+		if ( post_password_required( $current_post ) ) {
+			return get_the_password_form( $current_post );
+		}
+
 		$block_name    = 'wp-block-getwid-template-post-content';
 		$wrapper_class = $block_name;
 		$wrapper_style = '';
@@ -58,7 +64,6 @@ class PostContent extends \Getwid\Blocks\AbstractBlock {
 		}
 
 		$content_length = isset( $attributes['contentLength'] ) ? $attributes['contentLength'] : false;
-		$current_post   = get_post( get_the_ID() );
 		$is_back_end    = getwid_is_block_editor();
 
 		getwid_custom_color_style_and_class( $wrapper_style, $wrapper_class, $attributes, 'color', $is_back_end );

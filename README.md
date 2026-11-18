@@ -35,6 +35,9 @@ Before running any of the scripts, you must complete several steps:
 1. Use 22.* node version.
 1. In the plugin directory run `npm i`.
 
+### Complete production build
+* Run `npm run build:all` to build blocks, shared components, and common CSS for a release. This runs all three production build commands below.
+
 ### Blocks
 * Run `npm run start` to watch and compile block files during development.
 * Run `npm run build` to create a production build of block files.

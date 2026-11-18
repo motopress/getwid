@@ -69,6 +69,42 @@ function getwid_locate_template( $slug ){
 	return $template;
 }
 
+/**
+ * Get template content eligible for public inclusion, regardless of the viewer.
+ *
+ * @param int|string $template_id Post template ID.
+ * @return string Template content, or an empty string for an ineligible template.
+ */
+function getwid_get_post_template_content( $template_id ) {
+	if ( ! is_int( $template_id ) && ! is_string( $template_id ) ) {
+		return '';
+	}
+
+	if ( ! preg_match( '/^[0-9]+$/D', (string) $template_id ) ) {
+		return '';
+	}
+
+	$template_id = filter_var( ltrim( (string) $template_id, '0' ), FILTER_VALIDATE_INT, array(
+		'options' => array( 'min_range' => 1 ),
+	) );
+
+	if ( false === $template_id ) {
+		return '';
+	}
+
+	$template_post = get_post( $template_id );
+
+	if ( ! $template_post
+		|| 'getwid_template_part' !== $template_post->post_type
+		|| 'publish' !== $template_post->post_status
+		|| '' !== $template_post->post_password
+	) {
+		return '';
+	}
+
+	return $template_post->post_content;
+}
+
 /*
  * Add the option if it doesn't exist
  *

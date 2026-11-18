@@ -11,7 +11,7 @@ registerBlockType( metadata as BlockConfiguration< AiTextAttributes >, {
 	title: __( 'AI Assistant', 'getwid' ),
 	icon: <Icon />,
 	description: __(
-		'This Getwid block offers automated content generation fueled by the power of AI.',
+		'Generate draft text with AI assistance. Review before publishing.',
 		'getwid'
 	),
 	edit: MaybeBlockIsDisabled( 'getwid/ai-text' ) || Edit,

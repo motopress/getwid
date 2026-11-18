@@ -38,7 +38,7 @@ export default function TermsAndConditions( {
 
 	const text = createInterpolateElement(
 		__(
-			'In order to use this block, you must accept <link>Terms and Conditions</link>.',
+			'This assistant uses AI to generate text, which may be inaccurate. Review it before publishing. To continue, accept the <link>Terms and Conditions</link>.',
 			'getwid'
 		),
 		{
