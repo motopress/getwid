@@ -1,6 +1,6 @@
 {
 	"name": "getwid",
-	"version": "3.0.3",
+	"version": "3.0.4",
 	"license": "GPL",
 	"private": true,
 	"scripts": {
@@ -25,6 +25,7 @@
 		"gulp-rename": "^2.1.0",
 		"gulp-rtlcss": "^2.0.0",
 		"gulp-sass": "^6.0.1",
+		"playwright": "1.61.1",
 		"prettier": "npm:wp-prettier@^3.0.3",
 		"sass": "^1.101.0",
 		"typescript": "^6.0.3"

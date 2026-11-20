@@ -129,6 +129,9 @@ function initMediaTextSlider() {
 			}
 		);
 
+		// Prevent DOM-supplied Slick options from overriding Getwid's configuration.
+		sliderContent.removeAttr( 'data-slick' ).removeData( 'slick' );
+
 		sliderContent.slick( {
 			rows: 0,
 			slidesToShow: 1,

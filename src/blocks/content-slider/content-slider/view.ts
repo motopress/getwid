@@ -27,6 +27,9 @@ function initSliders() {
 
 		sliderRoot.addClass( 'getwid-init' );
 
+		// Prevent DOM-supplied Slick options from overriding Getwid's configuration.
+		slider.removeAttr( 'data-slick' ).removeData( 'slick' );
+
 		slider.slick( {
 			autoplay: !! sliderRoot.data( 'autoplay' ),
 			autoplaySpeed: sliderRoot.data( 'autoplay-speed' ) ?? 3000,

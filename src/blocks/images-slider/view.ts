@@ -80,6 +80,9 @@ function initSliders() {
 				};
 			};
 
+			// Prevent DOM-supplied Slick options from overriding Getwid's configuration.
+			currentSlider.removeAttr( 'data-slick' ).removeData( 'slick' );
+
 			currentSlider.slick?.( {
 				arrows: currentSlider.data( 'arrows' ) !== 'none',
 				dots: currentSlider.data( 'dots' ) !== 'none',

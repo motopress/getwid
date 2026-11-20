@@ -317,6 +317,9 @@ function initBackgroundSliders() {
 		slider.imagesLoaded().done( ( instance ) => {
 			const sliderElement = $( instance.elements[ 0 ] ) as SlickElement;
 
+			// Prevent DOM-supplied Slick options from overriding Getwid's configuration.
+			sliderElement.removeAttr( 'data-slick' ).removeData( 'slick' );
+
 			sliderElement.slick?.( {
 				arrows: false,
 				dots: false,

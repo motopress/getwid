@@ -63,6 +63,9 @@ function initPostCarousel() {
 				};
 			};
 
+			// Prevent DOM-supplied Slick options from overriding Getwid's configuration.
+			currentSlider.removeAttr( 'data-slick' ).removeData( 'slick' );
+
 			currentSlider.slick?.( {
 				arrows: options.getwid_arrows !== 'none',
 				dots: options.getwid_dots !== 'none',
